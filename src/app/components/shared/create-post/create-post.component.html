@@ -1,0 +1,64 @@
+<div class="mx-2 my-2">
+  <input class="tt mt-4" type="text" [ngModelOptions]="{standalone: true}" pInputText placeholder="Título da postagem"
+    [(ngModel)]="title" required />
+
+  <form [formGroup]="formGroup" class="my-3">
+    <p-editor formControlName="text" placeholder="Digite algo..." [style]="{ height: '283px' }" autoGrow="true">
+      <ng-template #header>
+        <span class="ql-formats">
+          <select class="ql-size">
+            <option value="small"></option>
+            <option value="normal" selected></option>
+            <option value="large"></option>
+          </select>
+          <button type="button" class="ql-bold bt-e" aria-label="Bold"></button>
+          <button type="button" class="ql-italic" aria-label="Italic"></button>
+          <button type="button" class="ql-underline" aria-label="Underline"></button>
+          <button type="button" class="ql-strike" aria-label="Strike"></button>
+          <button type="button" class="ql-blockquote" aria-label="Blockquote"></button>
+          <button type="button" class="ql-link" aria-label="Link"></button>
+          <button type="button" class="ql-image" aria-label="Image"></button>
+          <select class="ql-color">
+            <option value="#000000" selected></option>
+            <option value="#ff2424"></option>
+            <option value="#ff8a00"></option>
+            <option value="#f4ed1f"></option>
+            <option value="#00cf35"></option>
+            <option value="#0091ff"></option>
+            <option value="#ff9d9d"></option>
+            <option value="#984ef4"></option>
+          </select>
+          <select class="ql-background">
+            <option value="#00000050"></option>
+            <option value="#ffffff" selected></option>
+            <option value="#ff242450"></option>
+            <option value="#ff8a0050"></option>
+            <option value="#f4ed1f50"></option>
+            <option value="#00cf3550"></option>
+            <option value="#0091ff50"></option>
+            <option value="#ff9d9d50"></option>
+            <option value="#984ef450"></option>
+          </select>
+          <button type="button" class="ql-clean" aria-label="Clean"></button>
+        </span>
+      </ng-template>
+    </p-editor>
+  </form>
+
+  <div class="tags-container">
+
+    <p-select [options]="comunities" size="small" appendTo="body" (ngModel)="selectedComunity" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
+
+    <div class="flex flex-row w-full mb-2">
+      <div class="w-3 ml-2"><input class="tags" type="text" pInputText placeholder="Adicione uma tag..."
+          [(ngModel)]="newTag" (keydown.enter)="addTag($event)" /></div>
+      <div> <p-button class="bt-tags small-icon" icon="pi pi-plus" (click)="addTag($event)"
+          [disabled]="tags.length >= 20"></p-button>
+      </div>
+    </div>
+
+    <div class="tags-list">
+      <p-tag *ngFor="let tag of tags" [value]="'#' + tag" icon="pi pi-times" (click)="removeTag(tag)"></p-tag>
+    </div>
+  </div>
+</div>

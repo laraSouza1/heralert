@@ -1,0 +1,91 @@
+::ng-deep body {
+  background-image: url('https://imgur.com/8s5Bt7c.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.line {
+  background-color: #ff6b6b;
+  width: 130px;
+  height: 3px;
+}
+
+.border-page {
+  border-left: 25px solid #ff6b6b;
+  border-right: 15px solid #ff6b6b;
+}
+
+h1 {
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+  color: #3e3e3e;
+}
+
+.card {
+ background-color: white;
+ border: 2px solid #FF9D9D;
+ width: 600px;
+ min-height: 100% !important;
+ border-radius: 50px;
+}
+
+::ng-deep .p-inputtext {
+  background-color: white !important;
+  border: 1px solid #FF9D9D !important;
+  width: 100% !important;
+  color: #616161 !important;
+}
+
+a {
+  color: #a7a7a7;
+  font-size: small;
+}
+
+a:hover {
+  color: #868686;
+}
+
+::ng-deep .p-password {
+  background-color: white !important;
+  border: none !important;
+  width: 100% !important;
+  color: #616161 !important;
+}
+
+::ng-deep .p-inputicon {
+  color: #FF9D9D;
+}
+
+::ng-deep .p-button {
+  width: 100% !important;
+}
+
+::ng-deep .bt2 .p-button {
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #e2e2e2 !important;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  transform: scale(1.02) !important;
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}
+
+::ng-deep .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+}
+
+::ng-deep .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+  transform: scale(1.02) !important;
+}

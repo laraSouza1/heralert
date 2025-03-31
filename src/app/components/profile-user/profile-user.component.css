@@ -1,0 +1,63 @@
+::ng-deep .edit-profile .p-button {
+  background-color: transparent !important;
+  padding: 0px !important;
+  color: #F94C4C !important;
+  font-size: 10px !important;
+  border: none !important;
+}
+
+::ng-deep .edit-cog .pi {
+  color: #F94C4C !important;
+  font-size: 13px !important;
+}
+
+::ng-deep .edit-profile .p-button:not(:disabled):hover {
+  color: #d63030 !important;
+}
+
+.user {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.info {
+  font-size: 12px;
+}
+
+.number {
+  font-size: 12px;
+  font-weight: 600;
+  color: black;
+}
+
+::ng-deep .edit-at .pi {
+  font-size: 13px !important;
+  padding-right: 1px !important;
+}
+
+::ng-deep .edit-cicle .pi {
+  font-size: 4px !important;
+  padding-right: 6px !important;
+  padding-left: 6px !important;
+}
+
+.bio {
+  font-size: 14px;
+}
+
+.product-image {
+  width: 555px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.product-image2 {
+  border-radius: 100%;
+  border: 3px solid #ffffff;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  position: absolute;
+  top: 125px;
+  left: 400px;
+}

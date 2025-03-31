@@ -1,0 +1,30 @@
+<app-menu-bar></app-menu-bar>
+<div class="border-page flex align-content-center justify-content-center">
+  <div class="align-content-center justify-content-center card py-8 my-7">
+    <div class="flex flex-column mx-8 mb-4">
+      <h1 class="mt-0 mb-2">Acessar conta</h1>
+      <div class="line"></div>
+    </div>
+
+    <!--Formu-->
+    <form class="mx-8">
+      <p-iconfield class="mb-4">
+        <p-inputicon styleClass="pi pi-user"></p-inputicon>
+        <input type="text" pInputText placeholder="E-mail ou usuário" required />
+      </p-iconfield>
+
+      <p-iconfield class="mb-2">
+        <p-inputicon styleClass="pi pi-lock"></p-inputicon>
+        <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText placeholder="Palavra-passe" required />
+        <p-inputicon (click)="togglePasswordVisibility()" [styleClass]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer"></p-inputicon>
+      </p-iconfield>
+      <a class="flex mb-4" href="">Esqueceu a palavra-passe? Clique aqui.</a>
+
+      <div class="flex flex-row gap-3">
+        <p-button class="w-6" label="Fazer log-in" (onClick)="navigateToFY()"></p-button>
+        <p-button class="w-6 bt2" label="Cadastre-se" (onClick)="navigateToSignIn()"></p-button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

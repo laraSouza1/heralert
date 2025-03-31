@@ -1,0 +1,127 @@
+.container-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.line {
+  height: 1px;
+  background-color: #c2c2c2;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid #c2c2c2;
+  padding: 20px;
+  margin-right: 50px;
+}
+
+::ng-deep h1 {
+  font-weight: 400;
+}
+
+.scrollable-table {
+  max-height: 80%;
+  overflow-y: auto;
+  display: block;
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  max-height: 3em;
+}
+
+.div-chat {
+  background-color: #ffffff;
+  border-top: 4px solid #ff6b6b;
+  border-bottom: 1px solid #c2c2c2;
+  margin-top: 10px;
+  padding: 10px;
+  padding-bottom: 0px !important;
+  padding-right: 0px !important;
+}
+
+::ng-deep .pi-times:hover {
+  color: #ff6b6b !important;
+}
+
+.chat {
+  height: 210px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+::ng-deep .p-datatable-tbody > tr {
+  background-color: white !important;
+  color: #616161 !important;
+  border-color: #c2c2c2 !important;
+  height: 60px !important;
+}
+
+::ng-deep .p-datatable-tbody > tr > td {
+  border-color: #c2c2c2 !important;
+  padding: 8px !important;
+}
+
+::ng-deep .p-datatable-header {
+  background-color: white !important;
+  border-color: #c2c2c2 !important;
+}
+
+::ng-deep .p-inputtext {
+  background-color: white !important;
+  border: 1px solid #FF9D9D !important;
+  width: 100% !important;
+  color: #616161 !important;
+}
+
+::ng-deep .p-inputicon {
+  color: #FF9D9D;
+}
+
+.product-image {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.product-image2 {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  background-color: rgb(224, 224, 224);
+  border-bottom: 6px solid white;
+  border-left: 8px solid white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffb6b6;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 8px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+::ng-deep .p-contextmen {
+  margin: 0px !important;
+  padding: 0px !important;
+  position:sticky;
+}

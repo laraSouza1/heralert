@@ -1,0 +1,16 @@
+::ng-deep body {
+  background-image: url('https://imgur.com/4RMwX7M.png') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.line {
+  background-color: #ff6b6b;
+  width: 130px;
+  height: 3px;
+}
+
+.border-page {
+  border-left: 25px solid #ff6b6b;
+  border-right: 15px solid #ff6b6b;
+}

@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="line-fy">
+    <app-left-side class="sidebar left"></app-left-side>
+
+    <p-toast />
+    <p-confirmdialog />
+    <p-button class="bt3" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
+
+    <div class="content px-4">
+      <div class="line pb-2">
+        <div class="flex grid w-12 mt-1">
+          <div class="col-6">
+            <h1>Comunidades</h1>
+          </div>
+          <div class="col-6" style="display: flex; justify-content: end; align-items: center;">
+            <p-button icon="pi pi-arrow-right" class="bt-com">
+              <span class="text-hover">Ver todas</span>
+            </p-button>
+          </div>
+        </div>
+
+        <div class="grid h-9rem">
+          <div class="col-3"><img src="https://imgur.com/LqdcWd8.png" class="com-image" /></div>
+          <div class="col-3"><img src="https://imgur.com/YB4ZaPo.png" class="com-image" /></div>
+          <div class="col-3"><img src="https://imgur.com/niUYm31.png" class="com-image" /></div>
+          <div class="col-3"><img src="https://imgur.com/6zagZDp.png" class="com-image" /></div>
+        </div>
+      </div>
+
+      <div class="mt-3 mb-3">
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input pInputText type="text" placeholder="Pesquisar usuário" />
+        </p-iconfield>
+
+        <div class="flex flex-row gap-2 mt-3">
+          <p-button class="bt1" icon="pi pi-home" label="Para ti"></p-button>
+          <p-button class="bt2" icon="pi pi-users" label="Seguindo"></p-button>
+        </div>
+      </div>
+
+      <app-post></app-post>
+
+    </div>
+
+    <app-right-side class="sidebar right"></app-right-side>
+  </div>
+</div>
+
+<p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
+  <app-create-post></app-create-post>
+
+  <ng-template pTemplate="footer" class="mt-2">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
+    <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
+    <p-button label="Postar" class="bt-post" (click)="post()"></p-button>
+  </ng-template>
+</p-dialog>

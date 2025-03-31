@@ -1,0 +1,116 @@
+.tt {
+  font-size: 20px;
+  border: none !important;
+  padding-left: 0px !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-select {
+  padding-left: 0px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border-color: #ffb6b6;
+}
+
+::ng-deep .p-select-label.p-placeholder,
+::ng-deep .p-icon {
+  color: #ff8a8a;
+}
+
+::ng-deep .p-select:not(.p-disabled):hover,
+::ng-deep .p-select:not(.p-disabled).p-focus {
+  border-color: #ff8a8a;
+}
+
+::ng-deep .p-select-label {
+  color: rgb(85, 85, 85) !important;
+}
+
+::ng-deep .p-select-list-container {
+  background-color: white !important;
+  border: 1px solid #ffb6b6;
+  border-radius: 5px !important;
+}
+
+::ng-deep .p-select-overlay {
+  border: none !important;
+}
+
+::ng-deep .p-select-option {
+  color: rgb(85, 85, 85) !important;
+}
+
+.tags-container {
+  border-top: 1px solid #a1a1a1;
+  padding-top: 8px;
+}
+
+.tags {
+  font-size: 14px;
+  border: none !important;
+  box-shadow: none !important;
+  padding-left: 0px !important;
+}
+
+::ng-deep .bt-tags .p-button {
+  background-color: #FF6B6B !important;
+  color: #ffffff !important;
+  border: none !important;
+  height: 24px !important;
+  width: 24px !important;
+  border-radius: 50px !important;
+  position: relative !important;
+  top: 5px !important;
+}
+
+::ng-deep .small-icon .pi {
+  font-size: 12px;
+}
+
+::ng-deep .p-tag {
+  background-color: #FF6B6B35 !important;
+  color: #FF6B6B !important;
+  font-weight: 500 !important;
+  margin-left: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+::ng-deep ::-webkit-scrollbar {
+  width: 16px;
+  background-color: rgb(224, 224, 224);
+  border-bottom: 6px solid white;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb {
+  background-color: #ffb6b6;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+::ng-deep .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+  background-color: #ffb6b680 !important;
+}
+
+::ng-deep .p-select-option.p-select-option-selected {
+  background-color: #ffb6b680 !important;
+}
+
+::ng-deep .p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  background-color: #d8d8d8 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded:not(.ql-icon-picker) .ql-picker-item {
+  color: #3e3e3e !important;
+}
+
+::ng-deep .p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options .ql-picker-item:hover {
+  background-color: #b3b3b3 !important;
+}

@@ -1,0 +1,52 @@
+<div class="h-screen container">
+  <div class="container-chat">
+    <h1 class="mb-3">Chat</h1>
+    <div class="line"></div>
+  </div>
+
+  <div class="w-12">
+    <p-contextmenu #cm [model]="items" (onHide)="selectedProduct = null" />
+    <p-table #dt2 [value]="products" class="scrollable-table w-full" [ngStyle]="{'max-height': tableHeight}">
+      <ng-template #caption>
+        <div class="flex">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input pInputText type="text" (input)="filterProducts($event)" placeholder="Pesquisar usuário" />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-product let-i="rowIndex">
+        <tr (click)="onRowClick(product)" [pContextMenuRow]="product">
+          <td>
+            <img [src]="product.photo" height="50" width="50" class="product-image" />
+          </td>
+          <td>
+            <div class="truncate" style="color: #3e3e3e;"> {{ product.name }} </div>
+            <div class="truncate" style="font-size: 12px;"> {{ product.text }}</div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div *ngIf="isExpanded">
+      <div class="grid div-chat"  style="width: 100%; display: flex; align-items: center;">
+        <div class="col"><img *ngIf="expandedProduct" [src]="expandedProduct.photo" height="50" width="50" class="product-image2" /></div>
+        <div class="col-7 truncate"><div *ngIf="expandedProduct" style="color: #FF9D9D; font-weight: 600; font-size: large;"> {{ expandedProduct.name }} </div></div>
+        <div class="col"><i class="pi pi-times" (click)="closeDiv()"></i></div>
+      </div>
+      <div>
+        <div class="chat">Chat vazio.</div>
+        <div>
+          <p-iconfield>
+            <p-inputicon  styleClass="pi pi-plus" />
+            <input type="text" pInputText placeholder="Escrever..." />
+            <p-inputicon  styleClass="pi pi-send" />
+        </p-iconfield>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

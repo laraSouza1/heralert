@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "giraffa12",
+      "email": "giraffa12@gmail.com",
+      "senha": "lara12345"
+    },
+    {
+      "id": 2,
+      "name": "leao34",
+      "email": "leao34@gmail.com",
+      "senha": "rala12345"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "titulo": "Titulo1",
+      "conteudo": "Conteudo1",
+      "comunidadeId": 1,
+      "tags": "#lugarlegal",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "titulo": "Titulo2",
+      "conteudo": "Conteudo2",
+      "comunidadeId": 2,
+      "tags": "#Limpezadepele",
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "titulo": "Titulo3",
+      "conteudo": "Conteudo3",
+      "comunidadeId": 3,
+      "tags": "#ph",
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "titulo": "Titulo4",
+      "conteudo": "Conteudo4",
+      "comunidadeId": 4,
+      "tags": "#jujitsu",
+      "userId": 2
+    },
+    {
+      "id": 5,
+      "titulo": "Titulo5",
+      "conteudo": "Conteudo5",
+      "comunidadeId": 5,
+      "tags": "#leitura",
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "titulo": "Titulo6",
+      "conteudo": "Conteudo5",
+      "comunidadeId": 5,
+      "tags": "#leitura",
+      "userId": 2
+    }
+  ],
+  "comunidade": [
+    {
+      "id": 1,
+      "descrição": "Recomendações de locais"
+    },
+    {
+      "id": 2,
+      "descrição": "Autocuidados femininos"
+    },
+    {
+      "id": 3,
+      "descrição": "Autocuidados femininos íntimos"
+    },
+    {
+      "id": 4,
+      "descrição": "Dicas de autodefesa"
+    },
+    {
+      "id": 5,
+      "descrição": "Assuntos gerais"
+    }
+  ]
+}

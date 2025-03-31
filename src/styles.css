@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import "primeicons/primeicons.css";
+
+body {
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
+  color: #616161;
+  font-family: "Lexend", sans-serif;
+  line-height: 20px;
+}
+
+* {
+  font-family: Lexend, sans-serif;
+}
+
+.p-dialog {
+  background-color: white !important;
+  border-radius: 7px 7px 5px 5px !important;
+  color: #3e3e3e !important;
+  border: none !important;
+}
+
+.p-dialog-header {
+  background-color: #ff6b6b;
+  color: white !important;
+  padding: 10px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+.p-confirmdialog .p-dialog-content {
+  margin: 20px !important;
+  padding: 20px !important;
+  background-color: #ffe6e6;
+  border-left: 2px solid #ff6b6b;
+}
+
+.pi-sign-out:before {
+  color: #ff6b6b;
+}
+
+.p-button-text.p-button-secondary {
+  color: white !important;
+}
+
+.p-button-text.p-button-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.089) !important;
+}
+
+.p-editor .p-editor-toolbar.ql-snow {
+ border: none !important;
+
+}
+
+.p-editor .p-editor-toolbar {
+  background-color: white !important;
+  border: none !important;
+}
+
+.p-editor .p-editor-content .ql-editor {
+  background-color: white !important;
+  color: #3e3e3e !important;
+  font-size: 16px !important;
+}
+
+.p-editor .p-editor-content.ql-snow {
+  border: none !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before {
+  color: #ff6b6b !important;
+}
+
+.p-editor .p-editor-toolbar.ql-snow .ql-stroke {
+  stroke: #ff6b6b !important;
+}
+
+.p-editor .p-editor-toolbar.ql-snow .ql-fill {
+  fill: #ff6b6b !important;
+}
+
+.p-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+  stroke: #c74141 !important;
+}
+
+.p-editor .p-editor-toolbar.ql-snow {
+  padding-left: 0px !important;
+}
