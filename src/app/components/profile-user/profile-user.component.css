@@ -42,7 +42,7 @@
 }
 
 .bio {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .product-image {
@@ -50,6 +50,11 @@
   height: 150px;
   object-fit: cover;
 }
+
+::ng-deep html, body {
+  overflow-x: hidden;
+}
+
 
 .product-image2 {
   border-radius: 100%;
