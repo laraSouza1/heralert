@@ -8,6 +8,9 @@ import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
+import { HttpClient } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Validators } from '@angular/forms';
 
 interface Comunity {
   name: string;
@@ -26,6 +29,8 @@ interface Comunity {
 })
 export class CreatePostComponent {
 
+  private http = inject(HttpClient);
+
   title: string = '';
   tags: string[] = [];
   newTag: string = '';
@@ -35,7 +40,9 @@ export class CreatePostComponent {
 
   ngOnInit() {
     this.formGroup = new FormGroup({
-      text: new FormControl()
+      title: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      text: new FormControl('', [Validators.required]),
+      community: new FormControl('', [Validators.required])
     });
 
     this.comunities = [
@@ -44,7 +51,7 @@ export class CreatePostComponent {
       { name: 'Autocuidados Íntimos Femininos', code: 'AIF' },
       { name: 'Dicas de Autodefesa', code: 'DA' },
       { name: 'Geral', code: 'G' }
-  ];
+    ];
   }
 
   addTag(event: Event) {

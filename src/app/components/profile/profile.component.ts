@@ -12,6 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { ProfileUserComponent } from '../profile-user/profile-user.component';
 import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
+import { ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -26,34 +28,46 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileComponent {
 
-    showPostModal: boolean = false;
-    activeTab: 'posts' | 'favorites' | 'saved' = 'posts';
-    items: MenuItem[] | undefined;
+  @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
-    posts = [
-      { id: 1, userId: 1, username: 'Usuário', content: 'Meu post...', createdAt: 'Hoje', likes: 10, comments: 5, favorites: 3 }
+  showPostModal: boolean = false;
+  activeTab: 'posts' | 'favorites' | 'saved' = 'posts';
+  items: MenuItem[] | undefined;
+
+  posts = [
+    { id: 1, userId: 1, username: 'Usuário', content: 'Meu post...', createdAt: 'Hoje', likes: 10, comments: 5, favorites: 3 }
+  ];
+
+  favoritePosts = [
+    { id: 2, userId: 2, username: 'Outro Usuário', content: 'Post favoritado...', createdAt: 'Ontem', likes: 15, comments: 8, favorites: 5 }
+  ];
+
+  savedPosts = [
+    { id: 3, userId: 3, username: 'Usuário Salvo', content: 'Post salvo...', createdAt: 'Semana passada', likes: 20, comments: 12, favorites: 8 }
+  ];
+
+  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
+
+  ngOnInit() {
+    this.items = [
+      { label: 'Minhas postagens', icon: 'pi pi-file', command: () => this.activeTab = 'posts' },
+      { label: 'Meus favoritos', icon: 'pi pi-heart', command: () => this.activeTab = 'favorites' },
+      { label: 'Meus salvos', icon: 'pi pi-bookmark', command: () => this.activeTab = 'saved' }
     ];
-
-    favoritePosts = [
-      { id: 2, userId: 2, username: 'Outro Usuário', content: 'Post favoritado...', createdAt: 'Ontem', likes: 15, comments: 8, favorites: 5 }
-    ];
-
-    savedPosts = [
-      { id: 3, userId: 3, username: 'Usuário Salvo', content: 'Post salvo...', createdAt: 'Semana passada', likes: 20, comments: 12, favorites: 8 }
-    ];
-
-    constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) { }
-
-    ngOnInit() {
-      this.items = [
-        { label: 'Minhas postagens', icon: 'pi pi-file', command: () => this.activeTab = 'posts' },
-        { label: 'Meus favoritos', icon: 'pi pi-heart', command: () => this.activeTab = 'favorites' },
-        { label: 'Meus salvos', icon: 'pi pi-bookmark', command: () => this.activeTab = 'saved' }
-      ];
-    }
+  }
 
   openCreatePostModal() {
     this.showPostModal = true;
+
+    setTimeout(() => {
+      if (this.createPostComponent) {
+        this.createPostComponent.title = '';
+        this.createPostComponent.tags = [];
+        this.createPostComponent.newTag = '';
+        this.createPostComponent.selectedComunity = undefined;
+        this.createPostComponent.formGroup?.reset();
+      }
+    });
   }
 
   closeCreatePostModal() {
@@ -66,7 +80,41 @@ export class ProfileComponent {
   }
 
   post() {
-    console.log("Post publicado!");
-    this.closeCreatePostModal();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (!user?.id) {
+      alert("Usuário não autenticado!");
+      return;
+    }
+
+    if (!this.createPostComponent?.formGroup || this.createPostComponent.formGroup.invalid) {
+      this.createPostComponent?.formGroup?.markAllAsTouched();
+      return;
+    }
+
+    const title = this.createPostComponent.formGroup.get('title')?.value;
+    const content = this.createPostComponent.formGroup.get('text')?.value;
+    const community = this.createPostComponent.formGroup.get('community')?.value?.code;
+    const tags = this.createPostComponent?.tags;
+
+    const postData = {
+      user_id: user.id,
+      title,
+      content,
+      community,
+      tags,
+      media_url: null
+    };
+
+    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+      next: (response: any) => {
+        console.log("Post criado com sucesso:", response);
+        this.closeCreatePostModal();
+      },
+      error: (err) => {
+        console.error("Erro ao criar post:", err);
+        alert("Erro ao publicar post.");
+      }
+    });
   }
 }

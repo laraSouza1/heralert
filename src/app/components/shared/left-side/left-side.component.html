@@ -7,11 +7,11 @@
   <div class="flex flex-column justify-content-center align-items-center w-full">
 
     <div class="my-4 text-center">
-      <img class="img-profile mb-3" src="https://imgur.com/C5ADF8L.jpg" />
+      <img [src]="user?.profile_pic || 'https://imgur.com/DaRTcyk.jpg'" class="img-profile mb-3">
 
       <p class="pg-1">{{ user?.name }}</p>
       <div class="user px-2 mt-2 mb-4">
-        <i class="pi pi-at"></i>
+        <div class="editt-at"><i class="pi pi-at"></i></div>
         <span>{{ user?.username }}</span>
       </div>
       <p-button class="bt-pf" icon="pi pi-eye" label="Ver perfil" (click)="navigateToProfile()"></p-button>

@@ -56,17 +56,20 @@ body {
 
 .p-editor .p-editor-toolbar {
   background-color: white !important;
-  border: none !important;
+  border-radius: 0px !important;
 }
 
 .p-editor .p-editor-content .ql-editor {
   background-color: white !important;
   color: #3e3e3e !important;
   font-size: 16px !important;
+  border-radius: 0px !important;
 }
 
 .p-editor .p-editor-content.ql-snow {
   border: none !important;
+  border-left: 2px solid #ff6b6b !important;
+  border-radius: 0px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-label::before {

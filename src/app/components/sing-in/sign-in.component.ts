@@ -72,12 +72,12 @@ export class SingInComponent {
     this.usernameFormatError = !/^[A-Za-z0-9._]+$/.test(this.username);
     this.usernameSpaceError = this.username.includes(' ');
     this.usernameLengthError = this.username.length < 3;
-    this.usernameMaxLengthError = this.username.length > 10;
+    this.usernameMaxLengthError = this.username.length > 15;
   }
 
   validateName() {
     this.nameLengthError = !this.name || this.name.trim().length < 3;
-    this.nameMaxLengthError = this.name.length > 20;
+    this.nameMaxLengthError = this.name.length > 25;
   }
 
   validatePassword() {

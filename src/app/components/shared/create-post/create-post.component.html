@@ -1,9 +1,9 @@
 <div class="mx-2 my-2">
-  <input class="tt mt-4" type="text" [ngModelOptions]="{standalone: true}" pInputText placeholder="Título da postagem"
-    [(ngModel)]="title" required />
+  <input type="text" pInputText placeholder="Título da postagem" formControlName="title" class="tt mt-4" />
+  <p-message *ngIf="formGroup.controls.title.invalid && formGroup.controls.title.touched" severity="error" size="small" variant="simple" text="Título é obrigatório."></p-message>
 
   <form [formGroup]="formGroup" class="my-3">
-    <p-editor formControlName="text" placeholder="Digite algo..." [style]="{ height: '283px' }" autoGrow="true">
+    <p-editor formControlName="text" placeholder="Digite algo..." autoGrow="true">
       <ng-template #header>
         <span class="ql-formats">
           <select class="ql-size">
@@ -43,17 +43,24 @@
         </span>
       </ng-template>
     </p-editor>
+
+    <div class="mt-2">
+      <p-message *ngIf="formGroup.controls.text.invalid && formGroup.controls.text.touched" severity="error" size="small" variant="simple" text="Conteúdo é obrigatório."></p-message>
+    </div>
   </form>
 
   <div class="tags-container">
 
-    <p-select [options]="comunities" size="small" appendTo="body" (ngModel)="selectedComunity" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
+    <p-select [options]="comunities" formControlName="community" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
+    <p-message *ngIf="formGroup.controls.community.invalid && formGroup.controls.community.touched" severity="error" size="small" variant="simple" text="Selecione uma comunidade."></p-message>
 
     <div class="flex flex-row w-full mb-2">
       <div class="w-3 ml-2"><input class="tags" type="text" pInputText placeholder="Adicione uma tag..."
           [(ngModel)]="newTag" (keydown.enter)="addTag($event)" /></div>
-      <div> <p-button class="bt-tags small-icon" icon="pi pi-plus" (click)="addTag($event)"
-          [disabled]="tags.length >= 20"></p-button>
+      <div>
+        <p-button class="bt-tags small-icon" (click)="addTag($event)" [disabled]="tags.length >= 20">~
+          <i class="pi pi-plus"></i>
+        </p-button>
       </div>
     </div>
 

@@ -31,8 +31,10 @@
 }
 
 ::ng-deep .edit-at .pi {
-  font-size: 13px !important;
+  font-size: 11px !important;
   padding-right: 1px !important;
+  position: relative;
+  top: 1px;
 }
 
 ::ng-deep .edit-cicle .pi {
@@ -58,7 +60,7 @@
 
 .product-image2 {
   border-radius: 100%;
-  border: 3px solid #ffffff;
+  border: 4px solid #ffffff;
   width: 80px;
   height: 80px;
   object-fit: cover;

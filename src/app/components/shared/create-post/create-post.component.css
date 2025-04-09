@@ -65,6 +65,9 @@
 
 ::ng-deep .small-icon .pi {
   font-size: 12px;
+  position: relative !important;
+  left: 0px !important;
+  top: 0px !important;
 }
 
 ::ng-deep .p-tag {
@@ -103,7 +106,6 @@
 
 ::ng-deep .p-editor .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
   background-color: #d8d8d8 !important;
-  border: none !important;
   box-shadow: none !important;
 }
 
