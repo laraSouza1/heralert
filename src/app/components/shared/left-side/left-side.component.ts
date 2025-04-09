@@ -17,10 +17,16 @@ import { ToastModule } from 'primeng/toast';
 export class LeftSideComponent {
 
   items: MenuItem[] | undefined;
+  user: any;
 
   constructor(private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
+
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
 
     //itens menu
     this.items = [
@@ -68,7 +74,10 @@ export class LeftSideComponent {
         acceptButtonProps: {
           label: 'Sair',
           severity: "danger",
-          command: () => this.navigateToHome()
+          command: () => {
+            localStorage.removeItem('user');
+            this.navigateToHome();
+          }
       },
     });
 }

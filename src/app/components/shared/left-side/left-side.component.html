@@ -9,10 +9,10 @@
     <div class="my-4 text-center">
       <img class="img-profile mb-3" src="https://imgur.com/C5ADF8L.jpg" />
 
-      <p class="pg-1">Lara Souza</p>
+      <p class="pg-1">{{ user?.name }}</p>
       <div class="user px-2 mt-2 mb-4">
-        <i class="pi pi-at" style="font-size: 10px; position: relative; top: 1.1px;"></i>
-        <span>lara123asd</span>
+        <i class="pi pi-at"></i>
+        <span>{{ user?.username }}</span>
       </div>
       <p-button class="bt-pf" icon="pi pi-eye" label="Ver perfil" (click)="navigateToProfile()"></p-button>
     </div>

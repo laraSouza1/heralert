@@ -14,6 +14,7 @@
           required />
       </p-iconfield>
       <p-message *ngIf="emailError" severity="error" variant="simple" size="small">E-mail inválido.</p-message>
+      <p-message *ngIf="emailAlreadyUsed" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
 
       <p-iconfield class="mt-4 mb-2">
         <p-inputicon styleClass="pi pi-user"></p-inputicon>
@@ -43,6 +44,7 @@
       <p-message *ngIf="usernameMaxLengthError" severity="error" variant="simple" size="small">
         Máximo 10 caracteres.
       </p-message>
+      <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em uso.</p-message>
 
       <div class="my-4">
         <p-iconfield class="mb-2">

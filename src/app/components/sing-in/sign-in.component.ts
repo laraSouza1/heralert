@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NumberValueAccessor } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
@@ -36,10 +37,14 @@ export class SingInComponent {
   confirmPasswordError: boolean = false;
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
+  isSubmitting: boolean = false;
+  emailAlreadyUsed: boolean = false;
+  usernameAlreadyUsed: boolean = false;
+  user: any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
-  //navegação botões ------------------------------
+  //navegação botões
   navigateToFY() {
     this.router.navigate(['/for-you']);
   }
@@ -48,7 +53,7 @@ export class SingInComponent {
     this.router.navigate(['/login']);
   }
 
-  // Ver senha ------------------------------
+  //ver senha
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
@@ -57,7 +62,7 @@ export class SingInComponent {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
-  // Validações do formulário
+  //validações do formulário
   validateEmail() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     this.emailError = !emailPattern.test(this.email);
@@ -84,6 +89,10 @@ export class SingInComponent {
   }
 
   onSubmit() {
+
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     this.clearErrors();
     this.validateEmail();
     this.validateName();
@@ -95,13 +104,65 @@ export class SingInComponent {
         !this.usernameFormatError && !this.usernameSpaceError &&
         !this.usernameLengthError && !this.usernameMaxLengthError &&
         !this.passwordError && !this.confirmPasswordError) {
-      console.log('Formulário enviado com sucesso');
-      this.navigateToFY();
+
+      const registrationData = {
+        username: this.username,
+        name: this.name,
+        email: this.email,
+        password: this.password
+      };
+
+      this.http.post("http://localhost:8085/api/register", registrationData)
+        .subscribe({
+          next: (response: any) => {
+            if (response.status) {
+              console.log('Cadastro bem-sucedido!', response.message);
+
+              const userData = {
+                id: response.user?.id,
+                username: registrationData.username,
+                name: registrationData.name,
+                email: registrationData.email,
+                profile_pic: null,
+                cover_pic: null,
+                bio: null,
+                created_at: new Date().toISOString()
+              };
+
+              localStorage.setItem('user', JSON.stringify(userData));
+
+              this.navigateToFY();
+            } else {
+              console.error(response.message);
+              alert(response.message);
+            }
+          },
+          error: (error) => {
+            console.error('Erro ao cadastrar:', error);
+            this.emailAlreadyUsed = false;
+            this.usernameAlreadyUsed = false;
+
+            if (error.status === 409) {
+              const field = error.error.field;
+              if (field === 'email') {
+                this.emailAlreadyUsed = true;
+              } else if (field === 'username') {
+                this.usernameAlreadyUsed = true;
+              }
+            } else {
+              alert('Erro ao tentar cadastrar. Por favor, tente novamente.');
+            }
+            this.isSubmitting = false;
+          },
+          complete: () => {
+            this.isSubmitting = false;
+          }
+        });
     } else {
       console.log('Erro ao enviar formulário');
+      this.isSubmitting = false;
     }
   }
-
 
   clearErrors() {
     this.emailError = false;
