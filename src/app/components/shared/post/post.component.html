@@ -1,20 +1,43 @@
 <div class="container mb-5">
-  <div class="h-post flex flex-row gap-2">
-    <div class="flex align-items-center justify-content-center">
+
+  <!--header-->
+  <div class="flex flex-row p-3 gap-2">
+    <div class="flex align-items-center justify-content-center p-0 m-0">
       <img src="https://imgur.com/ryhUuwt.jpg" height="35" width="35" class="product-image" />
     </div>
     <div class="flex align-items-center justify-content-center user">Usuário</div>
     <div class="flex align-items-center justify-content-center">
       <p-button icon="pi pi-plus" class="bt-follow small-icon" label="Seguir"></p-button>
     </div>
+    <div class="w-7 flex align-items-center justify-content-end">
+      <p-toast />
+      <p-menu #menu [model]="items" [popup]="true" />
+      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+    </div>
   </div>
+
+  <!--cont-->
   <div class="cont-post">
-    Titulo | data
-    conteudo post
+    <div class="flex flex-row w-12 gap-2">
+      <div class="flex align-items-center title w-11">Título</div>
+      <div class="flex align-items-center justify-content-center date">00/00/00</div>
+    </div>
+    <div class="cont my-3">
+      Conteudo
+    </div>
     <hr>
-    tags
+    <div class="mt-3">
+      <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>
+    </div>
   </div>
-  <div class="cont-post small-icon">
-    <!--Interações (like, comentario, salvar, etc)-->
+
+  <!--ações-->
+  <div class="cont-post">
+    <div class="flex flex-row w-12">
+      <div class="flex align-items-center justify-content-center w-2"><p-button [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'" [label]="likes.toString()" class="icon-action fav bt-fav" (onClick)="toggleFavorite()" /></div>
+      <div class="flex align-items-center justify-content-center w-2"><p-button [icon]="isComment ? 'pi pi-comment-fill' : 'pi pi-comment'" [label]="comments.toString()" class="icon-action comment bt-comment" (onClick)="toggleComment()" /></div>
+      <div class="flex align-items-center justify-content-start w-2"><p-button [icon]="isSave ? 'pi pi-bookmark-fill' : 'pi pi-bookmark'" class="icon-action save bt-save" (onClick)="toggleSave()" /></div>
+      <div class="flex align-items-center justify-content-end w-6"><p-button icon="pi pi-share-alt" class="icon-action share bt-share" /></div>
+    </div>
   </div>
 </div>

@@ -70,6 +70,10 @@ export class ProfileComponent {
     });
   }
 
+  showSuccess() {
+    this.messageService.add({ severity: 'info', summary: 'POstado com sucesso!', life: 3000 });
+}
+
   closeCreatePostModal() {
     this.showPostModal = false;
   }
@@ -87,6 +91,7 @@ export class ProfileComponent {
       return;
     }
 
+    //Validação form
     if (!this.createPostComponent?.formGroup || this.createPostComponent.formGroup.invalid) {
       this.createPostComponent?.formGroup?.markAllAsTouched();
       return;
@@ -96,6 +101,13 @@ export class ProfileComponent {
     const content = this.createPostComponent.formGroup.get('text')?.value;
     const community = this.createPostComponent.formGroup.get('community')?.value?.code;
     const tags = this.createPostComponent?.tags;
+
+    if (!title || !content || !community) {
+      alert("Título, conteúdo e comunidade são obrigatórios!");
+      return;
+    }
+
+    //Envia os dados para o servidor
 
     const postData = {
       user_id: user.id,

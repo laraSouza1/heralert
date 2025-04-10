@@ -1,8 +1,12 @@
 <div class="mx-2 my-2">
-  <input type="text" pInputText placeholder="Título da postagem" formControlName="title" class="tt mt-4" />
-  <p-message *ngIf="formGroup.controls.title.invalid && formGroup.controls.title.touched" severity="error" size="small" variant="simple" text="Título é obrigatório."></p-message>
 
-  <form [formGroup]="formGroup" class="my-3">
+  <form [formGroup]="formGroup" class="mb-3">
+
+    <div class="my-3">
+      <input type="text" pInputText placeholder="Título da postagem" formControlName="title" maxlength="60" class="tt mt-4"/>
+      <p-message *ngIf="formGroup.controls.title.invalid && formGroup.controls.title.touched" severity="error" size="small" variant="simple" text="Título é obrigatório."></p-message>
+    </div>
+
     <p-editor formControlName="text" placeholder="Digite algo..." autoGrow="true">
       <ng-template #header>
         <span class="ql-formats">
@@ -47,25 +51,28 @@
     <div class="mt-2">
       <p-message *ngIf="formGroup.controls.text.invalid && formGroup.controls.text.touched" severity="error" size="small" variant="simple" text="Conteúdo é obrigatório."></p-message>
     </div>
+
+    <div class="my-3">
+      <p-select [options]="comunities" formControlName="community" appendTo="body" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
+      <p-message *ngIf="formGroup.controls.community.invalid && formGroup.controls.community.touched" severity="error" size="small" variant="simple" text="Selecione uma comunidade."></p-message>
+    </div>
+
   </form>
 
   <div class="tags-container">
-
-    <p-select [options]="comunities" formControlName="community" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
-    <p-message *ngIf="formGroup.controls.community.invalid && formGroup.controls.community.touched" severity="error" size="small" variant="simple" text="Selecione uma comunidade."></p-message>
 
     <div class="flex flex-row w-full mb-2">
       <div class="w-3 ml-2"><input class="tags" type="text" pInputText placeholder="Adicione uma tag..."
           [(ngModel)]="newTag" (keydown.enter)="addTag($event)" /></div>
       <div>
-        <p-button class="bt-tags small-icon" (click)="addTag($event)" [disabled]="tags.length >= 20">~
+        <p-button class="bt-tags small-icon" (click)="addTag($event)" [disabled]="tags.length >= 20">
           <i class="pi pi-plus"></i>
         </p-button>
       </div>
     </div>
 
     <div class="tags-list">
-      <p-tag *ngFor="let tag of tags" [value]="'#' + tag" icon="pi pi-times" (click)="removeTag(tag)"></p-tag>
+      <p-tag *ngFor="let tag of tags" class="mb-2 ml-2" [value]="'#' + tag" icon="pi pi-times" (click)="removeTag(tag)"></p-tag>
     </div>
   </div>
 </div>

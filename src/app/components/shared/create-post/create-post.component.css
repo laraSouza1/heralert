@@ -12,8 +12,7 @@
   border-color: #ffb6b6;
 }
 
-::ng-deep .p-select-label.p-placeholder,
-::ng-deep .p-icon {
+::ng-deep .p-select-label.p-placeholder {
   color: #ff8a8a;
 }
 
@@ -68,14 +67,6 @@
   position: relative !important;
   left: 0px !important;
   top: 0px !important;
-}
-
-::ng-deep .p-tag {
-  background-color: #FF6B6B35 !important;
-  color: #FF6B6B !important;
-  font-weight: 500 !important;
-  margin-left: 8px !important;
-  margin-bottom: 8px !important;
 }
 
 ::ng-deep ::-webkit-scrollbar {

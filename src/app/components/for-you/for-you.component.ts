@@ -12,6 +12,9 @@ import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { PostComponent } from '../shared/post/post.component';
+import { HttpClient } from '@angular/common/http';
+import { ViewChild } from '@angular/core';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-for-you',
@@ -27,19 +30,37 @@ import { PostComponent } from '../shared/post/post.component';
     ConfirmDialogModule,
     ToastModule,
     CreatePostComponent,
-    PostComponent
+    PostComponent,
+    RippleModule
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
 })
 
 export class ForYouComponent {
+
+  @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
+
   showPostModal: boolean = false;
 
-  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) {}
+
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!'});
+  }
 
   openCreatePostModal() {
     this.showPostModal = true;
+
+    setTimeout(() => {
+      if (this.createPostComponent) {
+        this.createPostComponent.title = '';
+        this.createPostComponent.tags = [];
+        this.createPostComponent.newTag = '';
+        this.createPostComponent.selectedComunity = undefined;
+        this.createPostComponent.formGroup?.reset();
+      }
+    });
   }
 
   closeCreatePostModal() {
@@ -52,7 +73,49 @@ export class ForYouComponent {
   }
 
   post() {
-    console.log("Post publicado!");
-    this.closeCreatePostModal();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (!user?.id) {
+      alert("Usuário não autenticado!");
+      return;
+    }
+
+    //Validação form
+    if (!this.createPostComponent?.formGroup || this.createPostComponent.formGroup.invalid) {
+      this.createPostComponent?.formGroup?.markAllAsTouched();
+      return;
+    }
+
+    const title = this.createPostComponent.formGroup.get('title')?.value;
+    const content = this.createPostComponent.formGroup.get('text')?.value;
+    const community = this.createPostComponent.formGroup.get('community')?.value?.code;
+    const tags = this.createPostComponent?.tags;
+
+    if (!title || !content || !community) {
+      alert("Título, conteúdo e comunidade são obrigatórios!");
+      return;
+    }
+
+    //Envia os dados para o servidor
+
+    const postData = {
+      user_id: user.id,
+      title,
+      content,
+      community,
+      tags,
+      media_url: null
+    };
+
+    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+      next: (response: any) => {
+        console.log("Post criado com sucesso:", response);
+        this.closeCreatePostModal();
+      },
+      error: (err) => {
+        console.error("Erro ao criar post:", err);
+        alert("Erro ao publicar post.");
+      }
+    });
   }
 }

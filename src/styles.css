@@ -91,3 +91,9 @@ body {
 .p-editor .p-editor-toolbar.ql-snow {
   padding-left: 0px !important;
 }
+
+.p-tag {
+  background-color: #FF6B6B35 !important;
+  color: #FF6B6B !important;
+  font-weight: 500 !important;
+}

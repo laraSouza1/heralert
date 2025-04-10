@@ -39,7 +39,7 @@
   height: 40px;
   width: 40px;
   position: fixed;
-  top: 620px;
+  top: 590px;
   left: 898px;
   font-size: 16px;
   font-weight: 600;
@@ -73,4 +73,13 @@
 
 ::ng-deep .bt-post2 .p-button:not(:disabled):hover {
   background-color: #aaaaaa !important;
+}
+
+::ng-deep .p-select-label.p-placeholder, .p-icon {
+  fill: #22c55e !important;
+}
+
+::ng-deep .p-toast-message-icon {
+  position: relative;
+  top: 3px;
 }

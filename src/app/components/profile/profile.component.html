@@ -37,7 +37,7 @@
   <ng-template pTemplate="footer" class="mt-2">
     <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
     <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
-    <p-button label="Postar" class="bt-post" (click)="post()"></p-button>
+    <p-button label="Postar" class="bt-post" (click)="post(); showSuccess()" pRipple></p-button>
   </ng-template>
 </p-dialog>
 
