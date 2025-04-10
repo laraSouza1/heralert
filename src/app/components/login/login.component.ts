@@ -40,42 +40,42 @@ export class LoginComponent {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-login() {
+  login() {
+    this.clearErrors();
 
-  this.clearErrors();
+    const loginData = {
+      usernameOrEmail: this.usernameOrEmail,
+      password: this.password
+    };
 
-  const loginData = {
-    usernameOrEmail: this.usernameOrEmail,
-    password: this.password
-  };
-
-  this.http.post("http://localhost:8085/api/login", loginData).subscribe({
-    next: (response: any) => {
-      if (response.status) {
-        console.log('Login bem-sucedido!', response.data);
-        localStorage.setItem('user', JSON.stringify(response.data));
-        this.router.navigate(['/for-you']);
-      }
-    },
-    error: (error) => {
-      console.error('Erro no login:', error);
-
-      this.emailOrUsernameError = false;
-      this.passwordError = false;
-
-      if (error.status === 401) {
-        const msg = error.error?.message || '';
-        if (msg.includes('Usuário não encontrado')) {
-          this.emailOrUsernameError = true;
-        } else if (msg.includes('Senha incorreta')) {
-          this.passwordError = true;
+    this.http.post("http://localhost:8085/api/login", loginData).subscribe({
+      next: (response: any) => {
+        if (response.status) {
+          console.log('Login bem-sucedido!', response.data);
+          localStorage.clear(); 
+          localStorage.setItem('user', JSON.stringify(response.data));
+          this.router.navigate(['/for-you']);
         }
-      } else {
-        alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+      },
+      error: (error) => {
+        console.error('Erro no login:', error);
+
+        this.emailOrUsernameError = false;
+        this.passwordError = false;
+
+        if (error.status === 401) {
+          const msg = error.error?.message || '';
+          if (msg.includes('Usuário não encontrado')) {
+            this.emailOrUsernameError = true;
+          } else if (msg.includes('Senha incorreta')) {
+            this.passwordError = true;
+          }
+        } else {
+          alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+        }
       }
-    }
-  });
-}
+    });
+  }
 
 clearErrors() {
   this.emailOrUsernameError = false;

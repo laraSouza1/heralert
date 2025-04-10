@@ -15,6 +15,7 @@ import { PostComponent } from '../shared/post/post.component';
 import { HttpClient } from '@angular/common/http';
 import { ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-for-you',
@@ -31,7 +32,8 @@ import { RippleModule } from 'primeng/ripple';
     ToastModule,
     CreatePostComponent,
     PostComponent,
-    RippleModule
+    RippleModule,
+    CommonModule
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
@@ -42,9 +44,26 @@ export class ForYouComponent {
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
   showPostModal: boolean = false;
+  posts: any[] = [];
+  currentUserId: any;
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) {}
 
+  ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+    }
+  
+    this.http.get<any>('http://localhost:8085/api/posts', {
+      params: { userId: this.currentUserId } 
+    }).subscribe(response => {
+      if (response.status) {
+        this.posts = response.data;
+      }
+    });
+  }  
+  
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!'});
   }

@@ -13,15 +13,15 @@
 
       <div class="mt-4">
         <ng-container *ngIf="activeTab === 'posts'">
-          <app-post *ngFor="let post of posts" [post]="post"></app-post>
+
         </ng-container>
 
         <ng-container *ngIf="activeTab === 'favorites'">
-          <app-post *ngFor="let post of favoritePosts" [post]="post"></app-post>
+
         </ng-container>
 
         <ng-container *ngIf="activeTab === 'saved'">
-          <app-post *ngFor="let post of savedPosts" [post]="post"></app-post>
+        
         </ng-container>
       </div>
 

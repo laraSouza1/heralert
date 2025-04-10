@@ -1,34 +1,30 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { MenuModule } from 'primeng/menu';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-left-side',
-  imports: [ImageModule, ButtonModule, MenuModule, ConfirmDialogModule, ToastModule],
+  imports: [ImageModule, ButtonModule, MenuModule, ToastModule],
   templateUrl: './left-side.component.html',
-  styleUrl: './left-side.component.css',
-  providers: [ConfirmationService, MessageService]
+  styleUrls: ['./left-side.component.css']
 })
 export class LeftSideComponent {
 
-  items: MenuItem[] | undefined;
+  items: any[] | undefined;
   user: any;
 
-  constructor(private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
     }
 
-    //itens menu
+    //itens do menu
     this.items = [
       {
         label: 'Início',
@@ -58,28 +54,8 @@ export class LeftSideComponent {
     this.router.navigate(['/profile']);
   }
 
-  confirm(event: Event) {
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Realmente deseja realizar log-out?',
-        header: 'Sair da conta',
-        closable: true,
-        closeOnEscape: true,
-        icon: 'pi pi-sign-out',
-        rejectButtonProps: {
-            label: 'Cancelar',
-            severity: "secondary",
-            variant: "outlined"
-        },
-        acceptButtonProps: {
-          label: 'Sair',
-          severity: "danger",
-          command: () => {
-            localStorage.removeItem('user');
-            this.navigateToHome();
-          }
-      },
-    });
-}
-
+  logout() {
+    localStorage.removeItem('user');
+    this.navigateToHome();
+  }
 }

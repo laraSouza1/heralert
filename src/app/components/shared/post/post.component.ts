@@ -1,60 +1,133 @@
-import { Component, Input } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { CommonModule, NgFor } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [TableModule, ButtonModule, TagModule, MenuModule, ToastModule],
+  imports: [TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule],
   templateUrl: './post.component.html',
-  styleUrl: './post.component.css'
+  styleUrls: ['./post.component.css']
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
 
-  tag: string = 'tag';
-  isFavorite = false;
-  likes = 876;
-  isComment = false;
-  comments = 37;
-  isSave = false;
+  @Input() post: any;
+  @Input() tags: string[] = [];
+  @Input() userId!: number;
+
+  isFavorite: boolean = false;
+  likes: number = 0;
+  isComment: boolean = false;
+  comments: number = 0;
+  isSave: boolean = false;
   items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                items: [
-                    {
-                        label: 'Bloquear usuário',
-                        icon: 'pi pi-refresh'
-                    },
-                    {
-                        label: 'Denunciar postagem',
-                        icon: 'pi pi-upload'
-                    },
-                    {
-                        label: 'Denunciar postagem',
-                        icon: 'pi pi-upload'
-                    }
-                ]
-            }
-        ];
+  constructor(private http: HttpClient, private messageService: MessageService) { }
+
+  ngOnInit() {
+    this.items = [
+      {
+        items: [
+          { label: 'Bloquear usuário', icon: 'pi pi-user-minus' },
+          { label: 'Denunciar postagem', icon: 'pi pi-flag' }
+        ]
+      }
+    ];
+  
+    this.likes = this.post.likes_count || 0;
+    this.isFavorite = !!this.post.user_liked;
+    this.isSave = !!this.post.user_saved;
+  
+    if (this.userId) {
+      const storedLike = localStorage.getItem(`like_${this.userId}_${this.post.id}`);
+      if (storedLike !== null) {
+        this.isFavorite = JSON.parse(storedLike);
+      }
+  
+      const storedSave = localStorage.getItem(`save_${this.userId}_${this.post.id}`);
+      if (storedSave !== null) {
+        this.isSave = JSON.parse(storedSave);
+      }
+    }
+  }
+
+  toggleFavorite() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!user?.id) {
+      alert("Usuário não autenticado!");
+      return;
     }
 
-toggleFavorite() {
-  this.isFavorite = !this.isFavorite;
-  this.likes += this.isFavorite ? 1 : -1;
-}
+    const prevIsFavorite = this.isFavorite;
+    this.isFavorite = !this.isFavorite;
 
-toggleComment() {
-  this.isComment = !this.isComment;
-  this.comments += this.isComment ? 1 : -1;
-}
+    const apiUrl = this.isFavorite
+      ? `http://localhost:8085/api/likes`
+      : `http://localhost:8085/api/likes/${user.id}/${this.post.id}`;
 
-toggleSave() {
-  this.isSave = !this.isSave;
-}
+    const request = this.isFavorite
+      ? this.http.post(apiUrl, { user_id: user.id, post_id: this.post.id })
+      : this.http.delete(apiUrl);
+
+    request.subscribe({
+      next: () => {
+        const action = this.isFavorite ? 'liked' : 'unliked';
+
+        if (this.isFavorite) {
+          this.likes += 1; 
+        } else {
+          this.likes -= 1;
+        }
+
+        this.messageService.add({ severity: 'success', summary: `Postagem ${action} com sucesso!` });
+
+        localStorage.setItem(`like_${user.id}_${this.post.id}`, JSON.stringify(this.isFavorite));
+      },
+      error: (err) => {
+        console.error(`Erro ao ${this.isFavorite ? 'dar like' : 'remover like'}:`, err);
+        alert(`Erro ao ${this.isFavorite ? 'dar like' : 'remover like'}.`);
+        this.isFavorite = prevIsFavorite;
+        this.likes += this.isFavorite ? -1 : 1;
+      }
+    });
+  }
+
+  toggleSave() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!user?.id) {
+      alert("Usuário não autenticado!");
+      return;
+    }
+
+    const prevIsSave = this.isSave;
+    this.isSave = !this.isSave;
+
+    const apiUrl = this.isSave
+      ? `http://localhost:8085/api/saved_posts`
+      : `http://localhost:8085/api/saved_posts/${user.id}/${this.post.id}`;
+
+    const request = this.isSave
+      ? this.http.post(apiUrl, { user_id: user.id, post_id: this.post.id })
+      : this.http.delete(apiUrl);
+
+    request.subscribe({
+      next: () => {
+        const action = this.isSave ? 'salva' : 'removida';
+        this.messageService.add({ severity: 'success', summary: `Postagem ${action} com sucesso!` });
+
+        localStorage.setItem(`save_${user.id}_${this.post.id}`, JSON.stringify(this.isSave));
+      },
+      error: (err) => {
+        console.error(`Erro ao ${this.isSave ? 'salvar' : 'remover'} a postagem:`, err);
+        alert(`Erro ao ${this.isSave ? 'salvar' : 'remover'} a postagem.`);
+        this.isSave = prevIsSave;
+      }
+    });
+  }
 }

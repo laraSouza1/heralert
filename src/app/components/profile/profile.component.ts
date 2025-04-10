@@ -56,6 +56,10 @@ export class ProfileComponent {
     ];
   }
 
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!'});
+  }
+
   openCreatePostModal() {
     this.showPostModal = true;
 
@@ -69,10 +73,6 @@ export class ProfileComponent {
       }
     });
   }
-
-  showSuccess() {
-    this.messageService.add({ severity: 'info', summary: 'POstado com sucesso!', life: 3000 });
-}
 
   closeCreatePostModal() {
     this.showPostModal = false;
