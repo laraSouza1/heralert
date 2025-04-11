@@ -17,6 +17,8 @@ import { ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
+import { PostsFYComponent } from '../posts-fy/posts-fy.component';
+import { PostsFollowingComponent } from '../posts-following/posts-following.component';
 
 @Component({
   selector: 'app-for-you',
@@ -25,17 +27,17 @@ import { TooltipModule } from 'primeng/tooltip';
     LeftSideComponent,
     RightSideComponent,
     ButtonModule,
-    InputIcon,
     IconFieldModule,
     InputTextModule,
     DialogModule,
     ConfirmDialogModule,
     ToastModule,
     CreatePostComponent,
-    PostComponent,
     RippleModule,
     CommonModule,
     TooltipModule,
+    PostsFYComponent,
+    PostsFollowingComponent
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
@@ -48,10 +50,16 @@ export class ForYouComponent {
   showPostModal: boolean = false;
   posts: any[] = [];
   currentUserId: any;
+  activeTab: 'fy' | 'following' = 'fy';
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    const savedTab = localStorage.getItem('activeTab');
+    if (savedTab === 'following' || savedTab === 'fy') {
+      this.activeTab = savedTab as 'fy' | 'following';
+    }
+
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
@@ -66,7 +74,12 @@ export class ForYouComponent {
     });
   }
 
-  showSuccess() {
+  setActiveTab(tab: 'fy' | 'following'): void {
+    this.activeTab = tab;
+    localStorage.setItem('activeTab', tab);
+  }
+
+  postPosted() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
   }
 
@@ -93,7 +106,7 @@ export class ForYouComponent {
     this.closeCreatePostModal();
   }
 
-  post() {
+  createPost() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (!user?.id) {
@@ -132,7 +145,7 @@ export class ForYouComponent {
       next: (response: any) => {
         console.log("Post criado com sucesso:", response);
         this.closeCreatePostModal();
-        this.showSuccess();
+        this.postPosted();
         setTimeout(() => {
           window.location.reload();
         }, 1500);

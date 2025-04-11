@@ -81,11 +81,77 @@
   background-color: #aaaaaa !important;
 }
 
-::ng-deep .p-select-label.p-placeholder, .p-icon {
+::ng-deep .p-select-label.p-placeholder,
+.p-icon {
   fill: #22c55e !important;
 }
 
 ::ng-deep .p-toast-message-icon {
   position: relative;
   top: 3px;
+}
+
+::ng-deep .bt1 .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 0px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+  width: 8rem;
+  width: 100% !important;
+}
+
+::ng-deep .bt1 .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .bt2 .p-button {
+  border-radius: 0px !important;
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #ebebeb !important;
+  height: 40px;
+  border: none !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}
+
+::ng-deep .bt-com .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  height: 40px;
+  width: 40px;
+}
+
+::ng-deep .bt-com .p-button:hover {
+  background-color: #F94C4C !important;
+  transform: scale(1.02) !important;
+}
+
+::ng-deep .bt3 .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-size: 13px !important;
+  height: 40px;
+  width: 40px;
+  position: fixed;
+  top: 590px;
+  left: 908px;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 1000;
 }

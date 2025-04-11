@@ -1,24 +1,43 @@
 <div class="w-12 pt-2">
-  <img [src]="user?.cover_pic || 'https://imgur.com/zKq8RT7.png'" class="product-image">
-  <img [src]="user?.profile_pic || 'https://imgur.com/DaRTcyk.jpg'" class="product-image2">
+
+  <img [src]="user?.cover_pic || 'https://imgur.com/r2KBLZG.png'" class="product-image">
+  <img [src]="user?.profile_pic || 'https://imgur.com/07ivMbo.jpg'" class="product-image2">
+
   <div class="flex flex-row mt-6 ml-3 gap-3">
     <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
-    <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-cog" label="Editar perfil"></p-button>
+    <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-cog"
+      label="Editar perfil" (click)="openEditProfileModal()">
+    </p-button>
   </div>
+
   <div class="flex flex-row ml-3 mt-2">
     <div class="flex align-items-center justify-content-center edit-at"><i class="pi pi-at"></i></div>
     <div class="flex align-items-center justify-content-center info">{{ user?.username }}</div>
     <div class="flex align-items-center justify-content-center edit-cicle"><i class="pi pi-circle-fill"></i></div>
-  <div class="flex align-items-center justify-content-center info">{{ user?.memberSince }}</div>
+    <div class="flex align-items-center justify-content-center info">{{ user?.memberSince }}</div>
+  </div>
 
-  </div>
   <div class="flex flex-row ml-3 mt-1">
-    <div  class="flex align-items-center justify-content-center number mr-1">95</div>
-    <div  class="flex align-items-center justify-content-center info mr-3">Seguindo</div>
-    <div  class="flex align-items-center justify-content-center number mr-1">234</div>
-    <div  class="flex align-items-center justify-content-center info">Seguidores</div>
+    <div class="flex align-items-center justify-content-center number mr-1">95</div>
+    <div class="flex align-items-center justify-content-center info mr-3">Seguindo</div>
+    <div class="flex align-items-center justify-content-center number mr-1">234</div>
+    <div class="flex align-items-center justify-content-center info">Seguidores</div>
   </div>
+
   <div class="ml-3 mt-2 bio">
-    {{ user?.bio || 'Sem bio ainda.' }}
+    {{ user?.bio }}
   </div>
 </div>
+
+<p-dialog [(visible)]="showEditProfileModal" modal [header]="'Editar Perfil'" [closable]="false"
+  [style]="{width: '50vw'}">
+
+  <app-edit-profile (formDataChanged)="onFormDataChanged($event)"></app-edit-profile>
+
+  <ng-template pTemplate="footer" class="mt-2">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeEditProfileModal()"></p-button>
+    <p-button label="Salvar" class="bt-post" (click)="editProfileComponent.emitFormData(); saveProfile()" pRipple>
+    </p-button>
+  </ng-template>
+
+</p-dialog>

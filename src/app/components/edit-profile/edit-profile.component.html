@@ -1,0 +1,33 @@
+<div class="p-4">
+  <form [formGroup]="formGroup">
+
+    <p-fileupload mode="basic" name="profile" chooseLabel="Foto de perfil" chooseIcon="pi pi-upload" accept="image/*"
+      maxFileSize="1000000" (onSelect)="onFileSelect($event, 'profile')">
+    </p-fileupload>
+
+    <p-fileupload mode="basic" name="cover" chooseLabel="Foto de capa" chooseIcon="pi pi-upload" accept="image/*"
+      maxFileSize="1000000" (onSelect)="onFileSelect($event, 'cover')">
+    </p-fileupload>
+
+    <p-iconfield class="mt-4 mb-2">
+      <p-inputicon styleClass="pi pi-user"></p-inputicon>
+      <input type="text" pInputText formControlName="name" [placeholder]="'Nome'" [value]="user?.name" maxlength="25" />
+    </p-iconfield>
+    <p-message *ngIf="nameLengthError" severity="error" variant="simple">Mínimo 3 caracteres.</p-message>
+    <p-message *ngIf="formGroup.get('name')?.errors?.['required'] && formGroup.get('name')?.touched" severity="error" variant="simple">Nome é obrigatório.</p-message>
+
+    <p-iconfield class="mt-4 mb-2">
+      <p-inputicon styleClass="pi pi-at"></p-inputicon>
+      <input maxlength="15" type="text" pInputText formControlName="username" [placeholder]="'Usuário'" />
+    </p-iconfield>
+    <p-message *ngIf="usernameFormatError" severity="error" variant="simple">Apenas letras, números, ponto ou underline.</p-message>
+    <p-message *ngIf="usernameSpaceError" severity="error" variant="simple">Não pode conter espaços.</p-message>
+    <p-message *ngIf="usernameLengthError" severity="error" variant="simple">Mínimo 3 caracteres.</p-message>
+    <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple">Usuário já em uso.</p-message>
+    <p-message *ngIf="formGroup.get('username')?.errors?.['required'] && formGroup.get('username')?.touched" severity="error" variant="simple">Usuário é obrigatório.</p-message>
+
+    <textarea pTextarea formControlName="bio" [placeholder]="'Insira uma bio...'" rows="5" [value]="user?.bio"
+      maxlength="160">
+    </textarea>
+  </form>
+</div>

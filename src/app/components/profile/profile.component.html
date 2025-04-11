@@ -1,6 +1,6 @@
 <div class="container">
   <div class="line-fy"></div>
-    <div class="mt-2">
+  <div class="mt-2">
     <app-left-side class="sidebar left"></app-left-side>
 
     <p-toast />
@@ -10,20 +10,32 @@
     <div class="content px-4">
       <app-profile-user></app-profile-user>
 
-      <p-menubar [model]="items" class="mt-12"/>
+      <div class="mt-3 mb-3">
+        <div class="flex flex-row w-full mt-3 gap-1">
+          <p-button [ngClass]="activeTab === 'mp' ? 'bt1' : 'bt2'" label="Meus posts" (click)="setActiveTab('mp')" class="w-3"></p-button>
+          <p-button [ngClass]="activeTab === 'mf' ? 'bt1' : 'bt2'" label="Meus favoritos" (click)="setActiveTab('mf')" class="w-3"></p-button>
+          <p-button [ngClass]="activeTab === 'ms' ? 'bt1' : 'bt2'" label="Meus salvos" (click)="setActiveTab('ms')" class="w-3"></p-button>
+          <p-button [ngClass]="activeTab === 'mr' ? 'bt1' : 'bt2'" label="Meus rascunhos" (click)="setActiveTab('mr')" class="w-3"></p-button>
+        </div>
+      </div>
+
+      <!--mostra componente com base no botão clicado-->
+      <app-posts-user *ngIf="activeTab === 'mp'"></app-posts-user>
+      <app-posts-liked *ngIf="activeTab === 'mf'"></app-posts-liked>
+      <app-posts-saved *ngIf="activeTab === 'ms'"></app-posts-saved>
+      <app-posts-drafts *ngIf="activeTab === 'mr'"></app-posts-drafts>
 
     </div>
     <app-right-side class="sidebar right"></app-right-side>
   </div>
 </div>
 
-<p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
+<p-dialog [(visible)]="showCreatePostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
   <app-create-post></app-create-post>
 
   <ng-template pTemplate="footer" class="mt-2">
     <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
     <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
-    <p-button label="Postar" class="bt-post" (click)="post()" pRipple></p-button>
+    <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
   </ng-template>
 </p-dialog>
-

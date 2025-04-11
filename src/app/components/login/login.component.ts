@@ -14,7 +14,16 @@ import { Message, MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-login',
-  imports: [InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule, MenuBarComponent, FooterComponent, MessageModule, Message, NgIf], // Add HttpClientModule to imports
+  imports: [InputIcon,
+    IconField,
+    InputTextModule,
+    FormsModule, ButtonModule,
+    PasswordModule,
+    MenuBarComponent,
+    FooterComponent,
+    MessageModule,
+    Message,
+    NgIf],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })

@@ -45,18 +45,21 @@
 
 .bio {
   font-size: 12px;
+  width: 520px !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .product-image {
-  width: 555px;
   height: 150px;
   object-fit: cover;
 }
 
-::ng-deep html, body {
+::ng-deep html,
+body {
   overflow-x: hidden;
 }
-
 
 .product-image2 {
   border-radius: 100%;
