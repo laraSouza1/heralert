@@ -36,6 +36,10 @@ h1 {
   color: #616161 !important;
 }
 
+::ng-deep input.p-inputtext:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffc3c3 inset !important;
+}
+
 a {
   color: #a7a7a7;
   font-size: small;

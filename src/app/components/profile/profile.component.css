@@ -1,11 +1,16 @@
 .container {
   display: flex;
   width: 100%;
+  position: relative;
 }
 
 .line-fy {
-  border: 10px solid #ff9d9d;
-  border-bottom: 3px solid white ;
+  height: 10px;
+  background-color: #ff9d9d;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
 }
 
 .sidebar {
@@ -40,9 +45,10 @@
   width: 40px;
   position: fixed;
   top: 590px;
-  left: 898px;
+  left: 908px;
   font-size: 16px;
   font-weight: 600;
+  z-index: 1000;
 }
 
 ::ng-deep .bt3 .p-button:hover {

@@ -84,9 +84,7 @@ export class PostComponent implements OnInit {
         } else {
           this.likes -= 1;
         }
-
-        this.messageService.add({ severity: 'success', summary: `Postagem ${action} com sucesso!` });
-
+        
         localStorage.setItem(`like_${user.id}_${this.post.id}`, JSON.stringify(this.isFavorite));
       },
       error: (err) => {
@@ -119,8 +117,6 @@ export class PostComponent implements OnInit {
     request.subscribe({
       next: () => {
         const action = this.isSave ? 'salva' : 'removida';
-        this.messageService.add({ severity: 'success', summary: `Postagem ${action} com sucesso!` });
-
         localStorage.setItem(`save_${user.id}_${this.post.id}`, JSON.stringify(this.isSave));
       },
       error: (err) => {

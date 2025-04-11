@@ -97,3 +97,12 @@ body {
   color: #FF6B6B !important;
   font-weight: 500 !important;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}

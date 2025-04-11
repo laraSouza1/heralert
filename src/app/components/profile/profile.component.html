@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="line-fy">
+  <div class="line-fy"></div>
+    <div class="mt-2">
     <app-left-side class="sidebar left"></app-left-side>
 
     <p-toast />
@@ -10,21 +11,6 @@
       <app-profile-user></app-profile-user>
 
       <p-menubar [model]="items" class="mt-12"/>
-
-      <div class="mt-4">
-        <ng-container *ngIf="activeTab === 'posts'">
-
-        </ng-container>
-
-        <ng-container *ngIf="activeTab === 'favorites'">
-
-        </ng-container>
-
-        <ng-container *ngIf="activeTab === 'saved'">
-        
-        </ng-container>
-      </div>
-
 
     </div>
     <app-right-side class="sidebar right"></app-right-side>
@@ -37,7 +23,7 @@
   <ng-template pTemplate="footer" class="mt-2">
     <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
     <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
-    <p-button label="Postar" class="bt-post" (click)="post(); showSuccess()" pRipple></p-button>
+    <p-button label="Postar" class="bt-post" (click)="post()" pRipple></p-button>
   </ng-template>
 </p-dialog>
 

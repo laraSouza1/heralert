@@ -21,8 +21,7 @@ import { HttpClient } from '@angular/common/http';
   imports: [RightSideComponent, LeftSideComponent, DialogModule,
     ConfirmDialogModule,
     ToastModule,
-    CreatePostComponent,
-    PostComponent, ButtonModule, ProfileUserComponent, MenubarModule, CommonModule],
+    CreatePostComponent, ButtonModule, ProfileUserComponent, MenubarModule, CommonModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -31,28 +30,16 @@ export class ProfileComponent {
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
   showPostModal: boolean = false;
-  activeTab: 'posts' | 'favorites' | 'saved' = 'posts';
   items: MenuItem[] | undefined;
-
-  posts = [
-    { id: 1, userId: 1, username: 'Usuário', content: 'Meu post...', createdAt: 'Hoje', likes: 10, comments: 5, favorites: 3 }
-  ];
-
-  favoritePosts = [
-    { id: 2, userId: 2, username: 'Outro Usuário', content: 'Post favoritado...', createdAt: 'Ontem', likes: 15, comments: 8, favorites: 5 }
-  ];
-
-  savedPosts = [
-    { id: 3, userId: 3, username: 'Usuário Salvo', content: 'Post salvo...', createdAt: 'Semana passada', likes: 20, comments: 12, favorites: 8 }
-  ];
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
 
   ngOnInit() {
     this.items = [
-      { label: 'Minhas postagens', icon: 'pi pi-file', command: () => this.activeTab = 'posts' },
-      { label: 'Meus favoritos', icon: 'pi pi-heart', command: () => this.activeTab = 'favorites' },
-      { label: 'Meus salvos', icon: 'pi pi-bookmark', command: () => this.activeTab = 'saved' }
+      { label: 'Minhas postagens', icon: 'pi pi-file' },
+      { label: 'Meus favoritos', icon: 'pi pi-heart' },
+      { label: 'Meus salvos', icon: 'pi pi-bookmark' },
+      { label: 'Meus rascunhos', icon: 'pi pi-pencil' }
     ];
   }
 
@@ -122,6 +109,10 @@ export class ProfileComponent {
       next: (response: any) => {
         console.log("Post criado com sucesso:", response);
         this.closeCreatePostModal();
+        this.showSuccess();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       },
       error: (err) => {
         console.error("Erro ao criar post:", err);

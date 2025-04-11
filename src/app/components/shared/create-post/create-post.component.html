@@ -62,8 +62,9 @@
   <div class="tags-container">
 
     <div class="flex flex-row w-full mb-2">
-      <div class="w-3 ml-2"><input class="tags" type="text" pInputText placeholder="Adicione uma tag..."
-          [(ngModel)]="newTag" (keydown.enter)="addTag($event)" /></div>
+      <div class="w-4 ml-2">
+        <input maxlength="30" class="tags" type="text" pInputText placeholder="Adicione uma tag..." [(ngModel)]="newTag" (keydown.enter)="addTag($event)" />
+      </div>
       <div>
         <p-button class="bt-tags small-icon" (click)="addTag($event)" [disabled]="tags.length >= 20">
           <i class="pi pi-plus"></i>

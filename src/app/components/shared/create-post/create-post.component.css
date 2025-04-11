@@ -9,7 +9,7 @@
   padding-left: 0px !important;
   box-shadow: none !important;
   background-color: white !important;
-  border-color: #ffb6b6;
+  border-color: #ffb6b6 !important;
 }
 
 ::ng-deep .p-select-label.p-placeholder {
@@ -18,7 +18,7 @@
 
 ::ng-deep .p-select:not(.p-disabled):hover,
 ::ng-deep .p-select:not(.p-disabled).p-focus {
-  border-color: #ff8a8a;
+  border-color: #ff8a8a !important;
 }
 
 ::ng-deep .p-select-label {
@@ -27,7 +27,7 @@
 
 ::ng-deep .p-select-list-container {
   background-color: white !important;
-  border: 1px solid #ffb6b6;
+  border: 1px solid #ffb6b6 !important;
   border-radius: 5px !important;
 }
 

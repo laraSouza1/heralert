@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-for-you',
@@ -33,7 +34,8 @@ import { CommonModule } from '@angular/common';
     CreatePostComponent,
     PostComponent,
     RippleModule,
-    CommonModule
+    CommonModule,
+    TooltipModule,
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
@@ -47,25 +49,25 @@ export class ForYouComponent {
   posts: any[] = [];
   currentUserId: any;
 
-  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) {}
+  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
     }
-  
+
     this.http.get<any>('http://localhost:8085/api/posts', {
-      params: { userId: this.currentUserId } 
+      params: { userId: this.currentUserId }
     }).subscribe(response => {
       if (response.status) {
         this.posts = response.data;
       }
     });
-  }  
-  
+  }
+
   showSuccess() {
-    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!'});
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
   }
 
   openCreatePostModal() {
@@ -130,6 +132,10 @@ export class ForYouComponent {
       next: (response: any) => {
         console.log("Post criado com sucesso:", response);
         this.closeCreatePostModal();
+        this.showSuccess();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       },
       error: (err) => {
         console.error("Erro ao criar post:", err);
