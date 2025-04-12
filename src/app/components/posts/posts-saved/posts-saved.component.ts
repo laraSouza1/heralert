@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { PostComponent } from '../shared/post/post.component';
-import { HttpClient } from '@angular/common/http';
+import { PostComponent } from '../../shared/post/post.component';
 
 @Component({
-  selector: 'app-posts-liked',
+  selector: 'app-posts-saved',
   imports: [
     CommonModule,
     FormsModule,
@@ -19,11 +19,11 @@ import { HttpClient } from '@angular/common/http';
     ButtonModule,
     InputIcon
   ],
-  templateUrl: './posts-liked.component.html',
-  styleUrl: './posts-liked.component.css'
+  templateUrl: './posts-saved.component.html',
+  styleUrl: './posts-saved.component.css'
 })
-export class PostsLikedComponent implements OnInit {
-  likedPosts: any[] = [];
+export class PostsSavedComponent implements OnInit {
+  savedPosts: any[] = [];
   currentUserId: number = 0;
 
   constructor(private http: HttpClient) {}
@@ -33,10 +33,10 @@ export class PostsLikedComponent implements OnInit {
     if (user?.id) {
       this.currentUserId = user.id;
 
-      this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`)
+      this.http.get<any>(`http://localhost:8085/api/posts/saved/${this.currentUserId}`)
         .subscribe(response => {
           if (response.status) {
-            this.likedPosts = response.data;
+            this.savedPosts = response.data;
           }
         });
     }

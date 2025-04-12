@@ -17,8 +17,8 @@ import { ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
-import { PostsFYComponent } from '../posts-fy/posts-fy.component';
-import { PostsFollowingComponent } from '../posts-following/posts-following.component';
+import { PostsFYComponent } from '../posts/posts-fy/posts-fy.component';
+import { PostsFollowingComponent } from '../posts/posts-following/posts-following.component';
 
 @Component({
   selector: 'app-for-you',

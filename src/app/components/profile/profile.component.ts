@@ -14,10 +14,10 @@ import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PostsDraftsComponent } from '../posts-drafts/posts-drafts.component';
-import { PostsLikedComponent } from '../posts-liked/posts-liked.component';
-import { PostsUserComponent } from '../posts-user/posts-user.component';
-import { PostsSavedComponent } from '../posts-saved/posts-saved.component';
+import { PostsDraftsComponent } from '../posts/posts-drafts/posts-drafts.component';
+import { PostsLikedComponent } from '../posts/posts-liked/posts-liked.component';
+import { PostsUserComponent } from '../posts/posts-user/posts-user.component';
+import { PostsSavedComponent } from '../posts/posts-saved/posts-saved.component';
 
 @Component({
   selector: 'app-profile',

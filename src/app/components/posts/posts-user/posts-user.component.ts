@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { PostComponent } from '../shared/post/post.component';
+import { PostComponent } from '../../shared/post/post.component';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
