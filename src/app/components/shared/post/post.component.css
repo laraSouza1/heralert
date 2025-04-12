@@ -12,6 +12,9 @@
 
 .pic {
   border-radius: 5px !important;
+  object-fit: cover;
+  height: 35px;
+  width: 35px;
 }
 
 .cont-post {
