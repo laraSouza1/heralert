@@ -36,24 +36,26 @@ export class ProfileUserComponent {
   }
 
   onFormDataChanged(data: any) {
-    this.formValues = data;
+    this.formValues = {
+      ...this.formValues,
+      ...data
+    };
   }
 
-  profileEdited() {
-    this.messageService.add({ severity: 'success', summary: 'Perfil atualizado com sucesso!' });
-  }
-
+  //para abertura de modal de edit-profile e ações de salvamento ------------------
+  //abre e fecha o modal de edição de perfil
   openEditProfileModal() {
     this.showEditProfileModal = true;
     setTimeout(() => {
       this.editProfileComponent.resetForm(this.user);
     });
-  }  
+  }
 
   closeEditProfileModal() {
     this.showEditProfileModal = false;
   }
 
+  //salva mudanças e envia para a bd
   saveProfile() {
     if (!this.formValues) {
       return;
@@ -62,9 +64,9 @@ export class ProfileUserComponent {
     const updatedUser = {
       ...this.user,
       ...this.formValues,
-      profile_pic: this.formValues.profile_pic_url || this.user.profile_pic,
-      cover_pic: this.formValues.cover_pic_url || this.user.cover_pic
-    };    
+      profile_pic: this.formValues.profile_pic_url ?? this.user.profile_pic,
+      cover_pic: this.formValues.cover_pic_url ?? this.user.cover_pic
+    };
 
     const apiUrl = 'http://localhost:8085/api/users/' + this.user.id;
 
@@ -81,5 +83,10 @@ export class ProfileUserComponent {
         this.messageService.add({ severity: 'error', summary: 'Erro ao salvar perfil!' });
       }
     });
+  }
+
+  //mensagem de perfil editado com sucesso
+  profileEdited() {
+    this.messageService.add({ severity: 'success', summary: 'Perfil atualizado com sucesso!' });
   }
 }

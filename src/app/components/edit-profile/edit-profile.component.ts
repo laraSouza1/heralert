@@ -40,11 +40,11 @@ export class EditProfileComponent {
   user: any;
 
   @Output() formDataChanged = new EventEmitter<any>();
-  
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -63,17 +63,18 @@ export class EditProfileComponent {
     this.formGroup.get('username')?.valueChanges.subscribe(() => this.validateUsername());
   }
 
+  emitFormData() {
+    if (this.formGroup.valid) {
+      this.formDataChanged.emit(this.formGroup.value);
+    }
+  }
+
+  //validações form -------------------------------------
   validateName(value: string) {
     const nameControl = this.formGroup.get('name');
     if (nameControl?.touched || nameControl?.dirty) {
       this.nameLengthError = value.length < 3;
       this.nameMaxLengthError = value.length > 25;
-    }
-  }
-
-  emitFormData() {
-    if (this.formGroup.valid) {
-      this.formDataChanged.emit(this.formGroup.value);
     }
   }
 
@@ -128,7 +129,7 @@ export class EditProfileComponent {
       profile_pic_url: userData.profile_pic_url || '',
       cover_pic_url: userData.cover_pic_url || ''
     });
-  
+
     this.usernameFormatError = false;
     this.usernameSpaceError = false;
     this.usernameLengthError = false;
@@ -136,8 +137,10 @@ export class EditProfileComponent {
     this.usernameAlreadyUsed = false;
     this.nameLengthError = false;
     this.nameMaxLengthError = false;
-  }  
+  }
 
+  //adiciona-upload imagem de icon/capa e remove ----------------------------
+  //upload img
   onUploadClick(type: 'profile' | 'cover') {
     const input = document.createElement('input');
     input.type = 'file';
@@ -151,13 +154,14 @@ export class EditProfileComponent {
     input.click();
   }
 
+  //manda para a bd
   onFileSelect(event: any, type: 'profile' | 'cover') {
     const file = event.files[0];
     if (!file) return;
-  
+
     const formData = new FormData();
     formData.append('image', file);
-  
+
     this.http.post('http://localhost:8085/api/upload', formData).subscribe({
       next: (res: any) => {
         const imageUrl = res.url;
@@ -174,6 +178,17 @@ export class EditProfileComponent {
         console.error('Erro ao enviar imagem:', err);
       }
     });
-  }  
+  }
+
+  //para remover imagem
+  removeImage(type: 'profile' | 'cover') {
+    if (type === 'profile') {
+      this.user.profile_pic = '';
+      this.formDataChanged.emit({ profile_pic_url: '' });
+    } else if (type === 'cover') {
+      this.user.cover_pic = '';
+      this.formDataChanged.emit({ cover_pic_url: '' });
+    }
+  }
 
 }

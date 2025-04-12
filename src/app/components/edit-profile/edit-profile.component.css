@@ -27,7 +27,7 @@
   width: 80px;
   height: 80px;
   position: relative;
-  top: -46px;
+  top: -42px;
   left: 20px;
   object-fit: cover;
   transition: opacity 0.3s ease;
@@ -51,7 +51,7 @@
 .overlay2 {
   position: absolute;
   border: 4px solid #ffffff;
-  top: -46px;
+  top: -42px;
   left: 20px;
   width: 80px;
   height: 80px;
@@ -71,5 +71,11 @@
 
 .image-wrapper:hover .product-image,
 .image-wrapper:hover .product-image2 {
-  opacity: 0.8;
+  opacity: 1;
+}
+
+::ng-deep .remove-img .p-button {
+  font-size: 12px !important;
+  height: 25px !important;
+  width: 120px !important;
 }
