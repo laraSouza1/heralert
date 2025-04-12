@@ -184,11 +184,13 @@ export class EditProfileComponent {
   removeImage(type: 'profile' | 'cover') {
     if (type === 'profile') {
       this.user.profile_pic = '';
+      this.formGroup.patchValue({ profile_pic_url: '' });
       this.formDataChanged.emit({ profile_pic_url: '' });
     } else if (type === 'cover') {
       this.user.cover_pic = '';
+      this.formGroup.patchValue({ cover_pic_url: '' });
       this.formDataChanged.emit({ cover_pic_url: '' });
     }
-  }
+  }  
 
 }
