@@ -19,10 +19,11 @@ export class LeftSideComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      this.user = JSON.parse(storedUser);
-    }
+    this.loadUser(); //chama dados do user
+
+    window.addEventListener('user-updated', () => {
+      this.loadUser();
+    }); //recarrega caso perfil seja editado
 
     //itens do menu
     this.items = [
@@ -42,6 +43,7 @@ export class LeftSideComponent {
     ];
   }
 
+  //btns de navegação
   navigateToFY() {
     this.router.navigate(['/for-you']);
   }
@@ -54,8 +56,17 @@ export class LeftSideComponent {
     this.router.navigate(['/profile']);
   }
 
+  //logout e limpa o user
   logout() {
     localStorage.removeItem('user');
     this.navigateToHome();
+  }
+
+  //chama dados do user
+  loadUser() {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
   }
 }

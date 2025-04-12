@@ -1,33 +1,60 @@
-<div class="p-4">
+<div class="pt-2 px-4">
   <form [formGroup]="formGroup">
 
-    <p-fileupload mode="basic" name="profile" chooseLabel="Foto de perfil" chooseIcon="pi pi-upload" accept="image/*"
-      maxFileSize="1000000" (onSelect)="onFileSelect($event, 'profile')">
-    </p-fileupload>
+    <!--capa e foto-->
+    <div class="image-wrapper w-full" (click)="onUploadClick('cover')">
+      <img [src]="user?.cover_pic || 'https://imgur.com/r2KBLZG.png'" class="product-image">
+      <div class="overlay">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-camera"></i>
+          150x570
+        </div>
+      </div>
+    </div>
 
-    <p-fileupload mode="basic" name="cover" chooseLabel="Foto de capa" chooseIcon="pi pi-upload" accept="image/*"
-      maxFileSize="1000000" (onSelect)="onFileSelect($event, 'cover')">
-    </p-fileupload>
+      <div class="image-wrapper" (click)="onUploadClick('profile')">
+        <img [src]="user?.profile_pic || 'https://imgur.com/07ivMbo.jpg'" class="product-image2">
+        <div class="overlay2">
+          <div class="flex flex-column justify-content-center align-items-center" style="font-size: 12px;">
+            <i class="pi pi-camera"></i>
+            80x80
+          </div>
+        </div>
+      </div>
 
-    <p-iconfield class="mt-4 mb-2">
-      <p-inputicon styleClass="pi pi-user"></p-inputicon>
-      <input type="text" pInputText formControlName="name" [placeholder]="'Nome'" [value]="user?.name" maxlength="25" />
-    </p-iconfield>
-    <p-message *ngIf="nameLengthError" severity="error" variant="simple">Mínimo 3 caracteres.</p-message>
-    <p-message *ngIf="formGroup.get('name')?.errors?.['required'] && formGroup.get('name')?.touched" severity="error" variant="simple">Nome é obrigatório.</p-message>
+      <!--nome, user e bio-->
+      <div class="flex flex-row w-full align-items-start gap-2 -mt-5">
+        <div class="w-6">
+          <p-iconfield class="mb-2">
+            <p-inputicon styleClass="pi pi-user"></p-inputicon>
+            <input type="text" pInputText formControlName="name" [placeholder]="'Nome'" [value]="user?.name"
+              maxlength="25" />
+          </p-iconfield>
+          <p-message *ngIf="nameLengthError" severity="error" variant="simple" size="small">Mínimo 3
+            caracteres.</p-message>
+          <p-message *ngIf="formGroup.get('name')?.errors?.['required'] && formGroup.get('name')?.touched"
+            severity="error" variant="simple" size="small">Nome é obrigatório.</p-message>
+        </div>
+        <div class="w-6">
+          <p-iconfield class="mb-2">
+            <p-inputicon styleClass="pi pi-at"></p-inputicon>
+            <input maxlength="15" type="text" pInputText formControlName="username" [placeholder]="'Usuário'" />
+          </p-iconfield>
+          <p-message *ngIf="usernameFormatError" severity="error" variant="simple" size="small">Apenas Aa-Zz, 0-9, ponto
+            e underscore.</p-message>
+          <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter
+            espaços.</p-message>
+          <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3
+            caracteres.</p-message>
+          <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em
+            uso.</p-message>
+          <p-message *ngIf="formGroup.get('username')?.errors?.['required'] && formGroup.get('username')?.touched"
+            severity="error" variant="simple" size="small">Usuário é obrigatório.</p-message>
+        </div>
+      </div>
 
-    <p-iconfield class="mt-4 mb-2">
-      <p-inputicon styleClass="pi pi-at"></p-inputicon>
-      <input maxlength="15" type="text" pInputText formControlName="username" [placeholder]="'Usuário'" />
-    </p-iconfield>
-    <p-message *ngIf="usernameFormatError" severity="error" variant="simple">Apenas letras, números, ponto ou underline.</p-message>
-    <p-message *ngIf="usernameSpaceError" severity="error" variant="simple">Não pode conter espaços.</p-message>
-    <p-message *ngIf="usernameLengthError" severity="error" variant="simple">Mínimo 3 caracteres.</p-message>
-    <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple">Usuário já em uso.</p-message>
-    <p-message *ngIf="formGroup.get('username')?.errors?.['required'] && formGroup.get('username')?.touched" severity="error" variant="simple">Usuário é obrigatório.</p-message>
-
-    <textarea pTextarea formControlName="bio" [placeholder]="'Insira uma bio...'" rows="5" [value]="user?.bio"
-      maxlength="160">
+      <textarea pInputText class="mt-3" pTextarea formControlName="bio" [placeholder]="'Insira uma bio...'" rows="4"
+        [value]="user?.bio" maxlength="160">
     </textarea>
   </form>
 </div>

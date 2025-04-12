@@ -43,6 +43,7 @@
   border: 4px solid #ff6b6b;
   width: 80px;
   height: 80px;
+  object-fit: cover;
 }
 
 .pg-1 {

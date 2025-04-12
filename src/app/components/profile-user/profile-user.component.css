@@ -54,6 +54,7 @@
 .product-image {
   height: 150px;
   object-fit: cover;
+  width: 100%;
 }
 
 ::ng-deep html,
@@ -68,6 +69,6 @@ body {
   height: 80px;
   object-fit: cover;
   position: absolute;
-  top: 125px;
-  left: 400px;
+  top: 120px;
+  left: 410px;
 }

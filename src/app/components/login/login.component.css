@@ -57,7 +57,7 @@ a:hover {
 }
 
 ::ng-deep .p-inputicon {
-  color: #FF9D9D;
+  color: #FF9D9D !important;
 }
 
 ::ng-deep .p-button {

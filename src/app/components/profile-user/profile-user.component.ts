@@ -45,7 +45,10 @@ export class ProfileUserComponent {
 
   openEditProfileModal() {
     this.showEditProfileModal = true;
-  }
+    setTimeout(() => {
+      this.editProfileComponent.resetForm(this.user);
+    });
+  }  
 
   closeEditProfileModal() {
     this.showEditProfileModal = false;
@@ -58,8 +61,10 @@ export class ProfileUserComponent {
 
     const updatedUser = {
       ...this.user,
-      ...this.formValues
-    };
+      ...this.formValues,
+      profile_pic: this.formValues.profile_pic_url || this.user.profile_pic,
+      cover_pic: this.formValues.cover_pic_url || this.user.cover_pic
+    };    
 
     const apiUrl = 'http://localhost:8085/api/users/' + this.user.id;
 
@@ -68,6 +73,7 @@ export class ProfileUserComponent {
         this.profileEdited();
         this.user = updatedUser;
         localStorage.setItem('user', JSON.stringify(this.user));
+        window.dispatchEvent(new Event('user-updated'));
         this.closeEditProfileModal();
       },
       error: (err) => {
@@ -76,6 +82,4 @@ export class ProfileUserComponent {
       }
     });
   }
-
-
 }

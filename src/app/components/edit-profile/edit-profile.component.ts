@@ -8,6 +8,8 @@ import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
+import { InputText } from 'primeng/inputtext';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,7 +20,9 @@ import { NgIf } from '@angular/common';
     InputIcon,
     IconField,
     ReactiveFormsModule,
-    NgIf],
+    NgIf,
+    InputText,
+    ImageModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
@@ -36,7 +40,7 @@ export class EditProfileComponent {
   user: any;
 
   @Output() formDataChanged = new EventEmitter<any>();
-
+  
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -116,9 +120,60 @@ export class EditProfileComponent {
     });
   }
 
+  resetForm(userData: any) {
+    this.formGroup.reset({
+      name: userData.name || '',
+      username: userData.username || '',
+      bio: userData.bio || '',
+      profile_pic_url: userData.profile_pic_url || '',
+      cover_pic_url: userData.cover_pic_url || ''
+    });
+  
+    this.usernameFormatError = false;
+    this.usernameSpaceError = false;
+    this.usernameLengthError = false;
+    this.usernameMaxLengthError = false;
+    this.usernameAlreadyUsed = false;
+    this.nameLengthError = false;
+    this.nameMaxLengthError = false;
+  }  
+
+  onUploadClick(type: 'profile' | 'cover') {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.onFileSelect({ files: [file] }, type);
+      }
+    };
+    input.click();
+  }
+
   onFileSelect(event: any, type: 'profile' | 'cover') {
     const file = event.files[0];
-    console.log(`Arquivo selecionado para ${type}:`, file);
-  }
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append('image', file);
+  
+    this.http.post('http://localhost:8085/api/upload', formData).subscribe({
+      next: (res: any) => {
+        const imageUrl = res.url;
+        if (type === 'profile') {
+          this.formGroup.patchValue({ profile_pic_url: imageUrl });
+          this.user.profile_pic = imageUrl;
+        } else {
+          this.formGroup.patchValue({ cover_pic_url: imageUrl });
+          this.user.cover_pic = imageUrl;
+        }
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error('Erro ao enviar imagem:', err);
+      }
+    });
+  }  
 
 }
