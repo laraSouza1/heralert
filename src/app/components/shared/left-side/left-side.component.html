@@ -6,16 +6,18 @@
 
   <div class="flex flex-column justify-content-center align-items-center w-full">
 
-    <div class="my-4 text-center">
+    <div class="mt-4 text-center">
       <img [src]="user?.profile_pic || '/imgs/ai.png'" class="img-profile mb-3">
 
       <p class="pg-1">{{ user?.name }}</p>
-      <div class="user px-2 mt-2 mb-4">
-        <div class="editt-at"><i class="pi pi-at"></i></div>
-        <span>{{ user?.username }}</span>
-      </div>
-      <p-button class="bt-pf" icon="pi pi-eye" label="Ver perfil" (click)="navigateToProfile()"></p-button>
     </div>
+
+    <div class="user mt-2 mb-4">
+      <div class="editt-at"><i class="pi pi-at"></i></div>
+      <span>{{ user?.username }}</span>
+    </div>
+    
+    <p-button class="bt-pf mb-4" icon="pi pi-eye" label="Ver perfil" (click)="navigateToProfile()"></p-button>
 
     <div class="w-full">
       <p-menu #menu [model]="items"></p-menu>

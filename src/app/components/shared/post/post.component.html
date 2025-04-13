@@ -9,7 +9,7 @@
       <div>{{ post.username }}</div>
     </div>
     <div class="flex align-items-center justify-content-center">
-      <p-button icon="pi pi-plus" class="bt-follow small-icon" label="Seguir"></p-button>
+      <p-button icon="pi pi-plus" class="bt-follow small" label="Seguir"></p-button>
     </div>
     <div class="w-7 flex align-items-center justify-content-end">
       <p-toast />
@@ -27,6 +27,10 @@
       </div>
     </div>
     <div class="cont mt-3" [innerHTML]="post.content"></div>
+
+    <button class="comm my-2">{{ post.community }}</button> <!--comunidade-->
+
+    <!--tags-->
     <div class="line mt-3 pt-3" *ngIf="tags?.length">
       <ng-container *ngFor="let tag of tags">
         <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>

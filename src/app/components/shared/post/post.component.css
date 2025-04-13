@@ -42,10 +42,10 @@
   background-color: rgb(190, 190, 190) !important;
 }
 
-::ng-deep .small-icon .pi {
-  font-size: 12px;
+::ng-deep .small .pi {
+  font-size: 10px;
   position: relative !important;
-  left: 0px !important;
+  left: 2px !important;
   top: 0px !important;
 }
 
@@ -143,4 +143,20 @@
 ::ng-deep .bt-share .p-button:not(:disabled):hover {
   background-color: #007bff30 !important;
   border: 2px solid #007bff;
+}
+
+.comm {
+  padding: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 12px;
+  color:#ff8a8a;
+  font-weight: 700;
+  border: 2px solid #FF9D9D;
+  border-radius: 50px;
+  background-color: white;
+}
+
+.comm:hover {
+  background-color: #FF9D9D50;
 }
