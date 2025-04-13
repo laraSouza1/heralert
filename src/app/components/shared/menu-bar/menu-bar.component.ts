@@ -32,10 +32,10 @@ export class MenuBarComponent {
         label: 'Cadastre-se',
         command: () => this.navigateToSignIn()
       },
-      {
+      /*{
         label: 'Suporte',
         command: () => this.navigateToSupport()
-      },
+      },*/
     ];
   }
 

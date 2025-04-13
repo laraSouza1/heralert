@@ -3,7 +3,7 @@
   <!--header-->
   <div class="flex flex-row p-3 gap-2">
     <div class="flex align-items-center justify-content-center p-0 m-0">
-      <img [src]="post.profile_pic || 'https://imgur.com/07ivMbo.jpg'" class="pic" />
+      <img [src]="post.profile_pic || '/imgs/ai.png'" class="pic" />
     </div>
     <div class="flex align-items-center justify-content-center user">
       <div>{{ post.username }}</div>
@@ -31,7 +31,7 @@
       <ng-container *ngFor="let tag of tags">
         <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>
       </ng-container>
-    </div>    
+    </div>
   </div>
 
   <!--ações-->

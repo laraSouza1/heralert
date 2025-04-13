@@ -3,7 +3,7 @@
 
     <!--capa e foto-->
     <div class="image-wrapper w-full" (click)="onUploadClick('cover')">
-      <img [src]="user?.cover_pic || 'https://imgur.com/r2KBLZG.png'" class="product-image">
+      <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="product-image">
       <div class="overlay">
         <div class="flex flex-column justify-content-center align-items-center" style="color: white">
           <i class="pi pi-camera"></i>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="image-wrapper" (click)="onUploadClick('profile')">
-      <img [src]="user?.profile_pic || 'https://imgur.com/07ivMbo.jpg'" class="product-image2">
+      <img [src]="user?.profile_pic || '/imgs/ai.png'" class="product-image2">
       <div class="overlay2">
         <div class="flex flex-column justify-content-center align-items-center" style="font-size: 12px; color: white">
           <i class="pi pi-camera"></i>

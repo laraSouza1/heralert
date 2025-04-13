@@ -1,5 +1,5 @@
 ::ng-deep body {
-  background-image: url('https://imgur.com/8s5Bt7c.jpg') !important;
+  background-image: url('/imgs/fundo2.png');
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }

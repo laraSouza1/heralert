@@ -1,13 +1,13 @@
 <div class="h-screen container">
   <div class="container-logo">
-    <img class="logo mb-3" src="https://imgur.com/12F74E9.png" height="35" (click)="navigateToFY()">
+    <img class="logo mb-3" src="/imgs/Heralert.png" height="35" (click)="navigateToFY()">
     <div class="line"></div>
   </div>
 
   <div class="flex flex-column justify-content-center align-items-center w-full">
 
     <div class="my-4 text-center">
-      <img [src]="user?.profile_pic || 'https://imgur.com/07ivMbo.jpg'" class="img-profile mb-3">
+      <img [src]="user?.profile_pic || '/imgs/ai.png'" class="img-profile mb-3">
 
       <p class="pg-1">{{ user?.name }}</p>
       <div class="user px-2 mt-2 mb-4">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="mb-4 mt-5">
-      <img src="https://imgur.com/HK6bL18.png" class="animated-image" height="75" />
+      <img src="/imgs/logo_sem_pequena.png" class="animated-image" height="75" />
     </div>
 
     <div>
