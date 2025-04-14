@@ -1,0 +1,23 @@
+<div class="line my-3 pt-3">
+  <p-iconfield iconPosition="left" class="ml-auto">
+    <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+    <input pInputText type="text" placeholder="Pesquisar..." />
+  </p-iconfield>
+</div>
+
+<table class="mt-2 w-full">
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td style="width: 4rem;">
+        <img [src]="user.profile_pic || '/imgs/ai.png'" class="img-profile" />
+      </td>
+      <td>
+        <div class="user">{{ user.username }}</div>
+        <div class="nome">{{ user.name }}</div>
+      </td>
+      <td class="text-right">
+        <p-button class="btn1" label="Seguir" icon="pi pi-user-plus"></p-button>
+      </td>
+    </tr>
+  </tbody>
+</table>

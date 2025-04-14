@@ -110,3 +110,45 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.p-select {
+  padding-left: 0px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border-color: #ffb6b6 !important;
+}
+
+.p-select-label.p-placeholder {
+  color: #ff8a8a;
+}
+
+.p-select:not(.p-disabled):hover,
+.p-select:not(.p-disabled).p-focus {
+  border-color: #ff8a8a !important;
+}
+
+.p-select-label {
+  color: #616161 !important;
+}
+
+.p-select-list-container {
+  background-color: white !important;
+  border: 1px solid #ffb6b6 !important;
+  border-radius: 5px !important;
+}
+
+.p-select-overlay {
+  border: none !important;
+}
+
+.p-select-option {
+  color: rgb(85, 85, 85) !important;
+}
+
+.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+  background-color: #ffb6b680 !important;
+}
+
+.p-select-option.p-select-option-selected {
+  background-color: #ffb6b680 !important;
+}

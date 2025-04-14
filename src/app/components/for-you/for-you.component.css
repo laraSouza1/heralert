@@ -63,17 +63,6 @@
   transform: scale(1.02);
 }
 
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
-::ng-deep .p-inputicon {
-  color: #FF9D9D;
-}
-
 ::ng-deep .bt1 .p-button {
   color: white !important;
   background-color: #FF6B6B !important;
@@ -166,10 +155,6 @@
 
 ::ng-deep .bt-post2 .p-button:not(:disabled):hover {
   background-color: #aaaaaa !important;
-}
-
-::ng-deep .p-select-label.p-placeholder, .p-icon {
-  fill: #22c55e !important;
 }
 
 ::ng-deep .p-toast-message-icon {

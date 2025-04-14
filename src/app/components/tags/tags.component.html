@@ -1,0 +1,17 @@
+<div class="line my-3 pt-3">
+  <p-iconfield iconPosition="left" class="ml-auto">
+    <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+    <input pInputText type="text" placeholder="Pesquisar..." />
+  </p-iconfield>
+</div>
+
+<table class="mt-2 w-full">
+  <tbody>
+    <tr *ngFor="let tag of tags">
+      <td style="width: 2rem;">
+        <div class="hasht">#</div>
+      </td>
+      <td>{{ tag }}</td>
+    </tr>
+  </tbody>
+</table>

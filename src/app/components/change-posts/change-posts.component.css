@@ -1,0 +1,37 @@
+::ng-deep .bt1 .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 5px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+  width: 8rem;
+  width: 100% !important;
+}
+
+::ng-deep .bt1 .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .bt2 .p-button {
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #e2e2e2 !important;
+  height: 40px;
+  border: none !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}
+
+.line {
+  border-top: 1px solid #e2e2e2;
+}

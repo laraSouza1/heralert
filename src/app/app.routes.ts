@@ -14,5 +14,5 @@ export const routes: Routes = [
   { path: 'sign-in', component: SingInComponent },
   { path: 'support', component: SupportComponent },
   { path: 'for-you', component: ForYouComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent }
 ];

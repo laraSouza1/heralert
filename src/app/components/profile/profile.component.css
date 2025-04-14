@@ -81,11 +81,6 @@
   background-color: #aaaaaa !important;
 }
 
-::ng-deep .p-select-label.p-placeholder,
-.p-icon {
-  fill: #22c55e !important;
-}
-
 ::ng-deep .p-toast-message-icon {
   position: relative;
   top: 3px;

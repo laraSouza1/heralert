@@ -6,6 +6,13 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputIcon } from 'primeng/inputicon';
+import { SelectModule } from 'primeng/select';
+import { HttpClient } from '@angular/common/http';
+
+interface Comunity {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-posts-fy',
@@ -17,7 +24,8 @@ import { InputIcon } from 'primeng/inputicon';
     IconFieldModule,
     InputTextModule,
     ButtonModule,
-    InputIcon
+    InputIcon,
+    SelectModule
   ],
   templateUrl: './posts-fy.component.html',
   styleUrls: ['./posts-fy.component.css']
@@ -25,4 +33,24 @@ import { InputIcon } from 'primeng/inputicon';
 export class PostsFYComponent {
   @Input() posts: any[] = [];
   @Input() currentUserId: any;
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+    }
+
+    this.http.get<any>('http://localhost:8085/api/posts', {
+      params: { userId: this.currentUserId }
+    }).subscribe(response => {
+      if (response.status) {
+        this.posts = response.data;
+      }
+    });
+
+  }
+
 }

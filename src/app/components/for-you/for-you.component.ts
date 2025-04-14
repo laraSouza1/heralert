@@ -19,6 +19,17 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { PostsFYComponent } from '../posts/posts-fy/posts-fy.component';
 import { PostsFollowingComponent } from '../posts/posts-following/posts-following.component';
+import { SelectModule } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
+import { UsersComponent } from '../users/users.component';
+import { TagsComponent } from '../tags/tags.component';
+import { ComunitiesComponent } from '../comunities/comunities.component';
+import { ChangePostsComponent } from '../change-posts/change-posts.component';
+
+interface Comunity {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-for-you',
@@ -36,8 +47,12 @@ import { PostsFollowingComponent } from '../posts/posts-following/posts-followin
     RippleModule,
     CommonModule,
     TooltipModule,
-    PostsFYComponent,
-    PostsFollowingComponent
+    SelectModule,
+    FormsModule,
+    UsersComponent,
+    TagsComponent,
+    ComunitiesComponent,
+    ChangePostsComponent
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
@@ -51,32 +66,20 @@ export class ForYouComponent {
   posts: any[] = [];
   currentUserId: any;
   activeTab: 'fy' | 'following' = 'fy';
+  comunities: Comunity[] | undefined;
+  selectedComunity: Comunity = { name: 'Postagens', code: 'Postagens' };
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    const savedTab = localStorage.getItem('activeTab');
-    if (savedTab === 'following' || savedTab === 'fy') {
-      this.activeTab = savedTab as 'fy' | 'following';
-    }
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-    }
+    this.comunities = [
+      { name: 'Postagens', code: 'Postagens' },
+      { name: 'Comunidades', code: 'Comunidades' },
+      { name: 'Usuários', code: 'Usuários' },
+      { name: 'Tags', code: 'Tags' }
+    ];
 
-    this.http.get<any>('http://localhost:8085/api/posts', {
-      params: { userId: this.currentUserId }
-    }).subscribe(response => {
-      if (response.status) {
-        this.posts = response.data;
-      }
-    });
-  }
-
-  setActiveTab(tab: 'fy' | 'following'): void {
-    this.activeTab = tab;
-    localStorage.setItem('activeTab', tab);
   }
 
   postPosted() {
@@ -114,7 +117,7 @@ export class ForYouComponent {
       return;
     }
 
-    //Validação form
+    //aalidação form
     if (!this.createPostComponent?.formGroup || this.createPostComponent.formGroup.invalid) {
       this.createPostComponent?.formGroup?.markAllAsTouched();
       return;
@@ -130,7 +133,7 @@ export class ForYouComponent {
       return;
     }
 
-    //Envia os dados para o servidor
+    //envia os dados para o servidor
 
     const postData = {
       user_id: user.id,

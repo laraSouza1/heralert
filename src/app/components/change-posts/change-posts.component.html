@@ -1,0 +1,14 @@
+<div class="line mt-3 mb-3">
+  <div class="flex flex-row gap-2 w-full mt-3">
+    <p-button [ngClass]="activeTab === 'fy' ? 'bt1' : 'bt2'" icon="pi pi-home" label="Para ti"
+      (click)="setActiveTab('fy')" class="w-6">
+    </p-button>
+    <p-button [ngClass]="activeTab === 'following' ? 'bt1' : 'bt2'" icon="pi pi-users" label="Seguindo"
+      (click)="setActiveTab('following')" class="w-6">
+    </p-button>
+  </div>
+</div>
+
+<!--mostrar componente com base no botão clicado-->
+<app-posts-fy *ngIf="activeTab === 'fy'"></app-posts-fy>
+<app-posts-following *ngIf="activeTab === 'following'"></app-posts-following>
