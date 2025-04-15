@@ -1,38 +1,27 @@
-import { Component } from '@angular/core';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
+import { CommonModule } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { Router, RouterOutlet } from '@angular/router';
-import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
-import { HttpClient } from '@angular/common/http';
-import { ViewChild } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
-import { CommonModule } from '@angular/common';
-import { TooltipModule } from 'primeng/tooltip';
 import { SelectModule } from 'primeng/select';
-import { FormsModule } from '@angular/forms';
-import { UsersComponent } from '../users/users.component';
-import { TagsComponent } from '../tags/tags.component';
-import { ChangePostsComponent } from '../change-posts/change-posts.component';
-import { AutocuidadosFemininosComponent } from '../communities/autocuidados-femininos/autocuidados-femininos.component';
-import { AutocuidadosIFComponent } from '../communities/autocuidados-if/autocuidados-if.component';
-import { DicasDefesaComponent } from '../communities/dicas-defesa/dicas-defesa.component';
-import { AssuntosGeraisComponent } from '../communities/assuntos-gerais/assuntos-gerais.component';
-import { RecoLocaisComponent } from '../communities/reco-locais/reco-locais.component';
-
-interface Comunity {
-  name: string;
-  code: string;
-}
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
+import { ChangePostsComponent } from '../../change-posts/change-posts.component';
+import { CreatePostComponent } from '../../shared/create-post/create-post.component';
+import { LeftSideComponent } from '../../shared/left-side/left-side.component';
+import { RightSideComponent } from '../../shared/right-side/right-side.component';
+import { TagsComponent } from '../../tags/tags.component';
+import { UsersComponent } from '../../users/users.component';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-for-you',
+  selector: 'app-autocuidados-if',
   providers: [MessageService, ConfirmationService],
   imports: [
     LeftSideComponent,
@@ -48,38 +37,20 @@ interface Comunity {
     CommonModule,
     TooltipModule,
     SelectModule,
-    FormsModule,
-    UsersComponent,
-    TagsComponent,
-    ChangePostsComponent,
-    RouterOutlet
+    FormsModule
   ],
-  templateUrl: './for-you.component.html',
-  styleUrls: ['./for-you.component.css']
+  templateUrl: './autocuidados-if.component.html',
+  styleUrl: './autocuidados-if.component.css'
 })
-
-export class ForYouComponent {
+export class AutocuidadosIFComponent {
 
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
   showPostModal: boolean = false;
   posts: any[] = [];
   currentUserId: any;
-  activeTab: 'fy' | 'following' = 'fy';
-  comunities: Comunity[] | undefined;
-  selectedComunity: Comunity = { name: 'Postagens', code: 'Postagens' };
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
-
-  ngOnInit(): void {
-
-    this.comunities = [
-      { name: 'Postagens', code: 'Postagens' },
-      { name: 'Usuários', code: 'Usuários' },
-      { name: 'Tags', code: 'Tags' }
-    ];
-
-  }
 
   postPosted() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
@@ -158,23 +129,4 @@ export class ForYouComponent {
     });
   }
 
-  navigateToAG() {
-    this.router.navigate(['/assuntos-gerais']);
-  }
-
-  navigateToAF() {
-    this.router.navigate(['/autocuidados-femininos']);
-  }
-
-  navigateToDA() {
-    this.router.navigate(['/dicas-defesa']);
-  }
-
-  navigateToRL() {
-    this.router.navigate(['/reco-locais']);
-  }
-
-  navigateToAIF() {
-    this.router.navigate(['/autocuidados-if']);
-  }
 }

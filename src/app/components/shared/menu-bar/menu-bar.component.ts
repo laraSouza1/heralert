@@ -21,8 +21,8 @@ export class MenuBarComponent {
     //itens menu
     this.items = [
       {
-        label: 'Home',
-        command: () => this.navigateToHome()
+        label: 'Welcome',
+        command: () => this.navigateToWelcome()
       },
       {
         label: 'Log-in',
@@ -40,8 +40,8 @@ export class MenuBarComponent {
   }
 
   //navegação de menu ------------------------------
-  navigateToHome() {
-    this.router.navigate(['/home']);
+  navigateToWelcome() {
+    this.router.navigate(['/welcome']);
   }
 
   navigateToLogin() {

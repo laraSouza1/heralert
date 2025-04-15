@@ -12,7 +12,6 @@ import { InputIcon } from 'primeng/inputicon';
   imports: [
     CommonModule,
     FormsModule,
-    PostComponent,
     IconFieldModule,
     InputTextModule,
     ButtonModule,

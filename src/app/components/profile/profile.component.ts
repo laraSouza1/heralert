@@ -126,10 +126,9 @@ export class ProfileComponent {
       next: (response: any) => {
         console.log("Post criado com sucesso:", response);
         this.closeCreatePostModal();
-        this.postPosted();
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       },
       error: (err) => {
         console.error("Erro ao criar post:", err);

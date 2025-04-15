@@ -8,25 +8,13 @@
     <p-confirmdialog />
     <p-button class="bt3" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
 
-    <div class="content px-4">
-      <div class="line pb-2">
-
-        <div class="flex flex-row w-full align-items-center mt-3">
-          <div class="flex justify-content-start align-content-center w-6">
-            <h1>Comunidades</h1>
-          </div>
-          <div class="flex justify-content-end align-items-center w-6">
-            <p-button icon="pi pi-arrow-right" pTooltip="Ver todas" class="bt-com">
-            </p-button>
-          </div>
-        </div>
-
-        <div class="grid h-9rem">
-          <div class="col-3"><img src="/imgs/1.png" class="com-image" /></div>
-          <div class="col-3"><img src="/imgs/2.png" class="com-image" /></div>
-          <div class="col-3"><img src="/imgs/3.png" class="com-image" /></div>
-          <div class="col-3"><img src="/imgs/4.png" class="com-image" /></div>
-        </div>
+    <div class="content px-4 pt-4">
+      <div class="w-full gap-2 flex justify-content-between line pb-2 mb-1">
+        <div (click)="navigateToAG()"><img src="/imgs/5.png" class="com-image" /></div>
+        <div (click)="navigateToAIF()"><img src="/imgs/1.png" class="com-image" /></div>
+        <div (click)="navigateToDA()"><img src="/imgs/2.png" class="com-image" /></div>
+        <div (click)="navigateToRL()"><img src="/imgs/3.png" class="com-image" /></div>
+        <div (click)="navigateToAF()"><img src="/imgs/4.png" class="com-image" /></div>
       </div>
 
       <div class="flex flex-row aling-items-center w-full ">
@@ -35,7 +23,6 @@
 
       <!--mostrar componente com base no select escolhido-->
       <app-change-posts *ngIf="selectedComunity.code === 'Postagens'"></app-change-posts>
-      <app-comunities *ngIf="selectedComunity.code === 'Comunidades'"></app-comunities>
       <app-users *ngIf="selectedComunity.code === 'Usuários'"></app-users>
       <app-tags *ngIf="selectedComunity.code === 'Tags'"></app-tags>
 

@@ -48,8 +48,8 @@ export class LeftSideComponent {
     this.router.navigate(['/for-you']);
   }
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
+  navigateToWelcome() {
+    this.router.navigate(['/welcome']);
   }
 
   navigateToProfile() {
@@ -59,7 +59,7 @@ export class LeftSideComponent {
   //logout e limpa o user
   logout() {
     localStorage.removeItem('user');
-    this.navigateToHome();
+    this.navigateToWelcome();
   }
 
   //chama dados do user

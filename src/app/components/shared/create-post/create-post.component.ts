@@ -50,7 +50,7 @@ export class CreatePostComponent {
       { name: 'Autocuidados Femininos', code: 'Autocuidados Femininos' },
       { name: 'Autocuidados Íntimos Femininos', code: 'Autocuidados Íntimos Femininos' },
       { name: 'Dicas de Autodefesa', code: 'Dicas de Autodefesa' },
-      { name: 'Geral', code: 'Geral' }
+      { name: 'Assuntos Gerais', code: 'Assuntos Gerais' }
     ];
   }
 

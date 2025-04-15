@@ -7,13 +7,13 @@ import { MenuBarComponent } from "../shared/menu-bar/menu-bar.component";
 import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-welcome',
   imports: [ButtonModule, MenubarModule, SkeletonModule, MenuBarComponent, FooterComponent],
   standalone: true,
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './welcome.component.html',
+  styleUrls: ['./welcome.component.css']
 })
-export class HomeComponent {
+export class WelcomeComponent {
 
   constructor(private router: Router) {}
 
