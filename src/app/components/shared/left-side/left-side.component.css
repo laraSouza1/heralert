@@ -142,6 +142,7 @@
   background-color: #ff6b6b38 !important;
 }
 
+/*
 .animated-image {
   animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
 }
@@ -163,3 +164,4 @@
       transform: translateX(5px);
   }
 }
+*/

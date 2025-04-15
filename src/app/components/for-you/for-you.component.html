@@ -9,7 +9,7 @@
     <p-button class="bt3" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
 
     <div class="content px-4 pt-4">
-      <div class="w-full gap-2 flex justify-content-between line pb-2 mb-1">
+      <div class="w-full gap-2 flex justify-content-between pb-2 mb-1 line">
         <div (click)="navigateToAG()"><img src="/imgs/5.png" class="com-image" /></div>
         <div (click)="navigateToAIF()"><img src="/imgs/1.png" class="com-image" /></div>
         <div (click)="navigateToDA()"><img src="/imgs/2.png" class="com-image" /></div>
@@ -17,8 +17,9 @@
         <div (click)="navigateToAF()"><img src="/imgs/4.png" class="com-image" /></div>
       </div>
 
-      <div class="flex flex-row aling-items-center w-full ">
-          <p-select class="select-midia mt-3 w-full" [options]="comunities" [(ngModel)]="selectedComunity" placeholder="Comunidades"optionLabel="name"></p-select>
+      <div class="flex flex-row aling-items-center w-full mt-3">
+        <div><p-button class="bt4" label="Explorar" /></div>
+        <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity" placeholder="Explorar" optionLabel="name"></p-select>
       </div>
 
       <!--mostrar componente com base no select escolhido-->
