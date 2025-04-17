@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -13,6 +13,10 @@ import { ProfileUserComponent } from '../profile-user/profile-user.component';
 import { LeftSideComponent } from '../shared/left-side/left-side.component';
 import { RightSideComponent } from '../shared/right-side/right-side.component';
 import { ProfileUserViewComponent } from '../profile-user-view/profile-user-view.component';
+import { PostComponent } from '../shared/post/post.component';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-profile-view',
@@ -24,10 +28,14 @@ import { ProfileUserViewComponent } from '../profile-user-view/profile-user-view
     ToastModule,
     CreatePostComponent,
     ButtonModule,
-    ProfileUserComponent,
     MenubarModule,
     CommonModule,
-    ProfileUserViewComponent],
+    ProfileUserViewComponent,
+  CommonModule,
+PostComponent,
+IconFieldModule,
+InputIconModule,
+InputTextModule],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
 })
@@ -37,6 +45,7 @@ export class ProfileViewComponent implements OnInit {
 
   showCreatePostModal: boolean = false;
   user: any;
+  userPosts: any[] = [];
 
   constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -45,11 +54,11 @@ export class ProfileViewComponent implements OnInit {
       const userId = params.get('id');
       if (userId) {
         this.loadUser(userId);
+        this.loadUserPosts(userId);
       }
     });
   }
 
-  //dá load nas infos de outro user
   loadUser(id: string): void {
     this.http.get<any>(`http://localhost:8085/api/users/${id}`).subscribe({
       next: (res) => {
@@ -63,6 +72,19 @@ export class ProfileViewComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao carregar perfil:', err);
+      }
+    });
+  }
+
+  loadUserPosts(userId: string): void {
+    this.http.get<any>(`http://localhost:8085/api/posts/user/${userId}`).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.userPosts = res.data;
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar posts do usuário:', err);
       }
     });
   }

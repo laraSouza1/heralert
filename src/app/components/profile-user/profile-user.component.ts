@@ -9,8 +9,7 @@ import { DialogModule } from 'primeng/dialog';
   selector: 'app-profile-user',
   imports: [ButtonModule,
     EditProfileComponent,
-    DialogModule,
-    EditProfileComponent],
+    DialogModule],
   templateUrl: './profile-user.component.html',
   styleUrl: './profile-user.component.css'
 })
@@ -40,7 +39,7 @@ export class ProfileUserComponent {
       ...this.formValues,
       ...data
     };
-  }  
+  }
 
   //para abertura de modal de edit-profile e ações de salvamento ------------------
   //abre e fecha o modal de edição de perfil
@@ -66,7 +65,7 @@ export class ProfileUserComponent {
       ...this.formValues,
       profile_pic: this.formValues.profile_pic_url ?? this.user.profile_pic,
       cover_pic: this.formValues.cover_pic_url ?? this.user.cover_pic
-    };    
+    };
 
     const apiUrl = 'http://localhost:8085/api/users/' + this.user.id;
 
