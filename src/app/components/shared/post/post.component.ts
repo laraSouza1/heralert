@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -28,7 +29,7 @@ export class PostComponent implements OnInit {
   isSave: boolean = false;
   items: MenuItem[] | undefined;
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private messageService: MessageService, private router: Router) { }
 
   ngOnInit() {
     this.items = [
@@ -39,21 +40,30 @@ export class PostComponent implements OnInit {
         ]
       }
     ];
-  
+
     this.likes = this.post.likes_count || 0;
     this.isFavorite = !!this.post.user_liked;
     this.isSave = !!this.post.user_saved;
-  
+
     if (this.userId) {
       const storedLike = localStorage.getItem(`like_${this.userId}_${this.post.id}`);
       if (storedLike !== null) {
         this.isFavorite = JSON.parse(storedLike);
       }
-  
+
       const storedSave = localStorage.getItem(`save_${this.userId}_${this.post.id}`);
       if (storedSave !== null) {
         this.isSave = JSON.parse(storedSave);
       }
+    }
+  }
+
+  goToUserProfile(): void {
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (currentUser && currentUser.id === this.post.user_id) {
+      this.router.navigate(['/profile']);
+    } else {
+      this.router.navigate(['/profile-view', this.post.user_id]);
     }
   }
 
@@ -80,11 +90,11 @@ export class PostComponent implements OnInit {
         const action = this.isFavorite ? 'liked' : 'unliked';
 
         if (this.isFavorite) {
-          this.likes += 1; 
+          this.likes += 1;
         } else {
           this.likes -= 1;
         }
-        
+
         localStorage.setItem(`like_${user.id}_${this.post.id}`, JSON.stringify(this.isFavorite));
       },
       error: (err) => {

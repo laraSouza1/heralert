@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="line-fy"></div>
+  <div class="mt-2">
+    <app-left-side class="sidebar left"></app-left-side>
+
+    <p-toast />
+    <p-confirmdialog />
+    <p-button class="bt3" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
+
+    <div class="content px-4 pt-4">
+      <app-profile-user-view [user]="user"></app-profile-user-view>
+
+    </div>
+
+    <app-right-side class="sidebar right"></app-right-side>
+  </div>
+</div>
+
+<p-dialog [(visible)]="showCreatePostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
+  <app-create-post></app-create-post>
+
+  <ng-template pTemplate="footer" class="mt-2">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
+    <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
+    <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
+  </ng-template>
+</p-dialog>

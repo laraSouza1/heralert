@@ -6,6 +6,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -24,10 +25,20 @@ export class UsersComponent implements OnInit {
 
   users: any[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUsers();
+  }
+
+  //ver perfil user selecionado
+  goToProfile(userId: number): void {
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (currentUser && currentUser.id === userId) {
+      this.router.navigate(['/profile']); //caso seja o user logado, vai para pagina de perfil dele
+    } else {
+      this.router.navigate(['/profile-view', userId]);
+    }
   }
 
   //puxa todos os users

@@ -16,12 +16,11 @@
         </p-iconfield>
       </div>
 
-      <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId">
-      </app-post>
+      <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId"></app-post>
+
+      <app-right-side class="sidebar right"></app-right-side>
+
     </div>
-
-    <app-right-side class="sidebar right"></app-right-side>
-
   </div>
 
   <p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">

@@ -1,70 +1,70 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
-import { SelectModule } from 'primeng/select';
+import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
-import { CreatePostComponent } from '../../shared/create-post/create-post.component';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
-import { HttpClient } from '@angular/common/http';
-import { PostComponent } from '../../shared/post/post.component';
-import { InputIcon } from 'primeng/inputicon';
+import { ProfileUserComponent } from '../profile-user/profile-user.component';
+import { LeftSideComponent } from '../shared/left-side/left-side.component';
+import { RightSideComponent } from '../shared/right-side/right-side.component';
+import { ProfileUserViewComponent } from '../profile-user-view/profile-user-view.component';
 
 @Component({
-  selector: 'app-assuntos-gerais',
+  selector: 'app-profile-view',
   providers: [MessageService, ConfirmationService],
-  imports: [
+  imports: [RightSideComponent,
     LeftSideComponent,
-    RightSideComponent,
-    ButtonModule,
-    IconFieldModule,
-    InputTextModule,
     DialogModule,
     ConfirmDialogModule,
     ToastModule,
     CreatePostComponent,
-    RippleModule,
+    ButtonModule,
+    ProfileUserComponent,
+    MenubarModule,
     CommonModule,
-    TooltipModule,
-    SelectModule,
-    FormsModule,
-    PostComponent,
-    InputIcon
-  ],
-  templateUrl: './assuntos-gerais.component.html',
-  styleUrl: './assuntos-gerais.component.css'
+    ProfileUserViewComponent],
+  templateUrl: './profile-view.component.html',
+  styleUrl: './profile-view.component.css'
 })
-export class AssuntosGeraisComponent {
+export class ProfileViewComponent implements OnInit {
 
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
-  showPostModal: boolean = false;
-  posts: any[] = [];
-  currentUserId: number = 0;
+  showCreatePostModal: boolean = false;
+  user: any;
 
-  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const userId = params.get('id');
+      if (userId) {
+        this.loadUser(userId);
+      }
+    });
+  }
 
-      this.http.get<any>(`http://localhost:8085/api/posts?userId=${this.currentUserId}&community=Assuntos Gerais`)
-        .subscribe(response => {
-          if (response.status) {
-            this.posts = response.data;
-          }
-        });
-    }
+  //dá load nas infos de outro user
+  loadUser(id: string): void {
+    this.http.get<any>(`http://localhost:8085/api/users/${id}`).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.user = res.data;
+
+          const date = new Date(this.user.created_at);
+          const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+          this.user.memberSince = `Membro desde ${meses[date.getMonth()]} ${date.getFullYear()}`;
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar perfil:', err);
+      }
+    });
   }
 
   postPosted() {
@@ -72,7 +72,7 @@ export class AssuntosGeraisComponent {
   }
 
   openCreatePostModal() {
-    this.showPostModal = true;
+    this.showCreatePostModal = true;
 
     setTimeout(() => {
       if (this.createPostComponent) {
@@ -86,7 +86,7 @@ export class AssuntosGeraisComponent {
   }
 
   closeCreatePostModal() {
-    this.showPostModal = false;
+    this.showCreatePostModal = false;
   }
 
   saveDraft() {
@@ -102,7 +102,7 @@ export class AssuntosGeraisComponent {
       return;
     }
 
-    //aalidação form
+    //Validação form
     if (!this.createPostComponent?.formGroup || this.createPostComponent.formGroup.invalid) {
       this.createPostComponent?.formGroup?.markAllAsTouched();
       return;
@@ -118,7 +118,7 @@ export class AssuntosGeraisComponent {
       return;
     }
 
-    //envia os dados para o servidor
+    //Envia os dados para o servidor
 
     const postData = {
       user_id: user.id,
@@ -135,7 +135,7 @@ export class AssuntosGeraisComponent {
         this.closeCreatePostModal();
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       },
       error: (err) => {
         console.error("Erro ao criar post:", err);
