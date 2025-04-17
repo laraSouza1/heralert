@@ -11,14 +11,13 @@ import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { ChangePostsComponent } from '../../change-posts/change-posts.component';
 import { CreatePostComponent } from '../../shared/create-post/create-post.component';
 import { LeftSideComponent } from '../../shared/left-side/left-side.component';
 import { RightSideComponent } from '../../shared/right-side/right-side.component';
-import { TagsComponent } from '../../tags/tags.component';
-import { UsersComponent } from '../../users/users.component';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { PostComponent } from '../../shared/post/post.component';
+import { InputIcon } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-autocuidados-femininos',
@@ -37,7 +36,9 @@ import { Router } from '@angular/router';
     CommonModule,
     TooltipModule,
     SelectModule,
-    FormsModule
+    FormsModule,
+    PostComponent,
+    InputIcon
   ],
   templateUrl: './autocuidados-femininos.component.html',
   styleUrl: './autocuidados-femininos.component.css'
@@ -48,9 +49,23 @@ export class AutocuidadosFemininosComponent {
 
   showPostModal: boolean = false;
   posts: any[] = [];
-  currentUserId: any;
+  currentUserId: number = 0;
 
   constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
+
+  ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+
+      this.http.get<any>(`http://localhost:8085/api/posts?userId=${this.currentUserId}&community=Autocuidados Femininos`)
+        .subscribe(response => {
+          if (response.status) {
+            this.posts = response.data;
+          }
+        });
+    }
+  }
 
   postPosted() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
