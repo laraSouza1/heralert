@@ -51,8 +51,7 @@ interface Comunity {
     FormsModule,
     UsersComponent,
     TagsComponent,
-    ChangePostsComponent,
-    RouterOutlet
+    ChangePostsComponent
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
