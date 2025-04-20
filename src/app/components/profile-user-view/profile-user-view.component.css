@@ -38,10 +38,10 @@
   white-space: normal;
 }
 
-.product-image {
+.cover-image {
   height: 150px;
   object-fit: cover;
-  width: 100%;
+  width: 574px;
 }
 
 ::ng-deep html,
@@ -49,7 +49,7 @@ body {
   overflow-x: hidden;
 }
 
-.product-image2 {
+.icon-image {
   border-radius: 100%;
   border: 4px solid #ffffff;
   width: 80px;

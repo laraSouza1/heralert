@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
 import { TextareaModule } from 'primeng/textarea';
 
-export interface Product {
+export interface User {
   photo: any;
   name: string;
   text: string;
@@ -24,18 +24,18 @@ export interface Product {
 })
 export class RightSideComponent implements OnInit {
 
-  products!: Product[];
+  users!: User[];
   items: MenuItem[] | undefined;
-  selectedProduct: Product | null = null;
+  selectedUser: User | null = null;
   tableHeight = '80%';
   isExpanded = false;
-  expandedProduct: Product | null = null;
+  expandedUser: User | null = null;
 
   @ViewChild('dt2') dt2!: Table;
 
   ngOnInit() {
-    this.getProductsMini().then((data) => {
-      this.products = data;
+    this.getUsersMini().then((data) => {
+      this.users = data;
     });
 
     this.items = [
@@ -44,7 +44,7 @@ export class RightSideComponent implements OnInit {
     ];
   }
 
-  getProductsMini(): Promise<Product[]> {
+  getUsersMini(): Promise<User[]> {
     return Promise.resolve([
       { photo: 'https://imgur.com/ryhUuwt.jpg', name: 'Lara Souza', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
       { photo: 'https://imgur.com/eVQoJev.jpg', name: 'Marta Vieira', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' },
@@ -58,8 +58,8 @@ export class RightSideComponent implements OnInit {
     ]);
   }
 
-  onRowClick(product: Product): void {
-    this.expandedProduct = product;
+  onRowClick(user: User): void {
+    this.expandedUser = user;
     this.isExpanded = true;
     this.tableHeight = '20%';
   }
@@ -67,10 +67,10 @@ export class RightSideComponent implements OnInit {
   closeDiv(): void {
     this.isExpanded = false;
     this.tableHeight = '80%';
-    this.expandedProduct = null;
+    this.expandedUser = null;
   }
 
-  filterProducts(event: Event): void {
+  filterUsers(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (this.dt2) {
       this.dt2.filterGlobal(input.value, 'contains');

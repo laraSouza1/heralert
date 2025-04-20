@@ -1,16 +1,9 @@
-.product-image {
-  width: 35px;
-  height: 35px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
 .container {
   border: 1px solid #FF9D9D;
   border-radius: 10px;
 }
 
-.pic {
+.icon-image {
   border-radius: 5px !important;
   object-fit: cover;
   height: 35px;

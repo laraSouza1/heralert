@@ -87,14 +87,14 @@
   color: #FF9D9D;
 }
 
-.product-image {
+.user-image {
   width: 45px;
   height: 45px;
   object-fit: cover;
   border-radius: 5px;
 }
 
-.product-image2 {
+.user-image2 {
   width: 45px;
   height: 45px;
   object-fit: cover;

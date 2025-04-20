@@ -94,3 +94,13 @@
   position: relative;
   top: 3px;
 }
+
+.div-ww {
+  width: 574px !important;
+}
+
+.com-banner {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}

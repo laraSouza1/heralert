@@ -47,7 +47,7 @@ export class CreatePostComponent {
 
     this.comunities = [
       { name: 'Recomendações de Locais', code: 'Recomendações de Locais' },
-      { name: 'Autocuidados Femininos', code: 'Autocuidados Femininos' },
+      { name: 'Autocuidados Gerais', code: 'Autocuidados Gerais' },
       { name: 'Autocuidados Íntimos Femininos', code: 'Autocuidados Íntimos Femininos' },
       { name: 'Dicas de Autodefesa', code: 'Dicas de Autodefesa' },
       { name: 'Assuntos Gerais', code: 'Assuntos Gerais' }

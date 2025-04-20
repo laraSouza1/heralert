@@ -3,17 +3,17 @@
 
     <!--capa e foto-->
     <div class="image-wrapper w-full" (click)="onUploadClick('cover')">
-      <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="product-image">
+      <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="cover-image">
       <div class="overlay">
         <div class="flex flex-column justify-content-center align-items-center" style="color: white">
           <i class="pi pi-camera"></i>
-          150x570
+          150x575
         </div>
       </div>
     </div>
 
     <div class="image-wrapper" (click)="onUploadClick('profile')">
-      <img [src]="user?.profile_pic || '/imgs/ai.png'" class="product-image2">
+      <img [src]="user?.profile_pic || '/imgs/ai.png'" class="icon-image">
       <div class="overlay2">
         <div class="flex flex-column justify-content-center align-items-center" style="font-size: 12px; color: white">
           <i class="pi pi-camera"></i>

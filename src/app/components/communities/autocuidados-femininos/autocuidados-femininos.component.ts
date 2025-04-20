@@ -58,7 +58,7 @@ export class AutocuidadosFemininosComponent {
     if (user?.id) {
       this.currentUserId = user.id;
 
-      this.http.get<any>(`http://localhost:8085/api/posts?userId=${this.currentUserId}&community=Autocuidados Femininos`)
+      this.http.get<any>(`http://localhost:8085/api/posts?userId=${this.currentUserId}&community=Autocuidados Gerais`)
         .subscribe(response => {
           if (response.status) {
             this.posts = response.data;
