@@ -23,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './posts-user.component.css'
 })
 export class PostsUserComponent implements OnInit {
+
   userPosts: any[] = [];
   currentUserId: number = 0;
   searchTerm = '';

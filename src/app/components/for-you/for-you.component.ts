@@ -3,7 +3,7 @@ import { LeftSideComponent } from '../shared/left-side/left-side.component';
 import { RightSideComponent } from '../shared/right-side/right-side.component';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { CreatePostComponent } from '../shared/create-post/create-post.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -20,11 +20,6 @@ import { FormsModule } from '@angular/forms';
 import { UsersComponent } from '../users/users.component';
 import { TagsComponent } from '../tags/tags.component';
 import { ChangePostsComponent } from '../change-posts/change-posts.component';
-import { AutocuidadosFemininosComponent } from '../communities/autocuidados-femininos/autocuidados-femininos.component';
-import { AutocuidadosIFComponent } from '../communities/autocuidados-if/autocuidados-if.component';
-import { DicasDefesaComponent } from '../communities/dicas-defesa/dicas-defesa.component';
-import { AssuntosGeraisComponent } from '../communities/assuntos-gerais/assuntos-gerais.component';
-import { RecoLocaisComponent } from '../communities/reco-locais/reco-locais.component';
 
 interface Comunity {
   name: string;

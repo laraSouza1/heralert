@@ -12,6 +12,7 @@ import { AutocuidadosIFComponent } from './components/communities/autocuidados-i
 import { DicasDefesaComponent } from './components/communities/dicas-defesa/dicas-defesa.component';
 import { RecoLocaisComponent } from './components/communities/reco-locais/reco-locais.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
+import { ViewPostComponent } from './components/view-post/view-post.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -26,5 +27,6 @@ export const routes: Routes = [
   { path: 'autocuidados-if', component: AutocuidadosIFComponent },
   { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
   { path: 'reco-locais', component: RecoLocaisComponent },
-  { path: 'profile-view/:username', component: ProfileViewComponent }
+  { path: 'profile-view/:username', component: ProfileViewComponent },
+  { path: 'view-post/:id', component: ViewPostComponent }
 ];

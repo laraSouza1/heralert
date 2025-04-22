@@ -21,6 +21,7 @@ export class PostComponent implements OnInit {
   @Input() post: any;
   @Input() tags: string[] = [];
   @Input() userId!: number;
+  @Input() isProfile: boolean = false;
 
   isFavorite: boolean = false;
   likes: number = 0;
@@ -56,6 +57,12 @@ export class PostComponent implements OnInit {
         this.isSave = JSON.parse(storedSave);
       }
     }
+  }
+
+  //abre post
+  goToPostDetail(event: MouseEvent) {
+    event.stopPropagation();
+    this.router.navigate(['/view-post', this.post.id]);
   }
 
   //ver perfil user selecionado

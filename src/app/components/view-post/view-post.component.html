@@ -1,0 +1,19 @@
+
+<div class="container">
+  <div class="line-fy"></div>
+
+  <div>
+    <app-left-side class="sidebar left"></app-left-side>
+
+    <div class="content px-4 pt-4 ">
+      <div class="div-ww">
+
+        <app-post [post]="post" [tags]="tags" [userId]="currentUserId" *ngIf="post"></app-post>
+      </div>
+    </div>
+
+
+
+      <app-right-side class="sidebar right"></app-right-side>
+    </div>
+  </div>
