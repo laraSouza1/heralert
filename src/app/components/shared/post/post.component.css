@@ -164,3 +164,23 @@
   background-color: none !important;
   color: #2b2b2b !important;
 }
+
+::ng-deep .menu-pontos .p-menu {
+  width: 250px !important;
+  position: absolute !important;
+  left: 680px !important;
+  border: none !important;
+  border-top: 2px solid #ffacac !important;
+}
+
+::ng-deep .menu-pontos .p-menu-submenu-label {
+  display: none !important;
+  height: 0px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.click:hover {
+  background-color: #ffefef;
+  border-radius: 10px 10px 0px 0px;
+}

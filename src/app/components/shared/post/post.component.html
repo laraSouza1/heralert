@@ -1,7 +1,7 @@
 <div class="container mb-5">
 
   <!--header-->
-  <div class="flex flex-row p-3 gap-2 cursor-pointer hover:bg-gray-100" (click)="goToUserProfile()">
+  <div class="flex flex-row p-3 gap-2 cursor-pointer click" (click)="goToUserProfile()">
     <div class="flex align-items-center justify-content-center p-0 m-0">
       <img [src]="post.profile_pic || '/imgs/ai.png'" class="icon-image" />
     </div>
@@ -13,7 +13,7 @@
     </div>
     <div class="w-9 flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
       <p-toast />
-      <p-menu #menu [model]="items" [popup]="true" />
+      <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
     </div>
   </div>
