@@ -37,6 +37,8 @@ export class CreatePostComponent {
   formGroup: FormGroup | any;
   comunities: Comunity[] | undefined;
   selectedComunity: Comunity | undefined;
+  editMode: boolean = false;
+  editingPostId: number | null = null;
 
   ngOnInit() {
     this.formGroup = new FormGroup({
@@ -52,6 +54,28 @@ export class CreatePostComponent {
       { name: 'Dicas de Autodefesa', code: 'Dicas de Autodefesa' },
       { name: 'Assuntos Gerais', code: 'Assuntos Gerais' }
     ];
+  }
+
+  setEditPost(post: any) {
+    this.editMode = true;
+    this.editingPostId = post.id;
+    this.formGroup.patchValue({
+      title: post.title,
+      text: post.content,
+      community: this.comunities?.find(c => c.code === post.community) || null
+    });
+    this.tags = [...post.tags];
+    this.newTag = '';
+  }
+
+  resetForm() {
+    this.editMode = false;
+    this.editingPostId = null;
+    this.title = '';
+    this.tags = [];
+    this.newTag = '';
+    this.selectedComunity = undefined;
+    this.formGroup?.reset();
   }
 
   addTag(event: Event) {

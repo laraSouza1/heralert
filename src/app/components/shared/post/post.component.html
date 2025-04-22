@@ -57,8 +57,8 @@
       </div>
 
       <div *ngIf="isProfile" class="w-6 flex justify-content-end gap-2">
-        <p-button icon="pi pi-pencil" class="icon-action pencil bt-pencil" />
-        <p-button icon="pi pi-trash" class="icon-action trash bt-trash" />
+        <p-button icon="pi pi-pencil" class="icon-action pencil bt-pencil" (click)="onEditClick()" />
+        <p-button icon="pi pi-trash" class="icon-action trash bt-trash" (click)="onDeleteClick()" />
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -24,11 +24,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PostsUserComponent implements OnInit {
 
+  @Output() editPostFromUser = new EventEmitter<any>();
+  @Output() deletePostFromUser = new EventEmitter<any>();
+
   userPosts: any[] = [];
   currentUserId: number = 0;
   searchTerm = '';
 
   constructor(private http: HttpClient) { }
+
+  onEditPost(post: any) {
+    this.editPostFromUser.emit(post);
+  }
+
+  onDeletePost(post: any) {
+    this.deletePostFromUser.emit(post);
+  }
 
   onSearch(event: any) {
     this.searchTerm = event.target.value;

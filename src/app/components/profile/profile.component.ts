@@ -45,14 +45,41 @@ export class ProfileComponent {
 
   showCreatePostModal: boolean = false;
   activeTab: 'mp' | 'mf' | 'ms' | 'mr' = 'mp';
+  postToEdit: any = null;
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     const savedTab = localStorage.getItem('activeTab') as 'mp' | 'mf' | 'ms' | 'mr' | null;
     if (savedTab && ['mp', 'mf', 'ms', 'mr'].includes(savedTab)) {
       this.activeTab = savedTab;
     }
+  }
+
+  handleEditPost(post: any) {
+    this.postToEdit = post;
+    this.openCreatePostModal();
+  }
+
+  handleDeletePost(post: any) {
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir a postagem: "${post.title}"?`,
+      header: 'Confirmar Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.http.delete(`http://localhost:8085/api/posts/${post.id}`).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Post deletado com sucesso!' });
+            setTimeout(() => window.location.reload(), 1000);
+          },
+          error: () => {
+            this.messageService.add({ severity: 'error', summary: 'Erro ao deletar post.' });
+          }
+        });
+      }
+    });
   }
 
   setActiveTab(tab: 'mp' | 'mf' | 'ms' | 'mr'): void {
@@ -69,11 +96,11 @@ export class ProfileComponent {
 
     setTimeout(() => {
       if (this.createPostComponent) {
-        this.createPostComponent.title = '';
-        this.createPostComponent.tags = [];
-        this.createPostComponent.newTag = '';
-        this.createPostComponent.selectedComunity = undefined;
-        this.createPostComponent.formGroup?.reset();
+        if (this.postToEdit) {
+          this.createPostComponent.setEditPost(this.postToEdit);
+        } else {
+          this.createPostComponent.resetForm();
+        }
       }
     });
   }
@@ -122,18 +149,24 @@ export class ProfileComponent {
       media_url: null
     };
 
-    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
-      next: (response: any) => {
-        console.log("Post criado com sucesso:", response);
-        this.closeCreatePostModal();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      },
-      error: (err) => {
-        console.error("Erro ao criar post:", err);
-        alert("Erro ao publicar post.");
-      }
-    });
+    if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
+      //atualiza post
+      this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
+        next: () => {
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao atualizar o post.")
+      });
+    } else {
+      //cria novo post
+      this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+        next: () => {
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao publicar post.")
+      });
+    }
   }
 }

@@ -5,4 +5,4 @@
   </p-iconfield>
 </div>
 
-<app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId" [isProfile]="true"></app-post>
+<app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId" [isProfile]="true" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)"></app-post>

@@ -1,5 +1,5 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -22,6 +22,9 @@ export class PostComponent implements OnInit {
   @Input() tags: string[] = [];
   @Input() userId!: number;
   @Input() isProfile: boolean = false;
+
+  @Output() editPost = new EventEmitter<any>();
+  @Output() deletePost = new EventEmitter<any>();
 
   isFavorite: boolean = false;
   likes: number = 0;
@@ -57,6 +60,16 @@ export class PostComponent implements OnInit {
         this.isSave = JSON.parse(storedSave);
       }
     }
+  }
+
+  //vai abrir para edição de post
+  onEditClick() {
+    this.editPost.emit(this.post);
+  }
+
+  //vai abrir para deletar post
+  onDeleteClick() {
+    this.deletePost.emit(this.post);
   }
 
   //abre post
