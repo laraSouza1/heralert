@@ -25,7 +25,8 @@ export class ProfileUserViewComponent implements OnInit {
     this.items = [
       {
         items: [
-          { label: 'Bloquear usuário', icon: 'pi pi-user-minus' }
+          { label: 'Bloquear usuário', icon: 'pi pi-user-minus' },
+          { label: 'Denunciar usuário', icon: 'pi pi-flag' }
         ]
       }
     ];

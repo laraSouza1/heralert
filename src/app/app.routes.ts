@@ -26,5 +26,5 @@ export const routes: Routes = [
   { path: 'autocuidados-if', component: AutocuidadosIFComponent },
   { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
   { path: 'reco-locais', component: RecoLocaisComponent },
-  { path: 'profile-view/:id', component: ProfileViewComponent }
+  { path: 'profile-view/:username', component: ProfileViewComponent }
 ];

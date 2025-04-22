@@ -153,3 +153,14 @@
 .comm:hover {
   background-color: #FF9D9D50;
 }
+
+::ng-deep .menu-cont .p-button {
+  background: none !important;
+  color: #616161 !important;
+  border: none !important;
+}
+
+::ng-deep .menu-cont .p-button:not(:disabled):hover {
+  background-color: none !important;
+  color: #2b2b2b !important;
+}

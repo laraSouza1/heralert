@@ -58,12 +58,13 @@ export class PostComponent implements OnInit {
     }
   }
 
+  //ver perfil user selecionado
   goToUserProfile(): void {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (currentUser && currentUser.id === this.post.user_id) {
       this.router.navigate(['/profile']);
     } else {
-      this.router.navigate(['/profile-view', this.post.user_id]);
+      this.router.navigate(['/profile-view', this.post.username]);
     }
   }
 

@@ -3,11 +3,18 @@
   <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="cover-image">
   <img [src]="user?.profile_pic || '/imgs/ai.png'" class="icon-image">
 
-  <div class="flex flex-row mt-6 ml-3 gap-3">
+  <div class="flex flex-row mt-6 ml-3 gap-3 align-items-center">
     <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
-    <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-cog"
+    <div>
+      <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-user-edit"
       label="Editar perfil" (click)="openEditProfileModal()">
     </p-button>
+    </div>
+    <div>
+      <p-toast />
+      <p-menu #menu [model]="items" [popup]="true" />
+      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
+    </div>
   </div>
 
   <div class="flex flex-row ml-3 mt-2">

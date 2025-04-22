@@ -32,12 +32,12 @@ export class UsersComponent implements OnInit {
   }
 
   //ver perfil user selecionado
-  goToProfile(userId: number): void {
+  goToProfile(userId: number, username: string): void {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (currentUser && currentUser.id === userId) {
-      this.router.navigate(['/profile']); //caso seja o user logado, vai para pagina de perfil dele
+      this.router.navigate(['/profile']);
     } else {
-      this.router.navigate(['/profile-view', userId]);
+      this.router.navigate(['/profile-view', username]);
     }
   }
 

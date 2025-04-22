@@ -11,10 +11,10 @@
     <div class="flex align-items-center justify-content-center">
       <p-button icon="pi pi-plus" class="bt-follow small" label="Seguir"></p-button>
     </div>
-    <div class="w-7 flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
+    <div class="w-9 flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
       <p-toast />
       <p-menu #menu [model]="items" [popup]="true" />
-      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
     </div>
   </div>
 

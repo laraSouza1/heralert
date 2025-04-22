@@ -1,15 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { DialogModule } from 'primeng/dialog';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-profile-user',
   imports: [ButtonModule,
     EditProfileComponent,
-    DialogModule],
+    DialogModule,
+    MenuModule,
+    ToastModule
+  ],
   templateUrl: './profile-user.component.html',
   styleUrl: './profile-user.component.css'
 })
@@ -18,12 +23,22 @@ export class ProfileUserComponent {
   user: any;
   showEditProfileModal: boolean = false;
   formValues: any;
+  items: MenuItem[] | undefined;
 
   @ViewChild(EditProfileComponent) editProfileComponent!: EditProfileComponent;
 
   constructor(private messageService: MessageService, private http: HttpClient) { }
 
   ngOnInit() {
+
+    this.items = [
+      {
+        items: [
+          { label: 'Configurações do perfil', icon: 'pi pi-cog' }
+        ]
+      }
+    ];
+
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
@@ -42,7 +57,7 @@ export class ProfileUserComponent {
   }
 
   //para abertura de modal de edit-profile e ações de salvamento ------------------
-  //abre e fecha o modal de edição de perfil
+
   openEditProfileModal() {
     this.showEditProfileModal = true;
     setTimeout(() => {
