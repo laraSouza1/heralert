@@ -24,11 +24,32 @@ import { Router } from '@angular/router';
 export class UsersComponent implements OnInit {
 
   users: any[] = [];
+  searchTerm = '';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUsers();
+  }
+
+  onSearch(event: any): void {
+    this.searchTerm = event.target.value;
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.http.get<any>('http://localhost:8085/api/users', {
+      params: { search: this.searchTerm }
+    }).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.users = res.data;
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar usuários:', err);
+      }
+    });
   }
 
   //ver perfil user selecionado
@@ -39,19 +60,5 @@ export class UsersComponent implements OnInit {
     } else {
       this.router.navigate(['/profile-view', username]);
     }
-  }
-
-  //puxa todos os users
-  loadUsers(): void {
-    this.http.get<any>('http://localhost:8085/api/users').subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.users = res.data;
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar usuários:', err);
-      }
-    });
   }
 }

@@ -25,20 +25,30 @@ import { HttpClient } from '@angular/common/http';
 export class PostsLikedComponent implements OnInit {
   likedPosts: any[] = [];
   currentUserId: number = 0;
+  searchTerm = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.loadLikedPosts();
+  }
+
+  loadLikedPosts() {
+    this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`, {
+      params: { search: this.searchTerm }
+    }).subscribe(response => {
+      if (response.status) {
+        this.likedPosts = response.data;
+      }
+    });
+  }
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
-
-      this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`)
-        .subscribe(response => {
-          if (response.status) {
-            this.likedPosts = response.data;
-          }
-        });
+      this.loadLikedPosts();
     }
   }
 }

@@ -25,20 +25,30 @@ import { PostComponent } from '../../shared/post/post.component';
 export class PostsSavedComponent implements OnInit {
   savedPosts: any[] = [];
   currentUserId: number = 0;
+  searchTerm = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.loadSavedPosts();
+  }
+
+  loadSavedPosts() {
+    this.http.get<any>(`http://localhost:8085/api/posts/saved/${this.currentUserId}`, {
+      params: { search: this.searchTerm }
+    }).subscribe(response => {
+      if (response.status) {
+        this.savedPosts = response.data;
+      }
+    });
+  }
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
-
-      this.http.get<any>(`http://localhost:8085/api/posts/saved/${this.currentUserId}`)
-        .subscribe(response => {
-          if (response.status) {
-            this.savedPosts = response.data;
-          }
-        });
+      this.loadSavedPosts();
     }
   }
 }

@@ -17,20 +17,27 @@ import { InputText } from 'primeng/inputtext';
   styleUrl: './tags.component.css'
 })
 export class TagsComponent implements OnInit {
-  tags: string[] = [];
+  tags: { tag: string, count: number }[] = [];
+  searchTerm = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadTags();
   }
 
-  //puxa tags
+  onSearch(event: any): void {
+    this.searchTerm = event.target.value;
+    this.loadTags();
+  }
+
   loadTags(): void {
-    this.http.get<any>('http://localhost:8085/api/tags').subscribe({
+    this.http.get<any>('http://localhost:8085/api/tags', {
+      params: { search: this.searchTerm }
+    }).subscribe({
       next: (res) => {
         if (res.status) {
-          this.tags = res.data.map((t: any) => t.tag);
+          this.tags = res.data;
         }
       },
       error: (err) => {

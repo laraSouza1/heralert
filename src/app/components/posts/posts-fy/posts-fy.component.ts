@@ -33,24 +33,35 @@ interface Comunity {
 export class PostsFYComponent {
   @Input() posts: any[] = [];
   @Input() currentUserId: any;
+  searchTerm = '';
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.loadPosts();
+  }
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-    }
-
+  loadPosts() {
     this.http.get<any>('http://localhost:8085/api/posts', {
-      params: { userId: this.currentUserId }
+      params: {
+        userId: this.currentUserId,
+        search: this.searchTerm
+      }
     }).subscribe(response => {
       if (response.status) {
         this.posts = response.data;
       }
     });
+  }
 
+  ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+    }
+
+    this.loadPosts();
   }
 
 }

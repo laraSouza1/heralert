@@ -1,7 +1,7 @@
 <div class="line my-3 pt-3">
   <p-iconfield iconPosition="left" class="ml-auto">
     <p-inputicon><i class="pi pi-search"></i></p-inputicon>
-    <input pInputText type="text" placeholder="Pesquisar..." />
+    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" />
   </p-iconfield>
 </div>
 
@@ -11,7 +11,8 @@
       <td style="width: 2rem;">
         <div class="hasht">#</div>
       </td>
-      <td>{{ tag }}</td>
+      <td>{{ tag.tag }}</td>
+      <td><div class="number flex justify-content-center">{{ tag.count }}</div></td>
     </tr>
   </tbody>
 </table>

@@ -50,21 +50,37 @@ export class DicasDefesaComponent {
   showPostModal: boolean = false;
   posts: any[] = [];
   currentUserId: number = 0;
+  searchTerm = '';
+  community = 'Dicas de Autodefesa';
 
-  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient) { }
+
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
-
-      this.http.get<any>(`http://localhost:8085/api/posts?userId=${this.currentUserId}&community=Dicas de Autodefesa`)
-        .subscribe(response => {
-          if (response.status) {
-            this.posts = response.data;
-          }
-        });
+      this.loadPosts();
     }
+  }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.loadPosts();
+  }
+
+  loadPosts() {
+    this.http.get<any>(`http://localhost:8085/api/posts`, {
+      params: {
+        userId: this.currentUserId.toString(),
+        community: this.community,
+        search: this.searchTerm
+      }
+    }).subscribe(response => {
+      if (response.status) {
+        this.posts = response.data;
+      }
+    });
   }
 
   postPosted() {

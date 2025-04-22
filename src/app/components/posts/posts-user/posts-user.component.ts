@@ -23,22 +23,32 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './posts-user.component.css'
 })
 export class PostsUserComponent implements OnInit {
-    userPosts: any[] = [];
-    currentUserId: number = 0;
-  
-    constructor(private http: HttpClient) {}
-  
-    ngOnInit() {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      if (user?.id) {
-        this.currentUserId = user.id;
-  
-        this.http.get<any>(`http://localhost:8085/api/posts/user/${this.currentUserId}`)
-          .subscribe(response => {
-            if (response.status) {
-              this.userPosts = response.data;
-            }
-          });
+  userPosts: any[] = [];
+  currentUserId: number = 0;
+  searchTerm = '';
+
+  constructor(private http: HttpClient) { }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.loadUserPosts();
+  }
+
+  loadUserPosts() {
+    this.http.get<any>(`http://localhost:8085/api/posts/user/${this.currentUserId}`, {
+      params: { search: this.searchTerm }
+    }).subscribe(response => {
+      if (response.status) {
+        this.userPosts = response.data;
       }
+    });
+  }
+
+  ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadUserPosts();
     }
-  }  
+  }
+}

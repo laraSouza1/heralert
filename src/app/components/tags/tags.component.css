@@ -27,3 +27,10 @@ td {
   font-size: 18px;
   color: #ff6b6b;
 }
+
+.number {
+  font-size: 14px;
+  color: #8a8a8a;
+  background-color: #dbdbdb;
+  border-radius: 10px;
+}

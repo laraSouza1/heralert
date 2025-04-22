@@ -40,6 +40,7 @@ export class ProfileViewComponent implements OnInit {
 
   user: any;
   userPosts: any[] = [];
+  searchTerm = '';
 
   constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -50,6 +51,13 @@ export class ProfileViewComponent implements OnInit {
         this.loadUser(username);
       }
     });
+  }
+
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    if (this.user?.id) {
+      this.loadUserPosts(this.user.id);
+    }
   }
 
   loadUser(username: string): void {
@@ -72,7 +80,9 @@ export class ProfileViewComponent implements OnInit {
   }
 
   loadUserPosts(userId: string): void {
-    this.http.get<any>(`http://localhost:8085/api/posts/user/${userId}`).subscribe({
+    this.http.get<any>(`http://localhost:8085/api/posts/user/${userId}`, {
+      params: { search: this.searchTerm }
+    }).subscribe({
       next: (res) => {
         if (res.status) {
           this.userPosts = res.data;
@@ -83,5 +93,4 @@ export class ProfileViewComponent implements OnInit {
       }
     });
   }
-
 }
