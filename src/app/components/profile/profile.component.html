@@ -23,7 +23,7 @@
       <app-posts-user *ngIf="activeTab === 'mp'" (editPostFromUser)="handleEditPost($event)" (deletePostFromUser)="handleDeletePost($event)"></app-posts-user>
       <app-posts-liked *ngIf="activeTab === 'mf'"></app-posts-liked>
       <app-posts-saved *ngIf="activeTab === 'ms'"></app-posts-saved>
-      <app-posts-drafts *ngIf="activeTab === 'mr'"></app-posts-drafts>
+      <app-posts-drafts *ngIf="activeTab === 'mr'" (editPostFromUser)="handleEditPost($event)" (deletePostFromUser)="handleDeletePost($event)"></app-posts-drafts>
 
     </div>
     <app-right-side class="sidebar right"></app-right-side>

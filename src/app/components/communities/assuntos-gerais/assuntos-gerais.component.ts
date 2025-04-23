@@ -106,8 +106,41 @@ export class AssuntosGeraisComponent {
   }
 
   saveDraft() {
-    console.log("Rascunho salvo!");
-    this.closeCreatePostModal();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (!user?.id) {
+      alert("Usuário não autenticado!");
+      return;
+    }
+
+    if (!this.createPostComponent?.formGroup) return;
+
+    const title = this.createPostComponent.formGroup.get('title')?.value || 'Rascunho sem título';
+    const content = this.createPostComponent.formGroup.get('text')?.value || '';
+    const community = this.createPostComponent.formGroup.get('community')?.value?.code || null;
+    const tags = this.createPostComponent?.tags || [];
+
+    const postData = {
+      user_id: user.id,
+      title,
+      content,
+      community,
+      tags,
+      media_url: null,
+      is_draft: 1
+    };
+
+    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+      next: (response: any) => {
+        console.log("Rascunho salvo com sucesso:", response);
+        this.messageService.add({ severity: 'info', summary: 'Rascunho salvo com sucesso' });
+        this.closeCreatePostModal();
+      },
+      error: (err) => {
+        console.error("Erro ao salvar rascunho:", err);
+        alert("Erro ao salvar rascunho.");
+      }
+    });
   }
 
   createPost() {

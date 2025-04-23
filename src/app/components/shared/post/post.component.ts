@@ -1,4 +1,4 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule],
+  imports: [TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule, NgIf],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
@@ -21,7 +21,9 @@ export class PostComponent implements OnInit {
   @Input() post: any;
   @Input() tags: string[] = [];
   @Input() userId!: number;
+  @Input() isDraft: boolean = false;
   @Input() isProfile: boolean = false;
+
 
   @Output() editPost = new EventEmitter<any>();
   @Output() deletePost = new EventEmitter<any>();
@@ -32,6 +34,7 @@ export class PostComponent implements OnInit {
   comments: number = 0;
   isSave: boolean = false;
   items: MenuItem[] | undefined;
+  isOwnPost: boolean = false;
 
   constructor(private http: HttpClient, private messageService: MessageService, private router: Router) { }
 
@@ -54,6 +57,12 @@ export class PostComponent implements OnInit {
       if (storedLike !== null) {
         this.isFavorite = JSON.parse(storedLike);
       }
+
+      const currentUser = localStorage.getItem('user');
+  if (currentUser) {
+    const user = JSON.parse(currentUser);
+    this.isOwnPost = user.id === this.post.user_id;
+  }
 
       const storedSave = localStorage.getItem(`save_${this.userId}_${this.post.id}`);
       if (storedSave !== null) {
@@ -95,6 +104,11 @@ export class PostComponent implements OnInit {
       return;
     }
 
+    if (user.id === this.post.user_id) {
+      alert("Você não pode curtir sua própria publicação.");
+      return;
+    }
+
     const prevIsFavorite = this.isFavorite;
     this.isFavorite = !this.isFavorite;
 
@@ -110,11 +124,7 @@ export class PostComponent implements OnInit {
       next: () => {
         const action = this.isFavorite ? 'liked' : 'unliked';
 
-        if (this.isFavorite) {
-          this.likes += 1;
-        } else {
-          this.likes -= 1;
-        }
+        this.likes += this.isFavorite ? 1 : -1;
 
         localStorage.setItem(`like_${user.id}_${this.post.id}`, JSON.stringify(this.isFavorite));
       },
@@ -125,12 +135,17 @@ export class PostComponent implements OnInit {
         this.likes += this.isFavorite ? -1 : 1;
       }
     });
-  }
+   }
 
-  toggleSave() {
+   toggleSave() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user?.id) {
       alert("Usuário não autenticado!");
+      return;
+    }
+
+    if (user.id === this.post.user_id) {
+      alert("Você não pode salvar sua própria postagem.");
       return;
     }
 
@@ -147,7 +162,6 @@ export class PostComponent implements OnInit {
 
     request.subscribe({
       next: () => {
-        const action = this.isSave ? 'salva' : 'removida';
         localStorage.setItem(`save_${user.id}_${this.post.id}`, JSON.stringify(this.isSave));
       },
       error: (err) => {

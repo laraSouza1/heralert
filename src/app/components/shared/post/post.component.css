@@ -108,6 +108,14 @@
   border: 2px solid #dc3545;
 }
 
+::ng-deep .bt-fav2 .p-button:disabled {
+  border-radius: 50px !important;
+  color: #dc3545 !important;
+  background-color: #dc354530 !important;
+  border: 2px solid #dc3545 !important;
+  opacity: 100% !important;
+}
+
 ::ng-deep .comment .pi {
   color: #27a243 !important;
 }
