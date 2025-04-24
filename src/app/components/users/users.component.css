@@ -54,3 +54,8 @@ td {
 ::ng-deep .btn1 .p-button:hover {
   background-color: #88888850 !important;
 }
+
+.click:hover {
+  background-color: #ffefef;
+  border-radius: 10px 10px 0px 0px;
+}

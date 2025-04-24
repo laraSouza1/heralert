@@ -23,12 +23,6 @@
   max-width: 100%;
 }
 
-.cont-post .cont img,
-.cont-post .cont iframe {
-  max-width: 100%;
-  height: auto;
-}
-
 ::ng-deep .bt-follow .p-button {
   font-size: 10px !important;
   width: 65px !important;

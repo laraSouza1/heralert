@@ -28,6 +28,11 @@ td {
   color: #ff6b6b;
 }
 
+.click:hover {
+  background-color: #ffefef;
+  border-radius: 10px 10px 0px 0px;
+}
+
 .number {
   font-size: 14px;
   color: #8a8a8a;

@@ -2,12 +2,12 @@
 
   <form [formGroup]="formGroup" class="mb-3">
 
-    <div class="my-3">
+    <div class="mb-3 mt-2">
       <input type="text" pInputText placeholder="Título da postagem" formControlName="title" maxlength="60" class="tt mt-4"/>
       <p-message *ngIf="formGroup.controls.title.invalid && formGroup.controls.title.touched" severity="error" size="small" variant="simple" text="Título é obrigatório."></p-message>
     </div>
 
-    <p-editor formControlName="text" placeholder="Digite algo..." autoGrow="true">
+    <p-editor formControlName="text" placeholder="Digite algo..." autoGrow="true" class="flex flex-column mb-2">
       <ng-template #header>
         <span class="ql-formats">
           <select class="ql-size">
@@ -47,6 +47,7 @@
         </span>
       </ng-template>
     </p-editor>
+    <p-message size="small">Limite das imagens: 512x512</p-message>
 
     <div class="mt-2">
       <p-message *ngIf="formGroup.controls.text.invalid && formGroup.controls.text.touched" severity="error" size="small" variant="simple" text="Conteúdo é obrigatório."></p-message>

@@ -111,7 +111,6 @@ export class ProfileComponent {
 
   saveDraft() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
     if (!user?.id) {
       alert("Usuário não autenticado!");
       return;
@@ -134,17 +133,27 @@ export class ProfileComponent {
       is_draft: 1
     };
 
-    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
-      next: (response: any) => {
-        console.log("Rascunho salvo com sucesso:", response);
-        this.messageService.add({ severity: 'info', summary: 'Rascunho salvo com sucesso' });
-        this.closeCreatePostModal();
-      },
-      error: (err) => {
-        console.error("Erro ao salvar rascunho:", err);
-        alert("Erro ao salvar rascunho.");
-      }
-    });
+    if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
+      //torna post postado em rascunho
+      this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'info', summary: 'Rascunho atualizado com sucesso' });
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao atualizar o rascunho.")
+      });
+    } else {
+      //cria novo rascunho
+      this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'info', summary: 'Rascunho salvo com sucesso' });
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao salvar rascunho.")
+      });
+    }
   }
 
   createPost() {
@@ -179,11 +188,11 @@ export class ProfileComponent {
       content,
       community,
       tags,
-      media_url: null
+      media_url: null,
+      is_draft: 0
     };
 
     if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
-      //atualiza post
       this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
         next: () => {
           this.closeCreatePostModal();
@@ -192,7 +201,6 @@ export class ProfileComponent {
         error: () => alert("Erro ao atualizar o post.")
       });
     } else {
-      //cria novo post
       this.http.post("http://localhost:8085/api/posts", postData).subscribe({
         next: () => {
           this.closeCreatePostModal();

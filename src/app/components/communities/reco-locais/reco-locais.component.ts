@@ -107,7 +107,6 @@ export class RecoLocaisComponent {
 
   saveDraft() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
     if (!user?.id) {
       alert("Usuário não autenticado!");
       return;
@@ -130,17 +129,26 @@ export class RecoLocaisComponent {
       is_draft: 1
     };
 
-    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
-      next: (response: any) => {
-        console.log("Rascunho salvo com sucesso:", response);
-        this.messageService.add({ severity: 'info', summary: 'Rascunho salvo com sucesso' });
-        this.closeCreatePostModal();
-      },
-      error: (err) => {
-        console.error("Erro ao salvar rascunho:", err);
-        alert("Erro ao salvar rascunho.");
-      }
-    });
+    if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
+      //torna post postado em rascunho
+      this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'info', summary: 'Rascunho atualizado com sucesso' });
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao atualizar o rascunho.")
+      });
+    } else {
+      //cria novo rascunho
+      this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'info', summary: 'Rascunho salvo com sucesso' });
+          this.closeCreatePostModal();
+        },
+        error: () => alert("Erro ao salvar rascunho.")
+      });
+    }
   }
 
   createPost() {
@@ -175,21 +183,26 @@ export class RecoLocaisComponent {
       content,
       community,
       tags,
-      media_url: null
+      media_url: null,
+      is_draft: 0
     };
 
-    this.http.post("http://localhost:8085/api/posts", postData).subscribe({
-      next: (response: any) => {
-        console.log("Post criado com sucesso:", response);
-        this.closeCreatePostModal();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      },
-      error: (err) => {
-        console.error("Erro ao criar post:", err);
-        alert("Erro ao publicar post.");
-      }
-    });
+    if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
+      this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
+        next: () => {
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao atualizar o post.")
+      });
+    } else {
+      this.http.post("http://localhost:8085/api/posts", postData).subscribe({
+        next: () => {
+          this.closeCreatePostModal();
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        error: () => alert("Erro ao publicar post.")
+      });
+    }
   }
 }
