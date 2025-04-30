@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-left-side',
-  imports: [ImageModule, ButtonModule, MenuModule, ToastModule],
+  providers: [MessageService, ConfirmationService],
+  imports: [ImageModule, ButtonModule, MenuModule, ToastModule, DialogModule, ConfirmDialogModule,],
   templateUrl: './left-side.component.html',
   styleUrls: ['./left-side.component.css']
 })
@@ -16,7 +20,10 @@ export class LeftSideComponent {
   items: any[] | undefined;
   user: any;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.loadUser(); //chama dados do user
@@ -63,9 +70,18 @@ export class LeftSideComponent {
 
   //logout e limpa o user
   logout() {
-    localStorage.removeItem('user');
-    this.navigateToWelcome();
-  }
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja sair?',
+      header: 'Confirmar Logout',
+      icon: 'pi pi-sign-out',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        localStorage.removeItem('user');
+        this.navigateToWelcome();
+      }
+    });
+  }  
 
   //chama dados do user
   loadUser() {

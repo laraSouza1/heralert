@@ -27,6 +27,25 @@
   background-color: rgb(190, 190, 190) !important;
 }
 
+::ng-deep .bt-follow2 .p-button {
+  font-size: 10px !important;
+  width: 75px !important;
+  height: 20px !important;
+  border-radius: 50px !important;
+  padding-left: 3px !important;
+  padding-right: 4px !important;
+  background-color: white;
+  border: 1px solid #27a243 !important;
+  color: #27a243 !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  padding-right: 1.5px !important;
+}
+
+::ng-deep .bt-follow2 .p-button:not(:disabled):hover {
+  background-color: #27a24330 !important;
+}
+
 /*icon do btn de seguir*/
 ::ng-deep .small .pi {
   font-size: 10px;
