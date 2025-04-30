@@ -1,18 +1,8 @@
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
-::ng-deep .p-inputicon {
-  color: #FF9D9D;
-}
-
 .line {
   border-top: 1px solid #e2e2e2;
 }
 
+/*foto do usuário*/
 .img-profile {
   object-fit: cover;
   width: 50px;
@@ -23,6 +13,7 @@
   border: 3px solid #ff6b6b;
 }
 
+/*formatação tabela*/
 table {
   border-collapse: collapse;
 }
@@ -33,6 +24,7 @@ td {
   padding-bottom: 10px;
 }
 
+/*usuário e nome do user*/
 .user {
   color: #ff9595;
   font-weight: 600;
@@ -43,6 +35,7 @@ td {
   font-size: 14px;
 }
 
+/*btn seguir*/
 ::ng-deep .btn1 .p-button {
   color: #888888 !important;
   background-color: #ffffff !important;
@@ -55,6 +48,7 @@ td {
   background-color: #88888850 !important;
 }
 
+/*click na linha da tabela*/
 .click:hover {
   background-color: #ffefef;
   border-radius: 10px 10px 0px 0px;

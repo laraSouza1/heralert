@@ -1,14 +1,4 @@
-::ng-deep .p-inputicon {
-  color: #FF9D9D !important;
-}
-
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
+/*RELACIADO A IMAGENS*/
 .image-wrapper {
   position: relative;
   display: inline-block;
@@ -74,6 +64,7 @@
   opacity: 1;
 }
 
+/*botões para remover capa/icon*/
 ::ng-deep .remove-img .p-button {
   font-size: 12px !important;
   height: 25px !important;

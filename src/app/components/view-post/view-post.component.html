@@ -1,19 +1,98 @@
+<!--EXIBE UM POST SELECIONADO POR ID E SEUS COMENTÁRIOS-->
 
 <div class="container">
   <div class="line-fy"></div>
 
-  <div>
-    <app-left-side class="sidebar left"></app-left-side>
+  <!--parte esquerda fixa da aplicação-->
+  <app-left-side class="sidebar left"></app-left-side>
 
-    <div class="content px-4 pt-4 ">
-      <div class="div-ww">
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
 
-        <app-post [post]="post" [tags]="tags" [userId]="currentUserId" *ngIf="post"></app-post>
+  <div class="content px-4 pt-4">
+    <div class="div-ww mb-6">
+
+      <!--post clicado-->
+      <app-post [post]="post" [tags]="tags" [userId]="currentUserId" *ngIf="post"></app-post>
+
+      <!--contagem de comentários-->
+      <h3 class="mb-4 line pt-4">{{ comments.length }} Comentário{{ comments.length === 1 ? '' : 's' }}</h3>
+
+      <ng-template #noComments>
+        <p class="text-gray-500">Nenhum comentário ainda.</p>
+      </ng-template>
+
+      <!--input para comentar-->
+      <div class="flex flex-row w-full">
+        <div class="flex w-11 justify-content-start aling-items-center aling-content-center">
+          <p-iconfield class="w-full">
+            <p-inputicon styleClass="pi pi-comment"></p-inputicon>
+            <input type="text" pInputText placeholder="Comentar..." [(ngModel)]="newComment" maxlength="360">
+          </p-iconfield>
+        </div>
+        <div class="flex w-1 justify-content-end aling-items-center aling-content-center">
+          <p-button icon="pi pi-send" class="btn" (click)="addComment()" />
+        </div>
+      </div>
+
+      <!--comentários-->
+      <div class="pt-2">
+
+        <ng-container *ngIf="commentTree.length > 0; else noComments">
+          <ng-container *ngTemplateOutlet="renderComments; context: { comments: commentTree, level: 0 }"></ng-container>
+        </ng-container>
+
+        <!--fetch nos comentários-->
+        <ng-template #renderComments let-comments="comments">
+          <div *ngFor="let comment of comments" [style.margin-left.px]="comment.parent_id ? 24 : 0" class="py-3 mb-2">
+
+            <!--header/user-->
+            <div class="flex flex-row align-items-center mb-2 gap-2 cursor-pointer"
+              (click)="goToUserProfile(comment.user_id, comment.username)">
+              <div class="flex justify-content-start">
+                <img [src]="comment.profile_pic || '/imgs/ai.png'" class="icon-image">
+              </div>
+              <div class="flex user justify-content-start">{{ comment.username }}</div>
+              <div class="flex justify-content-start">
+                <span *ngIf="comment.user_id === post.user_id" class="badge badge-primary ml-2 criador">
+                  Criador
+                </span>
+              </div>
+              <div *ngIf="comment.user_id !== currentUserId" class="w-full flex align-items-center justify-content-end"
+                (click)="$event.stopPropagation()">
+                <p-toast />
+                <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
+                <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
+              </div>
+            </div>
+
+            <!--CONTEÚDO-->
+            <div class="cont-comment" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)"></div>
+            <!--vai ler o conteúdo do cumentário em innerHTML para o pipe de mention funcionar-->
+
+            <div class="flex flex-row w-full mt-2">
+              <div class="date flex justify-content-start w-6">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
+              <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
+                <p-button icon="pi pi-trash" class="delete-comment" (click)="confirmDeleteComment(comment.id)"></p-button>
+              </div> <!--opção deletar comentário-->
+            </div>
+
+            <!--btn/input de responder comentário já existente-->
+            <input type="text" pInputText *ngIf="replyToCommentId === comment.id"
+              [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder"
+              class="i-resposta" maxlength="360" />
+            <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer"
+              (click)="startReply(comment)">Responder</a>
+
+            <ng-container *ngIf="comment.children?.length > 0">
+              <ng-container *ngTemplateOutlet="renderComments; context: { comments: comment.children }"></ng-container>
+            </ng-container>
+          </div>
+        </ng-template>
       </div>
     </div>
-
-
-
-      <app-right-side class="sidebar right"></app-right-side>
-    </div>
   </div>
+
+  <!--parte direita fixa da aplicação-->
+  <app-right-side class="sidebar right"></app-right-side>
+</div>

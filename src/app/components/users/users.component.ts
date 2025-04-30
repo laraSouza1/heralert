@@ -11,12 +11,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-users',
   imports: [
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    TableModule,
-    CommonModule,
-    ButtonModule
+    IconFieldModule, InputIconModule, InputTextModule,
+    TableModule, CommonModule, ButtonModule
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
@@ -26,17 +22,22 @@ export class UsersComponent implements OnInit {
   users: any[] = [];
   searchTerm = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
+  //pesquisa
   onSearch(event: any): void {
     this.searchTerm = event.target.value;
     this.loadUsers();
   }
 
+  //fetch todos os users
   loadUsers(): void {
     this.http.get<any>('http://localhost:8085/api/users', {
       params: { search: this.searchTerm }
@@ -57,6 +58,7 @@ export class UsersComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (currentUser && currentUser.id === userId) {
       this.router.navigate(['/profile']);
+      //se for o user logado no localstorage, mostra o perfil dele
     } else {
       this.router.navigate(['/profile-view', username]);
     }

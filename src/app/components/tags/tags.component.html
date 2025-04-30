@@ -1,10 +1,14 @@
+<!--COMPONENTE PARA MOSTRA TODAS AS TAGS EXISTENTES-->
+
+<!--pesquisa-->
 <div class="line my-3 pt-3">
   <p-iconfield iconPosition="left" class="ml-auto">
     <p-inputicon><i class="pi pi-search"></i></p-inputicon>
-    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" />
+    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
   </p-iconfield>
 </div>
 
+<!--tabela para exibição de todas as tags-->
 <table class="mt-2 w-full mb-6">
   <tbody>
     <tr class="click" *ngFor="let tag of tags">

@@ -1,17 +1,3 @@
-.container-chat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.line {
-  height: 1px;
-  background-color: #c2c2c2;
-  width: 100%;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -21,21 +7,30 @@
   margin-right: 50px;
 }
 
+.line {
+  height: 1px;
+  background-color: #c2c2c2;
+  width: 100%;
+}
+
 ::ng-deep h1 {
   font-weight: 400;
 }
 
-.scrollable-table {
-  max-height: 80%;
-  overflow-y: auto;
-  display: block;
-}
-
+/*CHAT*/
 .truncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   max-height: 3em;
+}
+
+.container-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .div-chat {
@@ -59,6 +54,14 @@
   align-items: center;
 }
 
+/*TABELA primeng*/
+
+.scrollable-table {
+  max-height: 80%;
+  overflow-y: auto;
+  display: block;
+}
+
 ::ng-deep .p-datatable-tbody > tr {
   background-color: white !important;
   color: #616161 !important;
@@ -76,17 +79,7 @@
   border-color: #c2c2c2 !important;
 }
 
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
-::ng-deep .p-inputicon {
-  color: #FF9D9D;
-}
-
+/*FOTOS DOS USER -----------------------*/
 .user-image {
   width: 45px;
   height: 45px;
@@ -101,6 +94,7 @@
   border-radius: 5px;
 }
 
+/*SCROLLBAR-------------------*/
 ::-webkit-scrollbar {
   width: 16px;
   background-color: rgb(224, 224, 224);

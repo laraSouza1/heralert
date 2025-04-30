@@ -1,3 +1,5 @@
+/*GERAL: fontes, body, scrollbar */
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import "primeicons/primeicons.css";
 
@@ -13,6 +15,23 @@ body {
 * {
   font-family: Lexend, sans-serif;
 }
+
+/*SCROLLBAR*/
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/*--------------------------------------------------------------------------*/
+
+/*ITENS PRIMENG*/
+
+/*MODAIS*/
 
 .p-dialog {
   background-color: white !important;
@@ -37,6 +56,8 @@ body {
   border-left: 2px solid #ff6b6b;
 }
 
+/*BOTÕES*/
+
 .pi-sign-out:before {
   color: #ff6b6b;
 }
@@ -49,9 +70,9 @@ body {
   background-color: rgba(255, 255, 255, 0.089) !important;
 }
 
+/*EDITOR (o campo de conteúdo na criação de post)*/
 .p-editor .p-editor-toolbar.ql-snow {
  border: none !important;
-
 }
 
 .p-editor .p-editor-toolbar {
@@ -92,6 +113,8 @@ body {
   padding-left: 0px !important;
 }
 
+/*TAGS*/
+
 .p-tag {
   background-color: #FF6B6B35 !important;
   color: #FF6B6B !important;
@@ -102,14 +125,20 @@ body {
   background-color: #FF6B6B50 !important;
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+/*INPUTS*/
+
+.p-inputicon {
+  color: #FF9D9D !important;
 }
 
-body::-webkit-scrollbar {
-  display: none;
+.p-inputtext {
+  background-color: white !important;
+  border: 1px solid #FF9D9D !important;
+  width: 100% !important;
+  color: #616161 !important;
 }
+
+/*SELECTS*/
 
 .p-select {
   padding-left: 0px !important;
@@ -151,4 +180,16 @@ body::-webkit-scrollbar {
 
 .p-select-option.p-select-option-selected {
   background-color: #ffb6b680 !important;
+}
+
+/*--------------------------------------------------------------------------*/
+
+/*menção de usuários por @ pipe*/
+.mention {
+  color: #FF9D9D;
+  font-weight: 500;
+  cursor: pointer;
+}
+.mention:hover {
+  text-decoration: underline;
 }

@@ -1,18 +1,8 @@
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
-::ng-deep .p-inputicon {
-  color: #FF9D9D;
-}
-
 .line {
   border-top: 1px solid #e2e2e2;
 }
 
+/*formatação tabela*/
 table {
   border-collapse: collapse;
 }
@@ -23,16 +13,19 @@ td {
   padding-bottom: 10px;
 }
 
-.hasht {
-  font-size: 18px;
-  color: #ff6b6b;
-}
-
+/*click linha da tabela*/
 .click:hover {
   background-color: #ffefef;
   border-radius: 10px 10px 0px 0px;
 }
 
+/*#*/
+.hasht {
+  font-size: 18px;
+  color: #ff6b6b;
+}
+
+/*contagem de hashtags*/
 .number {
   font-size: 14px;
   color: #8a8a8a;

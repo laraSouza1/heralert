@@ -1,3 +1,5 @@
+<!--COMPONENTE PARTILHADO MODELO DE POSTAGEM (utilizado em vários lugares)-->
+
 <div class="container mb-5">
 
   <!--header-->
@@ -11,7 +13,8 @@
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="flex align-items-center justify-content-center">
       <p-button icon="pi pi-plus" class="bt-follow small" label="Seguir"></p-button>
     </div>
-    <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
+    <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
+      (click)="$event.stopPropagation()">
       <p-toast />
       <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
@@ -26,7 +29,7 @@
         {{ post.created_at | date: 'dd/MM/yy' }}
       </div>
     </div>
-    <div class="cont mt-3" [innerHTML]="post.content"></div>
+    <div class="conteudo mt-3" [innerHTML]="post.content"></div>
 
     <button class="comm my-2">{{ post.community }}</button> <!--comunidade-->
 
@@ -43,21 +46,27 @@
     <div class="flex flex-row w-full gap-2 aling-items-center">
 
       <div *ngIf="!isDraft" class="w-6 flex justify-content-start gap-2">
+
+        <!--favoritar-->
         <p-button *ngIf="post.user_id !== userId" [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
           [label]="likes.toString()" class="icon-action fav bt-fav" (onClick)="toggleFavorite()" />
 
-        <p-button *ngIf="post.user_id === userId" icon="pi pi-heart-fill" [disabled]="true"
-          [label]="likes.toString()" class="icon-action fav bt-fav2" styleClass="bt-fav2" />
+        <p-button *ngIf="post.user_id === userId" icon="pi pi-heart-fill" [disabled]="true" [label]="likes.toString()"
+          class="icon-action fav bt-fav2" styleClass="bt-fav2" />
 
+        <!--comentar-->
         <p-button [icon]="isComment ? 'pi pi-comment-fill' : 'pi pi-comment'" [label]="comments.toString()"
-          class="icon-action comment bt-comment" />
+          class="icon-action comment bt-comment" (click)="goToPostDetail($event)" />
 
+        <!--salvar-->
         <p-button *ngIf="post.user_id !== userId" [icon]="isSave ? 'pi pi-bookmark-fill' : 'pi pi-bookmark'"
           class="icon-action save bt-save" (onClick)="toggleSave()" />
 
+        <!--partilhar-->
         <p-button icon="pi pi-share-alt" class="icon-action share bt-share" />
       </div>
 
+      <!--editar/excluir-->
       <div *ngIf="isDraft || isProfile" class="w-12 flex justify-content-end gap-2">
         <p-button icon="pi pi-pencil" class="icon-action pencil bt-pencil" (click)="onEditClick()" />
         <p-button icon="pi pi-trash" class="icon-action trash bt-trash" (click)="onDeleteClick()" />

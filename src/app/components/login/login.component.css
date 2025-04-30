@@ -21,6 +21,7 @@ h1 {
   color: #3e3e3e;
 }
 
+/*cqard que contém o form*/
 .card {
  background-color: white;
  border: 2px solid #FF9D9D;
@@ -29,17 +30,12 @@ h1 {
  border-radius: 50px;
 }
 
-::ng-deep .p-inputtext {
-  background-color: white !important;
-  border: 1px solid #FF9D9D !important;
-  width: 100% !important;
-  color: #616161 !important;
-}
-
+/*quando inputs aticos de usuario/nome e senha*/
 ::ng-deep input.p-inputtext:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #ffc3c3 inset !important;
 }
 
+/*link*/
 a {
   color: #a7a7a7;
   font-size: small;
@@ -49,6 +45,7 @@ a:hover {
   color: #868686;
 }
 
+/*input password primeng*/
 ::ng-deep .p-password {
   background-color: white !important;
   border: none !important;
@@ -56,14 +53,8 @@ a:hover {
   color: #616161 !important;
 }
 
-::ng-deep .p-inputicon {
-  color: #FF9D9D !important;
-}
 
-::ng-deep .p-button {
-  width: 100% !important;
-}
-
+/*botões LOGIN/CADASTRO*/
 ::ng-deep .bt2 .p-button {
   width: 100% !important;
   color: #616161 !important;
@@ -77,6 +68,7 @@ a:hover {
 }
 
 ::ng-deep .p-button {
+  width: 100% !important;
   color: white !important;
   background-color: #FF6B6B !important;
   border: none !important;

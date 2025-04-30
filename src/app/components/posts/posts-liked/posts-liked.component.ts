@@ -11,29 +11,37 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-posts-liked',
   imports: [
-    CommonModule,
-    FormsModule,
-    PostComponent,
-    IconFieldModule,
-    InputTextModule,
-    ButtonModule,
-    InputIcon
+    CommonModule, FormsModule, PostComponent, IconFieldModule,
+    InputTextModule, ButtonModule, InputIcon
   ],
   templateUrl: './posts-liked.component.html',
   styleUrl: './posts-liked.component.css'
 })
 export class PostsLikedComponent implements OnInit {
+
   likedPosts: any[] = [];
   currentUserId: number = 0;
   searchTerm = '';
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+
+    //recupera informações do usuário do localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadLikedPosts();
+    }
+  }
+
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadLikedPosts();
   }
 
+  //fetch posts curtidos pelo user
   loadLikedPosts() {
     this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`, {
       params: { search: this.searchTerm }
@@ -42,13 +50,5 @@ export class PostsLikedComponent implements OnInit {
         this.likedPosts = response.data;
       }
     });
-  }
-
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-      this.loadLikedPosts();
-    }
   }
 }

@@ -1,6 +1,11 @@
+<!--COMPONENTE DE LOGIN-->
+
+<!--menu no topo-->
 <app-menu-bar></app-menu-bar>
+
 <div class="border-page flex align-content-center justify-content-center">
   <div class="align-content-center justify-content-center card py-8 my-7">
+    <!--título-->
     <div class="flex flex-column mx-8 mb-4">
       <h1 class="mt-0 mb-2">Acessar conta</h1>
       <div class="line"></div>
@@ -8,23 +13,34 @@
 
     <!-- Formulário -->
     <form class="mx-8" (ngSubmit)="login()">
+
+      <!--campo nome ou usuário-->
       <p-iconfield class="mb-2">
         <p-inputicon styleClass="pi pi-user"></p-inputicon>
-        <input type="text" pInputText placeholder="E-mail ou usuário" [(ngModel)]="usernameOrEmail" name="usernameOrEmail" required />
+        <input type="text" pInputText placeholder="E-mail ou usuário" [(ngModel)]="usernameOrEmail" name="usernameOrEmail" required class="i-l" />
       </p-iconfield>
+      <!--mensagem de erro para campo nome ou usuário-->
       <p-message *ngIf="emailOrUsernameError" severity="error" variant="simple" size="small" text="E-mail ou usuário incorretos."></p-message>
 
+      <!--campo senha-->
       <p-iconfield class="mb-2 mt-4">
         <p-inputicon styleClass="pi pi-lock"></p-inputicon>
-        <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText placeholder="Palavra-passe" [(ngModel)]="password" name="password" required />
+        <input [type]="isPasswordVisible ? 'text' : 'password'" pInputText placeholder="Palavra-passe" [(ngModel)]="password" name="password" required class="i-l" />
         <p-inputicon (click)="togglePasswordVisibility()" [styleClass]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer"></p-inputicon>
       </p-iconfield>
+      <!--mensagem de erro para campo senha-->
       <p-message *ngIf="passwordError" severity="error" size="small" variant="simple" text="Palavra-passe incorreta."></p-message>
+      
+      <!--link alteração de passe-->
       <a class="flex mb-4 mt-2" href="">Esqueceu a palavra-passe? Clique aqui.</a>
 
-      <div class="flex flex-row gap-3">
-        <p-button type="submit" class="w-6" label="Fazer log-in"></p-button>
-        <p-button class="w-6 bt2" label="Cadastre-se" (click)="navigateToSignIn()"></p-button>
+      <div class="flex flex-row gap-3 w-full">
+        <div class="flex w-6">
+          <p-button class="w-full bt2" label="Cadastre-se" (click)="navigateToSignIn()"></p-button>
+        </div>
+        <div class="flex w-6">
+          <p-button type="submit" class="w-full" label="Fazer log-in"></p-button>
+        </div>
       </div>
     </form>
   </div>

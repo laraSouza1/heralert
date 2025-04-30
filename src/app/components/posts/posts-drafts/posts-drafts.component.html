@@ -1,3 +1,6 @@
+<!--COMPONENTE PARA A EXIBIÇÃO DOS POSTS DE RASCUNHO + PESQUISA-->
+
+<!--pesquisar-->
 <div class="mt-3 mb-3">
   <p-iconfield iconPosition="left" class="ml-auto">
     <p-inputicon><i class="pi pi-search"></i></p-inputicon>
@@ -5,4 +8,5 @@
   </p-iconfield>
 </div>
 
+<!--chamando post.component para exibição de posts em rascunhos-->
 <app-post *ngFor="let post of userPosts" [isDraft]="true" [post]="post" [tags]="post.tags" [userId]="currentUserId" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)"></app-post>

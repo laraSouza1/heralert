@@ -11,13 +11,8 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-posts-drafts',
   imports: [
-    CommonModule,
-    FormsModule,
-    PostComponent,
-    IconFieldModule,
-    InputTextModule,
-    ButtonModule,
-    InputIcon
+    CommonModule, FormsModule, PostComponent, IconFieldModule,
+    InputTextModule, ButtonModule, InputIcon
   ],
   templateUrl: './posts-drafts.component.html',
   styleUrl: './posts-drafts.component.css'
@@ -33,6 +28,17 @@ export class PostsDraftsComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+
+    //recupera informações do usuário do localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadDraftPosts();
+    }
+  }
+
+  //emiters das funções para editar/deletar post que está em post.component
   onEditPost(post: any) {
     this.editPostFromUser.emit(post);
   }
@@ -41,11 +47,13 @@ export class PostsDraftsComponent implements OnInit {
     this.deletePostFromUser.emit(post);
   }
 
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadDraftPosts();
   }
 
+  //fetch nos posts que são rascunhos (is_draft = 1)
   loadDraftPosts() {
     this.http.get<any>(`http://localhost:8085/api/posts/user/${this.currentUserId}/drafts`, {
       params: { search: this.searchTerm }
@@ -54,13 +62,5 @@ export class PostsDraftsComponent implements OnInit {
         this.userPosts = response.data;
       }
     });
-  }
-
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-      this.loadDraftPosts();
-    }
   }
 }

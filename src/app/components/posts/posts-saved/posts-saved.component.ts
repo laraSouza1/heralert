@@ -11,29 +11,37 @@ import { PostComponent } from '../../shared/post/post.component';
 @Component({
   selector: 'app-posts-saved',
   imports: [
-    CommonModule,
-    FormsModule,
-    PostComponent,
-    IconFieldModule,
-    InputTextModule,
-    ButtonModule,
-    InputIcon
+    CommonModule, FormsModule, PostComponent, IconFieldModule,
+    InputTextModule, ButtonModule, InputIcon
   ],
   templateUrl: './posts-saved.component.html',
   styleUrl: './posts-saved.component.css'
 })
 export class PostsSavedComponent implements OnInit {
+
   savedPosts: any[] = [];
   currentUserId: number = 0;
   searchTerm = '';
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+
+    //recupera informações do usuário do localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadSavedPosts();
+    }
+  }
+
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadSavedPosts();
   }
 
+  //fetch posts salvos
   loadSavedPosts() {
     this.http.get<any>(`http://localhost:8085/api/posts/saved/${this.currentUserId}`, {
       params: { search: this.searchTerm }
@@ -42,13 +50,5 @@ export class PostsSavedComponent implements OnInit {
         this.savedPosts = response.data;
       }
     });
-  }
-
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-      this.loadSavedPosts();
-    }
   }
 }

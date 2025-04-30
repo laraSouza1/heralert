@@ -1,3 +1,5 @@
+/*FORMATAÇÃO PÁGINA: SIDEBAR-LEFT | CONTENT | SIDEBAR-RIGHT e mais*/
+
 .container {
   display: flex;
   width: 100%;
@@ -11,10 +13,6 @@
   width: 100%;
   top: 0;
   z-index: 1000;
-}
-
-.line {
-  border-bottom: 2px solid #ff6b6b;
 }
 
 .sidebar {
@@ -44,136 +42,129 @@
   padding: 0px;
 }
 
-.post {
-  background-color: #c2c2c2;
-  border-radius: 10px;
-  height: 20rem;
-}
-
-.com-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.com-image:hover {
-  filter: contrast(120%);
-  filter: saturate(120%);
-  transform: scale(1.02);
-}
-
-::ng-deep .bt1 .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 5px !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-  height: 40px;
-  width: 8rem;
-  width: 100% !important;
-}
-
-::ng-deep .bt1 .p-button:hover {
-  background-color: #F94C4C !important;
-  font-weight: 700 !important;
-}
-
-::ng-deep .bt2 .p-button {
-  width: 100% !important;
-  color: #616161 !important;
-  background-color: #e2e2e2 !important;
-  height: 40px;
-  border: none !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-}
-
-::ng-deep .bt2 .p-button:hover {
-  color: #3b3b3b !important;
-  background-color: #c9c9c9 !important;
-}
-
-::ng-deep .bt-com .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 50px !important;
-  height: 40px;
-  width: 40px;
-}
-
-::ng-deep .bt-com .p-button:hover {
-  background-color: #F94C4C !important;
-  transform: scale(1.02) !important;
-}
-
-::ng-deep .bt3 .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 50px !important;
-  font-size: 13px !important;
-  height: 40px;
-  width: 40px;
-  position: fixed;
-  top: 590px;
-  left: 908px;
-  font-size: 16px;
-  font-weight: 600;
-  z-index: 1000;
-}
-
-::ng-deep .bt3 .p-button:hover {
-  background-color: #F94C4C !important;
-  font-weight: 700 !important;
-  transform: scale(1.02) !important;
-}
-
-::ng-deep .bt-post .p-button {
-  width: 100px !important;
-  font-size: 14px !important;
-  background-color: #FF6B6B !important;
-  color: white !important;
-  border: none !important;
-}
-
-::ng-deep .bt-post .p-button:not(:disabled):hover {
-  background-color: #F94C4C !important;
-}
-
-::ng-deep .bt-post2 .p-button {
-  width: 100px !important;
-  font-size: 14px !important;
-  border: none !important;
-  background-color: #c2c2c2 !important;
-  color: #3b3b3b !important;
-}
-
-::ng-deep .bt-post2 .p-button:not(:disabled):hover {
-  background-color: #aaaaaa !important;
-}
-
-::ng-deep .p-toast-message-icon {
-  position: relative;
-  top: 3px;
-}
-
+/*conteúdo pag limites*/
 .div-ww {
   width: 574px !important;
 }
 
-::ng-deep .bt4 .p-button {
-  border-radius: 0px !important;
-  background-color: white !important;
-  color: #616161 !important;
-  border: 0px !important;
-  border-left: 2px solid #ffb6b6 !important;
+/*--------------------------------------------------------------------------*/
+
+/*CSS ITENS ENVOLVENDO USUÁRIO*/
+
+/*icon de perfil*/
+.icon-image {
+  border-radius: 5px !important;
+  object-fit: cover;
+  height: 35px;
+  width: 35px;
 }
 
-::ng-deep .slt .p-select {
-  border-radius: 0px 5px 5px 0px !important;
+.icon-image:hover {
+  filter: contrast(180%);
+  filter: saturate(170%);
+}
+
+/*user*/
+.user {
+  color: #ff6b6b;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.user:hover {
+  color: #ce5252;
+}
+
+/*flag de criado*/
+.criador {
+  background-color: #ff9898;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+}
+
+/*menu 3 pontinho primeng*/
+::ng-deep .menu-cont .p-button {
+  background: none !important;
+  color: #616161 !important;
+  border: none !important;
+}
+
+::ng-deep .menu-cont .p-button:not(:disabled):hover {
+  background-color: none !important;
+  color: #2b2b2b !important;
+}
+
+::ng-deep .menu-pontos .p-menu {
+  width: 250px !important;
+  position: absolute !important;
+  left: 680px !important;
+  border: none !important;
+  border-top: 2px solid #ffacac !important;
+}
+
+::ng-deep .menu-pontos .p-menu-submenu-label {
+  display: none !important;
+  height: 0px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+/*--------------------------------------------------------------------------*/
+
+/*BOTÕES*/
+
+/*btn de enviar comentário*/
+::ng-deep .btn .p-button {
+  background-color: #ff6b6b !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px !important;
+}
+
+/*btn para deletar comentário*/
+::ng-deep .delete-comment .p-button {
+  border: none !important;
+  background-color: white !important;
+  color: #dc3545 !important;
+  font-size: 12px !important;
+}
+
+/*btn para responder um comentário*/
+.btn-responder {
+  color: #ff6e6e;
+  font-size: 15px;
+}
+
+/*--------------------------------------------------------------------------*/
+
+/*ITENS PARA AÇÕES DE COMENTAR*/
+
+/*input de responder um comentário*/
+.i-resposta {
+  background-color: rgb(221, 221, 221) !important;
+  border: none !important;
+  width: 100% !important;
+  color: #525252 !important;
+  font-size: 14px !important;
+}
+
+/*div conteúdo do comentário*/
+.cont-comment {
+  width: 550px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow-x: hidden;
+}
+
+/*data comentário*/
+.date {
+  font-size: 12px;
+  color: #9e9e9e;
+}
+
+.line {
+  border-top: 1px solid #c2c2c2;
 }

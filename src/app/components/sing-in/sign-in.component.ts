@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, NumberValueAccessor } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
@@ -15,7 +15,10 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
-  imports: [InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule, MessageModule, Message, CommonModule, MenuBarComponent, FooterComponent],
+  imports: [
+    InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule,
+    MessageModule, Message, CommonModule, MenuBarComponent, FooterComponent
+  ],
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.css']
 })
@@ -40,11 +43,13 @@ export class SingInComponent {
   isSubmitting: boolean = false;
   emailAlreadyUsed: boolean = false;
   usernameAlreadyUsed: boolean = false;
-  user: any;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) { }
 
-  //navegação botões
+  //navegação botões login/cadastro -----------------
   navigateToFY() {
     this.router.navigate(['/for-you']);
   }
@@ -53,7 +58,9 @@ export class SingInComponent {
     this.router.navigate(['/login']);
   }
 
-  //ver senha
+  //validações do formulário ---------------------
+
+  //validação senha + ver senha
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
@@ -62,7 +69,15 @@ export class SingInComponent {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
-  //validações do formulário
+  validatePassword() {
+    this.passwordError = this.password.length < 8;
+  }
+
+  validateConfirmPassword() {
+    this.confirmPasswordError = this.password !== this.confirmPassword;
+  }
+  
+  //validação email, nome e user
   validateEmail() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     this.emailError = !emailPattern.test(this.email);
@@ -80,14 +95,7 @@ export class SingInComponent {
     this.nameMaxLengthError = this.name.length > 25;
   }
 
-  validatePassword() {
-    this.passwordError = this.password.length < 8;
-  }
-
-  validateConfirmPassword() {
-    this.confirmPasswordError = this.password !== this.confirmPassword;
-  }
-
+  //envia o form para criar novo user
   onSubmit() {
 
     if (this.isSubmitting) return;
@@ -101,10 +109,12 @@ export class SingInComponent {
     this.validateConfirmPassword();
 
     if (!this.emailError && !this.nameLengthError && !this.nameMaxLengthError &&
-        !this.usernameFormatError && !this.usernameSpaceError &&
-        !this.usernameLengthError && !this.usernameMaxLengthError &&
-        !this.passwordError && !this.confirmPasswordError) {
+      !this.usernameFormatError && !this.usernameSpaceError &&
+      !this.usernameLengthError && !this.usernameMaxLengthError &&
+      !this.passwordError && !this.confirmPasswordError) {
+      //conferir validações
 
+      //envia pro back se estiver tudo ok
       const registrationData = {
         username: this.username,
         name: this.name,
@@ -129,6 +139,7 @@ export class SingInComponent {
                 created_at: new Date().toISOString()
               };
 
+              //armaneza o user no localstorage
               localStorage.setItem('user', JSON.stringify(userData));
 
               this.navigateToFY();
@@ -164,6 +175,7 @@ export class SingInComponent {
     }
   }
 
+  //limpar erros do form
   clearErrors() {
     this.emailError = false;
     this.usernameFormatError = false;

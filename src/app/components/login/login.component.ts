@@ -14,29 +14,27 @@ import { Message, MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-login',
-  imports: [InputIcon,
-    IconField,
-    InputTextModule,
-    FormsModule, ButtonModule,
-    PasswordModule,
-    MenuBarComponent,
-    FooterComponent,
-    MessageModule,
-    Message,
-    NgIf],
+  imports: [
+    InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule,
+    MenuBarComponent, FooterComponent, MessageModule, Message, NgIf
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-
 export class LoginComponent {
+
   isPasswordVisible: boolean = false;
   usernameOrEmail: string = '';
   password: string = '';
   emailOrUsernameError: boolean = false;
   passwordError: boolean = false;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) { }
 
+  //navegações dos btns do form ----------------
   navigateToSignIn() {
     this.router.navigate(['/sign-in']);
   }
@@ -45,10 +43,14 @@ export class LoginComponent {
     this.router.navigate(['/for-you']);
   }
 
+  //conteudo do form ----------------
+
+  //deixar pass visível ou não
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+  //executa login pro back
   login() {
     this.clearErrors();
 
@@ -61,7 +63,7 @@ export class LoginComponent {
       next: (response: any) => {
         if (response.status) {
           console.log('Login bem-sucedido!', response.data);
-          localStorage.clear(); 
+          localStorage.clear();
           localStorage.setItem('user', JSON.stringify(response.data));
           this.router.navigate(['/for-you']);
         }
@@ -86,9 +88,10 @@ export class LoginComponent {
     });
   }
 
-clearErrors() {
-  this.emailOrUsernameError = false;
-  this.passwordError = false;
-}
+  //limpa erros do form
+  clearErrors() {
+    this.emailOrUsernameError = false;
+    this.passwordError = false;
+  }
 
 }

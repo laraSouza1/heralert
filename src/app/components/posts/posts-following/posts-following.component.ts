@@ -10,12 +10,8 @@ import { InputIcon } from 'primeng/inputicon';
 @Component({
   selector: 'app-posts-following',
   imports: [
-    CommonModule,
-    FormsModule,
-    IconFieldModule,
-    InputTextModule,
-    ButtonModule,
-    InputIcon
+    CommonModule, FormsModule, IconFieldModule, InputTextModule,
+    ButtonModule, InputIcon
   ],
   templateUrl: './posts-following.component.html',
   styleUrl: './posts-following.component.css'

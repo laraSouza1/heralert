@@ -8,15 +8,14 @@ import { InputText } from 'primeng/inputtext';
 @Component({
   selector: 'app-tags',
   imports: [
-    InputIconModule,
-    IconFieldModule,
-    InputText,
+    InputIconModule, IconFieldModule, InputText,
     CommonModule
   ],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.css'
 })
 export class TagsComponent implements OnInit {
+
   tags: { tag: string, count: number }[] = [];
   searchTerm = '';
 
@@ -26,11 +25,13 @@ export class TagsComponent implements OnInit {
     this.loadTags();
   }
 
+  //pesquisar
   onSearch(event: any): void {
     this.searchTerm = event.target.value;
     this.loadTags();
   }
 
+  //fetch todas as tags
   loadTags(): void {
     this.http.get<any>('http://localhost:8085/api/tags', {
       params: { search: this.searchTerm }

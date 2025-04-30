@@ -13,23 +13,16 @@ import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-edit-profile',
-  imports: [ButtonModule,
-    MessageModule,
-    TextareaModule,
-    FileUploadModule,
-    InputIcon,
-    IconField,
-    ReactiveFormsModule,
-    NgIf,
-    InputText,
-    ImageModule],
+  imports: [
+    ButtonModule, MessageModule, TextareaModule, FileUploadModule, InputIcon, IconField,
+    ReactiveFormsModule, NgIf, InputText, ImageModule
+  ],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent {
 
   formGroup!: FormGroup;
-  isSubmitting = false;
   usernameFormatError = false;
   usernameSpaceError = false;
   usernameLengthError = false;
@@ -51,6 +44,7 @@ export class EditProfileComponent {
     const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
     this.user = storedUser;
 
+    //validações form
     this.formGroup = this.fb.group({
       name: [storedUser.name || '', [Validators.required, Validators.maxLength(25)]],
       username: [storedUser.username || '', [Validators.required, Validators.maxLength(15)]],
@@ -63,6 +57,7 @@ export class EditProfileComponent {
     this.formGroup.get('username')?.valueChanges.subscribe(() => this.validateUsername());
   }
 
+  //formata data de registro do user
   emitFormData() {
     if (this.formGroup.valid) {
       this.formDataChanged.emit(this.formGroup.value);
@@ -78,9 +73,9 @@ export class EditProfileComponent {
     }
   }
 
+  //validações para nome de usuário
   validateUsername() {
     const username = this.formGroup.get('username')?.value || '';
-    console.log('Validando username:', username);
 
     this.usernameFormatError = false;
     this.usernameSpaceError = false;
@@ -100,9 +95,11 @@ export class EditProfileComponent {
     }
   }
 
+  //caso altere nome de usuário, verifica se o novo está disponível
   checkUsernameAvailability(username: string) {
+
+    //se voltar a colocar a mesmo, ignora
     if (username === this.user?.username) {
-      console.log('Mesmo username do usuário logado, ignorando checagem');
       this.usernameAlreadyUsed = false;
       return;
     }
@@ -114,7 +111,6 @@ export class EditProfileComponent {
         this.cd.detectChanges();
       },
       error: (err) => {
-        console.error('Erro ao verificar username:', err);
         this.usernameAlreadyUsed = false;
         this.cd.detectChanges();
       }
@@ -191,6 +187,6 @@ export class EditProfileComponent {
       this.formGroup.patchValue({ cover_pic_url: '' });
       this.formDataChanged.emit({ cover_pic_url: '' });
     }
-  }  
+  }
 
 }

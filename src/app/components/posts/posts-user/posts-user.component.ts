@@ -11,13 +11,8 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-posts-user',
   imports: [
-    CommonModule,
-    FormsModule,
-    PostComponent,
-    IconFieldModule,
-    InputTextModule,
-    ButtonModule,
-    InputIcon
+    CommonModule, FormsModule, PostComponent, IconFieldModule,
+    InputTextModule, ButtonModule, InputIcon
   ],
   templateUrl: './posts-user.component.html',
   styleUrl: './posts-user.component.css'
@@ -33,6 +28,17 @@ export class PostsUserComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+
+    //recupera informações do usuário do localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadUserPosts();
+    }
+  }
+
+  //emiters das funções para editar/deletar post que está em post.component
   onEditPost(post: any) {
     this.editPostFromUser.emit(post);
   }
@@ -41,11 +47,13 @@ export class PostsUserComponent implements OnInit {
     this.deletePostFromUser.emit(post);
   }
 
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadUserPosts();
   }
 
+  //fetch todos os posts criados pelo user
   loadUserPosts() {
     this.http.get<any>(`http://localhost:8085/api/posts/user/${this.currentUserId}`, {
       params: { search: this.searchTerm }
@@ -54,13 +62,5 @@ export class PostsUserComponent implements OnInit {
         this.userPosts = response.data;
       }
     });
-  }
-
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
-      this.loadUserPosts();
-    }
   }
 }

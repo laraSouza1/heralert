@@ -1,7 +1,9 @@
+<!--COMPONENTE DE FORMULÁRIO DE EDIÇÃO DE PERFIL-->
+
 <div class="pt-2 px-4">
   <form [formGroup]="formGroup">
 
-    <!--capa e foto-->
+    <!--capa e foto adicionar-->
     <div class="image-wrapper w-full" (click)="onUploadClick('cover')">
       <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="cover-image">
       <div class="overlay">
@@ -22,6 +24,7 @@
       </div>
     </div>
 
+    <!--btns para remover capa/foto-->
     <div class="flex flex-row w-full justify-content-end mb-5 -mt-8">
       <div class="flex gap-2">
         <p-button class="remove-img" label="Remover icon" severity="danger" size="small"
@@ -31,39 +34,40 @@
       </div>
     </div>
 
-    <!--nome, user e bio-->
+    <!--campos para editarnome, user e bio-->
     <div class="flex flex-row w-full align-items-start gap-2">
       <div class="w-6">
+        <!--campo nome-->
         <p-iconfield class="mb-2">
           <p-inputicon styleClass="pi pi-user"></p-inputicon>
           <input type="text" pInputText formControlName="name" [placeholder]="'Nome'" [value]="user?.name"
-            maxlength="25" />
+            maxlength="25" class="i-d" />
         </p-iconfield>
-        <p-message *ngIf="nameLengthError" severity="error" variant="simple" size="small">Mínimo 3
-          caracteres.</p-message>
-        <p-message *ngIf="formGroup.get('name')?.errors?.['required'] && formGroup.get('name')?.touched"
-          severity="error" variant="simple" size="small">Nome é obrigatório.</p-message>
+
+        <!--mensagens de erro campo nome-->
+        <p-message *ngIf="nameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
+        <p-message *ngIf="formGroup.get('name')?.errors?.['required'] && formGroup.get('name')?.touched" severity="error" variant="simple" size="small">Nome é obrigatório.</p-message>
       </div>
+
       <div class="w-6">
+        <!--campo username-->
         <p-iconfield class="mb-2">
           <p-inputicon styleClass="pi pi-at"></p-inputicon>
-          <input maxlength="15" type="text" pInputText formControlName="username" [placeholder]="'Usuário'" />
+          <input maxlength="15" type="text" pInputText formControlName="username" [placeholder]="'Usuário'" class="i-d" />
         </p-iconfield>
-        <p-message *ngIf="usernameFormatError" severity="error" variant="simple" size="small">Apenas Aa-Zz, 0-9, ponto
-          e underscore.</p-message>
-        <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter
-          espaços.</p-message>
-        <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3
-          caracteres.</p-message>
-        <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em
-          uso.</p-message>
-        <p-message *ngIf="formGroup.get('username')?.errors?.['required'] && formGroup.get('username')?.touched"
-          severity="error" variant="simple" size="small">Usuário é obrigatório.</p-message>
+
+        <!--mensagens de erro campo username-->
+        <p-message *ngIf="usernameFormatError" severity="error" variant="simple" size="small">Apenas Aa-Zz, 0-9, ponto e underscore.</p-message>
+        <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter espaços.</p-message>
+        <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
+        <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em uso.</p-message>
+        <p-message *ngIf="formGroup.get('username')?.errors?.['required'] && formGroup.get('username')?.touched" severity="error" variant="simple" size="small">Usuário é obrigatório.</p-message>
       </div>
     </div>
 
+    <!--campo bio-->
     <textarea pInputText class="mt-3" pTextarea formControlName="bio" [placeholder]="'Insira uma bio...'" rows="4"
-      [value]="user?.bio" maxlength="160">
+      [value]="user?.bio" maxlength="160" class="i-d">
     </textarea>
   </form>
 </div>

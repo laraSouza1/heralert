@@ -1,10 +1,14 @@
+<!--COMPONENTE PARA EXIBIR TODOS OS USERS-->
+
+<!--pesquisa-->
 <div class="line my-3 pt-3">
   <p-iconfield iconPosition="left" class="ml-auto">
     <p-inputicon><i class="pi pi-search"></i></p-inputicon>
-    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" />
+    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
   </p-iconfield>
 </div>
 
+<!--tabela exibição users-->
 <table class="mt-2 w-full">
   <tbody>
     <tr class="click" *ngFor="let user of users" (click)="goToProfile(user.id, user.username)" style="cursor: pointer;">
