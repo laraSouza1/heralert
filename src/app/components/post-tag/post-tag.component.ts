@@ -1,36 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { IconFieldModule } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreatePostComponent } from '../../shared/create-post/create-post.component';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
+import { CreatePostComponent } from '../shared/create-post/create-post.component';
+import { LeftSideComponent } from '../shared/left-side/left-side.component';
+import { PostComponent } from '../shared/post/post.component';
+import { RightSideComponent } from '../shared/right-side/right-side.component';
 import { HttpClient } from '@angular/common/http';
-import { PostComponent } from '../../shared/post/post.component';
-import { InputIcon } from 'primeng/inputicon';
 
 @Component({
-  selector: 'app-assuntos-gerais',
+  selector: 'app-post-tag',
   providers: [MessageService, ConfirmationService],
   imports: [
     LeftSideComponent, RightSideComponent, ButtonModule, IconFieldModule, InputTextModule,
     DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent, RippleModule,
     CommonModule, TooltipModule, SelectModule, FormsModule, PostComponent, InputIcon
   ],
-  templateUrl: './assuntos-gerais.component.html',
-  styleUrl: './assuntos-gerais.component.css'
+  templateUrl: './post-tag.component.html',
+  styleUrl: './post-tag.component.css'
 })
-export class AssuntosGeraisComponent {
+export class PostTagComponent implements OnInit {
 
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
 
@@ -39,16 +39,16 @@ export class AssuntosGeraisComponent {
   currentUserId: number = 0;
   searchTerm = '';
   community = 'Assuntos Gerais';
+  tag: string = '';
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
 
-
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.currentUserId = user.id;
+  ngOnInit(): void {
+    this.currentUserId = JSON.parse(localStorage.getItem('user') || '{}')?.id || 0;
+    this.route.queryParams.subscribe(params => {
+      this.tag = params['tag'] || '';
       this.loadPosts();
-    }
+    });
   }
 
   onSearch(event: any) {
@@ -56,19 +56,19 @@ export class AssuntosGeraisComponent {
     this.loadPosts();
   }
 
-  loadPosts() {
+  loadPosts(): void {
     this.http.get<any>(`http://localhost:8085/api/posts`, {
       params: {
         userId: this.currentUserId.toString(),
-        community: this.community,
-        search: this.searchTerm
+        tag: this.tag,
+        search: this.searchTerm || ''
       }
     }).subscribe(response => {
       if (response.status) {
         this.posts = response.data;
       }
     });
-  }
+  }  
 
   postPosted() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });

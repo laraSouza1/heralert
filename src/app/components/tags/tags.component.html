@@ -11,12 +11,14 @@
 <!--tabela para exibição de todas as tags-->
 <table class="mt-2 w-full mb-6">
   <tbody>
-    <tr class="click" *ngFor="let tag of tags">
+    <tr class="click" *ngFor="let tag of tags" (click)="goToTag(tag.tag)">
       <td class="pl-2" style="width: 2rem;">
         <div class="hasht">#</div>
       </td>
       <td>{{ tag.tag }}</td>
-      <td class="pr-2 w-2"><div class="number flex justify-content-center">{{ tag.count }}</div></td>
+      <td class="pr-2 w-2">
+        <div class="number flex justify-content-center">{{ tag.count }}</div>
+      </td>
     </tr>
   </tbody>
 </table>

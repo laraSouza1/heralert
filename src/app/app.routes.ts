@@ -13,6 +13,8 @@ import { DicasDefesaComponent } from './components/communities/dicas-defesa/dica
 import { RecoLocaisComponent } from './components/communities/reco-locais/reco-locais.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
 import { ViewPostComponent } from './components/view-post/view-post.component';
+import { PostTagComponent } from './components/post-tag/post-tag.component';
+import { CommunitiesComponent } from './components/communities/communities/communities.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -28,5 +30,7 @@ export const routes: Routes = [
   { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
   { path: 'reco-locais', component: RecoLocaisComponent },
   { path: 'profile-view/:username', component: ProfileViewComponent },
-  { path: 'view-post/:id', component: ViewPostComponent }
+  { path: 'view-post/:id', component: ViewPostComponent },
+  { path: 'post-tag', component: PostTagComponent },
+  { path: 'communities', component: CommunitiesComponent }
 ];

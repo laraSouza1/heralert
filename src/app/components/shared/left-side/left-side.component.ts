@@ -34,7 +34,8 @@ export class LeftSideComponent {
       },
       {
         label: 'Comunidades',
-        icon: 'pi pi-users'
+        icon: 'pi pi-users',
+        command: () => this.navigateToComm()
       },
       {
         label: 'Notificações',
@@ -46,6 +47,10 @@ export class LeftSideComponent {
   //btns de navegação
   navigateToFY() {
     this.router.navigate(['/for-you']);
+  }
+
+  navigateToComm() {
+    this.router.navigate(['/communities']);
   }
 
   navigateToWelcome() {

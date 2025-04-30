@@ -44,7 +44,7 @@
 
         <!--fetch nos comentários-->
         <ng-template #renderComments let-comments="comments">
-          <div *ngFor="let comment of comments" [style.margin-left.px]="comment.parent_id ? 24 : 0" class="py-3 mb-2">
+          <div *ngFor="let comment of comments" [style.margin-left.px]="comment.parent_id ? 15 : 0" class="pt-3 mb-2">
 
             <!--header/user-->
             <div class="flex flex-row align-items-center mb-2 gap-2 cursor-pointer"
@@ -67,22 +67,26 @@
             </div>
 
             <!--CONTEÚDO-->
-            <div class="cont-comment" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)"></div>
+            <div class="cont-comment" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)">
+            </div>
             <!--vai ler o conteúdo do cumentário em innerHTML para o pipe de mention funcionar-->
 
             <div class="flex flex-row w-full mt-2">
-              <div class="date flex justify-content-start w-6">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
+              <div class="date flex justify-content-start w-6 mb-2">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
               <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
-                <p-button icon="pi pi-trash" class="delete-comment" (click)="confirmDeleteComment(comment.id)"></p-button>
+                <p-button icon="pi pi-trash" class="delete-comment"
+                  (click)="confirmDeleteComment(comment.id)"></p-button>
               </div> <!--opção deletar comentário-->
             </div>
 
             <!--btn/input de responder comentário já existente-->
-            <input type="text" pInputText *ngIf="replyToCommentId === comment.id"
-              [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder"
-              class="i-resposta" maxlength="360" />
-            <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer"
-              (click)="startReply(comment)">Responder</a>
+            <div class="bck pb-3">
+              <input type="text" pInputText *ngIf="replyToCommentId === comment.id"
+                [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder"
+                class="i-resposta" maxlength="360" />
+              <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer"
+                (click)="startReply(comment)">Responder</a>
+            </div>
 
             <ng-container *ngIf="comment.children?.length > 0">
               <ng-container *ngTemplateOutlet="renderComments; context: { comments: comment.children }"></ng-container>

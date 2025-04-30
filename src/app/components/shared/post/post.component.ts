@@ -95,6 +95,28 @@ export class PostComponent implements OnInit {
     this.router.navigate(['/view-post', this.post.id]);
   }
 
+  //encaminha para comunidade
+  goToCommunity(communityName: string, event: MouseEvent): void {
+    event.stopPropagation();
+    const routeMap: { [key: string]: string } = {
+      'Recomendações de Locais': 'reco-locais',
+      'Autocuidados Gerais': 'autocuidados-femininos',
+      'Autocuidados Íntimos Femininos': 'autocuidados-if',
+      'Dicas de Autodefesa': 'dicas-defesa',
+      'Assuntos Gerais': 'assuntos-gerais',
+    };
+    const route = routeMap[communityName];
+    if (route) {
+      this.router.navigate(['/' + route]);
+    }
+  }
+
+  //encaminha para tag clicada
+  goToTag(tag: string, event: Event): void {
+    event.stopPropagation();
+    this.router.navigate(['/post-tag'], { queryParams: { tag } });
+  }  
+  
   //ver perfil user selecionado
   goToUserProfile(): void {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');

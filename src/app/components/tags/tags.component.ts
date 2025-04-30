@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tags',
@@ -19,7 +20,7 @@ export class TagsComponent implements OnInit {
   tags: { tag: string, count: number }[] = [];
   searchTerm = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.loadTags();
@@ -29,6 +30,11 @@ export class TagsComponent implements OnInit {
   onSearch(event: any): void {
     this.searchTerm = event.target.value;
     this.loadTags();
+  }
+
+  //encaminha para a tag clicada
+  goToTag(tag: string): void {
+    this.router.navigate(['/post-tag'], { queryParams: { tag } });
   }
 
   //fetch todas as tags

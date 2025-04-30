@@ -31,14 +31,19 @@
     </div>
     <div class="conteudo mt-3" [innerHTML]="post.content"></div>
 
-    <button class="comm my-2">{{ post.community }}</button> <!--comunidade-->
+    <!--comunidade-->
+    <span (click)="goToCommunity(post.community, $event)" style="cursor: pointer;">
+      <button class="comm my-2">{{ post.community }}</button>
+    </span>
 
     <!--tags-->
     <div class="line mt-3 pt-3" *ngIf="tags?.length">
       <ng-container *ngFor="let tag of tags">
-        <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>
+        <span (click)="goToTag(tag, $event)" style="cursor: pointer;">
+          <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>
+        </span>        
       </ng-container>
-    </div>
+    </div>    
   </div>
 
   <!--ações-->
