@@ -8,13 +8,14 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FollowButtonComponent } from '../follow-button/follow-button.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
   imports: [
     TableModule, ButtonModule, TagModule, MenuModule,
-    ToastModule, NgFor, CommonModule, NgIf
+    ToastModule, NgFor, CommonModule, NgIf, FollowButtonComponent
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']

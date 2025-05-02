@@ -10,9 +10,7 @@
     <div class="flex align-items-center justify-content-center user">
       <div>{{ post.username }}</div>
     </div>
-    <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="flex align-items-center justify-content-center">
-      <p-button icon="pi pi-plus" class="bt-follow small" label="Seguir"></p-button>
-    </div>
+    <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" [targetUserId]="post.user_id" (click)="$event.stopPropagation()"></app-follow-button>
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
       (click)="$event.stopPropagation()">
       <p-toast />
@@ -29,7 +27,7 @@
         {{ post.created_at | date: 'dd/MM/yy' }}
       </div>
     </div>
-    <div class="conteudo mt-3" [innerHTML]="post.content"></div>
+    <div class="conteudo cont mt-3" [innerHTML]="post.content"></div>
 
     <!--comunidade-->
     <span (click)="goToCommunity(post.community, $event)" style="cursor: pointer;">

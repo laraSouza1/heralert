@@ -7,6 +7,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import { FollowService } from '../../../services/services/follow.service';
 
 @Component({
   selector: 'app-left-side',
@@ -22,7 +23,8 @@ export class LeftSideComponent {
 
   constructor(
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private followService: FollowService
   ) {}
 
   ngOnInit() {
@@ -78,8 +80,9 @@ export class LeftSideComponent {
       rejectLabel: 'Cancelar',
       accept: () => {
         localStorage.removeItem('user');
+        this.followService.clearFollowings();
         this.navigateToWelcome();
-      }
+      }      
     });
   }  
 

@@ -5,19 +5,20 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import { FollowButtonComponent } from '../shared/follow-button/follow-button.component';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-profile-user-view',
   imports: [
-    ButtonModule,
-    DialogModule,
-    MenuModule,
-    ToastModule
+    ButtonModule, DialogModule, MenuModule, ToastModule,
+    FollowButtonComponent, NgIf, CommonModule
   ],
   templateUrl: './profile-user-view.component.html',
-  styleUrl: './profile-user-view.component.css'
+  styleUrls: ['./profile-user-view.component.css']
 })
 export class ProfileUserViewComponent implements OnInit {
+  
   @Input() user: any;
   items: MenuItem[] | undefined;
 
@@ -31,5 +32,4 @@ export class ProfileUserViewComponent implements OnInit {
       }
     ];
   }
-
 }

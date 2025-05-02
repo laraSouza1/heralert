@@ -57,6 +57,7 @@
   object-fit: cover;
   height: 30px;
   width: 30px;
+  border: 2px solid #ff6b6b !important;
 }
 
 .icon-image:hover {
@@ -126,7 +127,7 @@
 /*btn para deletar comentário*/
 ::ng-deep .delete-comment .p-button {
   border: none !important;
-  background-color: white !important;
+  background-color: transparent !important;
   padding: 0px !important;
   color: #dc3545 !important;
   font-size: 12px !important;
@@ -144,9 +145,9 @@
 
 /*input de responder um comentário*/
 .i-resposta {
-  background-color: rgb(221, 221, 221) !important;
-  border: none !important;
-  width: 98% !important;
+  background-color: white !important;
+  border: 1px solid #ffd2d2 !important;
+  width: 100% !important;
   color: #525252 !important;
   font-size: 14px !important;
 }
@@ -161,17 +162,19 @@
   font-size: 16px;
 }
 
-.bck {
-  border-bottom: 1px solid #c2c2c2;
-  width: 565px;
-}
-
 /*data comentário*/
 .date {
   font-size: 12px;
-  color: #9e9e9e;
+  color: #919191;
 }
 
 .line {
   border-top: 1px solid #c2c2c2;
+}
+
+.arr {
+  background-color: rgb(243, 243, 243);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #dbdbdb;
 }

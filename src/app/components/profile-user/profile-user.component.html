@@ -1,14 +1,18 @@
+<!--COMPOENTE PARA PERFIL DO USER (foto, capa, seguidores, etc)-->
+
 <div class="w-12 pt-2">
 
+  <!--foto de perfil e capa-->
   <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="cover-image">
   <img [src]="user?.profile_pic || '/imgs/ai.png'" class="icon-image">
 
+  <!--nome e edição de perfil-->
   <div class="flex flex-row mt-6 ml-3 gap-3 align-items-center">
     <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
     <div>
       <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-user-edit"
-      label="Editar perfil" (click)="openEditProfileModal()">
-    </p-button>
+        label="Editar perfil" (click)="openEditProfileModal()">
+      </p-button>
     </div>
     <div>
       <p-toast />
@@ -17,6 +21,7 @@
     </div>
   </div>
 
+  <!--user e data de criação de perfil-->
   <div class="flex flex-row ml-3 mt-2">
     <div class="flex align-items-center justify-content-center edit-at"><i class="pi pi-at"></i></div>
     <div class="flex align-items-center justify-content-center info">{{ user?.username }}</div>
@@ -25,17 +30,22 @@
   </div>
 
   <div class="flex flex-row ml-3 mt-1">
-    <div class="flex align-items-center justify-content-center number mr-1">95</div>
-    <div class="flex align-items-center justify-content-center info mr-3">Seguindo</div>
-    <div class="flex align-items-center justify-content-center number mr-1">234</div>
-    <div class="flex align-items-center justify-content-center info">Seguidores</div>
+    <div class="flex" (click)="abrirFollowing()"><!--div seguindo-->
+      <div class="align-items-center justify-content-center number mr-1">{{ followingCount }}</div>
+      <div class="align-items-center justify-content-center info mr-3">Seguindo</div>
+    </div>
+    <div class="flex" (click)="abrirFollowers()"><!--div seguidores-->
+      <div class="align-items-center justify-content-center number mr-1">{{ followersCount }}</div>
+      <div class="align-items-center justify-content-center info">Seguidores</div>
+    </div>
   </div>
 
-  <div class="ml-3 mt-2 bio">
-    {{ user?.bio }}
-  </div>
+  <!--bio-->
+  <div class="ml-3 mt-2 bio">{{ user?.bio }}</div>
+
 </div>
 
+<!--modal de edição de perfil-->
 <p-dialog [(visible)]="showEditProfileModal" modal [header]="'Editar Perfil'" [closable]="false"
   [style]="{width: '50vw'}">
 

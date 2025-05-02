@@ -1,12 +1,16 @@
+<!--COMPONENTE DE PERFIL DE OUTROS USUÁRIO NA APP-->
+
 <div class="w-12 pt-2 line pb-2">
 
+  <!--foto e capa-->
   <img [src]="user?.cover_pic || '/imgs/ai2.png'" class="cover-image">
   <img [src]="user?.profile_pic || '/imgs/ai.png'" class="icon-image">
 
+  <!--nome, btn seguir, menu-->
   <div class="flex flex-row align-items-center mt-5 ml-3 gap-3">
     <div class="flex align-items-center justify-content-start user">{{ user?.name }}</div>
     <div class="flex justify-content-start">
-      <p-button icon="pi pi-plus" class="bt-follow small flex aling-items-center" label="Seguir"></p-button>
+      <app-follow-button *ngIf="user" [targetUserId]="user.id"></app-follow-button>
     </div>
     <div class="flex justify-content-end">
       <p-toast />
@@ -15,6 +19,7 @@
     </div>
   </div>
 
+  <!--user e data de criação da conta-->
   <div class="flex flex-row ml-3 mt-2">
     <div class="flex align-items-center justify-content-center edit-at"><i class="pi pi-at"></i></div>
     <div class="flex align-items-center justify-content-center info">{{ user?.username }}</div>
@@ -22,6 +27,7 @@
     <div class="flex align-items-center justify-content-center info">{{ user?.memberSince }}</div>
   </div>
 
+  <!--seguindo/seguidores-->
   <div class="flex flex-row ml-3 mt-1">
     <div class="flex align-items-center justify-content-center number mr-1 ">95</div>
     <div class="flex align-items-center justify-content-center info mr-3">Seguindo</div>
@@ -29,7 +35,7 @@
     <div class="flex align-items-center justify-content-center info">Seguidores</div>
   </div>
 
-  <div class="ml-3 mt-2 bio">
-    {{ user?.bio }}
-  </div>
+  <!--bio-->
+  <div class="ml-3 mt-2 bio">{{ user?.bio }}</div>
+
 </div>

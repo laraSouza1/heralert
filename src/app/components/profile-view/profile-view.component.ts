@@ -19,19 +19,10 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-profile-view',
   providers: [MessageService, ConfirmationService],
-  imports: [RightSideComponent,
-    LeftSideComponent,
-    DialogModule,
-    ConfirmDialogModule,
-    ToastModule,
-    ButtonModule,
-    MenubarModule,
-    CommonModule,
-    ProfileUserViewComponent,
-    PostComponent,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule
+  imports: [
+    RightSideComponent, LeftSideComponent, DialogModule, ConfirmDialogModule, ToastModule,
+    ButtonModule, MenubarModule, CommonModule, ProfileUserViewComponent, PostComponent,
+    IconFieldModule, InputIconModule, InputTextModule
   ],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
@@ -53,6 +44,7 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     if (this.user?.id) {
@@ -60,6 +52,7 @@ export class ProfileViewComponent implements OnInit {
     }
   }
 
+  //fetch das infos do usuário
   loadUser(username: string): void {
     this.http.get<any>(`http://localhost:8085/api/users/username/${username}`).subscribe({
       next: (res) => {
@@ -79,6 +72,7 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
+  //fetch dos posts do usuário
   loadUserPosts(userId: string): void {
     this.http.get<any>(`http://localhost:8085/api/posts/user/${userId}`, {
       params: { search: this.searchTerm }

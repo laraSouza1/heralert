@@ -44,53 +44,55 @@
 
         <!--fetch nos comentários-->
         <ng-template #renderComments let-comments="comments">
-          <div *ngFor="let comment of comments" [style.margin-left.px]="comment.parent_id ? 15 : 0" class="pt-3 mb-2">
+          <div *ngFor="let comment of comments" [style.margin-left.px]="comment.parent_id ? 15 : 0" class="my-3">
 
-            <!--header/user-->
-            <div class="flex flex-row align-items-center mb-2 gap-2 cursor-pointer"
-              (click)="goToUserProfile(comment.user_id, comment.username)">
-              <div class="flex justify-content-start">
-                <img [src]="comment.profile_pic || '/imgs/ai.png'" class="icon-image">
+            <div class="arr">
+              <!--header/user-->
+              <div class="flex flex-row align-items-center mb-3 gap-2 cursor-pointer"
+                (click)="goToUserProfile(comment.user_id, comment.username)">
+                <div class="flex justify-content-start">
+                  <img [src]="comment.profile_pic || '/imgs/ai.png'" class="icon-image">
+                </div>
+                <div class="flex user justify-content-start">{{ comment.username }}</div>
+                <div class="flex justify-content-start">
+                  <span *ngIf="comment.user_id === post.user_id" class="badge badge-primary ml-2 criador">
+                    Criador
+                  </span>
+                </div>
+                <div *ngIf="comment.user_id !== currentUserId"
+                  class="w-full flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
+                  <p-toast />
+                  <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
+                  <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
+                </div>
               </div>
-              <div class="flex user justify-content-start">{{ comment.username }}</div>
-              <div class="flex justify-content-start">
-                <span *ngIf="comment.user_id === post.user_id" class="badge badge-primary ml-2 criador">
-                  Criador
-                </span>
+
+              <!--CONTEÚDO------------------>
+
+              <div class="cont-comment pr-5" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)"></div>
+              <!--vai ler o conteúdo do coentário em innerHTML para o pipe de mention (@) funcionar-->
+
+              <div class="flex flex-row w-full mt-2">
+                <div class="date flex justify-content-start w-6 mb-2">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
+                
+                <!--opção deletar comentário-->
+                <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
+                  <p-button icon="pi pi-trash" class="delete-comment"(click)="confirmDeleteComment(comment.id)"></p-button>
+                </div>
               </div>
-              <div *ngIf="comment.user_id !== currentUserId" class="w-full flex align-items-center justify-content-end"
-                (click)="$event.stopPropagation()">
-                <p-toast />
-                <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
-                <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
+
+              <!--btn/input de responder comentário já existente-->
+              <div class="mt-1">
+                <input type="text" pInputText *ngIf="replyToCommentId === comment.id" [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder" class="i-resposta" maxlength="360" />
+                <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer" (click)="startReply(comment)">Responder</a>
               </div>
             </div>
 
-            <!--CONTEÚDO-->
-            <div class="cont-comment" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)">
-            </div>
-            <!--vai ler o conteúdo do cumentário em innerHTML para o pipe de mention funcionar-->
-
-            <div class="flex flex-row w-full mt-2">
-              <div class="date flex justify-content-start w-6 mb-2">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
-              <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
-                <p-button icon="pi pi-trash" class="delete-comment"
-                  (click)="confirmDeleteComment(comment.id)"></p-button>
-              </div> <!--opção deletar comentário-->
-            </div>
-
-            <!--btn/input de responder comentário já existente-->
-            <div class="bck pb-3">
-              <input type="text" pInputText *ngIf="replyToCommentId === comment.id"
-                [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder"
-                class="i-resposta" maxlength="360" />
-              <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer"
-                (click)="startReply(comment)">Responder</a>
-            </div>
-
+            <!--carrega respostas de comentários-->
             <ng-container *ngIf="comment.children?.length > 0">
               <ng-container *ngTemplateOutlet="renderComments; context: { comments: comment.children }"></ng-container>
             </ng-container>
+
           </div>
         </ng-template>
       </div>

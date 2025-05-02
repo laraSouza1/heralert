@@ -11,6 +11,7 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Message, MessageModule } from 'primeng/message';
+import { FollowService } from '../../services/services/follow.service';
 
 @Component({
   selector: 'app-login',
@@ -30,9 +31,7 @@ export class LoginComponent {
   passwordError: boolean = false;
 
   constructor(
-    private router: Router,
-    private http: HttpClient
-  ) { }
+    private router: Router, private http: HttpClient, private followService: FollowService) { }
 
   //navegações dos btns do form ----------------
   navigateToSignIn() {
@@ -63,8 +62,9 @@ export class LoginComponent {
       next: (response: any) => {
         if (response.status) {
           console.log('Login bem-sucedido!', response.data);
-          localStorage.clear();
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.clear(); //limpa localstorage antigo
+          localStorage.setItem('user', JSON.stringify(response.data)); //pega novos dados o user recem logado para o localstorage
+          this.followService.refreshFollowings(response.data.id); //dá refresh nos segudiores do novo user logado
           this.router.navigate(['/for-you']);
         }
       },
