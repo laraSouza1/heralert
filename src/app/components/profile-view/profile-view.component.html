@@ -15,7 +15,17 @@
         </p-iconfield>
       </div>
 
-      <app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="user.id"></app-post>
+      <ng-container *ngIf="userPosts.length > 0; else noProfilePosts">
+        <app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="user.id"></app-post>
+      </ng-container>
+      
+      <!--caso n haja posts-->
+      <ng-template #noProfilePosts>
+        <div class="no-content flex flex-column justify-content-center align-items-center">
+          <p class="flex">Ainda não há postagens!</p>
+          <img src="/imgs/i.png" class="flex no-content-img" />
+        </div>
+      </ng-template>      
     </div>
 
     <app-right-side class="sidebar right"></app-right-side>

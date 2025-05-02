@@ -9,4 +9,14 @@
 </div>
 
 <!--chamando post.component para exibição de posts curtidos pelo user-->
-<app-post *ngFor="let post of likedPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId"> </app-post>
+<ng-container *ngIf="likedPosts.length > 0; else noLikedPosts">
+  <app-post *ngFor="let post of likedPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId"></app-post>
+</ng-container>
+
+<!--caso n haja posts-->
+<ng-template #noLikedPosts>
+  <div class="no-content flex flex-column justify-content-center align-items-center">
+    <p class="flex">Ainda não há postagens favoritadas!</p>
+    <img src="/imgs/i.png" class="flex no-content-img" />
+  </div>
+</ng-template>
