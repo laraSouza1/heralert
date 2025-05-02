@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FollowService } from '../../../services/services/follow.service';
 
@@ -22,17 +22,16 @@ export class FollowButtonComponent implements OnInit {
   constructor(private followService: FollowService) { }
 
   ngOnInit(): void {
-    //busca os seguindos do user logado
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.currentUserId = user.id;
     this.isOwnProfile = this.currentUserId === this.targetUserId;
-
-    this.followService.refreshFollowings(this.currentUserId);
-
-    this.followService.getFollowingChanges().subscribe(followingSet => {
-      this.isFollowing = followingSet.has(this.targetUserId);
+  
+    this.followService.refreshFollowings(this.currentUserId).then(() => {
+      this.followService.getFollowingChanges().subscribe(followingSet => {
+        this.isFollowing = followingSet.has(this.targetUserId);
+      });
     });
-  }
+  }  
 
   //função para mudança do botão de seguir/seguindo
   toggleFollow(): void {

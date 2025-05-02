@@ -15,6 +15,8 @@ import { PostComponent } from '../shared/post/post.component';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { FollowingUserViewComponent } from '../followers/following-user-view/following-user-view.component';
+import { FollowersUserViewComponent } from '../followers/followers-user-view/followers-user-view.component';
 
 @Component({
   selector: 'app-profile-view',
@@ -22,7 +24,8 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [
     RightSideComponent, LeftSideComponent, DialogModule, ConfirmDialogModule, ToastModule,
     ButtonModule, MenubarModule, CommonModule, ProfileUserViewComponent, PostComponent,
-    IconFieldModule, InputIconModule, InputTextModule
+    IconFieldModule, InputIconModule, InputTextModule, FollowingUserViewComponent,
+    FollowersUserViewComponent
   ],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'
@@ -32,8 +35,11 @@ export class ProfileViewComponent implements OnInit {
   user: any;
   userPosts: any[] = [];
   searchTerm = '';
-
-  constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
+  showFollowingModal = false;
+  showFollowersModal = false;
+  selectedUserId: number | null = null;
+  
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -42,6 +48,17 @@ export class ProfileViewComponent implements OnInit {
         this.loadUser(username);
       }
     });
+  }
+
+  //abrir modais de ver seguidores/seguindo do user visualizado
+  onOpenFollowingModal(userId: number) {
+    this.selectedUserId = userId;
+    this.showFollowingModal = true;
+  }
+  
+  onOpenFollowersModal(userId: number) {
+    this.selectedUserId = null;
+    this.showFollowersModal = true;
   }
 
   //pesquisa

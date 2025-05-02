@@ -11,20 +11,24 @@ export class FollowService {
 
   constructor(private http: HttpClient) { }
 
-  //pega os following
-  refreshFollowings(userId: number): void {
-    if (this.loaded) return;
-
-    this.http.get<any>(`http://localhost:8085/api/follows/following/${userId}`).subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.followingUsers = new Set(res.data.map((u: any) => u.following_id));
-          this.followingChanged.next(new Set(this.followingUsers));
-          this.loaded = true;
-        }
-      }
+  //pega os following para login
+  refreshFollowings(userId: number): Promise<void> {
+    if (this.loaded) return Promise.resolve();
+  
+    return new Promise((resolve, reject) => {
+      this.http.get<any>(`http://localhost:8085/api/follows/following/${userId}`).subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.followingUsers = new Set(res.data.map((u: any) => u.following_id));
+            this.followingChanged.next(new Set(this.followingUsers));
+            this.loaded = true;
+          }
+          resolve();
+        },
+        error: (err) => reject(err)
+      });
     });
-  }
+  }   
 
   isFollowing(userId: number): boolean {
     return this.followingUsers.has(userId);
@@ -61,6 +65,7 @@ export class FollowService {
 
   //limpa infos ao dar logout
   clearFollowings(): void {
+    this.loaded = false;
     this.followingUsers.clear();
     this.followingChanged.next(new Set());
   }

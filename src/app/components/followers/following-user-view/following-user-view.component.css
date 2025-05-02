@@ -1,0 +1,67 @@
+.line {
+  border-top: 1px solid #e2e2e2;
+}
+
+/*foto do usuário*/
+.img-profile {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  top: 2.5px;
+  border: 3px solid #ff6b6b;
+}
+
+/*formatação tabela*/
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border-bottom: 1px solid #dbdbdb;
+  padding-top: 12px;
+  padding-bottom: 10px;
+}
+
+/*usuário e nome do user*/
+.user {
+  color: #ff9595;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.nome {
+  font-size: 14px;
+}
+
+/*btn seguir*/
+::ng-deep .btn1 .p-button {
+  color: #888888 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #888888 !important;
+  border-radius: 50px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .btn1 .p-button:hover {
+  background-color: #88888850 !important;
+}
+
+::ng-deep .btn12 .p-button {
+  color: #27a243 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #27a243 !important;
+  border-radius: 50px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .btn12 .p-button:hover {
+  background-color: #27a24350 !important;
+}
+
+/*click na linha da tabela*/
+.click:hover {
+  background-color: #ffefef;
+  border-radius: 10px 10px 0px 0px;
+}
