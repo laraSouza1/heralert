@@ -8,13 +8,14 @@ export class FollowService {
   private loaded = false;
   private followingUsers: Set<number> = new Set();
   private followingChanged = new BehaviorSubject<Set<number>>(this.followingUsers);
+  private followerCountChanged = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient) { }
 
   //pega os following para login
   refreshFollowings(userId: number): Promise<void> {
     if (this.loaded) return Promise.resolve();
-  
+
     return new Promise((resolve, reject) => {
       this.http.get<any>(`http://localhost:8085/api/follows/following/${userId}`).subscribe({
         next: (res) => {
@@ -28,7 +29,7 @@ export class FollowService {
         error: (err) => reject(err)
       });
     });
-  }   
+  }
 
   isFollowing(userId: number): boolean {
     return this.followingUsers.has(userId);
@@ -39,6 +40,10 @@ export class FollowService {
     return this.followingChanged.asObservable();
   }
 
+  getFollowerCountChanged(): Observable<void> {
+    return this.followerCountChanged.asObservable();
+  }
+
   //função de seguir
   follow(currentUserId: number, targetUserId: number): void {
     this.http.post('http://localhost:8085/api/follows', {
@@ -47,6 +52,8 @@ export class FollowService {
     }).subscribe(() => {
       this.followingUsers.add(targetUserId);
       this.followingChanged.next(new Set(this.followingUsers));
+
+      this.followerCountChanged.next();
     });
   }
 
@@ -60,6 +67,8 @@ export class FollowService {
     }).subscribe(() => {
       this.followingUsers.delete(targetUserId);
       this.followingChanged.next(new Set(this.followingUsers));
+
+      this.followerCountChanged.next();
     });
   }
 

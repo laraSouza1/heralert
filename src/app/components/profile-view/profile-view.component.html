@@ -28,6 +28,8 @@
   <app-following-user-view [userId]="selectedUserId"></app-following-user-view>
 </p-dialog>
 
-<p-dialog [(visible)]="showFollowersModal" modal header="Seguidores" [style]="{width: '43.5vw'}">
-  <app-followers-user-view [userId]="selectedUserId"></app-followers-user-view>
+<p-dialog [(visible)]="showFollowersModal" modal header="Seguidores" [style]="{width: '43.5vw'}" (onHide)="onCloseFollowersModal()">
+  <ng-container *ngIf="!resetFollowersComponent">
+    <app-followers-user-view [userId]="selectedUserId"></app-followers-user-view>
+  </ng-container>
 </p-dialog>

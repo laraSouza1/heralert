@@ -20,9 +20,9 @@ import { FollowService } from '../../services/services/follow.service';
   styleUrls: ['./profile-user-view.component.css']
 })
 export class ProfileUserViewComponent implements OnInit {
-  
+
   @Input() user: any;
-  
+
   @Output() openFollowersModal = new EventEmitter<number>();
   @Output() openFollowingModal = new EventEmitter<number>();
 
@@ -30,8 +30,8 @@ export class ProfileUserViewComponent implements OnInit {
   followingCount = 0;
   followersCount = 0;
 
-  constructor(private http: HttpClient, private followService: FollowService) {}
-  
+  constructor(private http: HttpClient, private followService: FollowService) { }
+
   ngOnInit() {
     this.items = [
       {
@@ -41,15 +41,34 @@ export class ProfileUserViewComponent implements OnInit {
         ]
       }
     ];
+
+    this.loadCounts();
+
+    this.followService.getFollowerCountChanged().subscribe(() => {
+      if (this.user?.id) {
+        this.loadCounts();
+      }
+    });
   }
 
   //para abrir e fechar modais de seguindo e seguidores
   abrirFollowing() {
     this.openFollowingModal.emit(this.user.id);
   }
-  
+
   abrirFollowers() {
     this.openFollowersModal.emit(this.user.id);
+  }
+
+  //vai buscar o nuemro se seguidores
+  loadCounts(): void {
+    this.http.get<any>(`http://localhost:8085/api/follows/followers-users/${this.user.id}`).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.user.followersCount = res.data.length;
+        }
+      }
+    });
   }
 
 }

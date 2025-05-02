@@ -38,6 +38,7 @@ export class ProfileViewComponent implements OnInit {
   showFollowingModal = false;
   showFollowersModal = false;
   selectedUserId: number | null = null;
+  resetFollowersComponent = false;
   
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -57,8 +58,15 @@ export class ProfileViewComponent implements OnInit {
   }
   
   onOpenFollowersModal(userId: number) {
-    this.selectedUserId = null;
+    this.selectedUserId = userId;
     this.showFollowersModal = true;
+  }  
+
+  onCloseFollowersModal() {
+    this.resetFollowersComponent = true;
+    setTimeout(() => {
+      this.resetFollowersComponent = false;
+    });
   }
 
   //pesquisa
