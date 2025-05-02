@@ -6,6 +6,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import { FollowService } from '../../services/services/follow.service';
 
 @Component({
   selector: 'app-profile-user',
@@ -29,7 +30,11 @@ export class ProfileUserComponent {
   followingCount = 0;
   followersCount = 0;
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(
+    private messageService: MessageService, 
+    private http: HttpClient, 
+    private followService: FollowService
+  ) { }
 
   ngOnInit() {
 
@@ -51,6 +56,10 @@ export class ProfileUserComponent {
       this.user.memberSince = `Membro desde ${meses[date.getMonth()]} ${date.getFullYear()}`;
     }
 
+    this.followService.getFollowerCountChanged().subscribe(() => {
+      this.loadCounts();
+    });
+  
     this.loadCounts();
   }
 
