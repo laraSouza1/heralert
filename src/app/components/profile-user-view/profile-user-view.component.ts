@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +19,7 @@ import { FollowService } from '../../services/services/follow.service';
   templateUrl: './profile-user-view.component.html',
   styleUrls: ['./profile-user-view.component.css']
 })
-export class ProfileUserViewComponent implements OnInit {
+export class ProfileUserViewComponent implements OnInit, OnChanges {
 
   @Input() user: any;
 
@@ -45,10 +45,18 @@ export class ProfileUserViewComponent implements OnInit {
     this.loadCounts();
 
     this.followService.getFollowerCountChanged().subscribe(() => {
-      if (this.user?.id) {
         this.loadCounts();
-      }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['user'] && this.user?.id) {
+      this.loadCounts();
+  
+      this.followService.getFollowerCountChanged().subscribe(() => {
+        this.loadCounts();
+      });
+    }
   }
 
   //para abrir e fechar modais de seguindo e seguidores

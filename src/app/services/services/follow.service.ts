@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FollowService {
@@ -8,7 +8,7 @@ export class FollowService {
   private loaded = false;
   private followingUsers: Set<number> = new Set();
   private followingChanged = new BehaviorSubject<Set<number>>(this.followingUsers);
-  private followerCountChanged = new BehaviorSubject<void>(undefined);
+  private followerCountChanged = new Subject<void>();
 
   constructor(private http: HttpClient) { }
 
@@ -77,5 +77,7 @@ export class FollowService {
     this.loaded = false;
     this.followingUsers.clear();
     this.followingChanged.next(new Set());
+
+    this.followerCountChanged = new Subject<void>();
   }
 }

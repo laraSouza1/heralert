@@ -64,8 +64,9 @@ export class LoginComponent {
           console.log('Login bem-sucedido!', response.data);
           localStorage.clear(); //limpa localstorage antigo
           localStorage.setItem('user', JSON.stringify(response.data)); //pega novos dados o user recem logado para o localstorage
-          this.followService.refreshFollowings(response.data.id); //dá refresh nos segudiores do novo user logado
-          this.router.navigate(['/for-you']);
+          this.followService.refreshFollowings(response.data.id).then(() => {
+            this.router.navigate(['/for-you']);
+          });          
         }
       },
       error: (error) => {
