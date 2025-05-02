@@ -128,11 +128,13 @@ export class ProfileComponent {
 
   handleDeletePost(post: any) {
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir a postagem: "${post.title}"?`,
-      header: 'Confirmar Exclusão',
+      message: `Tem certeza que deseja excluir a postagem "${post.title}"?`,
+      header: 'Excluir postagem',
       icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Sim',
+      acceptLabel: 'Excluir',
       rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'my-delete-button',
+      rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
         this.http.delete(`http://localhost:8085/api/posts/${post.id}`).subscribe({
           next: () => {

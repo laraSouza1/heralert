@@ -8,14 +8,14 @@
 
   <!--nome, btn seguir, menu-->
   <div class="flex flex-row align-items-center mt-5 ml-3 gap-3">
-    <div class="flex align-items-center justify-content-start user">{{ user?.name }}</div>
-    <div class="flex justify-content-start">
+    <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
+    <div>
       <app-follow-button *ngIf="user" [targetUserId]="user.id"></app-follow-button>
     </div>
-    <div class="flex justify-content-end">
+    <div>
       <p-toast />
-      <p-menu #menu [model]="items" [popup]="true" />
-      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
+      <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
+      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
     </div>
   </div>
 

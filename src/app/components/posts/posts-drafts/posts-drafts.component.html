@@ -9,4 +9,14 @@
 </div>
 
 <!--chamando post.component para exibição de posts em rascunhos-->
-<app-post *ngFor="let post of userPosts" [isDraft]="true" [post]="post" [tags]="post.tags" [userId]="currentUserId" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)"></app-post>
+<ng-container *ngIf="userPosts.length > 0; else noDraftPosts">
+  <app-post *ngFor="let post of userPosts" [isDraft]="true" [post]="post" [tags]="post.tags" [userId]="currentUserId" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)"></app-post>
+</ng-container>
+
+<!--caso n haja posts-->
+<ng-template #noDraftPosts>
+  <div class="no-content flex flex-column justify-content-center align-items-center">
+    <p class="flex">Ainda não há rascunhos criados!</p>
+    <img src="/imgs/i.png" class="flex no-content-img" />
+  </div>
+</ng-template>

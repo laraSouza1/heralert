@@ -76,8 +76,10 @@ export class LeftSideComponent {
       message: 'Tem certeza que deseja sair?',
       header: 'Confirmar Logout',
       icon: 'pi pi-sign-out',
-      acceptLabel: 'Sim',
+      acceptLabel: 'Sair',
       rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'my-out-button',
+      rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
         localStorage.removeItem('user');
         this.followService.clearFollowings();

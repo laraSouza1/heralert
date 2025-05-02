@@ -56,9 +56,13 @@ body::-webkit-scrollbar {
   border-left: 2px solid #ff6b6b;
 }
 
-/*BOTÕES*/
+/*BOTÕES E ICONS*/
 
 .pi-sign-out:before {
+  color: #ff6b6b;
+}
+
+.pi-exclamation-triangle:before {
   color: #ff6b6b;
 }
 
@@ -195,9 +199,10 @@ body::-webkit-scrollbar {
   text-decoration: underline;
 }
 
+/*para ausência de postagem*/
 .no-content {
   width: 574px;
-  height: 210px;
+  height: 190px;
   border-radius: 10px;
   color: #cacaca;
 }
@@ -206,4 +211,8 @@ body::-webkit-scrollbar {
   width: 80px;
   height: 80px;
   filter: opacity(40%);
+}
+
+.p-button:focus-visible {
+  outline: none !important;
 }

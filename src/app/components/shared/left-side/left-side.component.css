@@ -142,6 +142,33 @@
   background-color: #ff6b6b38 !important;
 }
 
+/*btns de cancelar/exluir postagem*/
+
+::ng-deep .my-out-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-out-button:hover {
+  background-color: #a72734 !important;
+}
+
+
+::ng-deep .my-cancel-button {
+  background-color: #d4d4d4 !important;
+  color: rgb(90, 90, 90) !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-cancel-button:hover {
+  background-color: #b8b8b8 !important;
+}
+
 /*
 .animated-image {
   animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
