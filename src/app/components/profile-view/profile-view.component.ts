@@ -17,6 +17,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { FollowingUserViewComponent } from '../followers/following-user-view/following-user-view.component';
 import { FollowersUserViewComponent } from '../followers/followers-user-view/followers-user-view.component';
+import { BlockService } from '../../services/block/block.service';
 
 @Component({
   selector: 'app-profile-view',
@@ -39,10 +40,34 @@ export class ProfileViewComponent implements OnInit {
   showFollowersModal = false;
   selectedUserId: number | null = null;
   resetFollowersComponent = false;
-  
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  isBlocked = false;
+
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private blockService: BlockService
+  ) { }
 
   ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+    this.blockService.getBlockedUsersChanges().subscribe(blockedSet => {
+      if (this.user?.id) {
+        const wasBlocked = this.isBlocked;
+        this.isBlocked = blockedSet.has(this.user.id);
+
+        if (wasBlocked && !this.isBlocked) {
+          //desbloqueou > recarrega os posts
+          this.loadUserPosts(this.user.id);
+        }
+
+        if (!wasBlocked && this.isBlocked) {
+          // bloqueou > limpa os posts
+          this.userPosts = [];
+        }
+      }
+    });
+
     this.route.paramMap.subscribe(params => {
       const username = params.get('username');
       if (username) {
@@ -56,11 +81,11 @@ export class ProfileViewComponent implements OnInit {
     this.selectedUserId = userId;
     this.showFollowingModal = true;
   }
-  
+
   onOpenFollowersModal(userId: number) {
     this.selectedUserId = userId;
     this.showFollowersModal = true;
-  }  
+  }
 
   onCloseFollowersModal() {
     this.resetFollowersComponent = true;
@@ -84,11 +109,17 @@ export class ProfileViewComponent implements OnInit {
         if (res.status) {
           this.user = res.data;
 
+          const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+          this.blockService.refreshBlockedUsers(currentUser.id).then(() => {
+            if (!this.blockService.isBlocked(this.user.id)) {
+              this.loadUserPosts(this.user.id);
+            }
+          });
+
           const date = new Date(this.user.created_at);
           const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
           this.user.memberSince = `Membro desde ${meses[date.getMonth()]} ${date.getFullYear()}`;
-
-          this.loadUserPosts(this.user.id);
         }
       },
       error: (err) => {

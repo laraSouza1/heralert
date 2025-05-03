@@ -28,18 +28,26 @@
   </div>
 
   <!--seguindo/seguidores-->
-  <div class="flex flex-row ml-3 mt-1">
-    <div class="flex" (click)="abrirFollowing()">
-      <div class="align-items-center justify-content-center number mr-1">{{ user.followingCount }}</div>
-      <div class="align-items-center justify-content-center info mr-3">Seguindo</div>
+  <ng-container *ngIf="!isBlocked">
+    <div class="flex flex-row ml-3 mt-1">
+      <div class="flex" (click)="abrirFollowing()">
+        <div class="align-items-center justify-content-center number mr-1">{{ user.followingCount }}</div>
+        <div class="align-items-center justify-content-center info mr-3">Seguindo</div>
+      </div>
+      <div class="flex" (click)="abrirFollowers()">
+        <div class="align-items-center justify-content-center number mr-1">{{ user.followersCount }}</div>
+        <div class="align-items-center justify-content-center info">Seguidores</div>
+      </div>
     </div>
-    <div class="flex" (click)="abrirFollowers()">
-      <div class="align-items-center justify-content-center number mr-1">{{ user.followersCount }}</div>
-      <div class="align-items-center justify-content-center info">Seguidores</div>
-    </div>
-  </div>  
+  </ng-container>
 
   <!--bio-->
   <div class="ml-3 mt-2 bio">{{ user?.bio }}</div>
 
+</div>
+
+<!--para abrir modal-->
+<div>
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
 </div>

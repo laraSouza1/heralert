@@ -74,6 +74,26 @@ td {
   background-color: #27a24330 !important;
 }
 
+/*btn bloquear*/
+::ng-deep .bt-block .p-button {
+  font-size: 10px !important;
+  width: 80px !important;
+  height: 20px !important;
+  border-radius: 50px !important;
+  padding-left: 3px !important;
+  padding-right: 4px !important;
+  background-color: white;
+  border: 1px solid #dc3545 !important;
+  color: #dc3545 !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  padding-right: 1.5px !important;
+}
+
+::ng-deep .bt-block .p-button:not(:disabled):hover {
+  background-color: #dc354530 !important;
+}
+
 /*icon do btn de seguir*/
 ::ng-deep .small .pi {
   font-size: 10px;

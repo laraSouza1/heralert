@@ -12,7 +12,7 @@ import { FollowService } from '../../../services/services/follow.service';
 @Component({
   selector: 'app-left-side',
   providers: [MessageService, ConfirmationService],
-  imports: [ImageModule, ButtonModule, MenuModule, ToastModule, DialogModule, ConfirmDialogModule,],
+  imports: [ImageModule, ButtonModule, MenuModule, ToastModule, DialogModule, ConfirmDialogModule],
   templateUrl: './left-side.component.html',
   styleUrls: ['./left-side.component.css']
 })
