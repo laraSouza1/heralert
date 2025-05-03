@@ -14,9 +14,10 @@
     </div>
     <div>
       <p-toast />
+      <p-confirmDialog></p-confirmDialog>
       <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
-    </div>
+    </div>  
   </div>
 
   <!--user e data de criação da conta-->
@@ -44,10 +45,4 @@
   <!--bio-->
   <div class="ml-3 mt-2 bio">{{ user?.bio }}</div>
 
-</div>
-
-<!--para abrir modal-->
-<div>
-  <p-toast></p-toast>
-  <p-confirmDialog></p-confirmDialog>
 </div>

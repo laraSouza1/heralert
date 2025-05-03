@@ -18,6 +18,7 @@ import { RightSideComponent } from '../../shared/right-side/right-side.component
 import { HttpClient } from '@angular/common/http';
 import { PostComponent } from '../../shared/post/post.component';
 import { InputIcon } from 'primeng/inputicon';
+import { BlockService } from '../../../services/block/block.service';
 
 @Component({
   selector: 'app-assuntos-gerais',
@@ -40,14 +41,20 @@ export class AssuntosGeraisComponent {
   searchTerm = '';
   community = 'Assuntos Gerais';
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(
+    private messageService: MessageService,
+    private http: HttpClient,
+    private blockService: BlockService
+  ) { }
 
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
-      this.loadPosts();
+      this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+        this.loadPosts();
+      });
     }
   }
 
@@ -65,7 +72,8 @@ export class AssuntosGeraisComponent {
       }
     }).subscribe(response => {
       if (response.status) {
-        this.posts = response.data;
+        const blockedUsers = this.blockService['blockedUsers'];
+        this.posts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
       }
     });
   }

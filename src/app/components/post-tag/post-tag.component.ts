@@ -18,6 +18,7 @@ import { LeftSideComponent } from '../shared/left-side/left-side.component';
 import { PostComponent } from '../shared/post/post.component';
 import { RightSideComponent } from '../shared/right-side/right-side.component';
 import { HttpClient } from '@angular/common/http';
+import { BlockService } from '../../services/block/block.service';
 
 @Component({
   selector: 'app-post-tag',
@@ -41,14 +42,28 @@ export class PostTagComponent implements OnInit {
   community = 'Assuntos Gerais';
   tag: string = '';
 
-  constructor(private messageService: MessageService, private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(
+    private messageService: MessageService,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private blockService: BlockService
+  ) { }
 
   ngOnInit(): void {
     this.currentUserId = JSON.parse(localStorage.getItem('user') || '{}')?.id || 0;
+
     this.route.queryParams.subscribe(params => {
       this.tag = params['tag'] || '';
       this.loadPosts();
     });
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+        this.loadPosts();
+      });
+    }
   }
 
   onSearch(event: any) {
@@ -65,7 +80,8 @@ export class PostTagComponent implements OnInit {
       }
     }).subscribe(response => {
       if (response.status) {
-        this.posts = response.data;
+        const blockedUsers = this.blockService['blockedUsers'];
+        this.posts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
       }
     });
   }  

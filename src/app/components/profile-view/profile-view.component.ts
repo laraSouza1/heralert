@@ -41,6 +41,8 @@ export class ProfileViewComponent implements OnInit {
   selectedUserId: number | null = null;
   resetFollowersComponent = false;
   isBlocked = false;
+  currentUser: any;
+  username!: string;
 
   constructor(
     private http: HttpClient,
@@ -109,9 +111,9 @@ export class ProfileViewComponent implements OnInit {
         if (res.status) {
           this.user = res.data;
 
-          const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+          this.currentUser = JSON.parse(localStorage.getItem('user') || '{}'); // Atribua o valor aqui
 
-          this.blockService.refreshBlockedUsers(currentUser.id).then(() => {
+          this.blockService.refreshBlockedUsers(this.currentUser.id).then(() => {
             if (!this.blockService.isBlocked(this.user.id)) {
               this.loadUserPosts(this.user.id);
             }

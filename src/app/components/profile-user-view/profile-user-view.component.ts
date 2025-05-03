@@ -134,7 +134,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       this.setupMenuItems(); //atualiza o texto-menu de bloquear>desbloquear
     });
 
-    // também notifica o botão
+    //notifica o botão
     this.followButtonComponent?.updateBlockedState?.();
   }
 

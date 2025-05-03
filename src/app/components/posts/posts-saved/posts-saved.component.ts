@@ -7,6 +7,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PostComponent } from '../../shared/post/post.component';
+import { BlockService } from '../../../services/block/block.service';
 
 @Component({
   selector: 'app-posts-saved',
@@ -23,7 +24,7 @@ export class PostsSavedComponent implements OnInit {
   currentUserId: number = 0;
   searchTerm = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private blockService: BlockService) { }
 
   ngOnInit() {
 
@@ -31,7 +32,9 @@ export class PostsSavedComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
-      this.loadSavedPosts();
+      this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+        this.loadSavedPosts();
+      });
     }
   }
 
@@ -47,7 +50,8 @@ export class PostsSavedComponent implements OnInit {
       params: { search: this.searchTerm }
     }).subscribe(response => {
       if (response.status) {
-        this.savedPosts = response.data;
+        const blockedUsers = this.blockService['blockedUsers'];
+        this.savedPosts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
       }
     });
   }

@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputIcon } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { HttpClient } from '@angular/common/http';
+import { BlockService } from '../../../services/block/block.service';
 
 @Component({
   selector: 'app-posts-fy',
@@ -25,7 +26,7 @@ export class PostsFYComponent {
   @Input() currentUserId: any;
   searchTerm = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private blockService: BlockService) { }
 
   ngOnInit(): void {
 
@@ -33,9 +34,10 @@ export class PostsFYComponent {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
+      this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+        this.loadPosts();
+      });
     }
-
-    this.loadPosts();
   }
 
   //pesquisa
@@ -53,9 +55,9 @@ export class PostsFYComponent {
       }
     }).subscribe(response => {
       if (response.status) {
-        this.posts = response.data;
+        const blockedUsers = this.blockService['blockedUsers'];
+        this.posts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
       }
     });
   }
-
 }
