@@ -22,7 +22,7 @@ export class BlockService {
           if (res.status) {
             this.blockedUsers = new Set(res.data.map((u: any) => u.blocked_id));
             this.blocksLoaded = true;
-            this.blockedUsersChanged.next(new Set(this.blockedUsers)); // EMITE
+            this.blockedUsersChanged.next(new Set(this.blockedUsers));
           }
           resolve();
         },
@@ -56,5 +56,5 @@ export class BlockService {
     this.blockedUsers.clear();
     this.blocksLoaded = false;
     this.blockedUsersChanged.next(new Set());
-  }
+  }  
 }

@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Message, MessageModule } from 'primeng/message';
 import { FollowService } from '../../services/services/follow.service';
+import { BlockService } from '../../services/block/block.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,11 @@ export class LoginComponent {
   passwordError: boolean = false;
 
   constructor(
-    private router: Router, private http: HttpClient, private followService: FollowService) { }
+    private router: Router,
+    private http: HttpClient,
+    private followService: FollowService,
+    private blockService: BlockService
+  ) { }
 
   //navegações dos btns do form ----------------
   navigateToSignIn() {
@@ -62,11 +67,18 @@ export class LoginComponent {
       next: (response: any) => {
         if (response.status) {
           console.log('Login bem-sucedido!', response.data);
-          localStorage.clear(); //limpa localstorage antigo
+  
+          localStorage.clear();
+  
+          //limpa dados anteriores
+          this.followService.clearFollowings();
+          this.blockService.clear();
+  
           localStorage.setItem('user', JSON.stringify(response.data)); //pega novos dados o user recem logado para o localstorage
+  
           this.followService.refreshFollowings(response.data.id).then(() => {
             this.router.navigate(['/for-you']);
-          });          
+          });
         }
       },
       error: (error) => {
