@@ -59,7 +59,6 @@ export class ForYouComponent {
   showPostModal: boolean = false;
   posts: any[] = [];
   currentUserId: any;
-  activeTab: 'fy' | 'following' = 'fy';
   comunities: Comunity[] | undefined;
   selectedComunity: Comunity = { name: 'Postagens', code: 'Postagens' };
 
