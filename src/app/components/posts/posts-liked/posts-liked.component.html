@@ -10,7 +10,7 @@
   </div>
 
   <!--chamando post.component para exibição de posts curtidos pelo user-->
-  <app-post *ngFor="let post of likedPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId"></app-post>
+  <app-post *ngFor="let post of likedPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId" (userBlocked)="onUserBlocked()"></app-post>
 </ng-container>
 
 <!--caso n haja posts-->

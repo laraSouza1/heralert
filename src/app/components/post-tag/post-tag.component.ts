@@ -50,6 +50,7 @@ export class PostTagComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //busca dados do user logado no localstorage
     this.currentUserId = JSON.parse(localStorage.getItem('user') || '{}')?.id || 0;
 
     this.route.queryParams.subscribe(params => {
@@ -60,17 +61,20 @@ export class PostTagComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
+      //atualiza users bloqueados para n exibir os posts deles
       this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
         this.loadPosts();
       });
     }
   }
 
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadPosts();
   }
 
+  //fetchposts
   loadPosts(): void {
 
     this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
@@ -80,14 +84,13 @@ export class PostTagComponent implements OnInit {
       this.http.get<any>(`http://localhost:8085/api/posts`, {
         params: {
           userId: this.currentUserId.toString(),
-          tag: this.tag,
+          tag: this.tag, //parametro para tag
           search: this.searchTerm || ''
         }
       }).subscribe(response => {
         if (response.status) {
           //se houver user bloqueado, não mostra os posts nas tags dele
-          this.posts
-            = response.data.filter((post: any) =>
+          this.posts = response.data.filter((post: any) =>
               !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
             );
         }
@@ -95,10 +98,14 @@ export class PostTagComponent implements OnInit {
     });
   }
 
-  postPosted() {
-    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
+  //att os bloqueios e recarrega postagens
+  onUserBlocked() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      this.loadPosts();
+    });
   }
 
+  //para abrir/fechar modal de criação de post --------------
   openCreatePostModal() {
     this.showPostModal = true;
 
@@ -118,6 +125,7 @@ export class PostTagComponent implements OnInit {
   }
 
   saveDraft() {
+    //busca dados do user logado no localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user?.id) {
       alert("Usuário não autenticado!");
@@ -163,7 +171,9 @@ export class PostTagComponent implements OnInit {
     }
   }
 
+  //para criar post
   createPost() {
+    //busca dados do user logado no localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (!user?.id) {
@@ -199,6 +209,7 @@ export class PostTagComponent implements OnInit {
       is_draft: 0
     };
 
+    //para atualização de post
     if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
       this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
         next: () => {
@@ -207,6 +218,7 @@ export class PostTagComponent implements OnInit {
         },
         error: () => alert("Erro ao atualizar o post.")
       });
+      //para criação de post
     } else {
       this.http.post("http://localhost:8085/api/posts", postData).subscribe({
         next: () => {
@@ -216,6 +228,11 @@ export class PostTagComponent implements OnInit {
         error: () => alert("Erro ao publicar post.")
       });
     }
+  }
+
+  //mensagem de sucesso de criação de post
+  postPosted() {
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
   }
 
 }

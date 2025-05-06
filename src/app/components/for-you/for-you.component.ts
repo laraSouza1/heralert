@@ -30,23 +30,10 @@ interface Comunity {
   selector: 'app-for-you',
   providers: [MessageService, ConfirmationService],
   imports: [
-    LeftSideComponent,
-    RightSideComponent,
-    ButtonModule,
-    IconFieldModule,
-    InputTextModule,
-    DialogModule,
-    ConfirmDialogModule,
-    ToastModule,
-    CreatePostComponent,
-    RippleModule,
-    CommonModule,
-    TooltipModule,
-    SelectModule,
-    FormsModule,
-    UsersComponent,
-    TagsComponent,
-    ChangePostsComponent
+    LeftSideComponent, RightSideComponent, ButtonModule, IconFieldModule, InputTextModule,
+    DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent, RippleModule,
+    CommonModule, TooltipModule, SelectModule, FormsModule, UsersComponent,
+    TagsComponent, ChangePostsComponent
   ],
   templateUrl: './for-you.component.html',
   styleUrls: ['./for-you.component.css']
@@ -62,7 +49,12 @@ export class ForYouComponent {
   comunities: Comunity[] | undefined;
   selectedComunity: Comunity = { name: 'Postagens', code: 'Postagens' };
 
-  constructor(private router: Router, private messageService: MessageService, private confirmationService: ConfirmationService, private http: HttpClient) { }
+  constructor(
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
 
@@ -74,10 +66,7 @@ export class ForYouComponent {
 
   }
 
-  postPosted() {
-    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
-  }
-
+  //para abrir/fechar modal de criação de post --------------
   openCreatePostModal() {
     this.showPostModal = true;
 
@@ -96,7 +85,9 @@ export class ForYouComponent {
     this.showPostModal = false;
   }
 
+  //salvar rascunho
   saveDraft() {
+    //busca dados do user logado do localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user?.id) {
       alert("Usuário não autenticado!");
@@ -142,7 +133,9 @@ export class ForYouComponent {
     }
   }
 
+  //criação de post
   createPost() {
+    //busca dados do user logado do localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (!user?.id) {
@@ -178,6 +171,7 @@ export class ForYouComponent {
       is_draft: 0
     };
 
+    //para atualização de post
     if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
       this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
         next: () => {
@@ -186,6 +180,7 @@ export class ForYouComponent {
         },
         error: () => alert("Erro ao atualizar o post.")
       });
+      //para criação de post
     } else {
       this.http.post("http://localhost:8085/api/posts", postData).subscribe({
         next: () => {
@@ -197,6 +192,12 @@ export class ForYouComponent {
     }
   }
 
+  //mensagem sucesso de criação de post
+  postPosted() {
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
+  }
+
+  //para navegação de comunidades --------------
   navigateToAG() {
     this.router.navigate(['/assuntos-gerais']);
   }

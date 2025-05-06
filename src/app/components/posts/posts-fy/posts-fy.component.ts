@@ -9,13 +9,15 @@ import { InputIcon } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { HttpClient } from '@angular/common/http';
 import { BlockService } from '../../../services/block/block.service';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-posts-fy',
   standalone: true,
   imports: [
     CommonModule, FormsModule, PostComponent, IconFieldModule, InputTextModule,
-    ButtonModule, InputIcon, SelectModule
+    ButtonModule, InputIcon, SelectModule, ConfirmDialogModule
   ],
   templateUrl: './posts-fy.component.html',
   styleUrls: ['./posts-fy.component.css']
@@ -66,6 +68,13 @@ export class PostsFYComponent {
           );
         }
       });
+    });
+  }
+
+  //att os bloqueios e recarrega postagens
+  onUserBlocked() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      this.loadPosts();
     });
   }
 }

@@ -48,20 +48,24 @@ export class DicasDefesaComponent {
   ) { }
 
   ngOnInit() {
+    //busca dados do user logado no localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.currentUserId = user.id;
+      //atualiza users bloqueados para n exibir os posts deles
       this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
         this.loadPosts();
       });
     }
   }
 
+  //pesquisa
   onSearch(event: any) {
     this.searchTerm = event.target.value;
     this.loadPosts();
   }
 
+  //fetch posts
   loadPosts() {
 
     this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
@@ -85,10 +89,14 @@ export class DicasDefesaComponent {
     });
   }
 
-  postPosted() {
-    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
+  //att os bloqueios e recarrega postagens
+  onUserBlocked() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      this.loadPosts();
+    });
   }
 
+  //para abrir/fechar modal de criação de post --------
   openCreatePostModal() {
     this.showPostModal = true;
 
@@ -107,10 +115,12 @@ export class DicasDefesaComponent {
     this.showPostModal = false;
   }
 
+  //salvar rascunho
   saveDraft() {
+    //busca dados do user logado no localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user?.id) {
-      alert("Usuário não autenticado!");
+      alert("Usuário não autenticado");
       return;
     }
 
@@ -153,7 +163,9 @@ export class DicasDefesaComponent {
     }
   }
 
+  //criação de novo post
   createPost() {
+    //busca dados do user logado no localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (!user?.id) {
@@ -189,6 +201,7 @@ export class DicasDefesaComponent {
       is_draft: 0
     };
 
+    //para atualização de post
     if (this.createPostComponent.editMode && this.createPostComponent.editingPostId) {
       this.http.put(`http://localhost:8085/api/posts/${this.createPostComponent.editingPostId}`, postData).subscribe({
         next: () => {
@@ -197,6 +210,7 @@ export class DicasDefesaComponent {
         },
         error: () => alert("Erro ao atualizar o post.")
       });
+      //para criação de post
     } else {
       this.http.post("http://localhost:8085/api/posts", postData).subscribe({
         next: () => {
@@ -206,6 +220,11 @@ export class DicasDefesaComponent {
         error: () => alert("Erro ao publicar post.")
       });
     }
+  }
+
+  //mensagem de post feito
+  postPosted() {
+    this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });
   }
 
 }

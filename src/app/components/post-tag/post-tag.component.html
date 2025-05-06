@@ -1,9 +1,13 @@
+<!--COMPONENTE PARA VER POSTS DE UMA DETERMINADA TAG-->
+
 <div class="container">
   <div class="line-fy"></div>
 
   <div>
+    <!--parte fixa esquerda da página-->
     <app-left-side class="sidebar left"></app-left-side>
 
+    <!--btn criar post-->
     <p-toast />
     <p-confirmdialog />
     <p-button class="bt3" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
@@ -11,12 +15,14 @@
     <div class="content px-4 pt-4 ">
       <div class="div-ww">
 
+        <!--título com a tag dos posts-->
         <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
           <div class="flex mr-2">Postagens em</div>
           <div class="flex hasht">#</div>
           <div class="flex hasht2">{{ tag }}</div>
         </div>
 
+        <!--input pesquisa de post-->
         <div class="mt-3 mb-3">
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon><i class="pi pi-search"></i></p-inputicon>
@@ -24,19 +30,24 @@
           </p-iconfield>
         </div>
 
-        <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId"></app-post>
+        <!--posts com a tag-->
+        <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId"
+          (userBlocked)="onUserBlocked()"></app-post>
       </div>
     </div>
 
+    <!--parte fixa direita da página-->
     <app-right-side class="sidebar right"></app-right-side>
   </div>
+</div>
 
-  <p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
-    <app-create-post></app-create-post>
+<!--modal que abre o componente de criação de post-->
+<p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
+  <app-create-post></app-create-post>
 
-    <ng-template pTemplate="footer" class="mt-2">
-      <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
-      <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
-      <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
-    </ng-template>
-  </p-dialog>
+  <ng-template pTemplate="footer" class="mt-2">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
+    <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
+    <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
+  </ng-template>
+</p-dialog>

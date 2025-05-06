@@ -8,12 +8,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PostComponent } from '../../shared/post/post.component';
 import { HttpClient } from '@angular/common/http';
 import { BlockService } from '../../../services/block/block.service';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-posts-liked',
   imports: [
     CommonModule, FormsModule, PostComponent, IconFieldModule,
-    InputTextModule, ButtonModule, InputIcon
+    InputTextModule, ButtonModule, InputIcon, ConfirmDialogModule
   ],
   templateUrl: './posts-liked.component.html',
   styleUrl: './posts-liked.component.css'
@@ -60,6 +62,13 @@ export class PostsLikedComponent implements OnInit {
           );
         }
       });
+    });
+  }
+
+  //att os bloqueios e recarrega postagens
+  onUserBlocked() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      this.loadLikedPosts();
     });
   }
 }

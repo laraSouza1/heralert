@@ -9,4 +9,4 @@
 </div>
 
 <!--chamando post.component para exibição de todos os posts já criado-->
-<app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId"></app-post>
+<app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId" (userBlocked)="onUserBlocked()"></app-post>

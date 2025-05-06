@@ -1,6 +1,6 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
@@ -9,13 +9,18 @@ import { ToastModule } from 'primeng/toast';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FollowButtonComponent } from '../follow-button/follow-button.component';
+import { BlockService } from '../../../services/block/block.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { FollowService } from '../../../services/services/follow.service';
 
 @Component({
   selector: 'app-post',
   standalone: true,
+  providers: [MessageService, ConfirmationService],
   imports: [
     TableModule, ButtonModule, TagModule, MenuModule,
-    ToastModule, NgFor, CommonModule, NgIf, FollowButtonComponent
+    ToastModule, NgFor, CommonModule, NgIf, FollowButtonComponent, ConfirmDialogModule, DialogModule
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
@@ -30,6 +35,7 @@ export class PostComponent implements OnInit {
 
   @Output() editPost = new EventEmitter<any>();
   @Output() deletePost = new EventEmitter<any>();
+  @Output() userBlocked = new EventEmitter<void>();
 
   isFavorite: boolean = false;
   likes: number = 0;
@@ -41,14 +47,22 @@ export class PostComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
-  ) { }
+    private router: Router,
+    private blockService: BlockService,
+    private followService: FollowService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+   ) { }
 
   ngOnInit() {
     this.items = [
       {
         items: [
-          { label: 'Bloquear usuário', icon: 'pi pi-user-minus' },
+          {
+            label: 'Bloquear usuário',
+            icon: 'pi pi-user-minus',
+            command: () => this.confirmBlockUser()
+          },
           { label: 'Denunciar postagem', icon: 'pi pi-flag' }
         ]
       }
@@ -78,6 +92,59 @@ export class PostComponent implements OnInit {
         this.isSave = JSON.parse(storedSave);
       }
     }
+  }
+
+  //dialogo de confirmação para bloquear
+  confirmBlockUser() {
+    const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
+    const targetUserId = this.post.user_id;
+
+    if (!currentUserId || !targetUserId || currentUserId === targetUserId) return;
+
+    const username = this.post.username || 'usuário';
+
+    this.confirmationService.confirm({
+      message: `Deseja bloquear @${username}?`,
+      header: 'Confirmar Bloqueio',
+      icon: 'pi pi-exclamation-circle',
+      acceptLabel: 'Bloquear',
+      rejectLabel: 'Cancelar',
+      //style dos btns
+      acceptButtonStyleClass: 'my-block-button',
+      rejectButtonStyleClass: 'my-cancel-button',
+      accept: () => {
+        this.blockService.blockUser(currentUserId, targetUserId).subscribe(() => {
+          this.unfollowIfFollowing(currentUserId, targetUserId);
+          this.blockService.clear();
+          this.userBlocked.emit();
+        });
+      }
+    });
+  }
+
+  //para de seguir após bloquear
+  unfollowIfFollowing(currentUserId: number, targetUserId: number) {
+    //verifica se segue
+    this.http.get<any>('http://localhost:8085/api/follows/check', {
+      params: {
+        follower_id: currentUserId,
+        following_id: targetUserId
+      }
+    }).subscribe(res => {
+      if (res.status && res.following) {
+        //para de seguir
+        this.http.delete('http://localhost:8085/api/follows', {
+          params: {
+            follower_id: currentUserId,
+            following_id: targetUserId
+          }
+        }).subscribe(() => {
+          this.followService.clearFollowings();
+          this.followService.refreshFollowings(currentUserId);
+          this.followService.getFollowerCountChanged();
+        });
+      }
+    });
   }
 
   //vai abrir para edição de post

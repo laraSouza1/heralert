@@ -46,6 +46,31 @@
   background-color: #27a24330 !important;
 }
 
+/*btn para bloquear usuário*/
+::ng-deep .bt-block .p-button {
+  font-size: 10px !important;
+  width: 80px !important;
+  height: 20px !important;
+  border-radius: 50px !important;
+  padding-left: 3px !important;
+  padding-right: 4px !important;
+  background-color: white;
+  border: 1px solid #dc3545 !important;
+  color: #dc3545 !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  padding-right: 1.5px !important;
+}
+
+::ng-deep .bt-block .p-button:not(:disabled):hover {
+  background-color: #dc354530 !important;
+}
+
+.aa {
+  position: relative !important;
+  top: 4px !important;
+}
+
 /*icon do btn de seguir*/
 ::ng-deep .small .pi {
   font-size: 10px;
@@ -274,3 +299,36 @@
 }
 
 /*---------------------------------------------------------------------------------*/
+
+/*PARA MODAL de bloquaer*/
+
+/*icons do modal*/
+::ng-deep .pi-exclamation-circle:before {
+  color: #ff6b6b;
+}
+
+/*btn para bloquear ou cancelar no modal*/
+::ng-deep .my-block-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-block-button:hover {
+  background-color: #a72734 !important;
+}
+
+
+::ng-deep .my-cancel-button {
+  background-color: #d4d4d4 !important;
+  color: rgb(90, 90, 90) !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-cancel-button:hover {
+  background-color: #b8b8b8 !important;
+}

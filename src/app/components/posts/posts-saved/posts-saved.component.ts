@@ -62,4 +62,11 @@ export class PostsSavedComponent implements OnInit {
     });
   });
   }
+
+  //att os bloqueios e recarrega postagens
+  onUserBlocked() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      this.loadSavedPosts();
+    });
+  }
 }

@@ -168,7 +168,6 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
 
       this.loadCounts();
 
-      // evite múltiplas subscrições:
       this.followService.getFollowerCountChanged().subscribe(() => {
         this.loadCounts();
       });

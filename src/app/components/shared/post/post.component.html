@@ -10,10 +10,11 @@
     <div class="flex align-items-center justify-content-center user">
       <div>{{ post.username }}</div>
     </div>
-    <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" [targetUserId]="post.user_id" (click)="$event.stopPropagation()"></app-follow-button>
+    <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" class="aa" [targetUserId]="post.user_id" (click)="$event.stopPropagation()"></app-follow-button>
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
       (click)="$event.stopPropagation()">
       <p-toast />
+      <p-confirmDialog></p-confirmDialog>
       <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
     </div>
@@ -39,9 +40,9 @@
       <ng-container *ngFor="let tag of tags">
         <span (click)="goToTag(tag, $event)" style="cursor: pointer;">
           <p-tag [value]="'#' + tag" class="mb-2 mr-2"></p-tag>
-        </span>        
+        </span>
       </ng-container>
-    </div>    
+    </div>
   </div>
 
   <!--ações-->
