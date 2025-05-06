@@ -20,6 +20,7 @@ import { FollowButtonComponent } from '../shared/follow-button/follow-button.com
 })
 export class UsersComponent implements OnInit {
 
+  currentUserId: number = 0;
   users: any[] = [];
   searchTerm = '';
 
@@ -28,8 +29,13 @@ export class UsersComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.loadUsers();
+  ngOnInit() {
+    //pega dados do user no localstorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.currentUserId = user.id;
+      this.loadUsers();
+    }
   }
 
   //pesquisa
@@ -41,7 +47,10 @@ export class UsersComponent implements OnInit {
   //fetch todos os users
   loadUsers(): void {
     this.http.get<any>('http://localhost:8085/api/users', {
-      params: { search: this.searchTerm }
+      params: {
+        search: this.searchTerm,
+        currentUserId: this.currentUserId.toString()
+      }
     }).subscribe({
       next: (res) => {
         if (res.status) {

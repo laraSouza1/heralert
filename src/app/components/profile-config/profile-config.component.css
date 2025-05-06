@@ -1,0 +1,130 @@
+/*conteúdo e configuração para container e página -------------------------*/
+.container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.sidebar {
+  width: 350px;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  border-top: 10px solid #ff9d9d;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.content {
+  flex: 1;
+  margin: 0 350px;
+  background-color: rgb(255, 255, 255);
+}
+
+::ng-deep body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.div-ww {
+  width: 574px !important;
+}
+
+/*linha topo página*/
+.line-fy {
+  height: 10px;
+  background-color: #ff9d9d;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+/*btn X do modal*/
+::ng-deep .p-toast-message-icon {
+  position: relative;
+  top: 3px;
+}
+
+.title {
+  font-size: 24px;
+  border-left: 2px solid #ff6b6b;
+  padding-left: 10px;
+}
+
+/*opções de configuração de conta ------------------*/
+/*fundo e linha*/
+.wd-100 {
+  border-bottom: 1px solid #c2c2c2;
+  padding: 20px;
+}
+
+.wd-100:hover {
+  background-color: #ececec;
+}
+
+.wd-1002 {
+  margin-top: 16px;
+  border-top: 1px solid #c2c2c2;
+}
+
+/*texto*/
+
+.op-profile {
+  color: #acacac;
+}
+
+.op-profile2 {
+  color: #dc3545;
+}
+
+.op-profile2:hover {
+  background-color: #dc354530;
+}
+
+/*btn bloqueado*/
+::ng-deep .bt-block .p-button {
+  font-size: 10px !important;
+  width: 80px !important;
+  height: 20px !important;
+  border-radius: 50px !important;
+  padding-left: 3px !important;
+  padding-right: 4px !important;
+  background-color: white;
+  border: 1px solid #dc3545 !important;
+  color: #dc3545 !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  padding-right: 1.5px !important;
+}
+
+::ng-deep .bt-block .p-button:not(:disabled):hover {
+  background-color: #dc354530 !important;
+}
+
+::ng-deep .small .pi {
+  font-size: 10px;
+  position: relative !important;
+  left: 2px !important;
+  top: 0px !important;
+}
+
+/*btns de cancelar/exluir conta*/
+
+::ng-deep .my-delete-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-delete-button:hover {
+  background-color: #a72734 !important;
+}

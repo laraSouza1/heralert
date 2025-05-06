@@ -1,9 +1,13 @@
+<!--COMPNENTE MENU PARTILHADO welcome, cadastro e login-->
 <div class="border-page backg">
   <div class="grid px-6 pt-4 pb-0">
+
+    <!--logo escrita-->
     <div class="col"><img src="/imgs/Heralert.png" height="40" (click)="navigateToWelcome()" style="cursor: pointer;">
     </div>
     <div class="col">
-      <p-menubar [model]="items"></p-menubar>
+      <!--menu-->
+      <p-menubar class="menu-direction menu" [model]="items"></p-menubar>
     </div>
   </div>
 </div>

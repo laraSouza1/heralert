@@ -1,0 +1,66 @@
+<!--COMPONENTE PARA MOSTRAR AS OPÇÕES DE CONFIGURAÇÃO DO PERFIL-->
+
+<div class="container">
+  <div class="line-fy"></div>
+
+  <div>
+    <!--parte esquerda fixa da página-->
+    <app-left-side class="sidebar left"></app-left-side>
+
+    <div class="content px-4 pt-4 ">
+      <div class="div-ww">
+
+        <!--título-->
+        <div class="flex flex-row my-2 title h-2rem align-content-center align-items-center">
+          <div class="flex mr-2">Configurações do perfil</div>
+        </div>
+
+        <div>
+          <!--e-mail-->
+          <div class="flex flex-row w-12 gap-6 wd-100 wd-1002">
+            <div class="flex justify-content-start">E-mail</div>
+            <div class="flex justify-content-end op-profile">{{ user?.email }}</div>
+          </div>
+
+          <!--palavra-passe-->
+          <div class="flex gap-6 wd-100">
+            <div>Palavra-passe</div>
+            <div class="op-profile">{{ passwordMasked }}</div>
+          </div>
+
+          <!--usuários bloqueados-->
+          <div class="flex gap-6 wd-100" (click)="abrirBlocked()">
+            <div>Usuários bloqueados</div>
+            <div class="op-profile">{{ blockedCount }}</div>
+          </div>
+
+          <!--denúncias-->
+          <div class="flex gap-6 wd-100">
+            <div>Minhas denúncias</div>
+            <div class="op-profile">0</div>
+          </div>
+
+          <!--excluir conta-->
+          <div class="flex wd-100 op-profile2" (click)="handleDeleteAccount()">
+            Excluir conta
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--parte direita fixa da página-->
+    <app-right-side class="sidebar right"></app-right-side>
+  </div>
+</div>
+
+<!--modal de confirmação-->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<!--modal lista de users bloqueados-->
+<p-dialog [(visible)]="showBlockedDialog" modal header="Bloqueados" [style]="{width: '43vw'}">
+  <ng-container>
+    <app-blocked-users></app-blocked-users>
+  </ng-container>
+</p-dialog>

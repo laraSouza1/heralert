@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { FollowButtonComponent } from '../shared/follow-button/follow-button.component';
 import { CommonModule, NgIf } from '@angular/common';
@@ -30,6 +30,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
   @Output() openFollowingModal = new EventEmitter<number>();
 
   @ViewChild(FollowButtonComponent) followButtonComponent!: FollowButtonComponent;
+  @ViewChild('menuRef') menu!: Menu;
 
   items: MenuItem[] | undefined;
   followingCount = 0;
@@ -44,24 +45,25 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    //pega dados do user logado no localstorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    //verifica se o user que está sendo visualizado é bloqueado ou não
+    if (!user?.id || !this.user?.id) return;
+
+    this.blockService.refreshBlockedUsers(user.id).then(() => {
+      this.isBlocked = this.blockService.isBlocked(this.user!.id);
+      this.setupMenuItems();
+    });
 
     this.loadCounts();
 
     this.followService.getFollowerCountChanged().subscribe(() => {
       this.loadCounts();
     });
-
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.blockService.refreshBlockedUsers(user.id).then(() => {
-      this.isBlocked = this.blockService.isBlocked(this.user.id);
-      this.setupMenuItems();
-    });
-
-    this.followService.getFollowerCountChanged().subscribe(() => {
-      this.loadCounts();
-    });
   }
 
+  //menu
   setupMenuItems() {
     this.items = [
       {
@@ -77,7 +79,14 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     ];
   }
 
+  toggleMenu(event: Event) {
+    if (this.menu) {
+      this.menu.toggle(event);
+    }
+  }
+
   confirmToggleBlock() {
+    //pega dados do user logado no localstorage
     const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
     const action = this.isBlocked ? 'desbloquear' : 'bloquear';
     const header = this.isBlocked ? 'Confirmar Desbloqueio' : 'Confirmar Bloqueio';
@@ -92,15 +101,18 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       icon,
       acceptLabel: this.isBlocked ? 'Desbloquear' : 'Bloquear',
       rejectLabel: 'Cancelar',
+      //style dos btns do modal
       acceptButtonStyleClass: this.isBlocked ? 'my-unblock-button' : 'my-block-button',
       rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
+        //desbloqueia user
         if (this.isBlocked) {
           this.blockService.unblockUser(currentUserId, this.user.id).subscribe(() => {
             this.blockService.clear();
             this.refreshBlockStatus(); //atualizar tudo
           });
         } else {
+          //bloqueia user
           this.blockService.blockUser(currentUserId, this.user.id).subscribe(() => {
             this.unfollowIfFollowing(currentUserId, this.user.id);
             this.blockService.clear();
@@ -111,16 +123,26 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     });
   }
 
+  //se bloquear um user que segue, vai parar de segui-lo
   unfollowIfFollowing(currentUserId: number, targetUserId: number) {
+
+    //verifica se segue
     this.http.get<any>('http://localhost:8085/api/follows/check', {
-      params: { follower_id: currentUserId, following_id: targetUserId }
+      params: {
+        follower_id: currentUserId,
+        following_id: targetUserId
+      }
     }).subscribe(res => {
       if (res.status && res.following) {
+        //vai parar de seguir caso sim
         this.http.delete('http://localhost:8085/api/follows', {
-          params: { follower_id: currentUserId, following_id: targetUserId }
+          params: {
+            follower_id: currentUserId,
+            following_id: targetUserId
+          }
         }).subscribe(() => {
-          this.followService.clearFollowings(); //limpa cache local de seguidores/seguidos
-          this.followService.refreshFollowings(currentUserId); // atualiza novamente
+          this.followService.clearFollowings();
+          this.followService.refreshFollowings(currentUserId); //atualiza novamente
           this.followService.getFollowerCountChanged(); //notifica componentes
         });
       }
@@ -140,8 +162,13 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user?.id) {
+      const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
+      this.isBlocked = this.blockService.isBlocked(this.user.id);
+      this.setupMenuItems();
+
       this.loadCounts();
 
+      // evite múltiplas subscrições:
       this.followService.getFollowerCountChanged().subscribe(() => {
         this.loadCounts();
       });
@@ -159,6 +186,8 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
 
   //vai buscar o nuemro se seguidores
   loadCounts(): void {
+    if (!this.user?.id) return;
+
     this.http.get<any>(`http://localhost:8085/api/follows/followers-users/${this.user.id}`).subscribe({
       next: (res) => {
         if (res.status) {
@@ -167,5 +196,6 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       }
     });
   }
+
 
 }

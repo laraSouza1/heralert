@@ -15,6 +15,7 @@ import { ProfileViewComponent } from './components/profile-view/profile-view.com
 import { ViewPostComponent } from './components/view-post/view-post.component';
 import { PostTagComponent } from './components/post-tag/post-tag.component';
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
+import { ProfileConfigComponent } from './components/profile-config/profile-config.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -32,5 +33,6 @@ export const routes: Routes = [
   { path: 'profile-view/:username', component: ProfileViewComponent },
   { path: 'view-post/:id', component: ViewPostComponent },
   { path: 'post-tag', component: PostTagComponent },
-  { path: 'communities', component: CommunitiesComponent }
+  { path: 'communities', component: CommunitiesComponent },
+  { path: 'profile-config', component: ProfileConfigComponent }
 ];

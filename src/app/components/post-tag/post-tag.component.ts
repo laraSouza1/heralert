@@ -72,19 +72,28 @@ export class PostTagComponent implements OnInit {
   }
 
   loadPosts(): void {
-    this.http.get<any>(`http://localhost:8085/api/posts`, {
-      params: {
-        userId: this.currentUserId.toString(),
-        tag: this.tag,
-        search: this.searchTerm || ''
-      }
-    }).subscribe(response => {
-      if (response.status) {
-        const blockedUsers = this.blockService['blockedUsers'];
-        this.posts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
-      }
+
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      const blockedUsers = this.blockService['blockedUsers'];
+      const usersWhoBlockedMe = this.blockService['usersWhoBlockedMe'];
+
+      this.http.get<any>(`http://localhost:8085/api/posts`, {
+        params: {
+          userId: this.currentUserId.toString(),
+          tag: this.tag,
+          search: this.searchTerm || ''
+        }
+      }).subscribe(response => {
+        if (response.status) {
+          //se houver user bloqueado, não mostra os posts nas tags dele
+          this.posts
+            = response.data.filter((post: any) =>
+              !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
+            );
+        }
+      });
     });
-  }  
+  }
 
   postPosted() {
     this.messageService.add({ severity: 'success', summary: 'Postagem feita com sucesso!' });

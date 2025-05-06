@@ -46,13 +46,20 @@ export class PostsLikedComponent implements OnInit {
 
   //fetch posts curtidos pelo user
   loadLikedPosts() {
-    this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`, {
-      params: { search: this.searchTerm }
-    }).subscribe(response => {
-      if (response.status) {
-        const blockedUsers = this.blockService['blockedUsers'];
-        this.likedPosts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
-      }
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      const blockedUsers = this.blockService['blockedUsers'];
+      const usersWhoBlockedMe = this.blockService['usersWhoBlockedMe'];
+
+      this.http.get<any>(`http://localhost:8085/api/posts/liked/${this.currentUserId}`, {
+        params: { search: this.searchTerm }
+      }).subscribe(response => {
+        if (response.status) {
+          //se houver user bloqueado, não mostra os posts curtidos dele
+          this.likedPosts = response.data.filter((post: any) =>
+            !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
+          );
+        }
+      });
     });
   }
 }

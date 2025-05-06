@@ -46,13 +46,20 @@ export class PostsSavedComponent implements OnInit {
 
   //fetch posts salvos
   loadSavedPosts() {
+    this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
+      const blockedUsers = this.blockService['blockedUsers'];
+      const usersWhoBlockedMe = this.blockService['usersWhoBlockedMe'];
+
     this.http.get<any>(`http://localhost:8085/api/posts/saved/${this.currentUserId}`, {
       params: { search: this.searchTerm }
     }).subscribe(response => {
       if (response.status) {
-        const blockedUsers = this.blockService['blockedUsers'];
-        this.savedPosts = response.data.filter((post: any) => !blockedUsers.has(post.user_id));
+        //se houver user bloqueado, nã mostra os posts salvos dele
+        this.savedPosts = response.data.filter((post: any) =>
+          !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
+        );
       }
     });
+  });
   }
 }

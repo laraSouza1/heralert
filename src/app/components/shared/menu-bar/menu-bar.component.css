@@ -1,9 +1,11 @@
+/*bordas da página*/
 .border-page {
   border-left: 25px solid #ff6b6b;
   border-right: 15px solid #ff6b6b;
 }
 
-::ng-deep .p-menubar {
+/*style do menu, elemento primeng*/
+::ng-deep .menu .p-menubar {
   width: 85% !important;
   text-align: center !important;
   justify-content: center !important;
@@ -16,6 +18,12 @@
   margin: 0px;
   position:static;
   top: 8px;
+}
+
+::ng-deep .menu-direction .p-menubar {
+  position: relative;
+  left: 200px !important;
+  top: 3px !important;
 }
 
 ::ng-deep .p-menubar-item-label {
@@ -58,6 +66,7 @@
   background-color: white;
 }
 
+/*para a logo em escrita*/
 img {
   cursor: pointer;
   display: block;

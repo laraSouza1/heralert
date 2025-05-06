@@ -116,14 +116,13 @@ export class PostComponent implements OnInit {
   goToTag(tag: string, event: Event): void {
     event.stopPropagation();
     this.router.navigate(['/post-tag'], { queryParams: { tag } });
-  }  
-  
+  }
+
   //ver perfil user selecionado
   goToUserProfile(): void {
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (currentUser && currentUser.id === this.post.user_id) {
-      this.router.navigate(['/profile']);
-      //se for o user logado no localstorage, mostra o perfil dele
+      this.router.navigate(['/profile']); //se for o user logado no localstorage, mostra o perfil dele
     } else {
       this.router.navigate(['/profile-view', this.post.username]);
     }

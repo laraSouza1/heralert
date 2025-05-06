@@ -1,41 +1,67 @@
+/*texto welcome*/
 .welcome {
-  font-size: 13px;
+  font-size: 14px;
 }
 
+/*título*/
 h1 {
   font-family: "Lexend", sans-serif;
   font-weight: 400;
   color: #3e3e3e;
 }
 
+/*linha abaixo do título*/
 .line {
   background-color: #ff6b6b;
   width: 130px;
   height: 3px;
 }
 
+/*bordas laterais*/
 .border-page {
   border-left: 25px solid #ff6b6b;
   border-right: 15px solid #ff6b6b;
 }
 
-.ps {
-  position:relative;
-  top: -27px;
-}
-
+/*body página*/
 ::ng-deep body {
   background-image: url('/imgs/fundo1.png');
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }
 
-.animated-image {
-  animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
-}
-
+/*btn de começo*/
 .btn-animated {
   animation: glow 1s ease-in-out infinite alternate;
+}
+
+::ng-deep .b-wel .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+  width: 150px !important;
+}
+
+::ng-deep .b-wel .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+  transform: scale(1.02) !important;
+}
+
+/*para logo e animação*/
+.ps {
+  position:relative;
+  top: -27px;
+}
+
+.animated-image {
+  animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -63,22 +89,4 @@ h1 {
   100% {
       filter: brightness(120%);
   }
-}
-
-::ng-deep .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 50px !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-  height: 40px;
-}
-
-::ng-deep .p-button:hover {
-  background-color: #F94C4C !important;
-  font-weight: 700 !important;
-  transform: scale(1.02) !important;
 }

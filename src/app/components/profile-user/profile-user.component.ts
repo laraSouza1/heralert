@@ -7,6 +7,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { FollowService } from '../../services/services/follow.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-user',
@@ -31,9 +32,10 @@ export class ProfileUserComponent {
   followersCount = 0;
 
   constructor(
-    private messageService: MessageService, 
-    private http: HttpClient, 
-    private followService: FollowService
+    private messageService: MessageService,
+    private http: HttpClient,
+    private followService: FollowService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class ProfileUserComponent {
     this.items = [
       {
         items: [
-          { label: 'Configurações do perfil', icon: 'pi pi-cog' }
+          { label: 'Configurações do perfil', icon: 'pi pi-cog', command: () => this.navigateToProfileConfig() }
         ]
       }
     ];
@@ -59,7 +61,7 @@ export class ProfileUserComponent {
     this.followService.getFollowerCountChanged().subscribe(() => {
       this.loadCounts();
     });
-  
+
     this.loadCounts();
   }
 
@@ -147,5 +149,10 @@ export class ProfileUserComponent {
   //mensagem de perfil editado com sucesso
   profileEdited() {
     this.messageService.add({ severity: 'success', summary: 'Perfil atualizado com sucesso!' });
+  }
+
+  //navegação de menu ------------------------------
+  navigateToProfileConfig() {
+    this.router.navigate(['/profile-config']);
   }
 }
