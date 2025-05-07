@@ -160,6 +160,18 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     this.followButtonComponent?.updateBlockedState?.();
   }
 
+  //vai att o setupitemsmenu em profile-view
+  refreshBlockedState() {
+    //pega dados o user logado no localstorage
+    const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
+    //vê user bloqueado
+    this.blockService.refreshBlockedUsers(currentUserId).then(() => {
+      //user bloqueado > mostra opção para desbloquear
+      this.isBlocked = this.blockService.isBlocked(this.user.id);
+      this.setupMenuItems();
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user?.id) {
       const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;

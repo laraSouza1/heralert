@@ -19,7 +19,7 @@
 
         <!-- posts -->
         <ng-container *ngIf="userPosts.length > 0; else noProfilePosts">
-          <app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="currentUser.id"></app-post>
+          <app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="currentUser.id" (userBlocked)="onUserBlocked()"></app-post>
         </ng-container>
       </ng-container>
 

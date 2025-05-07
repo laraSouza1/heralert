@@ -44,6 +44,8 @@ export class ProfileViewComponent implements OnInit {
   currentUser: any;
   username!: string;
 
+  @ViewChild(ProfileUserViewComponent) profileUserViewComponent!: ProfileUserViewComponent;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -145,4 +147,19 @@ export class ProfileViewComponent implements OnInit {
       }
     });
   }
+
+  //ao bloquear user, att profile-user-view, esconde os posts e mostra opção de desbloqueio
+  onUserBlocked(): void {
+    this.blockService.refreshBlockedUsers(this.currentUser.id).then(() => {
+      if (this.user?.id) {
+        this.isBlocked = this.blockService.isBlocked(this.user.id);
+        if (this.isBlocked) {
+          this.userPosts = [];
+        }
+
+        this.profileUserViewComponent?.refreshBlockedState();
+      }
+    });
+  }
+
 }
