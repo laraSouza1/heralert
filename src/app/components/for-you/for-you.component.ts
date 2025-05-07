@@ -57,13 +57,25 @@ export class ForYouComponent {
   ) { }
 
   ngOnInit(): void {
-
     this.comunities = [
       { name: 'Postagens', code: 'Postagens' },
       { name: 'Usuários', code: 'Usuários' },
       { name: 'Tags', code: 'Tags' }
     ];
 
+    //busca ultima página do esxplorar do localstorage
+    const savedComunity = localStorage.getItem('selectedComunity');
+    if (savedComunity) {
+      //volta para aúltima página do esxplorar
+      this.selectedComunity = JSON.parse(savedComunity);
+    } else {
+      this.selectedComunity = { name: 'Postagens', code: 'Postagens' };
+    }
+  }
+
+  //para guardar última página do esxplorar visitada no localstorage
+  onCommunityChange() {
+    localStorage.setItem('selectedComunity', JSON.stringify(this.selectedComunity));
   }
 
   //para abrir/fechar modal de criação de post --------------

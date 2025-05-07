@@ -19,7 +19,7 @@
 
       <div class="flex flex-row aling-items-center w-full mt-3">
         <div><p-button class="bt4" label="Explorar" /></div>
-        <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity" placeholder="Explorar" optionLabel="name"></p-select>
+        <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity" (ngModelChange)="onCommunityChange()" placeholder="Explorar" optionLabel="name"></p-select>
       </div>
 
       <!--mostrar componente com base no select escolhido-->
