@@ -16,14 +16,14 @@
         </div>
 
         <div>
-          <!--e-mail-->
-          <div class="flex flex-row w-12 gap-6 wd-100 wd-1002">
+          <!-- Email -->
+          <div class="flex flex-row w-12 gap-6 wd-100 wd-1002" (click)="abrirEmail()">
             <div class="flex justify-content-start">E-mail</div>
             <div class="flex justify-content-end op-profile">{{ user?.email }}</div>
           </div>
 
-          <!--palavra-passe-->
-          <div class="flex gap-6 wd-100">
+          <!-- Senha -->
+          <div class="flex gap-6 wd-100" (click)="abrirPassword()">
             <div>Palavra-passe</div>
             <div class="op-profile">{{ passwordMasked }}</div>
           </div>
@@ -63,4 +63,15 @@
   <ng-container>
     <app-blocked-users></app-blocked-users>
   </ng-container>
+</p-dialog>
+
+<!--modal email/atualizar e-mail-->
+<p-dialog header="Atualizar e-mail" [(visible)]="showEmailDialog" modal [style]="{width: '35vw'}" (onHide)="resetEmailComponent()">
+  <app-email *ngIf="emailComponentVisible" [user]="user" (onUpdate)="fecharEmail($event)"></app-email>
+</p-dialog>
+
+<!--modal palavra-passe/atualizar palavra-passe-->
+<p-dialog header="Atualizar palavra-passe" [(visible)]="showPasswordDialog" (onHide)="onPasswordDialogHide()" modal
+  [style]="{ width: '40vw' }">
+  <app-password [user]="user" (onUpdate)="onPasswordUpdated()"></app-password>
 </p-dialog>

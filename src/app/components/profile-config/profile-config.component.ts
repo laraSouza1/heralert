@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { LeftSideComponent } from '../shared/left-side/left-side.component';
 import { RightSideComponent } from '../shared/right-side/right-side.component';
 import { ButtonModule } from 'primeng/button';
@@ -12,13 +12,16 @@ import { BlockedUsersComponent } from '../config-options/blocked-users/blocked-u
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EmailComponent } from '../config-options/email/email.component';
+import { PasswordComponent } from '../config-options/password/password.component';
 
 @Component({
   selector: 'app-profile-config',
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, DialogService],
   imports: [
     LeftSideComponent, RightSideComponent, ButtonModule, ConfirmDialogModule, DialogModule,
-    MenuModule, ToastModule, BlockedUsersComponent, CommonModule
+    MenuModule, ToastModule, BlockedUsersComponent, CommonModule, EmailComponent, PasswordComponent, DynamicDialogModule
   ],
   templateUrl: './profile-config.component.html',
   styleUrl: './profile-config.component.css'
@@ -29,6 +32,11 @@ export class ProfileConfigComponent implements OnInit {
   showBlockedDialog = false;
   blockedCount = 0;
   passwordMasked = '';
+  showEmailDialog = false;
+  showPasswordDialog = false;
+  emailComponentVisible = true;
+
+  @ViewChild(PasswordComponent) passwordComponent!: PasswordComponent;
 
   constructor(
     private router: Router,
@@ -44,9 +52,46 @@ export class ProfileConfigComponent implements OnInit {
     this.loadBlockedCount(); //fetch nos users bloqueados
   }
 
-  //abre modal de users bloqueados
+  //modais -----------------------------------
+
+  //modal de users bloqueados
   abrirBlocked(): void {
     this.showBlockedDialog = true;
+  }
+
+  //modal email
+  abrirEmail(): void {
+    this.emailComponentVisible = true;
+    this.showEmailDialog = true;
+  }
+
+  fecharEmail(email?: string) {
+    this.emailComponentVisible = true;
+    if (email) {
+      this.user.email = email; //att somente se foi enviado um novo e-mail
+    }
+    this.showEmailDialog = false;
+  }
+
+  resetEmailComponent(): void {
+    this.emailComponentVisible = false;
+  }
+
+  //modal palavra-passe
+  abrirPassword(): void {
+    this.showPasswordDialog = true;
+  }
+
+  //reset nos campos do componente password
+  onPasswordDialogHide(): void {
+    this.passwordComponent.resetFields();
+  }
+
+  //att senha e seu comprimento para exibição
+  onPasswordUpdated(): void {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}'); //atualiza o user do localStorage
+    this.passwordMasked = '*'.repeat(this.user.password?.length || 0);
+    this.showPasswordDialog = false;
   }
 
   //fwtch users bloqueados

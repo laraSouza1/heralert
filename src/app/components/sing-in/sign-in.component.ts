@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { IconField } from 'primeng/iconfield';
@@ -46,7 +46,8 @@ export class SingInComponent {
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) { }
 
   //navegação botões login/cadastro -----------------
@@ -76,7 +77,7 @@ export class SingInComponent {
   validateConfirmPassword() {
     this.confirmPasswordError = this.password !== this.confirmPassword;
   }
-  
+
   //validação email, nome e user
   validateEmail() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,25 +97,72 @@ export class SingInComponent {
   }
 
   //envia o form para criar novo user
-  onSubmit() {
+  checkEmailAvailability(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.http.get(`http://localhost:8085/api/users/check-email?email=${encodeURIComponent(this.email)}`)
+        .subscribe({
+          next: (response: any) => resolve(response.exists),
+          error: () => resolve(false)
+        });
+    });
+  }
 
+  //faz check paa ver se o username já est+a em uso
+  checkUsernameAvailability(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.http.get(`http://localhost:8085/api/users/check-username?username=${encodeURIComponent(this.username)}`)
+        .subscribe({
+          next: (response: any) => resolve(response.exists),
+          error: (err) => {
+            console.error("Erro na verificação de username:", err);
+            resolve(false);
+          }
+        });
+    });
+  }
+
+  async onSubmit() {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
     this.clearErrors();
+
     this.validateEmail();
-    this.validateName();
     this.validateUsername();
+    this.validateName();
     this.validatePassword();
     this.validateConfirmPassword();
 
-    if (!this.emailError && !this.nameLengthError && !this.nameMaxLengthError &&
+    //executa verificações de maneira assíncrona
+    const [isEmailUsed, isUsernameUsed] = await Promise.all([
+      this.emailError ? false : this.checkEmailAvailability(),
+      (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
+    ]);
+
+    this.emailAlreadyUsed = isEmailUsed;
+    this.usernameAlreadyUsed = isUsernameUsed;
+
+    this.cdr.detectChanges();
+
+    //erro, cancela envio
+    const hasError =
+      this.emailError || this.emailAlreadyUsed ||
+      this.usernameFormatError || this.usernameSpaceError ||
+      this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
+      this.nameLengthError || this.nameMaxLengthError ||
+      this.passwordError || this.confirmPasswordError;
+
+    if (hasError) {
+      this.isSubmitting = false;
+      return;
+    }
+
+    //verificações validações
+    if (!this.nameLengthError && !this.nameMaxLengthError &&
       !this.usernameFormatError && !this.usernameSpaceError &&
       !this.usernameLengthError && !this.usernameMaxLengthError &&
       !this.passwordError && !this.confirmPasswordError) {
-      //conferir validações
 
-      //envia pro back se estiver tudo ok
       const registrationData = {
         username: this.username,
         name: this.name,
@@ -128,18 +176,7 @@ export class SingInComponent {
             if (response.status) {
               console.log('Cadastro bem-sucedido!', response.message);
 
-              const userData = {
-                id: response.user?.id,
-                username: registrationData.username,
-                name: registrationData.name,
-                email: registrationData.email,
-                profile_pic: null,
-                cover_pic: null,
-                bio: null,
-                created_at: new Date().toISOString()
-              };
-
-              //armaneza o user no localstorage
+              const userData = response.user; //inclui id do user cadastrado
               localStorage.setItem('user', JSON.stringify(userData));
 
               this.navigateToFY();
@@ -150,19 +187,7 @@ export class SingInComponent {
           },
           error: (error) => {
             console.error('Erro ao cadastrar:', error);
-            this.emailAlreadyUsed = false;
-            this.usernameAlreadyUsed = false;
-
-            if (error.status === 409) {
-              const field = error.error.field;
-              if (field === 'email') {
-                this.emailAlreadyUsed = true;
-              } else if (field === 'username') {
-                this.usernameAlreadyUsed = true;
-              }
-            } else {
-              alert('Erro ao tentar cadastrar. Por favor, tente novamente.');
-            }
+            alert('Erro ao tentar cadastrar. Por favor, tente novamente.');
             this.isSubmitting = false;
           },
           complete: () => {

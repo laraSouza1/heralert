@@ -23,7 +23,7 @@
       </p-iconfield>
       <!--mensagens de erro para o campo de email-->
       <p-message *ngIf="emailError" severity="error" variant="simple" size="small">E-mail inválido.</p-message>
-      <p-message *ngIf="emailAlreadyUsed" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
+      <p-message *ngIf="emailAlreadyUsed && !emailError" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
 
       <!--campo de nome-->
       <p-iconfield class="mt-4 mb-2">
@@ -46,7 +46,7 @@
       <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter espaços.</p-message>
       <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
       <p-message *ngIf="usernameMaxLengthError" severity="error" variant="simple" size="small">Máximo 15 caracteres.</p-message>
-      <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já emuso.</p-message>
+      <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em uso.</p-message>
 
       <div class="my-4">
         <!--campo de senha-->

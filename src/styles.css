@@ -66,6 +66,14 @@ body::-webkit-scrollbar {
   color: #ff6b6b;
 }
 
+.pi-eye-slash:before {
+  color: #ff6b6b;
+}
+
+.pi-eye:before {
+  color: #ff6b6b;
+}
+
 .p-button-text.p-button-secondary {
   color: white !important;
 }
