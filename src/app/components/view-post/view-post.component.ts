@@ -49,19 +49,12 @@ export class ViewPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.items = [
-      {
-        items: [
-          { label: 'Bloquear usuário', icon: 'pi pi-user-minus' },
-          { label: 'Denunciar comentário', icon: 'pi pi-flag' }
-        ]
-      }
-    ];
-
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.currentUserId = user?.id;
 
-    const postId = this.route.snapshot.paramMap.get('id');
+    const idSlug = this.route.snapshot.paramMap.get('idSlug'); //pega o id + slug
+    const postId = idSlug?.split('-')[0];
+
     if (postId) {
       this.http.get<any>(`http://localhost:8085/api/posts/${postId}`, {
         params: { userId: this.currentUserId }
@@ -70,9 +63,6 @@ export class ViewPostComponent implements OnInit {
           this.post = response.data;
           this.tags = this.post.tags;
           this.comments = this.post.comments;
-
-          console.log('Comentários recebidos do backend:', this.comments);
-
           this.buildCommentTree();
         }
       });

@@ -31,7 +31,7 @@ export const routes: Routes = [
   { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
   { path: 'reco-locais', component: RecoLocaisComponent },
   { path: 'profile-view/:username', component: ProfileViewComponent },
-  { path: 'view-post/:id', component: ViewPostComponent },
+  { path: 'view-post/:idSlug', component: ViewPostComponent },
   { path: 'post-tag', component: PostTagComponent },
   { path: 'communities', component: CommunitiesComponent },
   { path: 'profile-config', component: ProfileConfigComponent }

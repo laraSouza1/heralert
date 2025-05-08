@@ -52,7 +52,7 @@ export class PostComponent implements OnInit {
     private followService: FollowService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-   ) { }
+  ) { }
 
   ngOnInit() {
     this.items = [
@@ -160,7 +160,17 @@ export class PostComponent implements OnInit {
   //abre post clicado
   goToPostDetail(event: MouseEvent) {
     event.stopPropagation();
-    this.router.navigate(['/view-post', this.post.id]);
+    const slugTitle = this.slugify(this.post.title);
+    this.router.navigate([`/view-post/${this.post.id}-${slugTitle}`]);
+  }
+
+  //para link do post
+  slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') //remove acentos
+      .replace(/[^a-z0-9]+/g, '-') //substitui por hífen
+      .replace(/(^-|-$)/g, '');//remove hífens nas pontas
   }
 
   //encaminha para comunidade

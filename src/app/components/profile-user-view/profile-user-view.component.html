@@ -8,15 +8,23 @@
 
   <!--nome, btn seguir, menu-->
   <div class="flex flex-row align-items-center mt-5 ml-3 gap-3">
-    <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
-    <div>
-      <app-follow-button *ngIf="user" [targetUserId]="user.id"></app-follow-button>
+    <div class="flex flex-row gap-2 w-9">
+      <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
+      <div>
+        <app-follow-button *ngIf="user" [targetUserId]="user.id"></app-follow-button>
+      </div>
     </div>
-    <div>
-      <p-toast />
-      <p-confirmDialog></p-confirmDialog>
-      <p-menu #menuRef [model]="items" [popup]="true" class="menu-pontos" *ngIf="items?.length"></p-menu>
-      <p-button (click)="toggleMenu($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
+    <div class="flex flex-row gap-2">
+      <div>
+        <p-button icon="pi pi-share-alt" class="icon-action share bt-sharee" />
+        <p-button icon="pi pi-envelope" class="icon-action envelope bt-envelope" />
+      </div>
+      <div>
+        <p-toast />
+        <p-confirmDialog></p-confirmDialog>
+        <p-menu #menuRef [model]="items" class="menu-pontos" [popup]="true" *ngIf="items?.length"></p-menu>
+        <p-button (click)="toggleMenu($event)" class="menu-contt" icon="pi pi-ellipsis-v" />
+      </div>
     </div>
   </div>
 

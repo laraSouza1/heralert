@@ -1,8 +1,9 @@
 <!--COMPONETE QUE EXIBE DIVISÃO/SIDEBAR DIREITA DA APP (chat)-->
 
+<!--
 <div class="h-screen container">
 
-  <!--título-->
+  título
   <div class="container-chat">
     <h1 class="mb-3">Chat</h1>
     <div class="line"></div>
@@ -10,15 +11,15 @@
 
   <div class="w-12">
 
-    <!--itens users na lista de mensagens-->
+    itens users na lista de mensagens
     <p-contextmenu #cm [model]="items" (onHide)="selectedUser = null" />
 
-    <!--tabela de users de chats-->
+    tabela de users de chats
     <p-table #dt2 [value]="users" class="scrollable-table w-full" [ngStyle]="{'max-height': tableHeight}">
       <ng-template #caption>
         <div class="flex">
 
-          <!--pesquisa user-->
+          pesquisa user
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon>
               <i class="pi pi-search"></i>
@@ -28,7 +29,7 @@
         </div>
       </ng-template>
 
-      <!--infos do user-->
+      infos do user
       <ng-template pTemplate="body" let-user let-i="rowIndex">
         <tr (click)="onRowClick(user)" [pContextMenuRow]="user">
           <td>
@@ -42,9 +43,9 @@
       </ng-template>
     </p-table>
 
-    <!--ao clicar num dos users da lista acima, abre o chat dele-->
+    ao clicar num dos users da lista acima, abre o chat dele
     <div *ngIf="isExpanded">
-      <!--header/infos do user-->
+      header/infos do user
       <div class="grid div-chat" style="width: 100%; display: flex; align-items: center;">
         <div class="col"><img *ngIf="expandedUser" [src]="expandedUser.photo" height="50" width="50"
             class="user-image2" /></div>
@@ -55,7 +56,7 @@
         <div class="col"><i class="pi pi-times" (click)="closeDiv()"></i></div>
       </div>
 
-      <!--chat e inpu-->
+      chat e inpu
       <div>
         <div class="chat">Chat vazio.</div>
 
@@ -71,3 +72,4 @@
     </div>
   </div>
 </div>
+-->

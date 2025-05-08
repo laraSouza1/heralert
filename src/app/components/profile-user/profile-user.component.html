@@ -7,17 +7,24 @@
   <img [src]="user?.profile_pic || '/imgs/ai.png'" class="icon-image">
 
   <!--nome e edição de perfil-->
-  <div class="flex flex-row mt-6 ml-3 gap-3 align-items-center">
-    <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
-    <div>
-      <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-user-edit"
-        label="Editar perfil" (click)="openEditProfileModal()">
-      </p-button>
+  <div class="flex flex-row mt-5 ml-3 gap-3 align-items-center">
+    <div class="flex flex-row gap-2 w-10">
+      <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
+      <div>
+        <p-button class="flex align-items-center justify-content-center edit-profile edit-cog" icon="pi pi-user-edit"
+          label="Editar perfil" (click)="openEditProfileModal()">
+        </p-button>
+      </div>
     </div>
-    <div>
-      <p-toast />
-      <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
-      <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
+    <div class="flex flex-row gap-2">
+      <div>
+        <p-button icon="pi pi-share-alt" class="icon-action share bt-sharee" />
+      </div>
+      <div>
+        <p-toast />
+        <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
+        <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-contt" />
+      </div>
     </div>
   </div>
 
@@ -53,7 +60,8 @@
 
   <ng-template pTemplate="footer" class="mt-2">
     <p-button label="Cancelar" class="bt-post2" (click)="closeEditProfileModal()"></p-button>
-    <p-button label="Salvar" class="bt-post" (click)="editProfileComponent.emitFormData(); saveProfile()" pRipple></p-button>
+    <p-button label="Salvar" class="bt-post" (click)="editProfileComponent.emitFormData(); saveProfile()"
+      pRipple></p-button>
   </ng-template>
 
 </p-dialog>

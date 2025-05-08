@@ -1,3 +1,4 @@
+/*btn para editar perfil ---------------------------------------*/
 ::ng-deep .edit-profile .p-button {
   background-color: transparent !important;
   padding: 0px !important;
@@ -6,15 +7,17 @@
   border: none !important;
 }
 
+::ng-deep .edit-profile .p-button:not(:disabled):hover {
+  color: #d63030 !important;
+}
+
+/*icon do btn*/
 ::ng-deep .edit-cog .pi {
   color: #F94C4C !important;
   font-size: 13px !important;
 }
 
-::ng-deep .edit-profile .p-button:not(:disabled):hover {
-  color: #d63030 !important;
-}
-
+/*para infiormações do perfil ---------------------------*/
 .user {
   font-size: 20px;
   font-weight: 600;
@@ -51,17 +54,14 @@
   white-space: normal;
 }
 
+/*capa do perfil*/
 .cover-image {
   height: 150px;
   object-fit: cover;
   width: 574px;
 }
 
-::ng-deep html,
-body {
-  overflow-x: hidden;
-}
-
+/*icon do perfil*/
 .icon-image {
   border-radius: 100%;
   border: 4px solid #ffffff;
@@ -73,11 +73,19 @@ body {
   left: 395px;
 }
 
+/*para esconder scrollbar -------------------------------------*/
+::ng-deep html,
+body {
+  overflow-x: hidden;
+}
+
+/*menu 3 pontinhos-------------------------------------------*/
+/*conteúdo ao abrir*/
 ::ng-deep .menu-contt .p-button {
   background: none !important;
   color: #616161 !important;
   border: none !important;
-  position:absolute;
+  position: absolute;
   left: 920px;
 }
 
@@ -86,12 +94,14 @@ body {
   color: #2b2b2b !important;
 }
 
+/*2 pontinhos*/
 ::ng-deep .menu-pontos .p-menu {
   width: 250px !important;
   position: absolute !important;
-  left: 680px !important;
+  left: 694px !important;
+  top: 260px !important;
   border: none !important;
-  border-right: 2px solid #ffacac !important;
+  border-top: 2px solid #ffacac !important;
 }
 
 ::ng-deep .menu-pontos .p-menu-submenu-label {
@@ -99,4 +109,45 @@ body {
   height: 0px !important;
   padding: 0px !important;
   margin: 0px !important;
+}
+
+/*btn de messege e partilhar -------------------------------*/
+/*message*/
+::ng-deep .envelope .pi {
+  color: #616161 !important;
+}
+
+::ng-deep .bt-envelope .p-button {
+  color: #616161 !important;
+  background-color: white !important;
+  border-radius: 50px !important;
+  border: none !important;
+}
+
+::ng-deep .bt-envelope .p-button:not(:disabled):hover {
+  background-color: #61616130 !important;
+  border: 2px solid #616161;
+}
+
+/*partilhar*/
+::ng-deep .share .pi {
+  color: #007bff !important;
+}
+
+::ng-deep .bt-sharee .p-button {
+  color: #007bff !important;
+  background-color: white !important;
+  border-radius: 50px !important;
+  border: none !important;
+}
+
+::ng-deep .bt-sharee .p-button:not(:disabled):hover {
+  background-color: #007bff30 !important;
+  border: 2px solid #007bff;
+}
+
+::ng-deep .icon-action .pi {
+  font-size: 16px !important;
+  position: relative;
+  left: 0px !important;
 }
