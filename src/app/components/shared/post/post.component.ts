@@ -13,6 +13,7 @@ import { BlockService } from '../../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { FollowService } from '../../../services/services/follow.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-post',
@@ -51,7 +52,8 @@ export class PostComponent implements OnInit {
     private blockService: BlockService,
     private followService: FollowService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private clipboard: Clipboard
   ) { }
 
   ngOnInit() {
@@ -171,6 +173,20 @@ export class PostComponent implements OnInit {
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '') //remove acentos
       .replace(/[^a-z0-9]+/g, '-') //substitui por hífen
       .replace(/(^-|-$)/g, '');//remove hífens nas pontas
+  }
+
+  //para copiar link do post
+  copyPostLink(event: MouseEvent) {
+    event.stopPropagation();
+
+    const slugTitle = this.slugify(this.post.title);
+    const link = `${window.location.origin}/view-post/${this.post.id}-${slugTitle}`;
+    this.clipboard.copy(link);
+    this.linkCopied();
+  }
+
+  linkCopied() {
+    this.messageService.add({ severity: 'success', summary: 'Link copiado!' });
   }
 
   //encaminha para comunidade

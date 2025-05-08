@@ -67,7 +67,7 @@
           class="icon-action save bt-save" (onClick)="toggleSave()" />
 
         <!--partilhar-->
-        <p-button icon="pi pi-share-alt" class="icon-action share bt-share" />
+        <p-button icon="pi pi-share-alt" class="icon-action share bt-share" (click)="copyPostLink($event)" />
       </div>
 
       <!--editar/excluir-->

@@ -8,6 +8,7 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { FollowService } from '../../services/services/follow.service';
 import { Router } from '@angular/router';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-profile-user',
@@ -35,7 +36,8 @@ export class ProfileUserComponent {
     private messageService: MessageService,
     private http: HttpClient,
     private followService: FollowService,
-    private router: Router
+    private router: Router,
+    private clipboard: Clipboard
   ) { }
 
   ngOnInit() {
@@ -154,5 +156,18 @@ export class ProfileUserComponent {
   //navegação de menu ------------------------------
   navigateToProfileConfig() {
     this.router.navigate(['/profile-config']);
+  }
+
+  //função para copiar link do perfil
+  copyProfileLink() {
+    if (this.user?.username) {
+      const link = `${window.location.origin}/profile-view/${this.user.username}`;
+      this.clipboard.copy(link);
+      this.linkCopied();
+    }
+  }
+
+  linkCopied() {
+    this.messageService.add({ severity: 'success', summary: 'Link copiado!' });
   }
 }

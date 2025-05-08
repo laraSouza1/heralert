@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { FollowService } from '../../services/services/follow.service';
 import { BlockService } from '../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-profile-user-view',
@@ -41,7 +42,9 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     private http: HttpClient,
     private followService: FollowService,
     private confirmationService: ConfirmationService,
-    private blockService: BlockService
+    private blockService: BlockService,
+    private clipboard: Clipboard,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -208,5 +211,15 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     });
   }
 
+  //função para copiar link do perfil
+  copyProfileLink() {
+    const link = `${window.location.origin}/profile-view/${this.user.username}`;
+    this.clipboard.copy(link);
+    this.linkCopied();
+  }
+
+  linkCopied() {
+    this.messageService.add({ severity: 'success', summary: 'Link copiado!' });
+  }
 
 }
