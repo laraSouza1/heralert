@@ -1,7 +1,7 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { FollowService } from '../../../services/services/follow.service';
+import { FollowService } from '../../../services/follow/follow.service';
 import { BlockService } from '../../../services/block/block.service';
 
 @Component({

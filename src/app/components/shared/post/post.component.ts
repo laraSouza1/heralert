@@ -12,7 +12,7 @@ import { FollowButtonComponent } from '../follow-button/follow-button.component'
 import { BlockService } from '../../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { FollowService } from '../../../services/services/follow.service';
+import { FollowService } from '../../../services/follow/follow.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({

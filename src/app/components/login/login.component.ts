@@ -11,7 +11,7 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Message, MessageModule } from 'primeng/message';
-import { FollowService } from '../../services/services/follow.service';
+import { FollowService } from '../../services/follow/follow.service';
 import { BlockService } from '../../services/block/block.service';
 
 @Component({
@@ -67,15 +67,15 @@ export class LoginComponent {
       next: (response: any) => {
         if (response.status) {
           console.log('Login bem-sucedido!', response.data);
-  
+
           localStorage.clear();
-  
+
           //limpa dados anteriores
           this.followService.clearFollowings();
           this.blockService.clear();
-  
+
           localStorage.setItem('user', JSON.stringify(response.data)); //pega novos dados o user recem logado para o localstorage
-  
+
           this.followService.refreshFollowings(response.data.id).then(() => {
             this.router.navigate(['/for-you']);
           });

@@ -6,7 +6,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { FollowService } from '../../services/services/follow.service';
+import { FollowService } from '../../services/follow/follow.service';
 import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 

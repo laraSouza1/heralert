@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { FollowButtonComponent } from '../../shared/follow-button/follow-button.component';
 import { Subscription } from 'rxjs';
-import { FollowService } from '../../../services/services/follow.service';
+import { FollowService } from '../../../services/follow/follow.service';
 
 export interface User {
   id: number;

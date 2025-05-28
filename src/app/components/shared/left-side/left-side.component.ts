@@ -7,7 +7,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ImageModule } from 'primeng/image';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { FollowService } from '../../../services/services/follow.service';
+import { FollowService } from '../../../services/follow/follow.service';
 import { BlockService } from '../../../services/block/block.service';
 import { HttpClient } from '@angular/common/http';
 import { NotificationService } from '../../../services/notification/notification.service';
