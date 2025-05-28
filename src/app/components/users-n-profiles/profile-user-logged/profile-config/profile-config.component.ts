@@ -8,13 +8,13 @@ import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { BlockedUsersComponent } from '../../../config-options/blocked-users/blocked-users.component';
+import { BlockedUsersComponent } from '../config-options/blocked-users/blocked-users.component';
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EmailComponent } from '../../../config-options/email/email.component';
-import { PasswordComponent } from '../../../config-options/password/password.component';
+import { EmailComponent } from '../config-options/email/email.component';
+import { PasswordComponent } from '../config-options/password/password.component';
 
 @Component({
   selector: 'app-profile-config',

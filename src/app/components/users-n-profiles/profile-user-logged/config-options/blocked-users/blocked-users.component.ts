@@ -5,10 +5,10 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-import { FollowButtonComponent } from '../../shared/follow-button/follow-button.component';
+import { FollowButtonComponent } from '../../../../shared/follow-button/follow-button.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { FollowersUserComponent } from '../../followers/followers-user/followers-user.component';
-import { FollowingUserComponent } from '../../followers/following-user/following-user.component';
+import { FollowersUserComponent } from '../../../../followers/followers-user/followers-user.component';
+import { FollowingUserComponent } from '../../../../followers/following-user/following-user.component';
 import { Router } from '@angular/router';
 
 export interface User {
