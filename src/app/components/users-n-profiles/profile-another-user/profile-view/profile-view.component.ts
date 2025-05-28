@@ -8,16 +8,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
+import { LeftSideComponent } from '../../../shared/left-side/left-side.component';
+import { RightSideComponent } from '../../../shared/right-side/right-side.component';
 import { ProfileUserViewComponent } from '../profile-user-view/profile-user-view.component';
-import { PostComponent } from '../shared/post/post.component';
+import { PostComponent } from '../../../shared/post/post.component';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { FollowingUserViewComponent } from '../followers/following-user-view/following-user-view.component';
-import { FollowersUserViewComponent } from '../followers/followers-user-view/followers-user-view.component';
-import { BlockService } from '../../services/block/block.service';
+import { FollowingUserViewComponent } from '../../../followers/following-user-view/following-user-view.component';
+import { FollowersUserViewComponent } from '../../../followers/followers-user-view/followers-user-view.component';
+import { BlockService } from '../../../../services/block/block.service';
 
 @Component({
   selector: 'app-profile-view',

@@ -7,7 +7,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
-import { FollowButtonComponent } from '../shared/follow-button/follow-button.component';
+import { FollowButtonComponent } from '../../shared/follow-button/follow-button.component';
 
 @Component({
   selector: 'app-users',

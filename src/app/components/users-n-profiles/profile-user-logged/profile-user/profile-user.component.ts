@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { FollowService } from '../../services/follow/follow.service';
+import { FollowService } from '../../../../services/follow/follow.service';
 import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-profile-user',

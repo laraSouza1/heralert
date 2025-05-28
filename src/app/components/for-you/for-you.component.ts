@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
-import { UsersComponent } from '../users/users.component';
+import { UsersComponent } from '../users-n-profiles/users/users.component';
 import { ChangePostsComponent } from '../change-posts/change-posts.component';
 import { TagsComponent } from '../tags/tags/tags.component';
 

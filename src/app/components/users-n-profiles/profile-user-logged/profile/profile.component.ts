@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
+import { RightSideComponent } from '../../../shared/right-side/right-side.component';
+import { LeftSideComponent } from '../../../shared/left-side/left-side.component';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
-import { CreatePostComponent } from '../shared/create-post/create-post.component';
+import { CreatePostComponent } from '../../../shared/create-post/create-post.component';
 import { ButtonModule } from 'primeng/button';
 import { ProfileUserComponent } from '../profile-user/profile-user.component';
 import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PostsDraftsComponent } from '../posts/posts-drafts/posts-drafts.component';
-import { PostsLikedComponent } from '../posts/posts-liked/posts-liked.component';
-import { PostsUserComponent } from '../posts/posts-user/posts-user.component';
-import { PostsSavedComponent } from '../posts/posts-saved/posts-saved.component';
-import { FollowingUserComponent } from '../followers/following-user/following-user.component';
-import { FollowersUserComponent } from '../followers/followers-user/followers-user.component';
+import { PostsDraftsComponent } from '../../../posts/posts-drafts/posts-drafts.component';
+import { PostsLikedComponent } from '../../../posts/posts-liked/posts-liked.component';
+import { PostsUserComponent } from '../../../posts/posts-user/posts-user.component';
+import { PostsSavedComponent } from '../../../posts/posts-saved/posts-saved.component';
+import { FollowingUserComponent } from '../../../followers/following-user/following-user.component';
+import { FollowersUserComponent } from '../../../followers/followers-user/followers-user.component';
 
 @Component({
   selector: 'app-profile',

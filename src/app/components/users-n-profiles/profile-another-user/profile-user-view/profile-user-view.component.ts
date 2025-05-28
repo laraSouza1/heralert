@@ -5,11 +5,11 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { FollowButtonComponent } from '../shared/follow-button/follow-button.component';
+import { FollowButtonComponent } from '../../../shared/follow-button/follow-button.component';
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FollowService } from '../../services/follow/follow.service';
-import { BlockService } from '../../services/block/block.service';
+import { FollowService } from '../../../../services/follow/follow.service';
+import { BlockService } from '../../../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Clipboard } from '@angular/cdk/clipboard';
 

@@ -18,7 +18,7 @@ export interface User {
 @Component({
   selector: 'app-right-side',
   standalone: true,
-  imports: [TableModule, CommonModule, IconField, InputIcon, InputTextModule, ContextMenu, TextareaModule],
+  imports: [TableModule, CommonModule, InputTextModule, TextareaModule],
   templateUrl: './right-side.component.html',
   styleUrls: ['./right-side.component.css'],
 })
