@@ -13,7 +13,7 @@ import { DicasDefesaComponent } from './components/communities/dicas-defesa/dica
 import { RecoLocaisComponent } from './components/communities/reco-locais/reco-locais.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
 import { ViewPostComponent } from './components/posts/view-post/view-post.component';
-import { PostTagComponent } from './components/post-tag/post-tag.component';
+import { PostTagComponent } from './components/tags/posts-tag/post-tag.component';
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
 import { ProfileConfigComponent } from './components/profile-config/profile-config.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';

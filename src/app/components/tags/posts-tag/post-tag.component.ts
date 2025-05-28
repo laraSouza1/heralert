@@ -13,12 +13,12 @@ import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreatePostComponent } from '../shared/create-post/create-post.component';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
-import { PostComponent } from '../shared/post/post.component';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
+import { CreatePostComponent } from '../../shared/create-post/create-post.component';
+import { LeftSideComponent } from '../../shared/left-side/left-side.component';
+import { PostComponent } from '../../shared/post/post.component';
+import { RightSideComponent } from '../../shared/right-side/right-side.component';
 import { HttpClient } from '@angular/common/http';
-import { BlockService } from '../../services/block/block.service';
+import { BlockService } from '../../../services/block/block.service';
 
 @Component({
   selector: 'app-post-tag',

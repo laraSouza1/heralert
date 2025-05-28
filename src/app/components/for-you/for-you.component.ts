@@ -18,8 +18,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { UsersComponent } from '../users/users.component';
-import { TagsComponent } from '../tags/tags.component';
 import { ChangePostsComponent } from '../change-posts/change-posts.component';
+import { TagsComponent } from '../tags/tags/tags.component';
 
 interface Comunity {
   name: string;
