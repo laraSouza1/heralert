@@ -8,8 +8,8 @@ import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule, Message } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
-import { FooterComponent } from '../../shared/footer/footer.component';
-import { MenuBarComponent } from '../../shared/menu-bar/menu-bar.component';
+import { FooterComponent } from '../../../../shared/footer/footer.component';
+import { MenuBarComponent } from '../../../../shared/menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-password',
