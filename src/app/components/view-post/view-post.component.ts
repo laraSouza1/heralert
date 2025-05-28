@@ -91,6 +91,7 @@ export class ViewPostComponent implements OnInit {
         return;
       }
 
+      //navega até o perfil do user mencionado
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
       if (mentionedUsername === currentUser.username) {
         this.router.navigate(['/profile']);

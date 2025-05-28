@@ -50,11 +50,12 @@ export class ProfileUserComponent {
       }
     ];
 
-    //pega data de criação de conta + formatação para meses
+    //dados do user do localstorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
 
+      //formatação para meses
       const date = new Date(this.user.created_at);
       const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
       this.user.memberSince = `Membro desde ${meses[date.getMonth()]} ${date.getFullYear()}`;

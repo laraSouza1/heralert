@@ -167,7 +167,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
   refreshBlockedState() {
     //pega dados o user logado no localstorage
     const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
-    //vê user bloqueado
+    //vê users bloqueado
     this.blockService.refreshBlockedUsers(currentUserId).then(() => {
       //user bloqueado > mostra opção para desbloquear
       this.isBlocked = this.blockService.isBlocked(this.user.id);

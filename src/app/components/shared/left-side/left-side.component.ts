@@ -9,6 +9,8 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { FollowService } from '../../../services/services/follow.service';
 import { BlockService } from '../../../services/block/block.service';
+import { HttpClient } from '@angular/common/http';
+import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-left-side',
@@ -26,10 +28,22 @@ export class LeftSideComponent {
     private router: Router,
     private confirmationService: ConfirmationService,
     private followService: FollowService,
-    private blockService: BlockService
-  ) {}
+    private blockService: BlockService,
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) { }
+
+  notifications: any[] = [];
+  totalNotifications: number = 0;
 
   ngOnInit() {
+
+    //service de notification para fazer a contagem de notificações
+    if (!this.notificationService) return;
+    this.notificationService.totalNotifications$.subscribe(count => {
+      this.totalNotifications = count;
+    });
+
     this.loadUser(); //chama dados do user
 
     window.addEventListener('user-updated', () => {
@@ -50,9 +64,19 @@ export class LeftSideComponent {
       },
       {
         label: 'Notificações',
-        icon: 'pi pi-bell'
+        icon: 'pi pi-bell',
+        command: () => this.navigateToNotifications()
       },
     ];
+
+    this.notificationService.totalNotifications$.subscribe(count => {
+      this.totalNotifications = count;
+    });
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.notificationService.loadNotificationCount(user.id);
+    }
   }
 
   //btns de navegação
@@ -62,6 +86,10 @@ export class LeftSideComponent {
 
   navigateToComm() {
     this.router.navigate(['/communities']);
+  }
+
+  navigateToNotifications() {
+    this.router.navigate(['/notifications']);
   }
 
   navigateToWelcome() {
@@ -87,9 +115,9 @@ export class LeftSideComponent {
         this.followService.clearFollowings();
         this.blockService.clear();
         this.navigateToWelcome();
-      }      
+      }
     });
-  }  
+  }
 
   //chama dados do user
   loadUser() {

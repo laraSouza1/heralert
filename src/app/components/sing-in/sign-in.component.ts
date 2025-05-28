@@ -85,7 +85,7 @@ export class SingInComponent {
   }
 
   validateUsername() {
-    this.usernameFormatError = !/^[A-Za-z0-9._]+$/.test(this.username);
+    this.usernameFormatError = !/^[A-Za-z0-9._-]+$/.test(this.username);
     this.usernameSpaceError = this.username.includes(' ');
     this.usernameLengthError = this.username.length < 3;
     this.usernameMaxLengthError = this.username.length > 15;
@@ -176,7 +176,7 @@ export class SingInComponent {
             if (response.status) {
               console.log('Cadastro bem-sucedido!', response.message);
 
-              const userData = response.user; //inclui id do user cadastrado
+              const userData = response.user; //data o user, incluindo id do user cadastrado
               localStorage.setItem('user', JSON.stringify(userData));
 
               this.navigateToFY();

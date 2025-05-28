@@ -1,4 +1,6 @@
-<div class="h-screen container">
+<div class="container">
+
+  <!--logo heralert-->
   <div class="container-logo">
     <img class="logo mb-3" src="/imgs/Heralert.png" height="35" (click)="navigateToFY()">
     <div class="line"></div>
@@ -7,30 +9,40 @@
   <div class="flex flex-column justify-content-center align-items-center w-full">
 
     <div class="mt-4 text-center">
+
+      <!--foto de perfil-->
       <img [src]="user?.profile_pic || '/imgs/ai.png'" class="img-profile mb-3">
 
-      <p class="pg-1">{{ user?.name }}</p>
+      <!--nome de usuário-->
+      <p class="name">{{ user?.name }}</p>
     </div>
 
+    <!--usuário-->
     <div class="user mt-2 mb-4">
       <div class="editt-at"><i class="pi pi-at"></i></div>
       <span>{{ user?.username }}</span>
     </div>
 
-    <p-button class="bt-pf mb-4" icon="pi pi-eye" label="Ver perfil" (click)="navigateToProfile()"></p-button>
+    <!--btn ver perfil-->
+    <p-button class="navegate-profile mb-4" icon="pi pi-eye" label="Ver perfil"
+      (click)="navigateToProfile()"></p-button>
 
+    <!--menu + número de notificações-->
     <div class="w-full">
       <p-menu #menu [model]="items"></p-menu>
+      <div class="number-notifications flex justify-content-center align-items-center">{{ totalNotifications }}</div>
     </div>
 
+    <!--logo-->
     <div class="mb-4 mt-5">
       <img src="/imgs/logo_sem_pequena.png" height="75" />
     </div>
 
+    <!--btn para sair da app-->
     <div>
       <p-toast></p-toast>
       <p-confirmDialog></p-confirmDialog>
-      <p-button class="bt-pf1" icon="pi pi-sign-out" label="Sair" (click)="logout()" [outlined]="true"></p-button>
+      <p-button class="btn-sair" icon="pi pi-sign-out" label="Sair" (click)="logout()" [outlined]="true"></p-button>
     </div>
   </div>
 </div>

@@ -16,13 +16,14 @@ import { ViewPostComponent } from './components/view-post/view-post.component';
 import { PostTagComponent } from './components/post-tag/post-tag.component';
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
 import { ProfileConfigComponent } from './components/profile-config/profile-config.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
+//rotas acessíveis ao usuário
 export const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-in', component: SingInComponent },
-  { path: 'support', component: SupportComponent },
   { path: 'for-you', component: ForYouComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'assuntos-gerais', component: AssuntosGeraisComponent },
@@ -34,5 +35,7 @@ export const routes: Routes = [
   { path: 'view-post/:idSlug', component: ViewPostComponent },
   { path: 'post-tag', component: PostTagComponent },
   { path: 'communities', component: CommunitiesComponent },
-  { path: 'profile-config', component: ProfileConfigComponent }
+  { path: 'profile-config', component: ProfileConfigComponent },
+  { path: 'notifications', component: NotificationsComponent }
 ];
+

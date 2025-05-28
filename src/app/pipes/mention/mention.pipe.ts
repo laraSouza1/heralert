@@ -11,7 +11,7 @@ export class MentionPipe implements PipeTransform {
   transform(value: string): SafeHtml {
     if (!value) return value;
 
-    const mentionRegex = /@(\w+)/g;
+    const mentionRegex = /@([\w.-]+)/g;
     const replaced = value.replace(mentionRegex, `<span class="mention" data-username="$1">@$1</span>`);
 
     return this.sanitizer.bypassSecurityTrustHtml(replaced);

@@ -83,6 +83,7 @@ export class PostComponent implements OnInit {
         this.isFavorite = JSON.parse(storedLike);
       }
 
+      //verifica se o usuário atualmente logado é o autor de uma determinada postagem
       const currentUser = localStorage.getItem('user');
       if (currentUser) {
         const user = JSON.parse(currentUser);

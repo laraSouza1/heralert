@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PostComponent } from '../../shared/post/post.component';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { BlockService } from '../../../services/block/block.service';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { PostComponent } from '../../shared/post/post.component';
 
 @Component({
   selector: 'app-posts-fy',

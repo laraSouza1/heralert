@@ -10,7 +10,8 @@
     <div class="flex align-items-center justify-content-center user">
       <div>{{ post.username }}</div>
     </div>
-    <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" class="aa" [targetUserId]="post.user_id" (click)="$event.stopPropagation()"></app-follow-button>
+    <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" class="aa" [targetUserId]="post.user_id"
+      (click)="$event.stopPropagation()"></app-follow-button>
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
       (click)="$event.stopPropagation()">
       <p-toast />
@@ -51,10 +52,11 @@
 
       <div *ngIf="!isDraft" class="w-6 flex justify-content-start gap-2">
 
-        <!--favoritar-->
+        <!--favoritar usuários-->
         <p-button *ngIf="post.user_id !== userId" [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
           [label]="likes.toString()" class="icon-action fav bt-fav" (onClick)="toggleFavorite()" />
 
+        <!--favoritar user logado-->
         <p-button *ngIf="post.user_id === userId" icon="pi pi-heart-fill" [disabled]="true" [label]="likes.toString()"
           class="icon-action fav bt-fav2" styleClass="bt-fav2" />
 
