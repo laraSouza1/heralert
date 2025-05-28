@@ -1,79 +1,55 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
+import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { NotificationService } from '../../../services/notification/notification.service';
+import { CommonModule, NgIf } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { Router } from '@angular/router';
-import { ButtonIcon, ButtonModule } from 'primeng/button';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule, NgIf } from '@angular/common';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { MentionPipe } from '../../pipes/mention/mention.pipe';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { NotificationService } from '../../services/notification/notification.service';
+import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 
 @Component({
-  selector: 'app-notifications',
+  selector: 'app-likes-notifications',
   providers: [MessageService, ConfirmationService],
   imports: [
-    LeftSideComponent, IconFieldModule, InputIconModule, InputTextModule, ButtonModule, CommonModule,
+    IconFieldModule, InputIconModule, InputTextModule, ButtonModule, CommonModule,
     NgIf, MentionPipe, ToastModule, ConfirmDialogModule
   ],
-  templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  templateUrl: './likes-notifications.component.html',
+  styleUrl: './likes-notifications.component.css'
 })
-export class NotificationsComponent {
+export class LikesNotificationsComponent {
 
   constructor(
-    private router: Router, private http: HttpClient, private messageService: MessageService,
+    private http: HttpClient,
+    private router: Router,
+    private messageService: MessageService,
     private notificationService: NotificationService
   ) { }
 
   notifications: any[] = [];
-  totalNotifications: number = 0;
   notification: number = 0;
   userId!: number;
   searchTerm: string = '';
   filteredNotifications: any[] = [];
 
   ngOnInit() {
-
-    //pega user logado do localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.userId = user.id;
-
-      //inscrição para acompanhar mudanças
-      this.notificationService.totalNotifications$.subscribe(count => {
-        this.totalNotifications = count;
-      });
-
-      //carrega a contagem de notificações atual do backend
-      this.notificationService.loadNotificationCount(this.userId);
-
-      //fetch notificações
       this.http.get<any>(`http://localhost:8085/api/notifications/${this.userId}`).subscribe(res => {
         if (res.status) {
-          this.notifications = res.data;
+          this.notifications = res.data.filter((n: any) => n.type === 'like');
           this.filteredNotifications = [...this.notifications];
         }
       });
     }
   }
 
-  //pesquisa
-  onSearch(event: any) {
-    this.searchTerm = event.target.value.toLowerCase();
-
-    this.filteredNotifications = this.notifications.filter(n =>
-      (n.username && n.username.toLowerCase().includes(this.searchTerm)) ||
-      (n.message && n.message.toLowerCase().includes(this.searchTerm)) ||
-      (n.post_title && n.post_title.toLowerCase().includes(this.searchTerm))
-    );
-  }
-
-  //navega para a postagem do favorito/comentário
   goToPost(postId: number, title: string) {
     const slug = title.toLowerCase().replace(/\s+/g, '-');
     this.router.navigate([`/view-post/${postId}-${slug}`]);
@@ -86,9 +62,7 @@ export class NotificationsComponent {
     else this.router.navigate(['/profile-view', username]);
   }
 
-  //para deletar uma notificação
   handleDeleteNotification(notificationId: number) {
-
     this.http.delete(`http://localhost:8085/api/notifications/${notificationId}`).subscribe({
       next: () => {
         this.notifications = this.notifications.filter(n => n.id !== notificationId);
@@ -99,6 +73,17 @@ export class NotificationsComponent {
         this.messageService.add({ severity: 'error', summary: 'Erro ao excluir notificação.' });
       }
     });
+  }
+
+  //pesquisa
+  onSearch(event: any) {
+    this.searchTerm = event.target.value.toLowerCase();
+
+    this.filteredNotifications = this.notifications.filter(n =>
+      (n.username && n.username.toLowerCase().includes(this.searchTerm)) ||
+      (n.message && n.message.toLowerCase().includes(this.searchTerm)) ||
+      (n.post_title && n.post_title.toLowerCase().includes(this.searchTerm))
+    );
   }
 
   //marcação de user por @ pipe mention
@@ -114,5 +99,4 @@ export class NotificationsComponent {
       }
     }
   }
-
 }

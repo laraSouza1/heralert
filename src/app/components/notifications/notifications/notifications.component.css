@@ -1,0 +1,92 @@
+/*conteúdo e configuração para container e página -------------------------*/
+.container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.line-fy {
+  height: 10px;
+  background-color: #ff9d9d;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.div-ww {
+  width: 574px !important;
+}
+
+.sidebar {
+  width: 350px;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  border-top: 10px solid #ff9d9d;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.content {
+  flex: 1;
+  margin: 0 350px;
+  background-color: rgb(255, 255, 255);
+}
+
+::ng-deep body {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*header notificação ---------------------------------------------*/
+.h-tag {
+  font-size: 24px;
+  border-left: 2px solid #ff6b6b;
+  padding-left: 10px;
+}
+
+.line {
+  border-top: 1px solid #e2e2e2;
+}
+
+::ng-deep .bt1 .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 0px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+  width: 8rem;
+  width: 100% !important;
+}
+
+::ng-deep .bt1 .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .bt2 .p-button {
+  border-radius: 0px !important;
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #ebebeb !important;
+  height: 40px;
+  border: none !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}

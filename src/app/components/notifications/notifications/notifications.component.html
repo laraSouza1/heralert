@@ -1,0 +1,50 @@
+<!--COMPONENTE PARA VER TODAS AS NOTIFICAÇÕES DO USER LOGADO-->
+
+<div class="container">
+  <div class="line-fy"></div>
+
+  <div>
+
+    <!--parte esquerda fixa da app-->
+    <app-left-side class="sidebar left"></app-left-side>
+
+    <div class="content px-4 pt-4">
+
+      <div class="div-ww">
+
+        <!--header componente notificações-->
+        <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+          <div class="flex mr-2 w-6">Notificações</div>
+
+          <!--contagem notificações-->
+          <div class="flex w-6 justify-content-end">
+            <div class="number-notifications flex align-content-center align-items-center">{{ totalNotifications }}
+            </div>
+          </div>
+        </div>
+
+        <div class="line mt-3 mb-3">
+          <div class="flex flex-row w-full mt-3 gap-1">
+            <p-button [ngClass]="activeTab === 'all' ? 'bt1' : 'bt2'" label="Geral" (click)="setActiveTab('all')"
+              class="w-3"></p-button>
+            <p-button [ngClass]="activeTab === 'lk' ? 'bt1' : 'bt2'" label="Curtidas" (click)="setActiveTab('lk')"
+              class="w-3"></p-button>
+            <p-button [ngClass]="activeTab === 'ct' ? 'bt1' : 'bt2'" label="Comentários" (click)="setActiveTab('ct')"
+              class="w-3"></p-button>
+            <p-button [ngClass]="activeTab === 'fl' ? 'bt1' : 'bt2'" label="Seguidores" (click)="setActiveTab('fl')"
+              class="w-3"></p-button>
+          </div>
+        </div>
+
+        <!--mostra componente com base no botão clicado-->
+        <app-all-notifications *ngIf="activeTab === 'all'"></app-all-notifications><!--notificações gerais-->
+        <app-likes-notifications *ngIf="activeTab === 'lk'"></app-likes-notifications><!--notificações de curtidas-->
+        <app-comments-notifications
+          *ngIf="activeTab === 'ct'"></app-comments-notifications><!--notificações de comentários-->
+        <app-follower-notifications
+          *ngIf="activeTab === 'fl'"></app-follower-notifications><!--notificações de seguidores-->
+
+      </div>
+    </div>
+  </div>
+</div>

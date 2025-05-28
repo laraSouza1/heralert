@@ -16,7 +16,7 @@ import { ViewPostComponent } from './components/posts/view-post/view-post.compon
 import { PostTagComponent } from './components/tags/posts-tag/post-tag.component';
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
 import { ProfileConfigComponent } from './components/users-n-profiles/profile-user-logged/profile-config/profile-config.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
+import { NotificationsComponent } from './components/notifications/notifications/notifications.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
