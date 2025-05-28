@@ -12,7 +12,7 @@ import { AutocuidadosIFComponent } from './components/communities/autocuidados-i
 import { DicasDefesaComponent } from './components/communities/dicas-defesa/dicas-defesa.component';
 import { RecoLocaisComponent } from './components/communities/reco-locais/reco-locais.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
-import { ViewPostComponent } from './components/view-post/view-post.component';
+import { ViewPostComponent } from './components/posts/view-post/view-post.component';
 import { PostTagComponent } from './components/post-tag/post-tag.component';
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
 import { ProfileConfigComponent } from './components/profile-config/profile-config.component';

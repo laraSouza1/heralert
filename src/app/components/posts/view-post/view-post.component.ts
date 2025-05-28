@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PostComponent } from '../shared/post/post.component';
+import { PostComponent } from '../../shared/post/post.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
+import { RightSideComponent } from '../../shared/right-side/right-side.component';
+import { LeftSideComponent } from '../../shared/left-side/left-side.component';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -15,7 +15,7 @@ import { MenuModule } from 'primeng/menu';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { MentionPipe } from '../../pipes/mention/mention.pipe';
+import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 
 @Component({
   selector: 'app-view-post',
