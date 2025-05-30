@@ -1,0 +1,83 @@
+/*formatação do corpo da página -------------------*/
+::ng-deep body {
+  background-image: url('/imgs/fundo2.png');
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.border-page {
+  border-left: 25px solid #ff6b6b;
+  border-right: 15px solid #ff6b6b;
+}
+
+/*itens para o titulo --------------------*/
+.line {
+  background-color: #ff6b6b;
+  width: 130px;
+  height: 3px;
+}
+
+h1 {
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+  color: #3e3e3e;
+}
+
+/*card onde contem o form -----------------------*/
+.card {
+ background-color: white;
+ border: 2px solid #FF9D9D;
+ width: 600px;
+ min-height: 100% !important;
+ border-radius: 50px;
+}
+
+/*primeng pass*/
+::ng-deep .p-password {
+  background-color: white !important;
+  border: none !important;
+  width: 100% !important;
+  color: #616161 !important;
+}
+
+/*BOTÕES CADASTRO/LOGIN primeneg*/
+::ng-deep .p-button {
+  width: 100% !important;
+}
+
+::ng-deep .bt2 .p-button {
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #e2e2e2 !important;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  transform: scale(1.02) !important;
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}
+
+::ng-deep .p-button {
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+}
+
+::ng-deep .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+  transform: scale(1.02) !important;
+}
+
+.title-step {
+  border-left: 2px solid #FF6B6B;
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 10px;
+}

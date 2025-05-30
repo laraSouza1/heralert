@@ -4,85 +4,35 @@
 <app-menu-bar></app-menu-bar>
 
 <div class="border-page flex align-content-center justify-content-center">
-  <div class="align-content-center justify-content-center card py-8 my-5">
+  <div class="align-content-center justify-content-center card pt-8 my-5">
 
     <!--título-->
-    <div class="flex flex-column mx-8 mb-4">
+    <div class="flex flex-column mx-8 mb-5">
       <h1 class="mt-0 mb-2">Cadastrar-se</h1>
       <div class="line"></div>
     </div>
 
-    <!-- Formulário -->
-    <form class="mx-8" (ngSubmit)="onSubmit()">
+    <!--steps-->
+    <p-steps [model]="items" [readonly]="true" [activeIndex]="activeStep" />
 
-      <!--campo de email-->
-      <p-iconfield class="mt-4 mb-2">
-        <p-inputicon styleClass="pi pi-envelope"></p-inputicon>
-        <input type="email" [ngModelOptions]="{standalone: true}" pInputText placeholder="E-mail" [(ngModel)]="email"
-          (ngModelChange)="validateEmail()" required class="i-si" />
-      </p-iconfield>
-      <!--mensagens de erro para o campo de email-->
-      <p-message *ngIf="emailError" severity="error" variant="simple" size="small">E-mail inválido.</p-message>
-      <p-message *ngIf="emailAlreadyUsed && !emailError" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
+    <!--step 1: form de cadastro-->
+    <app-form-signin [hidden]="activeStep !== 0" #formSignin (formValid)="handleFormValidity($event)" (formDataReady)="receiveFormData($event)"></app-form-signin>
 
-      <!--campo de nome-->
-      <p-iconfield class="mt-4 mb-2">
-        <p-inputicon styleClass="pi pi-user"></p-inputicon>
-        <input type="text" [ngModelOptions]="{standalone: true}" pInputText placeholder="Nome" [(ngModel)]="name"
-          (ngModelChange)="validateName()" required class="i-si" />
-      </p-iconfield>
-      <!--mensagens de erro para o campo de nome-->
-      <p-message *ngIf="nameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
-      <p-message *ngIf="nameMaxLengthError" severity="error" variant="simple" size="small">Máximo 25 caracteres.</p-message>
+    <!--step 2: verificação de email + cadastro-->
+    <app-confirmation-email [hidden]="activeStep !== 1" #verificationEmail [email]="userEmailToVerify" (submitVerification)="onSubmitVerification($event)" (goBack)="goToPreviousStep()" (resendCode)="resendVerificationEmail()">
+    </app-confirmation-email>
 
-      <!--campo de nome de usuário-->
-      <p-iconfield class="mt-4 mb-2">
-        <p-inputicon styleClass="pi pi-at"></p-inputicon>
-        <input type="text" pInputText placeholder="Usuário" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"
-          (ngModelChange)="validateUsername()" required class="i-si" />
-      </p-iconfield>
-      <!--mensagens de erro para campo de usuário-->
-      <p-message *ngIf="usernameFormatError" severity="error" variant="simple" size="small">Pode conter apenas letras, números, ponto (.) e underscore (_).</p-message>
-      <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter espaços.</p-message>
-      <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
-      <p-message *ngIf="usernameMaxLengthError" severity="error" variant="simple" size="small">Máximo 15 caracteres.</p-message>
-      <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em uso.</p-message>
+    <!--btn próximo-->
+    <div class="flex w-12 mt-5 justify-content-center px-8">
+      <p-button class="flex w-6" *ngIf="activeStep === 0" label="Próximo" [disabled]="!isStepValid" (onClick)="goToNextStep()" />
+    </div>
 
-      <div class="my-4">
-        <!--campo de senha-->
-        <p-iconfield class="mb-2">
-          <p-inputicon styleClass="pi pi-lock"></p-inputicon>
-          <input [(ngModel)]="password" (ngModelChange)="validatePassword()" [ngModelOptions]="{standalone: true}"
-            [type]="isPasswordVisible ? 'text' : 'password'" pInputText placeholder="Palavra-passe" required
-            class="i-si" />
-          <p-inputicon (click)="togglePasswordVisibility()"
-            [styleClass]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer">
-          </p-inputicon>
-        </p-iconfield>
-        <!--mensagem de erro para campoi de senha-->
-        <p-message *ngIf="passwordError" severity="error" variant="simple" size="small">Mínimo 8 caracteres</p-message>
-      </div>
-
-      <!--campo de conferir senha-->
-      <p-iconfield class="mb-2">
-        <p-inputicon styleClass="pi pi-lock"></p-inputicon>
-        <input [(ngModel)]="confirmPassword" (ngModelChange)="validateConfirmPassword()"
-          [ngModelOptions]="{standalone: true}" [type]="isConfirmPasswordVisible ? 'text' : 'password'" pInputText
-          placeholder="Confirme a palavra-passe" required class="i-si" />
-        <p-inputicon (click)="toggleConfirmPasswordVisibility()" [styleClass]="
-            isConfirmPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'
-          " style="cursor: pointer">
-        </p-inputicon>
-      </p-iconfield>
-      <!--mensagem de erro para campo de conferir senha-->
-      <p-message *ngIf="confirmPasswordError" severity="error" variant="simple" size="small">Palavra-passes não correspondem</p-message>
-
-      <!--btns cadastro/login-->
-      <div class="flex flex-row gap-3 mt-4">
-        <p-button class="w-6 bt2" label="Fazer log-in" (onClick)="navigateToLogin()"></p-button>
-        <p-button type="submit" class="w-6" label="Cadastrar" (onClick)="onSubmit()"></p-button>
-      </div>
-    </form>
+    <!--btn para ir ao login-->
+    <div class="mt-4 pb-6">
+      <p-button class="bt1 flex justify-content-center" label="Já possui uma conta? Faça log-in!"(onClick)="navigateToLogin()"></p-button>
+    </div>
   </div>
 </div>
+
+<!--fotter da app-->
 <app-footer></app-footer>

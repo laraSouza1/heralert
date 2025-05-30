@@ -1,0 +1,76 @@
+/*BTNS*/
+
+/*btn para ir para o login*/
+::ng-deep .bt2 .p-button {
+  width: 100% !important;
+  color: #616161 !important;
+  background-color: #e2e2e2 !important;
+  border: none !important;
+  border-radius: 50px !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+}
+
+::ng-deep .bt2 .p-button:hover {
+  transform: scale(1.02) !important;
+  color: #3b3b3b !important;
+  background-color: #c9c9c9 !important;
+}
+
+/*btn para verificar email/cadastrar*/
+::ng-deep .bt1 .p-button {
+  width: 100% !important;
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+}
+
+::ng-deep .bt1 .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+  transform: scale(1.02) !important;
+}
+
+/*btn para reenviar o código de confirmação*/
+::ng-deep .bt3 .p-button {
+  color: #FF6B6B !important;
+  font-size: small !important;
+  background-color: white !important;
+  width: 45% !important;
+  border: none !important;
+}
+
+::ng-deep .bt3 .p-button:hover {
+  color: #ff5454 !important;
+  text-decoration: underline !important;
+  background-color: white !important;
+  transform: none !important;
+}
+
+/*título do step*/
+.title-step {
+  border-left: 2px solid #FF6B6B;
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+/*modificação do p-messege do primeng*/
+::ng-deep .message-email .p-message {
+  background-color: #ff929210 !important;
+  font-weight: 500 !important;
+  color: #ff9292 !important;
+  border: 1px solid #ff9292 !important;
+  padding: 10px !important;
+}

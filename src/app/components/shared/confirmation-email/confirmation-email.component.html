@@ -1,0 +1,23 @@
+<!--título do step-->
+<div class="mx-8 mb-4 -mt-2 title-step">Verificação do e-mail</div>
+
+<div class="flex flex-column align-items-center justify-content-center px-8">
+  <!--aviso de envio de código-->
+  <p-message severity="info" size="small" variant="simple" class="message-email mb-5">
+    Enviamos um código de verificação para
+    <strong style="color:#ff6d6d;" *ngIf="email">{{ email }}</strong>. Por favor, insira-o abaixo para
+    concluir o cadastro.
+  </p-message>
+
+  <!--input do código-->
+  <p-inputotp [(ngModel)]="verificationCode" [length]="6"></p-inputotp>
+
+  <!--btns voltar e verificar/cadastrar-->
+  <div class="flex flex-row w-12 gap-3 mt-4 mb-2">
+    <p-button type="button" class="w-6 bt2" label="Voltar" (onClick)="onGoBackClick()"></p-button>
+    <p-button type="button" class="w-6 bt1" label="Verificar" (onClick)="onSubmitCode()"></p-button>
+  </div>
+
+  <!--btn para reenviar o código-->
+  <p-button class="bt3 w-12 mt-3 w-12 flex justify-content-center align-items-center -mb-5" label="Reenviar Código" (onClick)="onResendCodeClick()"></p-button>
+</div>

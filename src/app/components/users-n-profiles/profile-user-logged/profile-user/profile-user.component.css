@@ -5,6 +5,8 @@
   color: #F94C4C !important;
   font-size: 10px !important;
   border: none !important;
+  padding-top: 3px !important;
+  padding-left: 15px !important;
 }
 
 ::ng-deep .edit-profile .p-button:not(:disabled):hover {

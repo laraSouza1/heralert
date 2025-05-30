@@ -1,3 +1,4 @@
+/*corpo da pániga*/
 ::ng-deep body {
   background-image: url('/imgs/fundo2.png');
   background-size: cover !important;
@@ -39,37 +40,51 @@ h1 {
   color: #616161 !important;
 }
 
-/*BOTÕES CADASTRO/LOGIN primeneg*/
-::ng-deep .p-button {
-  width: 100% !important;
-}
-
-::ng-deep .bt2 .p-button {
-  width: 100% !important;
-  color: #616161 !important;
-  background-color: #e2e2e2 !important;
-}
-
-::ng-deep .bt2 .p-button:hover {
-  transform: scale(1.02) !important;
-  color: #3b3b3b !important;
-  background-color: #c9c9c9 !important;
-}
-
-::ng-deep .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
+/*BOTÕES primeneg ----------------------------*/
+/*btn para ir ao login*/
+::ng-deep .bt1 .p-button {
+  color: #a7a7a7 !important;
+  font-size: small !important;
+  background-color: white !important;
+  width: 45% !important;
   border: none !important;
-  border-radius: 50px !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-  height: 40px;
 }
 
-::ng-deep .p-button:hover {
-  background-color: #F94C4C !important;
-  font-weight: 700 !important;
-  transform: scale(1.02) !important;
+::ng-deep .bt1 .p-button:hover {
+  color: #868686 !important;
+  text-decoration: underline !important;
+  background-color: white !important;
+  transform: none !important;
+}
+
+/*modificação dos steps do primng*/
+::ng-deep .p-steps-item-active .p-steps-item-label {
+  display: none !important;
+}
+
+::ng-deep .p-steps-item-label {
+ color:white !important;
+}
+
+::ng-deep .p-steps-list {
+    padding: 0;
+    margin: 0;
+    margin-left: -110px;
+    margin-right: -100px;
+}
+
+::ng-deep .p-steps-item:before {
+    border-color: #ff9e9e !important;
+}
+
+::ng-deep .p-steps-item-active .p-steps-item-number {
+    background: #ff9e9e !important;
+    border-color: #ff9e9e !important;
+    color: white !important;
+}
+
+::ng-deep .p-steps-item-number {
+    color: #ff9e9e !important;
+    border: 2px solid #ff9e9e !important;
+    background: white !important;
 }

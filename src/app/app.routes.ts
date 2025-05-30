@@ -4,7 +4,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SingInComponent } from './components/sing-in/sign-in.component';
 import { SupportComponent } from './components/support/support.component';
 import { ForYouComponent } from './components/for-you/for-you.component';
-import { CreatePostComponent } from './components/shared/create-post/create-post.component';
 import { ProfileComponent } from './components/users-n-profiles/profile-user-logged/profile/profile.component';
 import { AssuntosGeraisComponent } from './components/communities/assuntos-gerais/assuntos-gerais.component';
 import { AutocuidadosFemininosComponent } from './components/communities/autocuidados-femininos/autocuidados-femininos.component';

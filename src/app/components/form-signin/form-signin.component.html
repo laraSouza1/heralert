@@ -1,0 +1,57 @@
+<!--título do step-->
+<div class="mx-8 mb-4 -mt-2 title-step">Dados da conta</div>
+
+<!--formulário-->
+<form class="mx-8">
+
+   <!--campo de email-->
+  <p-iconfield class="mt-1 mb-2">
+    <p-inputicon styleClass="pi pi-envelope"></p-inputicon>
+    <input type="email" [ngModelOptions]="{standalone: true}" pInputText placeholder="E-mail" [(ngModel)]="email" (ngModelChange)="validateEmail()" required class="i-si" />
+  </p-iconfield>
+  <!--mensagens de erro para o campo de email-->
+  <p-message *ngIf="emailError" severity="error" variant="simple" size="small">E-mail inválido.</p-message>
+  <p-message *ngIf="emailAlreadyUsed && !emailError" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
+
+  <!--campo de nome-->
+  <p-iconfield class="mt-4 mb-2">
+    <p-inputicon styleClass="pi pi-user"></p-inputicon>
+    <input type="text" [ngModelOptions]="{standalone: true}" pInputText placeholder="Nome" [(ngModel)]="name" (ngModelChange)="validateName()" required class="i-si" />
+  </p-iconfield>
+  <!--mensagens de erro para o campo de nome-->
+  <p-message *ngIf="nameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
+  <p-message *ngIf="nameMaxLengthError" severity="error" variant="simple" size="small">Máximo 25 caracteres.</p-message>
+
+  <!--campo de nome de usuário-->
+  <p-iconfield class="mt-4 mb-2">
+    <p-inputicon styleClass="pi pi-at"></p-inputicon>
+    <input type="text" pInputText placeholder="Usuário" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" (ngModelChange)="validateUsername()" required class="i-si" />
+  </p-iconfield>
+  <!--mensagens de erro para campo de usuário-->
+  <p-message *ngIf="usernameFormatError" severity="error" variant="simple" size="small">Pode conter apenas letras, números, ponto (.) e underscore (_).</p-message>
+  <p-message *ngIf="usernameSpaceError" severity="error" variant="simple" size="small">Não pode conter espaços.</p-message>
+  <p-message *ngIf="usernameLengthError" severity="error" variant="simple" size="small">Mínimo 3 caracteres.</p-message>
+  <p-message *ngIf="usernameMaxLengthError" severity="error" variant="simple" size="small">Máximo 15 caracteres.</p-message>
+  <p-message *ngIf="usernameAlreadyUsed" severity="error" variant="simple" size="small">Usuário já em uso.</p-message>
+
+  <div class="my-4">
+    <p-iconfield class="mb-2">
+      <!--campo de senha-->
+      <p-inputicon styleClass="pi pi-lock"></p-inputicon>
+      <input [(ngModel)]="password" (ngModelChange)="validatePassword()" [ngModelOptions]="{standalone: true}" [type]="isPasswordVisible ? 'text' : 'password'" pInputText placeholder="Palavra-passe" required class="i-si" />
+      <p-inputicon (click)="togglePasswordVisibility()" [styleClass]="isPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer">
+      </p-inputicon>
+    </p-iconfield>
+    <!--mensagem de erro para campoi de senha-->
+    <p-message *ngIf="passwordError" severity="error" variant="simple" size="small">Mínimo 8 caracteres</p-message>
+  </div>
+
+  <!--campo de conferir senha-->
+  <p-iconfield class="mb-2">
+    <p-inputicon styleClass="pi pi-lock"></p-inputicon>
+    <input [(ngModel)]="confirmPassword" (ngModelChange)="validateConfirmPassword()" [ngModelOptions]="{standalone: true}" [type]="isConfirmPasswordVisible ? 'text' : 'password'" pInputText placeholder="Confirme a palavra-passe" required class="i-si" />
+    <p-inputicon (click)="toggleConfirmPasswordVisibility()" [styleClass]="isConfirmPasswordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'" style="cursor: pointer"></p-inputicon>
+  </p-iconfield>
+  <!--mensagem de erro para campo de conferir senha-->
+  <p-message *ngIf="confirmPasswordError" severity="error" variant="simple" size="small">Palavra-passes não correspondem</p-message>
+</form>
