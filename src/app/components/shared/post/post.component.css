@@ -15,7 +15,7 @@
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(218, 218, 218) !important;
   border: none !important;
   color: rgb(85, 85, 85) !important;
   padding: 0px !important;
@@ -34,7 +34,7 @@
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: white;
+  background-color: white !important;
   border: 1px solid #27a243 !important;
   color: #27a243 !important;
   padding: 0px !important;
@@ -54,7 +54,7 @@
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: white;
+  background-color: white !important;
   border: 1px solid #dc3545 !important;
   color: #dc3545 !important;
   padding: 0px !important;
@@ -73,7 +73,7 @@
 
 /*icon do btn de seguir*/
 ::ng-deep .small .pi {
-  font-size: 10px;
+  font-size: 10px !important;
   position: relative !important;
   left: 2px !important;
   top: 0px !important;
@@ -202,21 +202,21 @@
   color: #dc3545 !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #dc3545;
+  border: 2px solid #dc3545 !important;
 }
 
 ::ng-deep .bt-trash .p-button {
   color: #dc3545 !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #dc3545;
+  border: 2px solid #dc3545 !important;
   padding: 10px !important;
 }
 
 ::ng-deep .bt-fav .p-button:not(:disabled):hover,
 ::ng-deep .bt-trash .p-button:not(:disabled):hover {
   background-color: #dc354530 !important;
-  border: 2px solid #dc3545;
+  border: 2px solid #dc3545 !important;
 }
 
 ::ng-deep .bt-fav2 .p-button:disabled {
@@ -236,12 +236,12 @@
   color: #27a243 !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #27a243;
+  border: 2px solid #27a243 !important;
 }
 
 ::ng-deep .bt-comment .p-button:not(:disabled):hover {
   background-color: #27a24330 !important;
-  border: 2px solid #27a243;
+  border: 2px solid #27a243 !important;
 }
 
 /*salvar*/
@@ -253,13 +253,13 @@
   color: #ffc107 !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #ffc107;
+  border: 2px solid #ffc107 !important;
   padding: 10px !important;
 }
 
 ::ng-deep .bt-save .p-button:not(:disabled):hover {
   background-color: #ffc10730 !important;
-  border: 2px solid #ffc107;
+  border: 2px solid #ffc107 !important;
 }
 
 /*partilhar*/
@@ -271,13 +271,13 @@
   color: #007bff !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #007bff;
+  border: 2px solid #007bff !important;
   padding: 10px !important;
 }
 
 ::ng-deep .bt-share .p-button:not(:disabled):hover {
   background-color: #007bff30 !important;
-  border: 2px solid #007bff;
+  border: 2px solid #007bff !important;
 }
 
 /*editar*/
@@ -289,13 +289,13 @@
   color: #616161 !important;
   background-color: white !important;
   border-radius: 50px !important;
-  border: 2px solid #616161;
+  border: 2px solid #616161 !important;
   padding: 10px !important;
 }
 
 ::ng-deep .bt-pencil .p-button:not(:disabled):hover {
   background-color: #61616130 !important;
-  border: 2px solid #616161;
+  border: 2px solid #616161 !important;
 }
 
 /*---------------------------------------------------------------------------------*/

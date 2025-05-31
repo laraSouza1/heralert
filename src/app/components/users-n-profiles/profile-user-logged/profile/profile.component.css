@@ -35,23 +35,23 @@
   background-color: rgb(255, 255, 255);
 }
 
-::ng-deep .bt3 .p-button {
+::ng-deep .btn-create-post .p-button {
   color: white !important;
   background-color: #FF6B6B !important;
   border: none !important;
   border-radius: 50px !important;
   font-size: 13px !important;
-  height: 40px;
-  width: 40px;
-  position: fixed;
-  top: 590px;
-  left: 908px;
-  font-size: 16px;
-  font-weight: 600;
-  z-index: 1000;
+  height: 40px !important;
+  width: 40px !important;
+  position: fixed !important;
+  top: 590px !important;
+  left: 908px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  z-index: 1000 !important;
 }
 
-::ng-deep .bt3 .p-button:hover {
+::ng-deep .btn-create-post .p-button:hover {
   background-color: #F94C4C !important;
   font-weight: 700 !important;
   transform: scale(1.02) !important;

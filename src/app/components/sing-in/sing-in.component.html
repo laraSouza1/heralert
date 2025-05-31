@@ -12,6 +12,8 @@
       <div class="line"></div>
     </div>
 
+    <p-toast></p-toast>
+
     <!--steps-->
     <p-steps [model]="items" [readonly]="true" [activeIndex]="activeStep" />
 
@@ -29,7 +31,7 @@
 
     <!--btn para ir ao login-->
     <div class="mt-4 pb-6">
-      <p-button class="bt1 flex justify-content-center" label="Já possui uma conta? Faça log-in!"(onClick)="navigateToLogin()"></p-button>
+      <p-button class="btn-login flex justify-content-center" label="Já possui uma conta? Faça log-in!"(onClick)="navigateToLogin()"></p-button>
     </div>
   </div>
 </div>

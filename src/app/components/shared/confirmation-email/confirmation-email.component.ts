@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputOtpModule } from 'primeng/inputotp';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-confirmation-email',
+  providers: [MessageService],
   imports: [ButtonModule, InputOtpModule, CommonModule, FormsModule, MessageModule],
   templateUrl: './confirmation-email.component.html',
   styleUrl: './confirmation-email.component.css'
@@ -20,12 +22,14 @@ export class ConfirmationEmailComponent {
 
   verificationCode: string = '';
 
+  constructor(private messageService: MessageService) { }
+
   //verificação do código
   onSubmitCode() {
     if (this.verificationCode && this.verificationCode.length === 6) {
       this.submitVerification.emit(this.verificationCode);
     } else {
-      alert('Por favor, insira um código de verificação válido de 6 dígitos.');
+      this.messageService.add({ severity: 'error', summary: 'Insira um código de verificação válido de 6 dígitos'});
     }
   }
 
@@ -37,6 +41,5 @@ export class ConfirmationEmailComponent {
   //para reenviar um novo código
   onResendCodeClick() {
     this.resendCode.emit();
-    alert('Novo código de verificação enviado! Verifique seu e-mail.');
   }
 }

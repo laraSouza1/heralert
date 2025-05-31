@@ -72,7 +72,7 @@ body {
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(218, 218, 218) !important;
   border: none !important;
   color: rgb(85, 85, 85) !important;
   padding: 0px !important;
@@ -92,7 +92,7 @@ body {
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: white;
+  background-color: white !important;
   border: 1px solid #27a243 !important;
   color: #27a243 !important;
   padding: 0px !important;
@@ -112,7 +112,7 @@ body {
   border-radius: 50px !important;
   padding-left: 3px !important;
   padding-right: 4px !important;
-  background-color: white;
+  background-color: white !important;
   border: 1px solid #dc3545 !important;
   color: #dc3545 !important;
   padding: 0px !important;
@@ -125,7 +125,7 @@ body {
 }
 
 ::ng-deep .small .pi {
-  font-size: 10px;
+  font-size: 10px !important;
   position: relative !important;
   left: 2px !important;
   top: 0px !important;

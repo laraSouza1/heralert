@@ -42,7 +42,7 @@ h1 {
 
 /*BOTÕES primeneg ----------------------------*/
 /*btn para ir ao login*/
-::ng-deep .bt1 .p-button {
+::ng-deep .btn-login .p-button {
   color: #a7a7a7 !important;
   font-size: small !important;
   background-color: white !important;
@@ -50,7 +50,7 @@ h1 {
   border: none !important;
 }
 
-::ng-deep .bt1 .p-button:hover {
+::ng-deep .btn-login .p-button:hover {
   color: #868686 !important;
   text-decoration: underline !important;
   background-color: white !important;

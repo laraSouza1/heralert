@@ -6,15 +6,18 @@ import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { StepsModule } from 'primeng/steps';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ConfirmationEmailComponent } from '../shared/confirmation-email/confirmation-email.component';
 import { FormSigninComponent } from '../form-signin/form-signin.component';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-sing-in',
+  providers: [MessageService],
   imports: [
   CommonModule, ButtonModule, StepsModule, MenuBarComponent, FooterComponent,
-  ConfirmationEmailComponent, FormSigninComponent
+  ConfirmationEmailComponent, FormSigninComponent, MessageModule, ToastModule
 ],
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.css']
@@ -34,7 +37,8 @@ export class SingInComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -102,14 +106,15 @@ export class SingInComponent implements OnInit {
             this.userEmailToVerify = response.email; //pega o email inserido no form para enviar o cod
             this.activeStep = 1;
             this.cdr.detectChanges();
+            this.messageService.add({ severity: 'info', summary: 'Código enviado!', detail: 'Código de verificação enviado.' });
           } else {
             console.error(response.message);
-            alert(response.message);
+            this.messageService.add({ severity: 'error', summary: 'Erro', detail: response.message });
           }
         },
         error: (error) => {
           console.error('Erro ao iniciar cadastro:', error);
-          alert('Erro ao tentar iniciar cadastro. Por favor, tente novamente.');
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao tentar iniciar cadastro. Por favor, tente novamente.' });
           this.isSubmitting = false;
         },
         complete: () => {
@@ -134,16 +139,17 @@ export class SingInComponent implements OnInit {
             console.log('Verificação de e-mail e cadastro bem-sucedidos!');
             const userData = response.user;
             localStorage.setItem('user', JSON.stringify(userData));
-            this.navigateToFY(); //navega para for you page
+            this.messageService.add({ severity: 'success', summary: 'Conta criada com sucesso!'});
+            setTimeout(() => this.router.navigate(['/navigateToFY']), 1000);
           } else {
             console.error(response.message);
-            alert(response.message);
+            this.messageService.add({ severity: 'error', summary: 'Erro', detail: response.message });
           }
         },
         error: (error) => {
           console.error('Erro ao verificar código ou cadastrar:', error);
           const errorMessage = error.error?.message || 'Erro ao verificar código. Por favor, tente novamente.';
-          alert(errorMessage);
+          this.messageService.add({ severity: 'error', summary: 'Erro ao verificar código. Por favor, tente novamente.'});
           this.isSubmitting = false;
         },
         complete: () => {
@@ -156,6 +162,7 @@ export class SingInComponent implements OnInit {
   resendVerificationEmail() {
     if (!this.formData || !this.formData.email || this.isSubmitting) {
       console.error('Dados de formulário ou e-mail não disponíveis para reenviar código.');
+      this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: 'Não foi possível reenviar o código. Tente novamente.' });
       return;
     }
     this.isSubmitting = true;
@@ -164,15 +171,15 @@ export class SingInComponent implements OnInit {
         next: (response: any) => {
           if (response.status) {
             console.log('Novo e-mail de verificação enviado!', response.message);
-            alert('Novo código de verificação enviado! Verifique seu e-mail.');
+            this.messageService.add({ severity: 'info', summary: 'Novo código enviado!'});
           } else {
             console.error('Erro ao reenviar e-mail de verificação:', response.message);
-            alert('Erro ao reenviar e-mail de verificação.');
+            this.messageService.add({ severity: 'error', summary: 'Erro ao reenviar o código'});
           }
         },
         error: (error) => {
           console.error('Erro de rede ao reenviar e-mail de verificação:', error);
-          alert('Erro de rede ao reenviar e-mail de verificação.');
+          this.messageService.add({ severity: 'error', summary: 'Erro de Rede ao reenviar o código.' });
         },
         complete: () => {
           this.isSubmitting = false;
