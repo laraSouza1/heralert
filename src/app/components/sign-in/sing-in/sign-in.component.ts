@@ -2,15 +2,15 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
-import { FooterComponent } from '../shared/footer/footer.component';
+import { MenuBarComponent } from '../../shared/menu-bar/menu-bar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { StepsModule } from 'primeng/steps';
 import { MenuItem, MessageService } from 'primeng/api';
-import { ConfirmationEmailComponent } from '../shared/confirmation-email/confirmation-email.component';
-import { FormSigninComponent } from '../form-signin/form-signin.component';
+import { ConfirmationEmailComponent } from '../../shared/confirmation-email/confirmation-email.component';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { FormSigninComponent } from '../form-signin/form-signin.component';
 
 @Component({
   selector: 'app-sing-in',

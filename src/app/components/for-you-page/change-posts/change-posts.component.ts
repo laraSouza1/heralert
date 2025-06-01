@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { PostsFYComponent } from '../posts/posts-fy/posts-fy.component';
-import { PostsFollowingComponent } from '../posts/posts-following/posts-following.component';
+import { PostsFYComponent } from '../../posts/posts-fy/posts-fy.component';
+import { PostsFollowingComponent } from '../../posts/posts-following/posts-following.component';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 

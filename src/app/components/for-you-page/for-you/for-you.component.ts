@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { LeftSideComponent } from '../shared/left-side/left-side.component';
-import { RightSideComponent } from '../shared/right-side/right-side.component';
+import { LeftSideComponent } from '../../shared/left-side/left-side.component';
+import { RightSideComponent } from '../../shared/right-side/right-side.component';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Router } from '@angular/router';
-import { CreatePostComponent } from '../shared/create-post/create-post.component';
+import { CreatePostComponent } from '../../shared/create-post/create-post.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -17,9 +17,9 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
-import { UsersComponent } from '../users-n-profiles/users/users.component';
+import { UsersComponent } from '../../users-n-profiles/users/users.component';
 import { ChangePostsComponent } from '../change-posts/change-posts.component';
-import { TagsComponent } from '../tags/tags/tags.component';
+import { TagsComponent } from '../../tags/tags/tags.component';
 
 interface Comunity {
   name: string;
