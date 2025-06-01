@@ -66,7 +66,7 @@
 </p-dialog>
 
 <!--modal email/atualizar e-mail-->
-<p-dialog header="Atualizar e-mail" [(visible)]="showEmailDialog" modal [style]="{width: '35vw'}" (onHide)="resetEmailComponent()">
+<p-dialog header="Atualizar e-mail" [(visible)]="showEmailDialog" modal [style]="{width: '45vw'}" (onHide)="resetEmailComponent()">
   <app-email *ngIf="emailComponentVisible" [user]="user" (onUpdate)="fecharEmail($event)"></app-email>
 </p-dialog>
 

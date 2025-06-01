@@ -1,6 +1,6 @@
-/*btns de cancelar/atualizar email*/
-
-::ng-deep .my-att-button {
+/*btns de cancelar/próximo ----------------------*/
+/*btn próximo*/
+::ng-deep .my-next-button {
   background-color: #ff7979 !important;
   color: white !important;
   border: none !important;
@@ -8,10 +8,11 @@
   font-size: 14px !important;
 }
 
-::ng-deep .my-att-button:hover {
+::ng-deep .my-next-button:hover {
   background-color: #ff6969 !important;
 }
 
+/*btn cancelar*/
 ::ng-deep .my-cancel-button {
   background-color: #d4d4d4 !important;
   color: rgb(90, 90, 90) !important;
@@ -22,4 +23,44 @@
 
 ::ng-deep .my-cancel-button:hover {
   background-color: #b8b8b8 !important;
+}
+
+/*título do step -------------------*/
+.title-step {
+  border-left: 2px solid #FF6B6B;
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+/*modificação dos steps do primng ----------------------------------------*/
+::ng-deep .p-steps-item-active .p-steps-item-label {
+  display: none !important;
+}
+
+::ng-deep .p-steps-item-label {
+  color: white !important;
+}
+
+::ng-deep .p-steps-list {
+  padding: 0;
+  margin: 0;
+  margin-left: -100px;
+  margin-right: -105px;
+}
+
+::ng-deep .p-steps-item:before {
+  border-color: #ff9e9e !important;
+}
+
+::ng-deep .p-steps-item-active .p-steps-item-number {
+  background: #ff9e9e !important;
+  border-color: #ff9e9e !important;
+  color: white !important;
+}
+
+::ng-deep .p-steps-item-number {
+  color: #ff9e9e !important;
+  border: 2px solid #ff9e9e !important;
+  background: white !important;
 }

@@ -129,30 +129,30 @@ export class FormSigninComponent {
   }
 
   async onValidationChange() {
-  this.clearAvailabilityErrors();
+    this.clearAvailabilityErrors();
 
-  //executa verificações de maneira assíncrona
-  const [isEmailUsed, isUsernameUsed] = await Promise.all([
-    this.emailError ? false : this.checkEmailAvailability(),
-    (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
-  ]);
+    //executa verificações de maneira assíncrona
+    const [isEmailUsed, isUsernameUsed] = await Promise.all([
+      this.emailError ? false : this.checkEmailAvailability(),
+      (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
+    ]);
 
-  this.emailAlreadyUsed = isEmailUsed;
-  this.usernameAlreadyUsed = isUsernameUsed;
+    this.emailAlreadyUsed = isEmailUsed;
+    this.usernameAlreadyUsed = isUsernameUsed;
 
-  this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
+    this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
 
-  // erro, cancela envio
-  const hasError =
-    this.emailError || this.emailAlreadyUsed ||
-    this.usernameFormatError || this.usernameSpaceError ||
-    this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
-    this.nameLengthError || this.nameMaxLengthError ||
-    this.passwordError || this.confirmPasswordError ||
-    !this.email || !this.name || !this.username || !this.password || !this.confirmPassword; //verifica se os campos estão preenchidos
+    // erro, cancela envio
+    const hasError =
+      this.emailError || this.emailAlreadyUsed ||
+      this.usernameFormatError || this.usernameSpaceError ||
+      this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
+      this.nameLengthError || this.nameMaxLengthError ||
+      this.passwordError || this.confirmPasswordError ||
+      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword; //verifica se os campos estão preenchidos
 
-  this.formValid.emit(!hasError); //emite true se NÃO houver erros
-}
+    this.formValid.emit(!hasError); //emite true se NÃO houver erros
+  }
 
 
   clearAvailabilityErrors() {
@@ -160,33 +160,33 @@ export class FormSigninComponent {
     this.usernameAlreadyUsed = false;
   }
 
- //vai emitir os dados do formulário se eles forem validos
-async emitFormDataIfValid() {
-  //garante que todas as validações (incluindo as assíncronas) sejam executadas antes de emitir
-  await this.onValidationChange();
+  //vai emitir os dados do formulário se eles forem validos
+  async emitFormDataIfValid() {
+    //garante que todas as validações (incluindo as assíncronas) sejam executadas antes de emitir
+    await this.onValidationChange();
 
-  //re-avalia a validade baseada nos estados ATUAIS de erro
-  const isFormCurrentlyValid = !(
-    this.emailError || this.emailAlreadyUsed ||
-    this.usernameFormatError || this.usernameSpaceError ||
-    this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
-    this.nameLengthError || this.nameMaxLengthError ||
-    this.passwordError || this.confirmPasswordError ||
-    !this.email || !this.name || !this.username || !this.password || !this.confirmPassword //verifica se os campos estão preenchidos
-  );
+    //re-avalia a validade baseada nos estados ATUAIS de erro
+    const isFormCurrentlyValid = !(
+      this.emailError || this.emailAlreadyUsed ||
+      this.usernameFormatError || this.usernameSpaceError ||
+      this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
+      this.nameLengthError || this.nameMaxLengthError ||
+      this.passwordError || this.confirmPasswordError ||
+      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword //verifica se os campos estão preenchidos
+    );
 
-  if (isFormCurrentlyValid) {
-    const data = {
-      name: this.name,
-      email: this.email,
-      username: this.username,
-      password: this.password
-    };
-    this.formDataReady.emit(data);
-  } else {
-    console.log('Formulário inválido, não emitindo dados.');
-    this.messageService.add({severity:'warn', summary:'Preencha todos os campos!'});
+    if (isFormCurrentlyValid) {
+      const data = {
+        name: this.name,
+        email: this.email,
+        username: this.username,
+        password: this.password
+      };
+      this.formDataReady.emit(data);
+    } else {
+      console.log('Formulário inválido, não emitindo dados.');
+      this.messageService.add({ severity: 'warn', summary: 'Preencha todos os campos!' });
+    }
+    this.formValid.emit(isFormCurrentlyValid); //garante que o SingInComponent tenha o status mais recente
   }
-  this.formValid.emit(isFormCurrentlyValid); //garante que o SingInComponent tenha o status mais recente
-}
 }
