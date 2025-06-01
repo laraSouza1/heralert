@@ -6,13 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { Router } from '@angular/router';
-import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
-import { FooterComponent } from '../shared/footer/footer.component';
+import { MenuBarComponent } from '../../shared/menu-bar/menu-bar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Message, MessageModule } from 'primeng/message';
-import { FollowService } from '../../services/follow/follow.service';
-import { BlockService } from '../../services/block/block.service';
+import { FollowService } from '../../../services/follow/follow.service';
+import { BlockService } from '../../../services/block/block.service';
 
 @Component({
   selector: 'app-login',
