@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { LoginComponent } from './components/user-login/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { SingInComponent } from './components/sign-in/sing-in/sign-in.component';
 import { SupportComponent } from './components/support/support.component';
 import { ForYouComponent } from './components/for-you-page/for-you/for-you.component';
@@ -16,6 +16,8 @@ import { PostTagComponent } from './components/tags/posts-tag/post-tag.component
 import { CommunitiesComponent } from './components/communities/communities/communities.component';
 import { ProfileConfigComponent } from './components/users-n-profiles/profile-user-logged/profile-config/profile-config.component';
 import { NotificationsComponent } from './components/notifications/notifications/notifications.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { EmailToChangepassComponent } from './components/email-to-changepass/email-to-changepass.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
@@ -35,6 +37,8 @@ export const routes: Routes = [
   { path: 'post-tag', component: PostTagComponent },
   { path: 'communities', component: CommunitiesComponent },
   { path: 'profile-config', component: ProfileConfigComponent },
-  { path: 'notifications', component: NotificationsComponent }
+  { path: 'notifications', component: NotificationsComponent },
+  { path: 'change-password-request', component: EmailToChangepassComponent },
+  { path: 'change-password/:userId/:token', component: ChangePasswordComponent }
 ];
 

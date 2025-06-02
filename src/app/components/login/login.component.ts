@@ -5,20 +5,22 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
-import { Router } from '@angular/router';
-import { MenuBarComponent } from '../../shared/menu-bar/menu-bar.component';
-import { FooterComponent } from '../../shared/footer/footer.component';
+import { Router, RouterModule } from '@angular/router';
+import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
+import { FooterComponent } from '../shared/footer/footer.component';
 import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Message, MessageModule } from 'primeng/message';
-import { FollowService } from '../../../services/follow/follow.service';
-import { BlockService } from '../../../services/block/block.service';
+import { FollowService } from '../../services/follow/follow.service';
+import { BlockService } from '../../services/block/block.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
+  providers: [MessageService],
   imports: [
     InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule,
-    MenuBarComponent, FooterComponent, MessageModule, Message, NgIf
+    MenuBarComponent, FooterComponent, MessageModule, Message, NgIf, RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -35,7 +37,8 @@ export class LoginComponent {
     private router: Router,
     private http: HttpClient,
     private followService: FollowService,
-    private blockService: BlockService
+    private blockService: BlockService,
+    private messageService: MessageService
   ) { }
 
   //navegações dos btns do form ----------------

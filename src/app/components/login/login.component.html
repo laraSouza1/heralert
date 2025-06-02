@@ -30,9 +30,9 @@
       </p-iconfield>
       <!--mensagem de erro para campo senha-->
       <p-message *ngIf="passwordError" severity="error" size="small" variant="simple" text="Palavra-passe incorreta."></p-message>
-      
+
       <!--link alteração de passe-->
-      <a class="flex mb-4 mt-2" href="">Esqueceu a palavra-passe? Clique aqui.</a>
+      <a class="flex mb-4 mt-2" routerLink="/change-password-request">Esqueceu a palavra-passe? Clique aqui.</a>
 
       <div class="flex flex-row gap-3 w-full">
         <div class="flex w-6">

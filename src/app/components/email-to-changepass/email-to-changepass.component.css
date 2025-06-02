@@ -1,0 +1,95 @@
+/*corpo da pániga --------------------------------------*/
+::ng-deep body {
+  background-image: url('/imgs/fundo2.png');
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.border-page {
+  border-left: 25px solid #ff6b6b;
+  border-right: 15px solid #ff6b6b;
+}
+
+/*itens para o titulo ---------------------------------*/
+.line {
+  background-color: #ff6b6b;
+  width: 130px;
+  height: 3px;
+}
+
+h1 {
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+  color: #3e3e3e;
+}
+
+/*card onde contem o form -----------------------*/
+.card {
+ background-color: white;
+ border: 2px solid #FF9D9D;
+ width: 600px;
+ min-height: 100% !important;
+ border-radius: 50px;
+}
+
+/*modificação dos steps do primng -----------------------------*/
+::ng-deep .p-steps-item-active .p-steps-item-label {
+  display: none !important;
+}
+
+::ng-deep .p-steps-item-label {
+ color:white !important;
+}
+
+::ng-deep .p-steps-list {
+    padding: 0;
+    margin: 0;
+    margin-left: -110px;
+    margin-right: -100px;
+}
+
+::ng-deep .p-steps-item:before {
+    border-color: #ff9e9e !important;
+}
+
+::ng-deep .p-steps-item-active .p-steps-item-number {
+    background: #ff9e9e !important;
+    border-color: #ff9e9e !important;
+    color: white !important;
+}
+
+::ng-deep .p-steps-item-number {
+    color: #ff9e9e !important;
+    border: 2px solid #ff9e9e !important;
+    background: white !important;
+}
+
+/*btns --------------------------------------------------*/
+::ng-deep .bt .p-button {
+  width: 100% !important;
+  color: white !important;
+  background-color: #FF6B6B !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-family: "Lexend", sans-serif !important;
+  font-size: 13px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  height: 40px;
+}
+
+::ng-deep .bt .p-button:hover {
+  background-color: #F94C4C !important;
+  font-weight: 700 !important;
+  transform: scale(1.02) !important;
+}
+
+/*modificação do p-messege do primeng --------------------------*/
+::ng-deep .message-email .p-message {
+  background-color: #ff929210 !important;
+  font-weight: 500 !important;
+  color: #ff9292 !important;
+  border: 1px solid #ff9292 !important;
+  padding: 10px !important;
+}
+

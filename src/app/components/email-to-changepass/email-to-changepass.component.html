@@ -1,0 +1,52 @@
+<!--menu do topo-->
+<app-menu-bar></app-menu-bar>
+
+<div class="border-page flex align-content-center justify-content-center">
+  <div class="align-content-center justify-content-center card py-8 my-5">
+    <!--título-->
+    <div class="flex flex-column mx-8 mb-5">
+      <h1 class="mt-0 mb-2">Alteração de palavra-passe</h1>
+      <div class="line"></div>
+    </div>
+
+    <p-toast></p-toast>
+
+    <!--steps-->
+    <div class="mt-5">
+      <p-steps [model]="items" [readonly]="true" [activeIndex]="activeStep" />
+    </div>
+
+    <!--step 1: requisição de mudança de palavra-passe-->
+    <div [hidden]="activeStep !== 0" class="px-8">
+      <form (ngSubmit)="sendResetEmail()">
+        <p-iconfield class="mb-2">
+          <p-inputicon styleClass="pi pi-envelope"></p-inputicon>
+          <input type="email" pInputText placeholder="Insira seu e-mail" [(ngModel)]="email" name="email" (ngModelChange)="validateEmail()" required class="i-l" />
+        </p-iconfield>
+        <!--mensagens de erro-->
+        <p-message *ngIf="emailError" severity="error" variant="simple" size="small" text="E-mail inválido."></p-message>
+        <p-message *ngIf="backendError" severity="error" variant="simple" size="small" [text]="backendError"></p-message>
+
+        <!--btn de enviar-->
+        <div class="mt-4">
+          <p-button type="submit" class="bt" label="Enviar" [disabled]="emailError || !email"></p-button>
+        </div>
+      </form>
+    </div>
+
+    <!--step 2: mensagem de email enviado-->
+    <div [hidden]="activeStep !== 1" class="px-8">
+      <p-message variant="simple" class="message-email" size="large">
+        Enviamos um link para que você possa mudar sua senha! Verifique seu e-mail.
+      </p-message>
+
+      <!--btn voltar ao login-->
+      <div class="mt-4">
+        <p-button label="Voltar para o Login" class="bt" (click)="navigateToLogin()"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--footer da app-->
+<app-footer></app-footer>
