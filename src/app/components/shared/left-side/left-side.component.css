@@ -22,8 +22,9 @@
 /*icon @ ----------------------*/
 ::ng-deep .editt-at .pi {
   font-size: 11px !important;
-  position: relative;
-  top: 2px;
+  position: relative !important;
+  top: 2px !important;
+  color: #616161 !important;
 }
 
 /*linha debaixo da logo*/
@@ -40,7 +41,7 @@
   align-items: center;
   border-right: 1px solid #c2c2c2;
   padding: 20px;
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 /*imagem de perfil do usuário*/

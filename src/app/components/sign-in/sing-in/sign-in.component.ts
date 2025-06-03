@@ -140,7 +140,7 @@ export class SingInComponent implements OnInit {
             const userData = response.user;
             localStorage.setItem('user', JSON.stringify(userData));
             this.messageService.add({ severity: 'success', summary: 'Conta criada com sucesso!'});
-            setTimeout(() => this.router.navigate(['/navigateToFY']), 1000);
+            setTimeout(() => this.router.navigate(['/for-you']), 1000);
           } else {
             console.error(response.message);
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: response.message });

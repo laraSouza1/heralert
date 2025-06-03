@@ -1,75 +1,150 @@
 <!--COMPONETE QUE EXIBE DIVISÃO/SIDEBAR DIREITA DA APP (chat)-->
 
-<!--
-<div class="h-screen container">
+<!--para abertura de modal-->
+<p-toast />
+<p-confirmdialog />
 
-  título
+<div class="container">
+
+  <!--título-->
   <div class="container-chat">
     <h1 class="mb-3">Chat</h1>
     <div class="line"></div>
   </div>
 
   <div class="w-12">
-
-    itens users na lista de mensagens
     <p-contextmenu #cm [model]="items" (onHide)="selectedUser = null" />
 
-    tabela de users de chats
-    <p-table #dt2 [value]="users" class="scrollable-table w-full" [ngStyle]="{'max-height': tableHeight}">
-      <ng-template #caption>
-        <div class="flex">
+    <!--tabela de usuários que têm chat-->
+    <p-table #dt2 [value]="users" class="scrollable-table table-heigh w-full" [ngStyle]="{'max-height': tableHeight}">
 
-          pesquisa user
-          <p-iconfield iconPosition="left" class="ml-auto">
-            <p-inputicon>
-              <i class="pi pi-search"></i>
-            </p-inputicon>
-            <input pInputText type="text" (input)="filterUsers($event)" placeholder="Pesquisar usuário" />
+      <!--input de pesquisa por nome/usuário-->
+      <ng-template #caption>
+        <div class="w-full mx-0 px-0">
+          <p-iconfield iconPosition="left">
+            <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+            <input pInputText type="text" (input)="filterByNameOrUsername($event)" placeholder="Pesquisar usuário" />
           </p-iconfield>
         </div>
       </ng-template>
 
-      infos do user
       <ng-template pTemplate="body" let-user let-i="rowIndex">
-        <tr (click)="onRowClick(user)" [pContextMenuRow]="user">
+        <tr (click)="onRowClick(user)" [pContextMenuRow]="user" class="click">
+          <!--foto de perfil-->
           <td>
-            <img [src]="user.photo" height="50" width="50" class="user-image" />
+            <img [src]="user.profile_pic || '/imgs/ai.png'" class="user-image" />
           </td>
+
+          <!--nome e nome de usuário-->
           <td>
-            <div class="truncate" style="color: #3e3e3e;"> {{ user.name }} </div>
-            <div class="truncate" style="font-size: 12px;"> {{ user.text }}</div>
+            <div class="flex flex-column">
+              <div class="name2 flex">{{ user.name | truncateWords: 20 }}</div>
+              <div class="user flex">
+                <div class="edit-at-user"><i class="pi pi-at"></i></div>
+                <div class="username">{{ user.username | truncateWords: 20 }}</div>
+              </div>
+            </div>
+
+            <!--última mensagem enviada-->
+            <div style="font-size: 12px;">{{ user.lastMessageContent | truncateWords: 20 }}</div>
           </td>
         </tr>
       </ng-template>
     </p-table>
 
-    ao clicar num dos users da lista acima, abre o chat dele
+    <!--ao clicar num usuário, o chat dele abre-->
     <div *ngIf="isExpanded">
-      header/infos do user
-      <div class="grid div-chat" style="width: 100%; display: flex; align-items: center;">
-        <div class="col"><img *ngIf="expandedUser" [src]="expandedUser.photo" height="50" width="50"
-            class="user-image2" /></div>
-        <div class="col-7 truncate">
-          <div *ngIf="expandedUser" style="color: #FF9D9D; font-weight: 600; font-size: large;"> {{ expandedUser.name }}
+
+      <!--header do chat-->
+      <div class="div-chat flex flex-row w-12 gap-2" *ngIf="expandedUser" (click)="goToProfile(expandedUser.userId, expandedUser.username)" style="cursor: pointer;">
+
+        <!--foto do user-->
+        <div class="flex align-items-center justify-content-center w-2">
+          <img *ngIf="expandedUser" [src]="expandedUser.profile_pic || '/imgs/ai.png'" class="user-image2" />
+        </div>
+
+        <!--nome e nome de usuário-->
+        <div class="flex align-items-center w-9">
+          <div class="flex flex-column">
+            <div *ngIf="expandedUser" class="name flex">{{ expandedUser.name | truncateWords: 20 }}</div>
+
+            <div class="user flex">
+              <div class="edit-at-user"><i class="pi pi-at"></i></div>
+              <div class="username">{{ expandedUser.username | truncateWords: 20 }}</div>
+            </div>
           </div>
         </div>
-        <div class="col"><i class="pi pi-times" (click)="closeDiv()"></i></div>
-      </div>
 
-      chat e inpu
-      <div>
-        <div class="chat">Chat vazio.</div>
-
-        <div>
-          <p-iconfield>
-            <p-inputicon styleClass="pi pi-plus" />
-            <input type="text" pInputText placeholder="Escrever..." class="pesquisa" />
-            <p-inputicon styleClass="pi pi-send" />
-          </p-iconfield>
+        <!--btn para fechar o chat-->
+        <div class="flex align-items-center justify-content-center w-2">
+          <i class="pi pi-times" (click)="closeDiv(); $event.stopPropagation()"></i>
         </div>
       </div>
 
+      <!--chat-->
+      <div class="border-chat px-2 pb-2">
+
+        <!--conversas-->
+        <div class="chat">
+          <ng-container *ngIf="chatMessages.length > 0; else emptyChat">
+
+            <!--o ngclass vai indentificar e estilizar a mensagem de quem envia e recebe-->
+            <div *ngFor="let message of chatMessages"
+              [ngClass]="{'message-sent': message.sender_id === loggedInUserId, 'message-received': message.receiver_id === loggedInUserId}"
+              class="flex flex-column mb-4">
+
+              <div class="flex gap-2 mb-3"
+                [ngClass]="{'message-sent': message.sender_id === loggedInUserId, 'message-received': message.receiver_id === loggedInUserId}">
+
+                <!--btn para excluir uma mensagem-->
+                <div *ngIf="message.sender_id === loggedInUserId" class="flex justify-content-end align-items-end">
+                  <p-button icon="pi pi-trash" class="trash-bt trash" (click)="handleDeleteMessage(message.id)"></p-button>
+                </div>
+
+                <!--verifica se é imagem-->
+                <ng-container *ngIf="isImage(message.content); else textContent">
+                  <img [src]="message.content" class="max-w-13rem border-round" />
+                </ng-container>
+
+                <!--se não for imagem, mostra como texto-->
+                <ng-template #textContent>
+                  <p class="m-0">{{ message.content }}</p>
+                </ng-template>
+              </div>
+
+              <!--data e hora-->
+              <div class="flex"
+                [ngClass]="{'message-sent': message.sender_id === loggedInUserId, 'message-received': message.receiver_id === loggedInUserId}">
+                <span class="message-time mx-1">{{ message.created_at | date:'HH:mm' }}</span>
+                <span class="message-time mx-1">{{ message.created_at | date:'dd/MM/yy' }}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <!--mensagem de chat vazio-->
+          <ng-template #emptyChat>
+            <div class="chat-empty-message">Chat vazio</div>
+          </ng-template>
+        </div>
+
+        <div class="flex flex-row mt-2 gap-2">
+
+          <!--btn plus para enviar imagens-->
+          <div class="flex">
+            <p-button icon="pi pi-plus" class="plus-bt" (click)="onUploadClickForChat()"></p-button>
+          </div>
+
+          <!--input para enviar mensagem-->
+          <div class="flex">
+            <input type="text" pInputText placeholder="Escrever..." [(ngModel)]="newMessageContent" (keyup.enter)="sendMessage()" class="pesquisa" />
+          </div>
+
+          <!--btn para enviar mensagem-->
+          <div class="flex">
+            <p-button icon="pi pi-send" class="send-bt" (click)="sendMessage()"></p-button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
--->

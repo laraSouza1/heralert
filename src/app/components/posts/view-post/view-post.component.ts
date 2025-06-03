@@ -20,9 +20,11 @@ import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 @Component({
   selector: 'app-view-post',
   providers: [MessageService, ConfirmationService],
-  imports: [PostComponent, RightSideComponent, LeftSideComponent,
-    CommonModule, IconFieldModule, InputIconModule, InputTextModule,
-    ButtonModule, ToastModule, NgIf, MenuModule, FormsModule, InputText, DialogModule, ConfirmDialogModule, MentionPipe],
+  imports: [
+    PostComponent, RightSideComponent, LeftSideComponent, CommonModule, IconFieldModule, InputIconModule,
+    InputTextModule, ButtonModule, ToastModule, NgIf, MenuModule, FormsModule, InputText, DialogModule,
+    ConfirmDialogModule, MentionPipe
+  ],
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.css'
 })

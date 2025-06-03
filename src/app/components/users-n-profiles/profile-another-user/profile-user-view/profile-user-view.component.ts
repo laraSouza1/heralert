@@ -12,6 +12,7 @@ import { FollowService } from '../../../../services/follow/follow.service';
 import { BlockService } from '../../../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { ChatService } from '../../../../services/chat/chat.service';
 
 @Component({
   selector: 'app-profile-user-view',
@@ -44,17 +45,19 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private blockService: BlockService,
     private clipboard: Clipboard,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
     //pega dados do user logado no localstorage
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const loggedInUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-    //verifica se o user que está sendo visualizado é bloqueado ou não
-    if (!user?.id || !this.user?.id) return;
+    if (!loggedInUser?.id || !this.user?.id) {
+      return;
+    }
 
-    this.blockService.refreshBlockedUsers(user.id).then(() => {
+    this.blockService.refreshBlockedUsers(loggedInUser.id).then(() => {
       this.isBlocked = this.blockService.isBlocked(this.user!.id);
       this.setupMenuItems();
     });
@@ -80,6 +83,14 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
         ]
       }
     ];
+  }
+
+  //vai começar um novo chat
+  startChat(): void {
+    if (this.user) {
+      //passa o objeto user para o chatservice
+      this.chatService.openChatWithUser(this.user);
+    }
   }
 
   toggleMenu(event: Event) {
