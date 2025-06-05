@@ -11,7 +11,6 @@ import { MessageModule, Message } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { StepsModule } from 'primeng/steps';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpinnerIcon } from 'primeng/icons';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MenuBarComponent } from '../shared/menu-bar/menu-bar.component';
 import { FooterComponent } from '../shared/footer/footer.component';
@@ -21,7 +20,7 @@ import { FooterComponent } from '../shared/footer/footer.component';
   providers: [MessageService],
   imports: [
     InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule,
-    MessageModule, Message, CommonModule, NgIf, StepsModule, SpinnerIcon, ProgressSpinnerModule, MenuBarComponent,
+    MessageModule, Message, CommonModule, NgIf, StepsModule, ProgressSpinnerModule, MenuBarComponent,
     FooterComponent
   ],
   templateUrl: './change-password.component.html',

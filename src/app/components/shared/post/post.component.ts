@@ -173,7 +173,7 @@ export class PostComponent implements OnInit {
       .toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '') //remove acentos
       .replace(/[^a-z0-9]+/g, '-') //substitui por hífen
-      .replace(/(^-|-$)/g, '');//remove hífens nas pontas
+      .replace(/(^-|-$)/g, ''); //remove hífens nas pontas
   }
 
   //para copiar link do post

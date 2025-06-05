@@ -6,7 +6,6 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import {ContextMenuModule } from 'primeng/contextmenu';
 import { TextareaModule } from 'primeng/textarea';
 import { HttpClient } from '@angular/common/http';
 import { ChatService } from '../../../services/chat/chat.service';
@@ -26,6 +25,7 @@ interface ChatUser {
   name: string;
   profile_pic?: string;
   lastMessageContent: string;
+  lastMessageSenderId?: number;
 }
 
 interface Message {
@@ -40,7 +40,7 @@ interface Message {
   selector: 'app-right-side',
   providers: [MessageService, ConfirmationService],
   imports: [
-    TableModule, CommonModule, InputTextModule, TextareaModule, IconFieldModule, ContextMenuModule,
+    TableModule, CommonModule, InputTextModule, TextareaModule, IconFieldModule,
     InputIconModule, CommonModule, NgIf, FormsModule, ButtonModule, TruncateWordsPipe, MenuModule,
     ToastModule, ConfirmDialogModule, DialogModule
   ],
@@ -50,7 +50,6 @@ interface Message {
 export class RightSideComponent implements OnInit {
 
   users!: ChatUser[];
-  items: MenuItem[] | undefined;
   selectedUser: ChatUser | null = null;
   tableHeight = '520px';
   isExpanded = false;
@@ -75,12 +74,6 @@ export class RightSideComponent implements OnInit {
   ngOnInit() {
     //carrega os usuários com quem o usuário logado tem conversas
     this.loadChatUsers();
-
-    //itens do menu
-    this.items = [
-      { label: 'Bloquear', icon: 'pi pi-trash' },
-      { label: 'Denunciar', icon: 'pi pi-alert' }
-    ];
 
     //observa o evento para abrir um novo chat
     this.chatService.openChatEmitter.subscribe((userToChatWith: any) => {
@@ -138,7 +131,8 @@ export class RightSideComponent implements OnInit {
             username: user.username,
             name: user.name,
             profile_pic: user.profile_pic,
-            lastMessageContent: user.lastMessageContent
+            lastMessageContent: user.lastMessageContent,
+            lastMessageSenderId: user.lastMessageSenderId
           }));
           this.originalUsers = [...this.users]; //clona os dados originais para filtragem
         } else {
@@ -186,6 +180,7 @@ export class RightSideComponent implements OnInit {
       next: response => {
         if (response.status) {
           this.chatMessages = response.data;
+          this.scrollToChatBottom();
         } else {
           console.error('Falha ao carregar mensagens do chat:', response.message);
         }
@@ -235,6 +230,7 @@ export class RightSideComponent implements OnInit {
           });
           this.newMessageContent = ''; //limpa o campo de nova mensagem
           this.loadChatUsers(); //atualiza a lista de chats para refletir a nova mensagem
+          this.scrollToChatBottom(); //rola para a última mensagem
         } else {
           console.error('Falha ao enviar mensagem:', response.message);
         }
@@ -243,6 +239,15 @@ export class RightSideComponent implements OnInit {
         console.error('Erros enviando mensagem:', error);
       }
     });
+  }
+
+  scrollToChatBottom(): void {
+    setTimeout(() => {
+      const chatDiv = document.querySelector('.chat');
+      if (chatDiv) { //verifica se o elemento existe
+        chatDiv.scrollTo({ top: chatDiv.scrollHeight, behavior: 'smooth' });
+      }
+    }, 100); //um pequeno atraso para garantir que o DOM foi atualizado
   }
 
   //handle exclusão de uma mensagem
@@ -313,4 +318,18 @@ export class RightSideComponent implements OnInit {
   isImage(content: string): boolean {
     return /\.(jpeg|jpg|gif|png|webp)$/i.test(content);
   }
+
+  getPreviewWithSender(user: any): string {
+    const content = user.lastMessageContent;
+    const isImage = /\.(jpeg|jpg|gif|png|webp)$/i.test(content || '');
+    const displayContent = isImage ? '[imagem]' : content;
+
+    if (!displayContent) return 'Sem mensagens';
+
+    const senderId = user.lastMessageSenderId;
+    const prefix = senderId === this.loggedInUserId ? 'eu' : user.username;
+
+    return `${prefix}: ${displayContent}`;
+  }
+
 }

@@ -13,8 +13,6 @@
   </div>
 
   <div class="w-12">
-    <p-contextmenu #cm [model]="items" (onHide)="selectedUser = null" />
-
     <!--tabela de usuários que têm chat-->
     <p-table #dt2 [value]="users" class="scrollable-table table-heigh w-full" [ngStyle]="{'max-height': tableHeight}">
 
@@ -30,11 +28,9 @@
 
       <ng-template pTemplate="body" let-user let-i="rowIndex">
         <tr (click)="onRowClick(user)" [pContextMenuRow]="user" class="click">
-          <!--foto de perfil-->
           <td>
             <img [src]="user.profile_pic || '/imgs/ai.png'" class="user-image" />
           </td>
-
           <!--nome e nome de usuário-->
           <td>
             <div class="flex flex-column">
@@ -46,7 +42,7 @@
             </div>
 
             <!--última mensagem enviada-->
-            <div style="font-size: 12px;">{{ user.lastMessageContent | truncateWords: 20 }}</div>
+            <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 20 }}</div>
           </td>
         </tr>
       </ng-template>
