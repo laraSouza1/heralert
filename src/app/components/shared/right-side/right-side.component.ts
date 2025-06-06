@@ -148,32 +148,41 @@ export class RightSideComponent implements OnInit {
 
   //carrega a lista de usuários com chats
   loadChatUsers(): void {
-    if (typeof this.loggedInUserId === 'undefined') {
-      return;
-    }
+  if (typeof this.loggedInUserId === 'undefined') return;
+
+  this.blockService.refreshBlockedUsers(this.loggedInUserId).then(() => {
+    const blockedSet = new Set(this.blockService['blockedUsers']);
+    const blockedBySet = new Set(this.blockService['usersWhoBlockedMe']);
 
     this.http.get<any>(`http://localhost:8085/api/chats/${this.loggedInUserId}`).subscribe({
       next: response => {
         if (response.status) {
           //mapeia a resposta para o formato ChatUser
-          this.users = response.data.map((user: any) => ({
-            userId: user.userId,
-            username: user.username,
-            name: user.name,
-            profile_pic: user.profile_pic,
-            lastMessageContent: user.lastMessageContent,
-            lastMessageSenderId: user.lastMessageSenderId
-          }));
-          this.originalUsers = [...this.users]; //clona os dados originais para filtragem
+          this.users = response.data
+            .filter((user: any) =>
+              !blockedSet.has(user.userId) &&
+              !blockedBySet.has(user.userId)
+            )
+            .map((user: any) => ({
+              userId: user.userId,
+              username: user.username,
+              name: user.name,
+              profile_pic: user.profile_pic,
+              lastMessageContent: user.lastMessageContent,
+              lastMessageSenderId: user.lastMessageSenderId
+            }));
+
+          this.originalUsers = [...this.users];
         } else {
-          console.error('Falha ao carregar chats do user:', response.message);
+          console.error(response.message);
         }
       },
       error: error => {
-        console.error('Erro ao carregar chats dos users:', error);
+        console.error(error);
       }
     });
-  }
+  });
+}
 
   //filtra usuários por nome ou username
   filterByNameOrUsername(event: Event): void {

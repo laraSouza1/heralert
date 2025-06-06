@@ -41,12 +41,11 @@ export class AllNotificationsComponent {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       this.userId = user.id;
-
       //fetch notificações
       this.http.get<any>(`http://localhost:8085/api/notifications/${this.userId}`).subscribe(res => {
         if (res.status) {
           this.notifications = res.data;
-          this.filteredNotifications = [...this.notifications];
+          this.filteredNotifications = [...this.notifications]; //inicializa filteredNotifications
         }
       });
     }
@@ -78,10 +77,13 @@ export class AllNotificationsComponent {
 
   //para deletar uma notificação
   handleDeleteNotification(notificationId: number) {
-
     this.http.delete(`http://localhost:8085/api/notifications/${notificationId}`).subscribe({
       next: () => {
+        //filtra as notificações para remover a excluída
         this.notifications = this.notifications.filter(n => n.id !== notificationId);
+        //att filteredNotifications após a mudança em notifications
+        this.filteredNotifications = [...this.notifications];
+
         this.notificationService.decrement();
         this.messageService.add({ severity: 'success', summary: 'Notificação excluída com sucesso!' });
       },

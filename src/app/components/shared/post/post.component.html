@@ -52,11 +52,11 @@
 
       <div *ngIf="!isDraft" class="w-6 flex justify-content-start gap-2">
 
-        <!--favoritar usuários-->
+        <!--curtir usuários-->
         <p-button *ngIf="post.user_id !== userId" [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
           [label]="likes.toString()" class="icon-action fav bt-fav" (onClick)="toggleFavorite()" />
 
-        <!--favoritar user logado-->
+        <!--curtir user logado-->
         <p-button *ngIf="post.user_id === userId" icon="pi pi-heart-fill" [disabled]="true" [label]="likes.toString()"
           class="icon-action fav bt-fav2" styleClass="bt-fav2" />
 

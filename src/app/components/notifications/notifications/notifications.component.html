@@ -36,10 +36,8 @@
         <!--mostra componente com base no botão clicado-->
         <app-all-notifications *ngIf="activeTab === 'all'"></app-all-notifications><!--notificações gerais-->
         <app-likes-notifications *ngIf="activeTab === 'lk'"></app-likes-notifications><!--notificações de curtidas-->
-        <app-comments-notifications
-          *ngIf="activeTab === 'ct'"></app-comments-notifications><!--notificações de comentários-->
-        <app-follower-notifications
-          *ngIf="activeTab === 'fl'"></app-follower-notifications><!--notificações de seguidores-->
+        <app-comments-notifications *ngIf="activeTab === 'ct'"></app-comments-notifications><!--notificações de comentários-->
+        <app-follower-notifications *ngIf="activeTab === 'fl'"></app-follower-notifications><!--notificações de seguidores-->
 
       </div>
     </div>

@@ -149,6 +149,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
           this.blockService.unblockUser(currentUserId, this.user.id).subscribe(() => {
             this.blockService.clear();
             this.refreshBlockStatus(); //atualizar tudo
+            this.setupMenuItems();
           });
         } else {
           //bloqueia user
@@ -156,6 +157,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
             this.unfollowIfFollowing(currentUserId, this.user.id);
             this.blockService.clear();
             this.refreshBlockStatus();
+            this.setupMenuItems();
           });
         }
       }

@@ -62,10 +62,15 @@ export class CommentsNotificationsComponent {
     else this.router.navigate(['/profile-view', username]);
   }
 
+  //para deletar uma notificação
   handleDeleteNotification(notificationId: number) {
     this.http.delete(`http://localhost:8085/api/notifications/${notificationId}`).subscribe({
       next: () => {
+        //filtra as notificações para remover a excluída
         this.notifications = this.notifications.filter(n => n.id !== notificationId);
+        //att filteredNotifications após a mudança em notifications
+        this.filteredNotifications = [...this.notifications];
+
         this.notificationService.decrement();
         this.messageService.add({ severity: 'success', summary: 'Notificação excluída com sucesso!' });
       },

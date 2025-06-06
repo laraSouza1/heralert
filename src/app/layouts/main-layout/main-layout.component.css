@@ -39,7 +39,6 @@ v.container {
   margin-right: 350px;
   background-color: #ffffff;
   min-height: 100vh;
-  z-index: 1;
   position: relative;
 }
 
