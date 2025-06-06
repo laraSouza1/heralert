@@ -10,7 +10,7 @@
 
 <!--tabelas de usuários que o user visualizado segue-->
 <table class="mt-2 w-full">
-  <tbody>
+  <tbody *ngIf="users && users.length > 0">
     <tr *ngFor="let user of users" (click)="goToProfile(user.id, user.username)" style="cursor: pointer;">
       <td class="pl-2" style="width: 4rem;">
         <img [src]="user.profile_pic || '/imgs/ai.png'" class="img-profile" />
@@ -21,6 +21,13 @@
       </td>
       <td class="text-right pr-2">
         <app-follow-button [targetUserId]="user.id" (click)="$event.stopPropagation()"></app-follow-button>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="!users || users.length === 0">
+    <tr>
+      <td colspan="3" class="text-center py-4" style="color: #cacaca;">
+        Essa usuária ainda não segue ninguém!
       </td>
     </tr>
   </tbody>

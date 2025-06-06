@@ -18,27 +18,36 @@ import { ProfileConfigComponent } from './components/users-n-profiles/profile-us
 import { NotificationsComponent } from './components/notifications/notifications/notifications.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { EmailToChangepassComponent } from './components/email-to-changepass/email-to-changepass.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
+  //rotas SEM LeftSideComponent/RightSideComponent
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-in', component: SingInComponent },
-  { path: 'for-you', component: ForYouComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'assuntos-gerais', component: AssuntosGeraisComponent },
-  { path: 'dicas-defesa', component: DicasDefesaComponent },
-  { path: 'autocuidados-if', component: AutocuidadosIFComponent },
-  { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
-  { path: 'reco-locais', component: RecoLocaisComponent },
-  { path: 'profile-view/:username', component: ProfileViewComponent },
-  { path: 'view-post/:idSlug', component: ViewPostComponent },
-  { path: 'post-tag', component: PostTagComponent },
-  { path: 'communities', component: CommunitiesComponent },
-  { path: 'profile-config', component: ProfileConfigComponent },
-  { path: 'notifications', component: NotificationsComponent },
   { path: 'change-password-request', component: EmailToChangepassComponent },
-  { path: 'change-password/:userId/:token', component: ChangePasswordComponent }
-];
+  { path: 'change-password/:userId/:token', component: ChangePasswordComponent },
 
+  //rotas COM LeftSideComponent/RightSideComponent (usam layout com perfil e chat)
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'for-you', component: ForYouComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'assuntos-gerais', component: AssuntosGeraisComponent },
+      { path: 'dicas-defesa', component: DicasDefesaComponent },
+      { path: 'autocuidados-if', component: AutocuidadosIFComponent },
+      { path: 'autocuidados-femininos', component: AutocuidadosFemininosComponent },
+      { path: 'reco-locais', component: RecoLocaisComponent },
+      { path: 'profile-view/:username', component: ProfileViewComponent },
+      { path: 'view-post/:idSlug', component: ViewPostComponent },
+      { path: 'post-tag', component: PostTagComponent },
+      { path: 'communities', component: CommunitiesComponent },
+      { path: 'profile-config', component: ProfileConfigComponent },
+      { path: 'notifications', component: NotificationsComponent }
+    ]
+  }
+];

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { RightSideComponent } from '../../../shared/right-side/right-side.component';
-import { LeftSideComponent } from '../../../shared/left-side/left-side.component';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,7 +22,7 @@ import { FollowersUserComponent } from '../../../followers/followers-user/follow
   selector: 'app-profile',
   providers: [MessageService, ConfirmationService],
   imports: [
-    RightSideComponent, LeftSideComponent, DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent,
+    DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent,
     ButtonModule, ProfileUserComponent, MenubarModule, CommonModule, PostsDraftsComponent, PostsLikedComponent,
     PostsUserComponent, PostsSavedComponent, FollowingUserComponent, FollowersUserComponent
   ],

@@ -193,19 +193,19 @@
 
 /*favoritar e excluir*/
 ::ng-deep .fav .pi,
-::ng-deep .trash .pi {
+::ng-deep .trashh .pi {
   color: #dc3545 !important;
 }
 
 ::ng-deep .bt-fav .p-button,
-::ng-deep .bt-trash .p-button {
+::ng-deep .bt-trashh .p-button {
   color: #dc3545 !important;
   background-color: white !important;
   border-radius: 50px !important;
   border: 2px solid #dc3545 !important;
 }
 
-::ng-deep .bt-trash .p-button {
+::ng-deep .bt-trashh .p-button {
   color: #dc3545 !important;
   background-color: white !important;
   border-radius: 50px !important;
@@ -214,7 +214,7 @@
 }
 
 ::ng-deep .bt-fav .p-button:not(:disabled):hover,
-::ng-deep .bt-trash .p-button:not(:disabled):hover {
+::ng-deep .bt-trashh .p-button:not(:disabled):hover {
   background-color: #dc354530 !important;
   border: 2px solid #dc3545 !important;
 }

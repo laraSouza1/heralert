@@ -3,7 +3,6 @@
 <div class="container">
   <div class="line-fy"></div>
   <div class="mt-2">
-    <app-left-side class="sidebar left"></app-left-side>
 
     <p-toast />
     <p-confirmdialog />
@@ -28,7 +27,6 @@
       <app-posts-drafts *ngIf="activeTab === 'mr'" (editPostFromUser)="handleEditPost($event)" (deletePostFromUser)="handleDeletePost($event)"></app-posts-drafts><!--rascunhos do user-->
 
     </div>
-    <app-right-side class="sidebar right"></app-right-side>
   </div>
 </div>
 
@@ -53,5 +51,5 @@
 <p-dialog [(visible)]="showFollowersModal" modal header="Seguidores" [style]="{width: '43.5vw'}" (onHide)="onCloseFollowersModal()">
   <ng-container *ngIf="!resetFollowersComponent">
     <app-followers-user #followersUser></app-followers-user>
-  </ng-container>  
+  </ng-container>
 </p-dialog>

@@ -1,4 +1,4 @@
-::ng-deep .bt1 .p-button {
+::ng-deep .fyou .p-button {
   color: white !important;
   background-color: #FF6B6B !important;
   border: none !important;
@@ -12,12 +12,12 @@
   width: 100% !important;
 }
 
-::ng-deep .bt1 .p-button:hover {
+::ng-deep .fyou .p-button:hover {
   background-color: #F94C4C !important;
   font-weight: 700 !important;
 }
 
-::ng-deep .bt2 .p-button {
+::ng-deep .followingbt .p-button {
   width: 100% !important;
   color: #616161 !important;
   background-color: #e2e2e2 !important;
@@ -27,7 +27,7 @@
   font-size: 13px !important;
 }
 
-::ng-deep .bt2 .p-button:hover {
+::ng-deep .following .p-button:hover {
   color: #3b3b3b !important;
   background-color: #c9c9c9 !important;
 }

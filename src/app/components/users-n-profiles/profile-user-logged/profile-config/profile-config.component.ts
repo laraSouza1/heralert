@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { LeftSideComponent } from '../../../shared/left-side/left-side.component';
-import { RightSideComponent } from '../../../shared/right-side/right-side.component';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
@@ -20,7 +18,7 @@ import { PasswordComponent } from '../config-options/password/password.component
   selector: 'app-profile-config',
   providers: [MessageService, ConfirmationService, DialogService],
   imports: [
-    LeftSideComponent, RightSideComponent, ButtonModule, ConfirmDialogModule, DialogModule,
+    ButtonModule, ConfirmDialogModule, DialogModule,
     MenuModule, ToastModule, BlockedUsersComponent, CommonModule, EmailComponent, PasswordComponent, DynamicDialogModule
   ],
   templateUrl: './profile-config.component.html',

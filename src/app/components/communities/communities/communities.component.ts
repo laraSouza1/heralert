@@ -7,23 +7,17 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { IconFieldModule } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreatePostComponent } from '../../shared/create-post/create-post.component';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
-import { PostComponent } from '../../shared/post/post.component';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-communities',
   providers: [MessageService, ConfirmationService],
     imports: [
-      LeftSideComponent, RightSideComponent, ButtonModule, IconFieldModule, InputTextModule,
+      ButtonModule, IconFieldModule, InputTextModule,
       DialogModule, ConfirmDialogModule, ToastModule, RippleModule,
       CommonModule, TooltipModule, SelectModule, FormsModule
     ],

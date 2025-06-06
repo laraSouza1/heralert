@@ -2,7 +2,6 @@
   <div class="line-fy"></div>
 
   <div>
-    <app-left-side class="sidebar left"></app-left-side>
 
     <p-toast />
     <p-confirmdialog />
@@ -26,8 +25,6 @@
       <app-change-posts *ngIf="selectedComunity.code === 'Postagens'"></app-change-posts>
       <app-users *ngIf="selectedComunity.code === 'Usuários'"></app-users>
       <app-tags *ngIf="selectedComunity.code === 'Tags'"></app-tags>
-
-      <app-right-side class="sidebar right"></app-right-side>
     </div>
   </div>
 
