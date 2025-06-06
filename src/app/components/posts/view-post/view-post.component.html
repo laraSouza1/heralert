@@ -3,9 +3,6 @@
 <div class="container">
   <div class="line-fy"></div>
 
-  <!--parte esquerda fixa da aplicação-->
-  <app-left-side class="sidebar left"></app-left-side>
-
   <p-confirmDialog></p-confirmDialog>
   <p-toast></p-toast>
 
@@ -74,7 +71,7 @@
 
               <div class="flex flex-row w-full mt-2">
                 <div class="date flex justify-content-start w-6 mb-2">{{ comment.created_at | date: 'dd/MM/yy' }}</div>
-                
+
                 <!--opção deletar comentário-->
                 <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
                   <p-button icon="pi pi-trash" class="delete-comment"(click)="confirmDeleteComment(comment.id)"></p-button>
@@ -98,7 +95,4 @@
       </div>
     </div>
   </div>
-
-  <!--parte direita fixa da aplicação-->
-  <app-right-side class="sidebar right"></app-right-side>
 </div>

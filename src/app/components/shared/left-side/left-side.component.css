@@ -179,7 +179,7 @@
   background-color: #b8b8b8 !important;
 }
 
-/*
+/*animação logo*/
 .animated-image {
   animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
 }
@@ -201,7 +201,6 @@
       transform: translateX(5px);
   }
 }
-*/
 
 /*número de notificações ----------------------------*/
 .number-notifications {

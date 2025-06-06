@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Router } from '@angular/router';
@@ -30,7 +28,7 @@ interface Comunity {
   selector: 'app-for-you',
   providers: [MessageService, ConfirmationService],
   imports: [
-    LeftSideComponent, RightSideComponent, ButtonModule, IconFieldModule, InputTextModule,
+    ButtonModule, IconFieldModule, InputTextModule,
     DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent, RippleModule,
     CommonModule, TooltipModule, SelectModule, FormsModule, UsersComponent,
     TagsComponent, ChangePostsComponent

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PostComponent } from '../../shared/post/post.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -21,7 +19,7 @@ import { MentionPipe } from '../../../pipes/mention/mention.pipe';
   selector: 'app-view-post',
   providers: [MessageService, ConfirmationService],
   imports: [
-    PostComponent, RightSideComponent, LeftSideComponent, CommonModule, IconFieldModule, InputIconModule,
+    PostComponent, CommonModule, IconFieldModule, InputIconModule,
     InputTextModule, ButtonModule, ToastModule, NgIf, MenuModule, FormsModule, InputText, DialogModule,
     ConfirmDialogModule, MentionPipe
   ],

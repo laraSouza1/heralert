@@ -28,9 +28,12 @@
 
       <ng-template pTemplate="body" let-user let-i="rowIndex">
         <tr (click)="onRowClick(user)" [pContextMenuRow]="user" class="click">
+
+          <!--foto usuário-->
           <td>
             <img [src]="user.profile_pic || '/imgs/ai.png'" class="user-image" />
           </td>
+
           <!--nome e nome de usuário-->
           <td>
             <div class="flex flex-column">
@@ -45,14 +48,24 @@
             <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 15 }}</div>
           </td>
 
-          <!--para excluir/deletar chata-->
+           <!--para excluir/deletar chat-->
           <td>
             <div>
-              <i class="pi pi-ellipsis-v cursor-pointer" (click)="toggleOptions(user.userId); $event.stopPropagation()"></i>
+              <i class="pi pi-ellipsis-v cursor-pointer"
+                (click)="toggleOptions(user.userId); $event.stopPropagation()"></i>
               <div *ngIf="activeOptionsUserId === user.userId" class="div-btn-delete2">
-                <p-button class="delete-chat" (click)="deleteChat(user); $event.stopPropagation()" label="Deletar chat"></p-button>
+                <p-button class="delete-chat" (click)="deleteChat(user); $event.stopPropagation()"
+                  label="Deletar chat"></p-button>
               </div>
             </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3" class="text-center py-4" style="color: #cacaca;">
+            Você ainda não falou com ninguém!
           </td>
         </tr>
       </ng-template>
@@ -61,7 +74,7 @@
     <!--ao clicar num usuário, o chat dele abre-->
     <div *ngIf="isExpanded">
 
-      <!--header do chat-->
+      <!--header do chat aberto-->
       <div class="div-chat flex flex-row w-12 gap-2" *ngIf="expandedUser" (click)="goToProfile(expandedUser.userId, expandedUser.username)" style="cursor: pointer;">
 
         <!--foto do user-->

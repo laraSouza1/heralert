@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +15,7 @@ import { AllNotificationsComponent } from '../all-notifications/all-notification
   selector: 'app-notifications',
   providers: [MessageService, ConfirmationService],
   imports: [
-    LeftSideComponent, ButtonModule, CommonModule, NgIf, ToastModule, LikesNotificationsComponent,
+    ButtonModule, CommonModule, NgIf, ToastModule, LikesNotificationsComponent,
     CommentsNotificationsComponent, FollowerNotificationsComponent, AllNotificationsComponent
   ],
   templateUrl: './notifications.component.html',

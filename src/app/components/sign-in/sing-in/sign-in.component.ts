@@ -106,7 +106,7 @@ export class SingInComponent implements OnInit {
             this.userEmailToVerify = response.email; //pega o email inserido no form para enviar o cod
             this.activeStep = 1;
             this.cdr.detectChanges();
-            this.messageService.add({ severity: 'info', summary: 'Código enviado!', detail: 'Código de verificação enviado.' });
+            this.messageService.add({ severity: 'info', summary: 'Código enviado para seu e-mail!'});
           } else {
             console.error(response.message);
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: response.message });
@@ -114,7 +114,7 @@ export class SingInComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao iniciar cadastro:', error);
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao tentar iniciar cadastro. Por favor, tente novamente.' });
+          this.messageService.add({ severity: 'error', summary: 'Erro ao tentar iniciar cadastro' });
           this.isSubmitting = false;
         },
         complete: () => {

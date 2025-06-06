@@ -1,0 +1,45 @@
+v.container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.line-fy {
+  height: 10px;
+  background-color: #ff9d9d;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Sidebars fixos */
+.sidebar {
+  width: 350px;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  background-color: #ffffff;
+  border-top: 10px solid #ff9d9d;
+  z-index: 100; /* abaixo do .line-fy, mas acima do conteúdo */
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+/* Conteúdo central */
+.content {
+  flex: 1;
+  margin-left: 0px;
+  margin-right: 350px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  z-index: 1;
+  position: relative;
+}
+

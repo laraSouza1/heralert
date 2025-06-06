@@ -12,8 +12,6 @@ import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { CreatePostComponent } from '../../shared/create-post/create-post.component';
-import { LeftSideComponent } from '../../shared/left-side/left-side.component';
-import { RightSideComponent } from '../../shared/right-side/right-side.component';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PostComponent } from '../../shared/post/post.component';
@@ -24,7 +22,7 @@ import { BlockService } from '../../../services/block/block.service';
   selector: 'app-autocuidados-if',
   providers: [MessageService, ConfirmationService],
   imports: [
-    LeftSideComponent, RightSideComponent, ButtonModule, IconFieldModule, InputTextModule,
+    ButtonModule, IconFieldModule, InputTextModule,
     DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent, RippleModule,
     CommonModule, TooltipModule, SelectModule, FormsModule, PostComponent, InputIcon
   ],
