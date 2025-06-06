@@ -163,6 +163,55 @@
   width: 30px !important;
 }
 
+/*btn deletar mensagens/chat*/
+::ng-deep .delete-chat .p-button {
+  font-size: 14px !important;
+  color: #dc3545 !important;
+  background-color: transparent !important;
+  border: none !important;
+  width: 100% !important;
+  border-radius: 0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+::ng-deep .delete-chat .p-button:hover {
+  background-color: #dc354530 !important;
+}
+
+/*fundo dos btns*/
+.div-btn-delete {
+  position: absolute;
+  right: 75px;
+  top: 135px;
+  z-index: 5;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-top: 2px solid #ec7171 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  width: 14rem;
+}
+
+.div-btn-delete2 {
+  position: absolute;
+  right: 10px;
+  top: 115px;
+  z-index: 5;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-top: 2px solid #ec7171 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  width: 8rem;
+}
+
 /*btns confirmação de cancelar/exluir mensagem*/
 ::ng-deep .my-delete-button {
   background-color: #dc3545 !important;
@@ -210,6 +259,7 @@
   color: white;
   font-weight: 600;
   font-size: 18px;
+  white-space: nowrap !important;
 }
 
 .name2 {
@@ -264,4 +314,17 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a1a1a1;
+}
+
+/*btns do modal de sair da app (cancelar/sair) ---------------------------------*/
+::ng-deep .my-confirm-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-confirm-button:hover {
+  background-color: #a72734 !important;
 }

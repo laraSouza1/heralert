@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { TableModule } from 'primeng/table';
 import { CommonModule, NgIf } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TextareaModule } from 'primeng/textarea';
 import { HttpClient } from '@angular/common/http';
 import { ChatService } from '../../../services/chat/chat.service';
@@ -17,7 +17,6 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-
 
 interface ChatUser {
   userId: number;
@@ -57,6 +56,8 @@ export class RightSideComponent implements OnInit {
   chatMessages: Message[] = [];
   newMessageContent: string = '';
   originalUsers: ChatUser[] = [];
+  activeOptionsUserId: number | null = null;
+  showChatHeaderOptions = false;
 
   @ViewChild('dt2') dt2!: Table;
 
@@ -114,6 +115,28 @@ export class RightSideComponent implements OnInit {
         lastMessageContent: existingChatUser?.lastMessageContent || 'Novo chat'
       });
     });
+
+    //para recomeçar um chat depois de excluí-lo (recupera as mensagens existentes)
+    this.chatService.startedChat$.subscribe(user => {
+      const exists = this.users.some(u => u.userId === user.userId);
+      if (!exists) {
+        this.users.unshift({
+          userId: user.userId,
+          name: user.name || user.username,
+          username: user.username,
+          profile_pic: user.profile_pic || '',
+          lastMessageContent: 'chat vazio',
+          lastMessageSenderId: undefined
+        });
+      }
+      this.onRowClick({
+        userId: user.userId,
+        name: user.name || user.username,
+        username: user.username,
+        profile_pic: user.profile_pic || '',
+        lastMessageContent: 'chat vazio'
+      });
+    });
   }
 
   //carrega a lista de usuários com chats
@@ -154,20 +177,12 @@ export class RightSideComponent implements OnInit {
     );
   }
 
-  //filtra usuários pela última mensagem
-  filterByMessage(event: Event): void {
-    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
-    this.users = this.originalUsers.filter(user =>
-      user.lastMessageContent?.toLowerCase().includes(searchTerm)
-    );
-  }
-
   //para quando clicar numa linha da tabela de chats
   onRowClick(user: ChatUser): void {
-    this.expandedUser = user;
-    this.isExpanded = true;
-    this.tableHeight = '0px'; //esconde a tabela de chats
-    this.loadChatMessages(user.userId);
+    this.expandedUser = user; //define o usuário do chat expandido
+    this.isExpanded = true; //abre a visualização do chat
+    this.tableHeight = '0px';
+    this.loadChatMessages(user.userId); //carrega as mensagens do chat selecionado
   }
 
   //carrega as mensagens de um chat específico
@@ -179,8 +194,8 @@ export class RightSideComponent implements OnInit {
     this.http.get<any>(`http://localhost:8085/api/messages/${this.loggedInUserId}/${otherUserId}`).subscribe({
       next: response => {
         if (response.status) {
-          this.chatMessages = response.data;
-          this.scrollToChatBottom();
+          this.chatMessages = response.data; //atribui as mensagens carregadas
+          this.scrollToChatBottom(); //rola para o final do chat
         } else {
           console.error('Falha ao carregar mensagens do chat:', response.message);
         }
@@ -199,7 +214,7 @@ export class RightSideComponent implements OnInit {
   //fecha a div do chat expandido
   closeDiv(): void {
     this.isExpanded = false;
-    this.tableHeight = '100%'; //restaura a altura da tabela de chats
+    this.tableHeight = '100%';
     this.expandedUser = null;
     this.chatMessages = [];
     this.newMessageContent = '';
@@ -241,19 +256,20 @@ export class RightSideComponent implements OnInit {
     });
   }
 
+  //vai dar scroll para o final do chat
   scrollToChatBottom(): void {
     setTimeout(() => {
       const chatDiv = document.querySelector('.chat');
       if (chatDiv) { //verifica se o elemento existe
         chatDiv.scrollTo({ top: chatDiv.scrollHeight, behavior: 'smooth' });
       }
-    }, 100); //um pequeno atraso para garantir que o DOM foi atualizado
+    }, 100); //atraso para garantir que o DOM foi atualizado
   }
 
   //handle exclusão de uma mensagem
   handleDeleteMessage(messageId: number): void {
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir essa mensagem?`,
+      message: `Tem certeza que deseja excluir essa<br>mensagem?`,
       header: 'Excluir mensagem',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Excluir',
@@ -264,8 +280,27 @@ export class RightSideComponent implements OnInit {
         this.http.delete<any>(`http://localhost:8085/api/messages/${messageId}`).subscribe({
           next: response => {
             if (response.status) {
-              //remove a mensagem excluída da lista
+              //remove a mensagem
               this.chatMessages = this.chatMessages.filter(msg => msg.id !== messageId);
+
+              //atualiza preview na lista de usuários
+              if (this.expandedUser) {
+                const userId = this.expandedUser.userId;
+                const remainingMessages = [...this.chatMessages];
+
+                const lastMessage = remainingMessages[remainingMessages.length - 1];
+                const index = this.users.findIndex(u => u.userId === userId);
+
+                if (index !== -1) {
+                  if (lastMessage) {
+                    this.users[index].lastMessageContent = lastMessage.content;
+                    this.users[index].lastMessageSenderId = lastMessage.sender_id;
+                  } else {
+                    this.users[index].lastMessageContent = 'chat vazio';
+                    this.users[index].lastMessageSenderId = undefined;
+                  }
+                }
+              }
             } else {
               console.error('Falha ao deletar mensagem:', response.message);
             }
@@ -287,24 +322,24 @@ export class RightSideComponent implements OnInit {
   onUploadClickForChat() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = 'image/*'; //aceita apenas arquivos de imagem
     input.onchange = (event: any) => {
       const file = event.target.files[0];
       if (file) {
-        this.uploadChatImage(file);
+        this.uploadChatImage(file); //chama a função de upload se um arquivo for selecionado
       }
     };
-    input.click();
+    input.click(); //simula o clique no input de arquivo
   }
 
   //envia uma imagem para o servidor
   uploadChatImage(file: File) {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('image', file); //adiciona o arquivo à FormData
 
     this.http.post('http://localhost:8085/api/upload', formData).subscribe({
       next: (res: any) => {
-        const imageUrl = res.url;
+        const imageUrl = res.url; //obtém o URL da imagem da resposta
         this.newMessageContent = imageUrl; //define o URL da imagem como conteúdo da mensagem
         this.sendMessage(); //envia a mensagem com o URL da imagem
       },
@@ -319,17 +354,119 @@ export class RightSideComponent implements OnInit {
     return /\.(jpeg|jpg|gif|png|webp)$/i.test(content);
   }
 
+  //exibição de informações de mensagem na lista de chat
   getPreviewWithSender(user: any): string {
     const content = user.lastMessageContent;
-    const isImage = /\.(jpeg|jpg|gif|png|webp)$/i.test(content || '');
+
+    //se não tiver nenhuma mensagem, mostra "chat vazio"
+    if (!content || content.trim() === '') {
+      return 'chat vazio';
+    }
+
+    //se for imagem, mostra como "[imagem]"
+    const isImage = /\.(jpeg|jpg|gif|png|webp)$/i.test(content);
     const displayContent = isImage ? '[imagem]' : content;
 
-    if (!displayContent) return 'Sem mensagens';
-
+    //prefixo de quem enviou a última mensagem
     const senderId = user.lastMessageSenderId;
     const prefix = senderId === this.loggedInUserId ? 'eu' : user.username;
 
     return `${prefix}: ${displayContent}`;
+  }
+
+  //alterna a exibição das opções de um usuário
+  toggleOptions(userId: number): void {
+    this.activeOptionsUserId = this.activeOptionsUserId === userId ? null : userId;
+  }
+
+  //para deletar o chat
+  deleteChat(user: ChatUser): void {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar este chat?<br>Não se preocupe, as mensagens deste chat não<br>serão apagadas se voltar.',
+      header: 'Deletar chat',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Deletar',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'my-confirm-button',
+      rejectButtonStyleClass: 'my-cancel-button',
+      accept: () => {
+        if (!this.loggedInUserId) return;
+
+        this.http.post<any>('http://localhost:8085/api/deleted-chats', {
+          user_id: this.loggedInUserId,
+          other_user_id: user.userId
+        }).subscribe({
+          next: res => {
+            if (res.status) {
+              this.users = this.users.filter(u => u.userId !== user.userId); //remove o chat da lista
+              this.originalUsers = [...this.users]; //atualiza a lista original
+              this.messageService.add({ severity: 'success', summary: 'Chat excluído com sucesso!' });
+            } else {
+              //--
+            }
+          },
+          error: err => {
+            console.error(err);
+          }
+        });
+
+        this.activeOptionsUserId = null; //esconde as opções após a ação
+      }
+    });
+  }
+
+  //alterna a visibilidade das opções do cabeçalho do chat
+  toggleChatHeaderOptions(): void {
+    this.showChatHeaderOptions = !this.showChatHeaderOptions;
+  }
+
+  //exclui todas as mensagens de um chat
+  deleteAllMessages(otherUserId: number): void {
+    if (!this.loggedInUserId) return;
+
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja apagar todas<br>as mensagens nesse chat?<br><b><i>Essa ação é irreversível.</b></i>',
+      header: 'Deletar todas as mensagens',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Deletar',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'my-confirm-button',
+      rejectButtonStyleClass: 'my-cancel-button',
+      accept: () => {
+        this.http.post<any>('http://localhost:8085/api/delete-messages-only', {
+          user_id: this.loggedInUserId,
+          other_user_id: otherUserId
+        }).subscribe({
+          next: res => {
+            if (res.status) {
+              this.chatMessages = []; //limpa as mensagens exibidas no chat
+
+              const userIndex = this.users.findIndex(u => u.userId === otherUserId);
+              if (userIndex !== -1) {
+                this.users[userIndex].lastMessageContent = 'chat vazio'; // atualiza a última mensagem na lista de chats
+                this.users[userIndex].lastMessageSenderId = undefined;
+              }
+
+              this.messageService.add({ severity: 'success', summary: 'Mensagens apagadas!' });
+            } else {
+              this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: res.message });
+            }
+          },
+          error: err => {
+            console.error(err);
+          }
+        });
+
+        this.showChatHeaderOptions = false; //esconde as opções do cabeçalho
+      }
+    });
+  }
+
+  //fecha opções e menu ao clicar em qualquer lugar do documento
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.activeOptionsUserId = null;
+    this.showChatHeaderOptions = false;
   }
 
 }

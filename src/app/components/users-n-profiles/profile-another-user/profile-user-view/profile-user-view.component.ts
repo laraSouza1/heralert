@@ -87,9 +87,34 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
 
   //vai começar um novo chat
   startChat(): void {
-    if (this.user) {
-      //passa o objeto user para o chatservice
-      this.chatService.openChatWithUser(this.user);
+    const loggedInUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (this.user && this.user.id && this.user.username && loggedInUser?.id) {
+      //remove o chat da tabela deleted_chats, se existir
+      this.http.post('http://localhost:8085/api/unhide-chat', {
+        user_id: loggedInUser.id,
+        other_user_id: this.user.id
+      }).subscribe({
+        next: () => {
+          //emite a abertura do chat
+          this.chatService.openChatWithUser({
+            userId: this.user.id,
+            username: this.user.username,
+            name: this.user.name,
+            profile_pic: this.user.profile_pic
+          });
+        },
+        error: err => {
+          console.error('Erro ao restaurar chat:', err);
+          //ainda abre o chat mesmo se a requisição falhar
+          this.chatService.openChatWithUser({
+            userId: this.user.id,
+            username: this.user.username,
+            name: this.user.name,
+            profile_pic: this.user.profile_pic
+          });
+        }
+      });
     }
   }
 

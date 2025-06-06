@@ -34,15 +34,25 @@
           <!--nome e nome de usuário-->
           <td>
             <div class="flex flex-column">
-              <div class="name2 flex">{{ user.name | truncateWords: 20 }}</div>
+              <div class="name2 flex">{{ user.name | truncateWords: 15 }}</div>
               <div class="user flex">
                 <div class="edit-at-user"><i class="pi pi-at"></i></div>
-                <div class="username">{{ user.username | truncateWords: 20 }}</div>
+                <div class="username">{{ user.username | truncateWords: 15 }}</div>
               </div>
             </div>
 
             <!--última mensagem enviada-->
-            <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 20 }}</div>
+            <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 15 }}</div>
+          </td>
+
+          <!--para excluir/deletar chata-->
+          <td>
+            <div>
+              <i class="pi pi-ellipsis-v cursor-pointer" (click)="toggleOptions(user.userId); $event.stopPropagation()"></i>
+              <div *ngIf="activeOptionsUserId === user.userId" class="div-btn-delete2">
+                <p-button class="delete-chat" (click)="deleteChat(user); $event.stopPropagation()" label="Deletar chat"></p-button>
+              </div>
+            </div>
           </td>
         </tr>
       </ng-template>
@@ -55,24 +65,32 @@
       <div class="div-chat flex flex-row w-12 gap-2" *ngIf="expandedUser" (click)="goToProfile(expandedUser.userId, expandedUser.username)" style="cursor: pointer;">
 
         <!--foto do user-->
-        <div class="flex align-items-center justify-content-center w-2">
+        <div class="flex align-items-center justify-content-center w-3">
           <img *ngIf="expandedUser" [src]="expandedUser.profile_pic || '/imgs/ai.png'" class="user-image2" />
         </div>
 
         <!--nome e nome de usuário-->
-        <div class="flex align-items-center w-9">
+        <div class=" flex align-items-center w-7">
           <div class="flex flex-column">
-            <div *ngIf="expandedUser" class="name flex">{{ expandedUser.name | truncateWords: 20 }}</div>
+            <div *ngIf="expandedUser" class="name flex">{{ expandedUser.name | truncateWords: 15 }}</div>
 
             <div class="user flex">
               <div class="edit-at-user"><i class="pi pi-at"></i></div>
-              <div class="username">{{ expandedUser.username | truncateWords: 20 }}</div>
+              <div class="username">{{ expandedUser.username | truncateWords: 15 }}</div>
             </div>
           </div>
         </div>
 
+        <!--para excluir mensagens de um chat-->
+        <div class=" flex align-items-center w-1" (click)="$event.stopPropagation()">
+          <i class="pi pi-ellipsis-v cursor-pointer" (click)="toggleChatHeaderOptions(); $event.stopPropagation()"></i>
+          <div *ngIf="showChatHeaderOptions" class="div-btn-delete">
+            <p-button class="delete-chat" (click)="deleteAllMessages(expandedUser!.userId); $event.stopPropagation()" label="Apagar toda a conversa"></p-button>
+          </div>
+        </div>
+
         <!--btn para fechar o chat-->
-        <div class="flex align-items-center justify-content-center w-2">
+        <div class="flex align-items-center justify-content-center w-1">
           <i class="pi pi-times" (click)="closeDiv(); $event.stopPropagation()"></i>
         </div>
       </div>

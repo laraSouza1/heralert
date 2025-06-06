@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -8,7 +9,10 @@ export class ChatService {
 
   constructor() { }
 
-  openChatWithUser(user: any): void { //muda para any
-    this.openChatEmitter.emit(user);
+  private startedChatSource = new Subject<any>();
+  startedChat$ = this.startedChatSource.asObservable();
+
+  openChatWithUser(user: any) {
+    this.startedChatSource.next(user); //notifica outros componentes
   }
 }
