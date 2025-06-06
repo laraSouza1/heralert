@@ -193,7 +193,7 @@
 
 /*favoritar e excluir*/
 ::ng-deep .fav .pi,
-::ng-deep .trash .pi {
+::ng-deep .trashh .pi {
   color: #dc3545 !important;
 }
 
