@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,13 @@ export class BlockService {
     });
   }
 
+  private blockAction = new Subject<void>();
+  blockAction$ = this.blockAction.asObservable();
+
+  notifyBlockAction() {
+    this.blockAction.next();
+  }
+
   //para mudanças em ambas as listas
   getAllBlockedChanges(): Observable<{ blocked: Set<number>, blockedBy: Set<number> }> {
     return this.allBlockedChanged.asObservable();
@@ -63,14 +70,24 @@ export class BlockService {
     return this.http.post('http://localhost:8085/api/blocks', {
       blocker_id: blockerId,
       blocked_id: blockedId
-    });
+    }).pipe(
+      tap(() => {
+        this.clear();
+        this.notifyBlockAction();
+      })
+    );
   }
 
   //para desbloquear um usuário
   unblockUser(blockerId: number, blockedId: number): Observable<any> {
     return this.http.delete('http://localhost:8085/api/blocks', {
       params: { blocker_id: blockerId, blocked_id: blockedId }
-    });
+    }).pipe(
+      tap(() => {
+        this.clear();
+        this.notifyBlockAction();
+      })
+    );
   }
 
   //mudanças na lista de bloqueados pelo atual
@@ -78,7 +95,7 @@ export class BlockService {
     return this.blockedUsersChanged.asObservable();
   }
 
-   //limpa infos ao dar logout
+  //limpa infos ao dar logout
   clear(): void {
     this.blockedUsers.clear();
     this.blocksLoaded = false;

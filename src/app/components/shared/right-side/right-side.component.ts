@@ -17,6 +17,7 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { BlockService } from '../../../services/block/block.service';
 
 interface ChatUser {
   userId: number;
@@ -69,7 +70,8 @@ export class RightSideComponent implements OnInit {
     private chatService: ChatService,
     private router: Router,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private blockService: BlockService
   ) { }
 
   ngOnInit() {
@@ -137,6 +139,11 @@ export class RightSideComponent implements OnInit {
         lastMessageContent: 'chat vazio'
       });
     });
+
+    this.blockService.blockAction$.subscribe(() => {
+      this.loadChatUsers();
+    });
+
   }
 
   //carrega a lista de usuários com chats
