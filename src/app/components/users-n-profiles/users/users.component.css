@@ -2,7 +2,39 @@
   border-top: 1px solid #e2e2e2;
 }
 
-/*foto do usuário*/
+/*corpo da página --------------------------------*/
+.container {
+  width: 572px;
+}
+
+.sidebar {
+  width: 350px;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  border-top: 10px solid #ff9d9d;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.content {
+  flex: 1;
+  margin: 0 350px;
+  background-color: rgb(255, 255, 255);
+}
+
+::ng-deep body {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*foto do usuário ---------------------------------*/
 .img-profile {
   object-fit: cover;
   width: 50px;

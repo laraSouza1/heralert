@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         if (res.status) {
-          this.users = res.data;
+          this.users = res.data.users;;
         }
       },
       error: (err) => {
