@@ -19,10 +19,13 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { EmailToChangepassComponent } from './components/email-to-changepass/email-to-changepass.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AdministrationLayoutComponent } from './layouts/administration-layout/administration-layout.component';
+import { UsersListComponent } from './components/administration/users-list/users-list.component';
+import { TagsAdministrationComponent } from './components/administration/tags-administration/tags-administration.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
-  //rotas SEM LeftSideComponent/RightSideComponent
+  //rotas sem LeftSideComponent/RightSideComponent
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
@@ -30,7 +33,7 @@ export const routes: Routes = [
   { path: 'change-password-request', component: EmailToChangepassComponent },
   { path: 'change-password/:userId/:token', component: ChangePasswordComponent },
 
-  //rotas COM LeftSideComponent/RightSideComponent (usam layout com perfil e chat)
+  //rotas com LeftSideComponent/RightSideComponent (usam layout com perfil e chat)
   {
     path: '',
     component: MainLayoutComponent,
@@ -48,6 +51,16 @@ export const routes: Routes = [
       { path: 'communities', component: CommunitiesComponent },
       { path: 'profile-config', component: ProfileConfigComponent },
       { path: 'notifications', component: NotificationsComponent }
+    ]
+  },
+
+  //rotas com MenuAdministrationComponent (usam layout com menu de adms)
+  {
+    path: '',
+    component: AdministrationLayoutComponent,
+    children: [
+      { path: 'users-list', component: UsersListComponent },
+      { path: 'tags-administration', component: TagsAdministrationComponent },
     ]
   }
 ];

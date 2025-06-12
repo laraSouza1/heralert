@@ -3,11 +3,11 @@
   <form [formGroup]="formGroup" class="mb-3">
 
     <div class="mb-3 mt-2">
-      <input type="text" pInputText placeholder="Título da postagem" formControlName="title" maxlength="60" class="tt mt-4"/>
+      <input type="text" pInputText placeholder="Título da postagem*" formControlName="title" maxlength="60" class="tt mt-4"/>
       <p-message *ngIf="formGroup.controls.title.invalid && formGroup.controls.title.touched" severity="error" size="small" variant="simple" text="Título é obrigatório."></p-message>
     </div>
 
-    <p-editor formControlName="text" placeholder="Digite algo..." autoGrow="true" class="flex flex-column mb-2">
+    <p-editor formControlName="text" placeholder="Digite algo...*" autoGrow="true" class="flex flex-column mb-2">
       <ng-template #header>
         <span class="ql-formats">
           <select class="ql-size">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="my-3">
-      <p-select [options]="comunities" formControlName="community" appendTo="body" optionLabel="name" placeholder="Selecionar comunidade" class="w-full md:w-56 my-2" />
+      <p-select [options]="comunities" formControlName="community" appendTo="body" optionLabel="name" placeholder="Selecionar comunidade*" class="w-full md:w-56 my-2" />
       <p-message *ngIf="formGroup.controls.community.invalid && formGroup.controls.community.touched" severity="error" size="small" variant="simple" text="Selecione uma comunidade."></p-message>
     </div>
 

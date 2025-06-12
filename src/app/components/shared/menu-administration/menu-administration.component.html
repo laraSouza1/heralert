@@ -1,0 +1,27 @@
+<div class="container h-screen">
+
+  <!--logo heralert-->
+  <div class="container-logo">
+    <img class="logo mb-3" src="/imgs/Heralert.png" height="35" (click)="navigateToFY()">
+    <div class="line"></div>
+  </div>
+
+  <div class="flex flex-column justify-content-center align-items-center w-full">
+
+    <!--menu + número de notificações-->
+    <div class="w-full mb-4 mt-3">
+      <p-menu #menu [model]="items"></p-menu>
+    </div>
+
+    <!--logo-->
+    <div class="mb-3 mt-4">
+      <img src="/imgs/logo_sem_pequena.png" height="75" class="animated-image" />
+    </div>
+
+    <!--btn para voltar a app-->
+    <div>
+      <p-button class="btn-voltar" icon="pi pi-angle-left" label="Heralert" (click)="navigateToFY()"
+        [outlined]="true"></p-button>
+    </div>
+  </div>
+</div>

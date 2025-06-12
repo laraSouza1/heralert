@@ -1,0 +1,51 @@
+<div class="container px-6">
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
+
+  <!--header componente notificações-->
+  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+    <div class="flex mr-2 w-6">Lista de tags</div>
+  </div>
+
+  <!--pesquisa-->
+  <div class="line my-3 pt-3">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+      <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
+    </p-iconfield>
+  </div>
+
+  <div class="table-container">
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <table class="mt-2 w-full mb-6" class="mt-2 w-full" *ngIf="!isLoading">
+      <thead>
+        <tr>
+          <th style="width: 6%;">Ver</th>
+          <th>Nome da tag</th>
+          <th style="width: 10%;">Usos</th>
+          <th style="width: 10%;">Deletar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="click" *ngFor="let tag of tags" style="cursor: pointer;">
+          <td (click)="goToTag(tag.tag)" class="dn">
+            <i class="pi pi-eye"></i>
+          </td>
+          <td>{{ tag.tag }}</td>
+          <td>{{ tag.count }}
+          </td>
+          <td class="dn trash" (click)="handleDeleteTag(tag.tag)">
+            <i class="pi pi-trash"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p-paginator [rows]="limit" [totalRecords]="totalTags" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
+  </div>
+</div>

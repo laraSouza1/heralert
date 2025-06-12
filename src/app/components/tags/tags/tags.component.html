@@ -1,24 +1,26 @@
 <!--COMPONENTE PARA MOSTRA TODAS AS TAGS EXISTENTES-->
 
-<!--pesquisa-->
-<div class="line my-3 pt-3">
-  <p-iconfield iconPosition="left" class="ml-auto">
-    <p-inputicon><i class="pi pi-search"></i></p-inputicon>
-    <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
-  </p-iconfield>
-</div>
+<div class="container">
+  <!--pesquisa-->
+  <div class="line my-3 pt-3">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+      <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
+    </p-iconfield>
+  </div>
 
-<!--tabela para exibição de todas as tags-->
-<table class="mt-2 w-full mb-6">
-  <tbody>
-    <tr class="click" *ngFor="let tag of tags" (click)="goToTag(tag.tag)">
-      <td class="pl-2" style="width: 2rem;">
-        <div class="hasht">#</div>
-      </td>
-      <td>{{ tag.tag }}</td>
-      <td class="pr-2 w-2">
-        <div class="number flex justify-content-center">{{ tag.count }}</div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!--tabela para exibição de todas as tags-->
+  <table class="mt-2 w-full mb-6">
+    <tbody>
+      <tr class="click" *ngFor="let tag of tags" (click)="goToTag(tag.tag)">
+        <td class="pl-2" style="width: 2rem;">
+          <div class="hasht">#</div>
+        </td>
+        <td>{{ tag.tag }}</td>
+        <td class="pr-2 w-2">
+          <div class="number flex justify-content-center">{{ tag.count }}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

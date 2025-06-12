@@ -84,7 +84,7 @@ body::-webkit-scrollbar {
 
 /*EDITOR (o campo de conteúdo na criação de post)*/
 .p-editor .p-editor-toolbar.ql-snow {
- border: none !important;
+  border: none !important;
 }
 
 .p-editor .p-editor-toolbar {
@@ -223,4 +223,58 @@ body::-webkit-scrollbar {
 
 .p-button:focus-visible {
   outline: none !important;
+}
+
+/*spinner ------------------------------------------*/
+
+.loader-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/*spinner simples*/
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff8c8c;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*páginação primeng ------------------------------------------*/
+.p-paginator {
+  background: white !important;
+  color: #616161 !important;
+  border-bottom: 2px solid #ff8a8a;
+  border-radius: 0px !important;
+}
+
+.p-paginator-page.p-paginator-page-selected,
+.p-paginator-page.p-paginator-page-selected:hover {
+  background: #ff6969 !important;
+  color: white !important;
+}
+
+.p-ripple {
+  color: #616161 !important;
+}
+
+.p-ripple:hover {
+  color: #616161 !important;
+  background: #ff696945 !important;
 }

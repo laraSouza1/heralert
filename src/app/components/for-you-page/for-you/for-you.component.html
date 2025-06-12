@@ -1,13 +1,19 @@
 <div class="container">
+
   <div class="line-fy"></div>
 
   <div>
 
+    <!--para abrir modal e aparecer mensagens-->
     <p-toast />
     <p-confirmdialog />
+
+    <!--btn criar post-->
     <p-button class="btn-create-post" icon="pi pi-pencil" (click)="openCreatePostModal()" type="button"></p-button>
 
     <div class="content px-4 pt-4">
+
+      <!--imagem das comunidades + navegação a elas-->
       <div class="w-full gap-2 flex justify-content-between pb-2 mb-1 line">
         <div (click)="navigateToAG()"><img src="/imgs/5.png" class="com-image" /></div>
         <div (click)="navigateToAIF()"><img src="/imgs/1.png" class="com-image" /></div>
@@ -16,9 +22,11 @@
         <div (click)="navigateToAF()"><img src="/imgs/4.png" class="com-image" /></div>
       </div>
 
+      <!--para explorar: ver posts / users / tags -->
       <div class="flex flex-row aling-items-center w-full mt-3">
         <div><p-button class="bt4" label="Explorar" /></div>
-        <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity" (ngModelChange)="onCommunityChange()" placeholder="Explorar" optionLabel="name"></p-select>
+        <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity"
+          (ngModelChange)="onCommunityChange()" placeholder="Explorar" optionLabel="name"></p-select>
       </div>
 
       <!--mostrar componente com base no select escolhido-->
@@ -27,13 +35,16 @@
       <app-tags *ngIf="selectedComunity.code === 'Tags'"></app-tags>
     </div>
   </div>
+</div>
 
-  <p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
-    <app-create-post></app-create-post>
+<!--modal de criação de postagem-->
+<p-dialog [(visible)]="showPostModal" modal [header]="''" [closable]="false" [style]="{width: '50vw'}">
+  <app-create-post></app-create-post>
 
-    <ng-template pTemplate="footer" class="mt-2">
-      <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
-      <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
-      <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
-    </ng-template>
-  </p-dialog>
+  <ng-template pTemplate="footer" class="mt-2">
+    <!--btns cancelar, rascunho e postar-->
+    <p-button label="Cancelar" class="bt-post2" (click)="closeCreatePostModal()"></p-button>
+    <p-button label="Rascunho" class="bt-post2" (click)="saveDraft()"></p-button>
+    <p-button label="Postar" class="bt-post" (click)="createPost()" pRipple></p-button>
+  </ng-template>
+</p-dialog>

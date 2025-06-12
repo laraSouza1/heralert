@@ -459,7 +459,7 @@ export class RightSideComponent implements OnInit {
 
               const userIndex = this.users.findIndex(u => u.userId === otherUserId);
               if (userIndex !== -1) {
-                this.users[userIndex].lastMessageContent = 'chat vazio'; // atualiza a última mensagem na lista de chats
+                this.users[userIndex].lastMessageContent = 'chat vazio'; //atualiza a última mensagem na lista de chats
                 this.users[userIndex].lastMessageSenderId = undefined;
               }
 

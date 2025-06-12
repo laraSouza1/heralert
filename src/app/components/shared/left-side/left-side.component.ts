@@ -23,6 +23,8 @@ export class LeftSideComponent {
 
   items: any[] | undefined;
   user: any;
+  notifications: any[] = [];
+  totalNotifications: number = 0;
 
   constructor(
     private router: Router,
@@ -33,9 +35,6 @@ export class LeftSideComponent {
     private notificationService: NotificationService
   ) { }
 
-  notifications: any[] = [];
-  totalNotifications: number = 0;
-
   ngOnInit() {
 
     //service de notification para fazer a contagem de notificações
@@ -44,30 +43,44 @@ export class LeftSideComponent {
       this.totalNotifications = count;
     });
 
-    this.loadUser(); //chama dados do user
-
+    this.loadUser();
     window.addEventListener('user-updated', () => {
-      this.loadUser();
-    }); //recarrega caso perfil seja editado
+      this.loadUser(); //recarrega caso perfil seja editado
+    }); //chama dados do user
 
     //itens do menu
-    this.items = [
+    const baseItems = [
+      //itens visíveis a users nível/role 0 (usuárias)
       {
         label: 'Início',
         icon: 'pi pi-home',
-        command: () => this.navigateToFY()
+        command: () => this.navigateToFY(),
       },
       {
         label: 'Comunidades',
         icon: 'pi pi-users',
-        command: () => this.navigateToComm()
+        command: () => this.navigateToComm(),
       },
       {
         label: 'Notificações',
         icon: 'pi pi-bell',
-        command: () => this.navigateToNotifications()
+        command: () => this.navigateToNotifications(),
       },
     ];
+
+    //condição para visualização do item de menu "administração" caso o nível/role seja 1 ou 2 (adm e criadora)
+    if (this.user && (this.user.role === 1 || this.user.role === 2)) {
+      this.items = [
+        ...baseItems,
+        {
+          label: 'Administração',
+          icon: 'pi pi-cog',
+          command: () => this.navigateToUsersList(),
+        },
+      ];
+    } else {
+      this.items = baseItems;
+    }
 
     this.notificationService.totalNotifications$.subscribe(count => {
       this.totalNotifications = count;
@@ -98,6 +111,10 @@ export class LeftSideComponent {
 
   navigateToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  navigateToUsersList() {
+    this.router.navigate(['/users-list']);
   }
 
   //logout e limpa o user

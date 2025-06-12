@@ -1,0 +1,131 @@
+/*menu do PrimeNG --------------------------------------------*/
+::ng-deep .p-menu {
+  background-color: white;
+  color: #616161 !important;
+  border: none !important;
+  width: 100% !important;
+  border-bottom: 1px solid #c2c2c2 !important;
+  padding-bottom: 1.5rem !important;
+  border-radius: 0px !important;
+  background-color: white !important;
+}
+
+::ng-deep .p-menu-list {
+  padding: 0px;
+}
+
+::ng-deep .p-menu-item-content .p-menu-item-icon,
+::ng-deep .p-menu-item-content .p-menu-item-link {
+  color: #616161 !important;
+  padding: 6px !important;
+}
+
+::ng-deep .p-menu-item-link:hover {
+  background-color: #ff6b6b38 !important;
+}
+
+::ng-deep .p-menu-item-content:hover .p-menu-item-icon,
+::ng-deep .p-menu-item-content:hover .p-menu-item-link {
+  color: #ff6b6b !important;
+  border-radius: 0px;
+}
+
+::ng-deep  .p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
+  background-color: white !important;
+  color: #ff6b6b !important;
+}
+
+::ng-deep .p-menu-item.p-focus .p-menu-item-content {
+  color: #ff6b6b !important;
+  background-color: #ff6b6b38 !important;
+}
+
+::ng-deep .p-menu-submenu-label {
+  border-left: 2px solid #ff6b6b;
+  color: #4d4d4d !important;
+  font-weight: 700 !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-top: 1rem !important;
+}
+
+/*Logo container ------------------ */
+.container-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/*logo*/
+.logo {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
+.logo:hover {
+  transform: scale(1.02) !important;
+}
+
+/*linha debaixo da logo*/
+.line {
+  height: 1px;
+  background-color: #c2c2c2;
+  width: 100%;
+}
+
+/*container da página*/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #c2c2c2;
+  padding: 20px;
+  margin-left: 20px;
+  height: screen;
+}
+
+/*animação logo*/
+.animated-image {
+  animation: float 4s ease-in-out infinite, sway 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-10px);
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+      transform: translateX(0);
+  }
+  50% {
+      transform: translateX(5px);
+  }
+}
+
+/*btn voltar*/
+::ng-deep .btn-voltar .p-button {
+  background-color: white !important;
+  color: #ff8b8b !important;
+  height: 25px !important;
+  font-weight: bold !important;
+  width: 90px !important;
+  border: none !important;
+}
+
+::ng-deep .btn-voltar .p-button:hover {
+  border-bottom: 2px solid #ff8b8b !important;
+  border-top: 0px !important;
+  border-left: 0px !important;
+  border-right: 0px !important;
+  border-radius: 0px !important;
+  transform: scale(1) !important;
+}

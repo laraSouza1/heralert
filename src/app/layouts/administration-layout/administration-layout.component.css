@@ -28,15 +28,11 @@
   left: 0;
 }
 
-.right {
-  right: 0;
-}
-
 /*conteúdo central*/
 .content {
   flex: 1;
-  margin-left: 0px;
-  margin-right: 350px;
+  margin-left: 350px !important;
+  margin-right: 0px;
   background-color: #ffffff;
   min-height: 100vh;
   position: relative;

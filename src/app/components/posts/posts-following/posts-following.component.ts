@@ -24,8 +24,9 @@ export class PostsFollowingComponent implements OnInit {
   posts: any[] = [];
   currentUserId: number = 0;
   searchTerm: string = '';
+  isLoading = false;
 
-  constructor(private http: HttpClient, private blockService: BlockService) {}
+  constructor(private http: HttpClient, private blockService: BlockService) { }
 
   ngOnInit(): void {
     //recupera informações do usuário do localStorage
@@ -44,12 +45,22 @@ export class PostsFollowingComponent implements OnInit {
 
   //fetch de todos os posts de usuários que o user logado segue
   loadFollowingPosts() {
+    this.isLoading = true;
+
     let params = new HttpParams().set('search', this.searchTerm || '');
 
     this.http.get<any>(`http://localhost:8085/api/posts/following/${this.currentUserId}`, { params })
-      .subscribe(response => {
-        if (response.status) {
-          this.posts = response.data;
+      .subscribe({
+        next: (response) => {
+          if (response.status) {
+            this.posts = response.data;
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
   }

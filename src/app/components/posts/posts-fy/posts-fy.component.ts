@@ -27,6 +27,7 @@ export class PostsFYComponent {
   @Input() posts: any[] = [];
   @Input() currentUserId: any;
   searchTerm = '';
+  isLoading = false;
 
   constructor(private http: HttpClient, private blockService: BlockService) { }
 
@@ -51,6 +52,8 @@ export class PostsFYComponent {
   //fetch de todos os posts
   loadPosts() {
 
+    this.isLoading = true;
+
     this.blockService.refreshBlockedUsers(this.currentUserId).then(() => {
       const blockedUsers = this.blockService['blockedUsers'];
       const usersWhoBlockedMe = this.blockService['usersWhoBlockedMe'];
@@ -60,12 +63,19 @@ export class PostsFYComponent {
           userId: this.currentUserId.toString(),
           search: this.searchTerm
         }
-      }).subscribe(response => {
-        if (response.status) {
-          //se houver user bloqueado, não mostra os posts dele
-          this.posts = response.data.filter((post: any) =>
-            !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
-          );
+      }).subscribe({
+        next: (response) => {
+          if (response.status) {
+            this.posts = response.data.filter((post: any) =>
+              !blockedUsers.has(post.user_id) && !usersWhoBlockedMe.has(post.user_id)
+            );
+          }
+        },
+        error: (err) => {
+          console.error('Erro ao carregar posts:', err);
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
     });

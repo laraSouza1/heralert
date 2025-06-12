@@ -14,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { FollowService } from '../../../services/follow/follow.service';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post',
@@ -45,6 +46,7 @@ export class PostComponent implements OnInit {
   isSave: boolean = false;
   items: MenuItem[] | undefined;
   isOwnPost: boolean = false;
+  sanitizedContent: SafeHtml | undefined;
 
   constructor(
     private http: HttpClient,
@@ -53,7 +55,8 @@ export class PostComponent implements OnInit {
     private followService: FollowService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -75,6 +78,11 @@ export class PostComponent implements OnInit {
     this.isFavorite = !!this.post.user_liked;
     this.isSave = !!this.post.user_saved;
     this.comments = this.post.comments_count || 0;
+
+    //para sanitizar o conteúdo
+    if (this.post.content) {
+    this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
+  }
 
     //recupera informações do usuário do localStorage
     if (this.userId) {

@@ -142,7 +142,7 @@ export class FormSigninComponent {
 
     this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
 
-    // erro, cancela envio
+    //erro, cancela envio
     const hasError =
       this.emailError || this.emailAlreadyUsed ||
       this.usernameFormatError || this.usernameSpaceError ||

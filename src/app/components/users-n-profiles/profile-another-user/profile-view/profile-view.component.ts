@@ -64,7 +64,7 @@ export class ProfileViewComponent implements OnInit {
         }
 
         if (!wasBlocked && this.isBlocked) {
-          // bloqueou > limpa os posts
+          //bloqueou > limpa os posts
           this.userPosts = [];
         }
       }
@@ -111,7 +111,7 @@ export class ProfileViewComponent implements OnInit {
         if (res.status) {
           this.user = res.data;
 
-          this.currentUser = JSON.parse(localStorage.getItem('user') || '{}'); // Atribua o valor aqui
+          this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 
           this.blockService.refreshBlockedUsers(this.currentUser.id).then(() => {
             if (!this.blockService.isBlocked(this.user.id)) {

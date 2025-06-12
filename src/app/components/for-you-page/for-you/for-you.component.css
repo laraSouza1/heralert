@@ -1,9 +1,12 @@
+/*para formatação/organização da página ---------------------------*/
 .container {
   display: flex;
-  width: 100%;
+  width: 572px;
+  margin-left: 350px !important;
   position: relative;
 }
 
+/*linhas decorativas -----------------------*/
 .line-fy {
   height: 10px;
   background-color: #ff9d9d;
@@ -17,39 +20,7 @@
   border-bottom: 2px solid #ff6b6b;
 }
 
-.sidebar {
-  width: 350px;
-  position: fixed;
-  top: 0;
-  background-color: #ffffff;
-  border-top: 10px solid #ff9d9d;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  right: 0;
-}
-
-.content {
-  flex: 1;
-  margin: 0 350px;
-  background-color: rgb(255, 255, 255);
-}
-
-::ng-deep body {
-  margin: 0px;
-  padding: 0px;
-}
-
-.post {
-  background-color: #c2c2c2;
-  border-radius: 10px;
-  height: 20rem;
-}
-
+/*Imagem das comunidades ------------------------------*/
 .com-image {
   width: 100%;
   height: 100%;
@@ -63,54 +34,7 @@
   transform: scale(1.02);
 }
 
-::ng-deep .bt1 .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 5px !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-  height: 40px;
-  width: 8rem;
-  width: 100% !important;
-}
-
-::ng-deep .bt1 .p-button:hover {
-  background-color: #F94C4C !important;
-  font-weight: 700 !important;
-}
-
-::ng-deep .bt2 .p-button {
-  width: 100% !important;
-  color: #616161 !important;
-  background-color: #e2e2e2 !important;
-  height: 40px;
-  border: none !important;
-  font-family: "Lexend", sans-serif !important;
-  font-size: 13px !important;
-}
-
-::ng-deep .bt2 .p-button:hover {
-  color: #3b3b3b !important;
-  background-color: #c9c9c9 !important;
-}
-
-::ng-deep .bt-com .p-button {
-  color: white !important;
-  background-color: #FF6B6B !important;
-  border: none !important;
-  border-radius: 50px !important;
-  height: 40px;
-  width: 40px;
-}
-
-::ng-deep .bt-com .p-button:hover {
-  background-color: #F94C4C !important;
-  transform: scale(1.02) !important;
-}
-
+/*btn criar postagem ---------------------------*/
 ::ng-deep .btn-create-post .p-button {
   color: white !important;
   background-color: #FF6B6B !important;
@@ -133,6 +57,9 @@
   transform: scale(1.02) !important;
 }
 
+/*btns do modal de criação de post ------------------------------------------*/
+
+/*btn postar*/
 ::ng-deep .bt-post .p-button {
   width: 100px !important;
   font-size: 14px !important;
@@ -145,6 +72,7 @@
   background-color: #F94C4C !important;
 }
 
+/*btns cancelar/salavr rascunho*/
 ::ng-deep .bt-post2 .p-button {
   width: 100px !important;
   font-size: 14px !important;
@@ -157,11 +85,13 @@
   background-color: #aaaaaa !important;
 }
 
+/*modificação toast primeng*/
 ::ng-deep .p-toast-message-icon {
   position: relative;
   top: 3px;
 }
 
+/*texto "explorar*/
 ::ng-deep .bt4 .p-button {
   border-radius: 0px !important;
   background-color: white !important;

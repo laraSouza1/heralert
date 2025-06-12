@@ -46,6 +46,7 @@ export class ForYouComponent {
   currentUserId: any;
   comunities: Comunity[] | undefined;
   selectedComunity: Comunity = { name: 'Postagens', code: 'Postagens' };
+  isLoading: boolean = true;
 
   constructor(
     private router: Router,
@@ -55,6 +56,7 @@ export class ForYouComponent {
   ) { }
 
   ngOnInit(): void {
+
     this.comunities = [
       { name: 'Postagens', code: 'Postagens' },
       { name: 'Usuários', code: 'Usuários' },

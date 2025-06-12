@@ -58,7 +58,7 @@ export class EmailComponent implements OnInit, OnChanges {
     }
   }
 
-  // Valida o formato e dispara verificação de duplicidade
+  //valida o formato
   validateEmail() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     this.emailError = !emailPattern.test(this.email);
@@ -70,7 +70,7 @@ export class EmailComponent implements OnInit, OnChanges {
     }
   }
 
-  // Verifica no backend se o e-mail já está em uso
+  //verifica no backend se o e-mail já está em uso
   checkEmailAvailability() {
     this.http.get(`http://localhost:8085/api/users/check-email?email=${encodeURIComponent(this.email)}`)
       .subscribe({
