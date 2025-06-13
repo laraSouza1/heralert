@@ -110,21 +110,6 @@
   color: #2b2b2b !important;
 }
 
-::ng-deep .menu-pontos .p-menu {
-  width: 250px !important;
-  position: absolute !important;
-  left: 680px !important;
-  border: none !important;
-  border-top: 2px solid #ffacac !important;
-}
-
-::ng-deep .menu-pontos .p-menu-submenu-label {
-  display: none !important;
-  height: 0px !important;
-  padding: 0px !important;
-  margin: 0px !important;
-}
-
 /*click do header de usuário*/
 .click:hover {
   background-color: #ffefef;
@@ -331,4 +316,32 @@
 
 ::ng-deep .my-cancel-button:hover {
   background-color: #b8b8b8 !important;
+}
+
+/*btns do modal de criação de post ------------------------------------------*/
+
+/*btn postar*/
+::ng-deep .bt-post .p-button {
+  width: 100px !important;
+  font-size: 14px !important;
+  background-color: #FF6B6B !important;
+  color: white !important;
+  border: none !important;
+}
+
+::ng-deep .bt-post .p-button:not(:disabled):hover {
+  background-color: #F94C4C !important;
+}
+
+/*btns cancelar*/
+::ng-deep .bt-post2 .p-button {
+  width: 100px !important;
+  font-size: 14px !important;
+  border: none !important;
+  background-color: #c2c2c2 !important;
+  color: #3b3b3b !important;
+}
+
+::ng-deep .bt-post2 .p-button:not(:disabled):hover {
+  background-color: #aaaaaa !important;
 }

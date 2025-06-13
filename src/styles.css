@@ -278,3 +278,12 @@ body::-webkit-scrollbar {
   color: #616161 !important;
   background: #ff696945 !important;
 }
+
+.p-menu.custom-menu {
+  width: 250px !important;
+  border: none !important;
+  border-top: 2px solid #ffacac !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+

@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -15,14 +15,15 @@ import { DialogModule } from 'primeng/dialog';
 import { FollowService } from '../../../services/follow/follow.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ReportingPostComponent } from '../../reportingForms/reporting-post/reporting-post.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
   providers: [MessageService, ConfirmationService],
   imports: [
-    TableModule, ButtonModule, TagModule, MenuModule,
-    ToastModule, NgFor, CommonModule, NgIf, FollowButtonComponent, ConfirmDialogModule, DialogModule
+    TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule, NgIf,
+    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
@@ -39,6 +40,8 @@ export class PostComponent implements OnInit {
   @Output() deletePost = new EventEmitter<any>();
   @Output() userBlocked = new EventEmitter<void>();
 
+  @ViewChild(ReportingPostComponent) reportingPostComponent!: ReportingPostComponent;
+
   isFavorite: boolean = false;
   likes: number = 0;
   isComment: boolean = false;
@@ -47,6 +50,7 @@ export class PostComponent implements OnInit {
   items: MenuItem[] | undefined;
   isOwnPost: boolean = false;
   sanitizedContent: SafeHtml | undefined;
+  showPostModal: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -62,13 +66,20 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
+        label: 'Opções',
         items: [
           {
             label: 'Bloquear usuário',
             icon: 'pi pi-user-minus',
             command: () => this.confirmBlockUser()
           },
-          { label: 'Denunciar postagem', icon: 'pi pi-flag' }
+          {
+            label: 'Denunciar postagem',
+            icon: 'pi pi-flag',
+            command: () => {
+              this.showPostModal = true;
+            }
+          }
         ]
       }
     ];
@@ -102,6 +113,28 @@ export class PostComponent implements OnInit {
       if (storedSave !== null) {
         this.isSave = JSON.parse(storedSave);
       }
+    }
+  }
+
+  //para enviar o form de denuncia de post
+  submitReportForm() {
+    if (this.reportingPostComponent) {
+      this.reportingPostComponent.submitReport();
+     
+      this.showPostModal = false; //fecha modal após envio
+    }
+  }
+
+  //confere validade do form para desativar/ativar btn de envio
+  reportFormValid(): boolean {
+    return this.reportingPostComponent?.formGroup?.valid ?? false;
+  }
+
+  closeReporting() {
+    this.showPostModal = false;
+    //reseta o form após submissão
+    if (this.reportingPostComponent) {
+        this.reportingPostComponent.formGroup.reset();
     }
   }
 
