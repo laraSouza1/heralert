@@ -13,13 +13,14 @@ import { BlockService } from '../../../../services/block/block.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ChatService } from '../../../../services/chat/chat.service';
+import { ReportingUserComponent } from '../../../reportingForms/reporting-user/reporting-user.component';
 
 @Component({
   selector: 'app-profile-user-view',
   providers: [MessageService, ConfirmationService],
   imports: [
-    ButtonModule, DialogModule, MenuModule, ToastModule,
-    FollowButtonComponent, NgIf, CommonModule, ConfirmDialogModule
+    ButtonModule, DialogModule, MenuModule, ToastModule, FollowButtonComponent, NgIf, CommonModule,
+    ConfirmDialogModule, ReportingUserComponent
   ],
   templateUrl: './profile-user-view.component.html',
   styleUrls: ['./profile-user-view.component.css']
@@ -33,11 +34,13 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
 
   @ViewChild(FollowButtonComponent) followButtonComponent!: FollowButtonComponent;
   @ViewChild('menuRef') menu!: Menu;
+  @ViewChild(ReportingUserComponent) reportingUserComponent!: ReportingUserComponent;
 
   items: MenuItem[] | undefined;
   followingCount = 0;
   followersCount = 0;
   isBlocked = false;
+  showUserReportModal: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -46,7 +49,8 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
     private blockService: BlockService,
     private clipboard: Clipboard,
     private messageService: MessageService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -79,10 +83,37 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
             icon: this.isBlocked ? 'pi pi-user-plus' : 'pi pi-user-minus',
             command: () => this.confirmToggleBlock()
           },
-          { label: 'Denunciar usuário', icon: 'pi pi-flag' }
+          {
+            label: 'Denunciar usuário',
+            icon: 'pi pi-flag',
+            command: () => { this.showUserReportModal = true; }
+           }
         ]
       }
     ];
+  }
+
+ 
+  closeUserReportingModal() {
+    this.showUserReportModal = false;
+    if (this.reportingUserComponent) {
+      //reseta o form após submissão
+      this.reportingUserComponent.formGroup.reset();
+      this.reportingUserComponent.showOtherReasonTextarea = false;
+    }
+  }
+
+  //para enviar o form de denuncia de post
+  submitUserReportForm() {
+    if (this.reportingUserComponent) {
+      this.reportingUserComponent.submitReport();
+      this.showUserReportModal = false; //fecha modal após envio
+    }
+  }
+
+  //confere validade do form para desativar/ativar btn de envio
+  isUserReportFormValid(): boolean {
+    return this.reportingUserComponent?.formGroup?.valid ?? false;
   }
 
   //vai começar um novo chat

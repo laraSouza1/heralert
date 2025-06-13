@@ -1,0 +1,73 @@
+<p-toast appendTo="body"></p-toast>
+
+<!--informações da denúncia de post-->
+<div class="mx-2 mt-4">
+
+  <!--Título-->
+  <div *ngIf="user" class="flex flex-column my-4">
+    <div class="flex title mb-3">Informações da denúncia:</div>
+
+    <!--nome de usuário-->
+    <div class="flex ml-2 mb-1">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Usuária denunciada:</div>
+      <div class="flex ml-2 link" (click)="goToProfile(user.id, user.username); $event.stopPropagation()"
+        style="cursor: pointer;">
+        <div class="icon"><i class="pi pi-at"></i></div>
+        <span>{{ user.username }}</span>
+      </div>
+    </div>
+
+    <!--nome-->
+    <div class="flex ml-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Nome:</div>
+      <div class="ml-2"><span>{{ user.name || 'Não informado' }}</span></div>
+    </div>
+  </div>
+
+  <!--fomrulário-->
+  <form [formGroup]="formGroup">
+    <div class="field mb-3">
+
+      <!--select para opções da denúncia-->
+      <p-select id="selectedReason" [options]="reasons" formControlName="selectedReason" appendTo="body"
+        optionLabel="label" placeholder="Selecione o motivo" class="w-full mb-2" [ngClass]="{
+          'ng-dirty ng-invalid':
+            formGroup.get('selectedReason')?.invalid &&
+            formGroup.get('selectedReason')?.touched
+        }">
+      </p-select>
+      <!--mensagem de erro-->
+      <p-message *ngIf="
+        formGroup.get('selectedReason')?.invalid &&
+        formGroup.get('selectedReason')?.touched
+        " severity="error" variant="simple" size="small" text="O motivo é obrigatório.">
+      </p-message>
+    </div>
+
+    <!--Textarea para caso a opção escolhida no select seja "outro"-->
+    <div class="field mb-3" *ngIf="showOtherReasonTextarea">
+
+      <!--textarea para explicar o motivo-->
+      <textarea id="otherReason" rows="5" cols="30" pTextarea formControlName="otherReason" maxlength="360"
+        placeholder="Descreva o motivo da denúncia (máx. 360 caracteres)" class="w-full" [ngClass]="{
+          'ng-dirty ng-invalid':
+            formGroup.get('otherReason')?.invalid &&
+            formGroup.get('otherReason')?.touched
+        }">
+      </textarea>
+      <!--mensagem de erro-->
+      <p-message *ngIf="formGroup.get('otherReason')?.invalid && formGroup.get('otherReason')?.touched" severity="error"
+        variant="simple" size="small" [text]="
+        (formGroup.get('otherReason')?.errors?.['required']
+          ? 'Este campo é obrigatório.'
+          : '') +
+        (formGroup.get('otherReason')?.errors?.['maxlength']
+          ? ' Máximo de 360 caracteres.'
+          : '')
+        ">
+      </p-message>
+    </div>
+  </form>
+</div>
