@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -12,19 +12,20 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-reporting-post',
+  selector: 'app-reporting-comment',
   standalone: true,
   providers: [MessageService],
   imports: [
     ReactiveFormsModule, InputTextModule, ButtonModule, CommonModule, ToastModule, MessageModule,
     SelectModule, TextareaModule
   ],
-  templateUrl: './reporting-post.component.html',
-  styleUrl: './reporting-post.component.css'
+  templateUrl: './reporting-comment.component.html',
+  styleUrl: './reporting-comment.component.css'
 })
-export class ReportingPostComponent implements OnInit {
+export class ReportingCommentComponent {
 
   formGroup: FormGroup;
+  @Input() comment: any;
   @Input() post: any;
   reasons: any[];
   showOtherReasonTextarea: boolean = false;
@@ -38,9 +39,9 @@ export class ReportingPostComponent implements OnInit {
   ) {
     //inicializa as opções de motivos para denúncia
     this.reasons = [
-      { label: 'Conteúdo indevido', value: 'Conteúdo indevido' },
-      { label: 'Imagem indevida', value: 'Imagem indevida' },
-      { label: 'Tag(s) indevida(s)', value: 'Tag(s) indevida(s)' },
+      { label: 'Comentário ofensivo', value: 'Comentário ofensivo' },
+      { label: 'Bullying/assédio', value: 'Bullying/assédio' },
+      { label: 'Spam/desinformação', value: 'Spam/desinformação' },
       { label: 'Outro', value: 'Outro' }
     ];
 
@@ -93,17 +94,18 @@ export class ReportingPostComponent implements OnInit {
       .replace(/(^-|-$)/g, '');
   }
 
-  //envia a denúncia da postagem
+  //envia a denúncia do comentário
   submitReport() {
+
     //verifica se o formulário é válido e se a postagem existe
-    if (this.formGroup.valid && this.post) {
+    if (this.formGroup.valid && this.comment && this.post) {
       //define o motivo da denúncia
       const selectedReason = this.formGroup.value.selectedReason;
       const reason = this.showOtherReasonTextarea
         ? this.formGroup.value.otherReason
         : (typeof selectedReason === 'object' ? selectedReason.value : selectedReason);
 
-      //obtém o usuário logado do localStorage
+        //obtém o usuário logado do localStorage
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 
       //verifica se o usuário está autenticado
@@ -114,9 +116,9 @@ export class ReportingPostComponent implements OnInit {
       //prepara os dados da denúncia
       const reportData = {
         reporter_id: currentUser.id,
-        reported_user_id: this.post.user_id,
-        target_type: 'post',
-        target_id: this.post.id,
+        reported_user_id: this.comment.user_id,
+        target_type: 'comment',
+        target_id: this.comment.id,
         reason: reason
       };
 
@@ -152,5 +154,4 @@ export class ReportingPostComponent implements OnInit {
     //abre a URL em uma nova aba
     window.open(profileUrl, '_blank');
   }
-
 }

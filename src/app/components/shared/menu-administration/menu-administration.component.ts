@@ -35,6 +35,10 @@ export class MenuAdministrationComponent {
         label: 'Gerenciamente de denúncias',
         items: [
           {
+            label: 'Denúncias de usuários',
+            icon: 'pi pi-users',
+          },
+          {
             label: 'Denúncias de posts',
             icon: 'pi pi-file',
           },

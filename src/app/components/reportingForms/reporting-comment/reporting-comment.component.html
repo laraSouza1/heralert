@@ -2,19 +2,19 @@
 <div class="mx-2 mt-4">
 
   <!--informações da denúncia de post-->
-  <div *ngIf="post" class="flex flex-column my-4">
+  <div *ngIf="comment && post" class="flex flex-column my-4">
 
     <!--título-->
     <div class="flex title mb-3">Informações da denúncia:</div>
 
-    <!--username da criadora do post-->
+    <!--nome de usuário de quem comentou-->
     <div class="flex ml-2 mb-1">
       <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
-      <div>Usuária da postagem:</div>
-      <div class="flex ml-2 link" (click)="goToProfile(post.user_id, post.username); $event.stopPropagation()"
+      <div>Usuário do comentário:</div>
+      <div class="flex ml-2 link" (click)="goToProfile(comment.user_id, comment.username); $event.stopPropagation()"
         style="cursor: pointer;">
         <div class="icon"><i class="pi pi-at"></i></div>
-        <span>{{ post.username }}</span>
+        <span>{{ comment.username }}</span>
       </div>
     </div>
 
@@ -25,11 +25,15 @@
       <div class="ml-2"><a [href]="getPostLink()" target="_blank" class="post-title-link">{{ post.title }}</a></div>
     </div>
 
-    <!--comunidade do post-->
+    <!--conteúdo do comentário-->
     <div class="flex ml-2">
-      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
-      <div>Comunidade da postagem:</div>
-      <div class="ml-2">{{ post.community }}</div>
+      <div class="flex flex-column">
+        <div class="flex">
+          <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+          <div class="flex">Conteúdo do comentário:</div>
+        </div>
+        <div class="comment ml-3 mt-1">{{ comment.content }}</div>
+      </div>
     </div>
   </div>
 
@@ -54,7 +58,7 @@
 
     </div>
 
-    <!--Textarea para caso a opção escolhida no select seja "outro"-->
+    <!--textarea para caso a opção escolhida no select seja "outro"-->
     <div class="field mb-3" *ngIf="showOtherReasonTextarea">
 
       <!--textarea para explicar o motivo-->
@@ -66,7 +70,8 @@
         }">
       </textarea>
       <!--mensagem de erro-->
-      <p-message *ngIf="formGroup.get('otherReason')?.invalid && formGroup.get('otherReason')?.touched" severity="error" variant="simple" size="small" [text]="
+      <p-message *ngIf="formGroup.get('otherReason')?.invalid && formGroup.get('otherReason')?.touched" severity="error"
+        variant="simple" size="small" [text]="
           (formGroup.get('otherReason')?.errors?.['required']
             ? 'Este campo é obrigatório.'
             : '') +

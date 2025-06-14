@@ -81,9 +81,10 @@ export class ReportingUserComponent implements OnInit {
     //verifica se o formulário é válido e se o user existe
     if (this.formGroup.valid && this.user) {
       //define o motivo da denúncia
-      const reason = this.showOtherReasonTextarea ?
-        this.formGroup.value.otherReason :
-        this.formGroup.value.selectedReason;
+      const selectedReason = this.formGroup.value.selectedReason;
+      const reason = this.showOtherReasonTextarea
+        ? this.formGroup.value.otherReason
+        : (typeof selectedReason === 'object' ? selectedReason.value : selectedReason);
 
       //obtém o usuário logado do localStorage
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}');

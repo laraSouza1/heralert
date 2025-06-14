@@ -24,4 +24,11 @@
       </td>
     </tr>
   </tbody>
+  <tbody *ngIf="!users || users.length === 0">
+    <tr>
+      <td colspan="3" class="text-center py-4" style="color: #cacaca;">
+        Você ainda não bloqueou ninguém!
+      </td>
+    </tr>
+  </tbody>
 </table>

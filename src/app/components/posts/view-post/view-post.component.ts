@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PostComponent } from '../../shared/post/post.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MentionPipe } from '../../../pipes/mention/mention.pipe';
+import { ReportingCommentComponent } from '../../reportingForms/reporting-comment/reporting-comment.component';
 
 @Component({
   selector: 'app-view-post',
@@ -21,7 +22,7 @@ import { MentionPipe } from '../../../pipes/mention/mention.pipe';
   imports: [
     PostComponent, CommonModule, IconFieldModule, InputIconModule,
     InputTextModule, ButtonModule, ToastModule, NgIf, MenuModule, FormsModule, InputText, DialogModule,
-    ConfirmDialogModule, MentionPipe
+    ConfirmDialogModule, MentionPipe, ReportingCommentComponent
   ],
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.css'
@@ -39,6 +40,10 @@ export class ViewPostComponent implements OnInit {
   replyToUsername: string = '';
   commentTree: any[] = [];
   isOwnPost: boolean = false;
+  showCommentReportModal: boolean = false;
+  selectedCommentToReport: any = null;
+
+  @ViewChild(ReportingCommentComponent) reportingCommentComponent!: ReportingCommentComponent;
 
   constructor(
     private http: HttpClient,
@@ -67,6 +72,51 @@ export class ViewPostComponent implements OnInit {
         }
       });
     }
+
+    //itens menu
+    this.items = [
+      {
+        label: 'Denunciar comentário',
+        icon: 'pi pi-flag',
+        command: (event) => {
+          this.openReportingCommentModal();
+        }
+
+      }
+    ];
+  }
+
+  //para abrir o menu dos 3 pontinhos com a opção de report
+  openReportCommentMenu(event: Event, comment: any, menu: any) {
+    this.selectedCommentToReport = comment;
+    menu.toggle(event);
+  }
+
+  //abre modal de denuncia de comentário
+  openReportingCommentModal() {
+    this.showCommentReportModal = true;
+  }
+
+  closeReportingCommentModal() {
+    this.showCommentReportModal = false;
+    //reseta o form após submissão
+    if (this.reportingCommentComponent) {
+      this.reportingCommentComponent.formGroup.reset();
+      this.reportingCommentComponent.showOtherReasonTextarea = false;
+    }
+  }
+
+  //para enviar o form de denuncia de post
+  submitCommentReportForm() {
+    if (this.reportingCommentComponent) {
+      this.reportingCommentComponent.submitReport();
+      this.closeReportingCommentModal(); //fecha modal após envio
+    }
+  }
+
+  //confere validade do form para desativar/ativar btn de envio
+  isCommentReportFormValid(): boolean {
+    return this.reportingCommentComponent?.formGroup?.valid ?? false;
   }
 
   //ver perfil user selecionado

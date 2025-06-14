@@ -44,17 +44,18 @@ export class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
-  //fetch todos os users
   loadUsers(): void {
     this.http.get<any>('http://localhost:8085/api/users', {
       params: {
         search: this.searchTerm,
-        currentUserId: this.currentUserId.toString()
+        currentUserId: this.currentUserId.toString(),
+        //vai dar sortby por users que segueseguindo
+        sortByFollows: 'true'
       }
     }).subscribe({
       next: (res) => {
         if (res.status) {
-          this.users = res.data.users;;
+          this.users = res.data.users;
         }
       },
       error: (err) => {

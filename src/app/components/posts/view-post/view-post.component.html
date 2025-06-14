@@ -4,7 +4,7 @@
   <div class="line-fy"></div>
 
   <p-confirmDialog></p-confirmDialog>
-  <p-toast></p-toast>
+  <p-toast appendTo="body"></p-toast>
 
   <div class="content px-4 pt-4">
     <div class="div-ww mb-6">
@@ -58,9 +58,8 @@
                 </div>
                 <div *ngIf="comment.user_id !== currentUserId"
                   class="w-full flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
-                  <p-toast />
                   <p-menu #menu [model]="items" [popup]="true" class="menu-pontos" />
-                  <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
+                  <p-button (click)="openReportCommentMenu($event, comment, menu)" icon="pi pi-ellipsis-v" class="menu-cont" />
                 </div>
               </div>
 
@@ -74,7 +73,7 @@
 
                 <!--opção deletar comentário-->
                 <div *ngIf="comment.user_id === currentUserId" class="flex w-6 justify-content-end">
-                  <p-button icon="pi pi-trash" class="delete-comment"(click)="confirmDeleteComment(comment.id)"></p-button>
+                  <p-button icon="pi pi-trash" class="delete-comment" (click)="confirmDeleteComment(comment.id)"></p-button>
                 </div>
               </div>
 
@@ -96,3 +95,12 @@
     </div>
   </div>
 </div>
+
+<p-dialog [(visible)]="showCommentReportModal" modal [header]="'Denunciar Comentário'" [closable]="false" [style]="{ width: '50vw' }">
+  <app-reporting-comment *ngIf="selectedCommentToReport && post" [comment]="selectedCommentToReport" [post]="post"></app-reporting-comment>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeReportingCommentModal()"></p-button>
+    <p-button label="Enviar" class="bt-post" pRipple (click)="submitCommentReportForm()" [disabled]="!isCommentReportFormValid()"></p-button>
+  </ng-template>
+</p-dialog>
