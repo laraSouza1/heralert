@@ -1,0 +1,22 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-users-reports',
+  imports: [
+    IconFieldModule, InputIconModule, InputTextModule, TableModule, CommonModule, ButtonModule, PaginatorModule
+  ],
+  templateUrl: './users-reports.component.html',
+  styleUrl: './users-reports.component.css'
+})
+export class UsersReportsComponent {
+
+}

@@ -287,3 +287,37 @@ body::-webkit-scrollbar {
   margin: 0px !important;
 }
 
+/*tabs primng ---------------------------------------*/
+
+.p-tabpanels {
+  background: white !important;
+  padding-top: 10px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.p-tablist-tab-list {
+  background: rgb(255, 212, 212) !important;
+  border-bottom: 2px solid #ff7777 !important;
+  /*border-width: var(--p-tabs-tablist-border-width);*/
+}
+
+.p-tab-active {
+  background: #ff7777 !important;
+  color: white !important;
+}
+
+.p-tablist-active-bar {
+  background: #ff7777 !important;
+}
+
+.p-tab {
+  border-color: #ff7777 !important;
+}
+
+.p-tab:not(.p-disabled):focus-visible {
+  box-shadow: none !important;
+  outline: none !important;
+  outline-offset: none !important;
+}

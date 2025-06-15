@@ -1,0 +1,54 @@
+/*título do form*/
+.title {
+  border-left: 2px solid #FF6B6B;
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+/*icon @ ----------------------*/
+::ng-deep .icon .pi {
+  font-size: 13px !important;
+  position: relative !important;
+  top: 2px !important;
+  margin-right: 1px !important;
+  color: #ff7474;
+}
+
+/*link do perfil/post*/
+.link,
+a {
+  color: #ff8383 !important;
+  text-decoration: underline !important;
+  font-weight: 500 !important;
+}
+
+/*alteração elemento primng textarea ----------------------*/
+::ng-deep .p-textarea:enabled:focus {
+  border-color: #ffb6b6 !important;
+  box-shadow: #ffb6b6 !important;
+  outline: #ffb6b6 !important;
+  outline-offset: #ffb6b6 !important;
+}
+
+::ng-deep .p-textarea {
+  background-color: white !important;
+  color: #616161 !important;
+  border-color: #ffb6b6 !important;
+}
+
+/*Conteúdo do motivo da denúncia -----------------*/
+.reason {
+  background-color: #ffebeb;
+  border-radius: 5px;
+  border: 1px solid #FF6B6B;
+  padding: 6px;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  width: 580px;
+}
+
+/*status da denúncia*/
+.status {
+  color: #FF6B6B;
+}

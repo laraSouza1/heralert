@@ -10,13 +10,14 @@ import { LikesNotificationsComponent } from '../likes-notifications/likes-notifi
 import { CommentsNotificationsComponent } from '../comments-notifications/comments-notifications.component';
 import { FollowerNotificationsComponent } from '../follower-notifications/follower-notifications.component';
 import { AllNotificationsComponent } from '../all-notifications/all-notifications.component';
+import { AdmsNotificationsComponent } from '../adms-notifications/adms-notifications.component';
 
 @Component({
   selector: 'app-notifications',
   providers: [MessageService, ConfirmationService],
   imports: [
     ButtonModule, CommonModule, NgIf, ToastModule, LikesNotificationsComponent,
-    CommentsNotificationsComponent, FollowerNotificationsComponent, AllNotificationsComponent
+    CommentsNotificationsComponent, FollowerNotificationsComponent, AllNotificationsComponent, AdmsNotificationsComponent
   ],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css'
@@ -29,13 +30,13 @@ export class NotificationsComponent {
 
   totalNotifications: number = 0;
   userId!: number;
-  activeTab: 'all' | 'lk' | 'ct' | 'fl' = 'all';
+  activeTab: 'all' | 'lk' | 'ct' | 'fl' | 'adm' = 'all';
 
   ngOnInit() {
 
     //vai salvar a tab atual para não sair dela quando dar reload na página
-    const savedTab = localStorage.getItem('activeTab') as 'all' | 'lk' | 'ct' | 'fl' | null;
-    if (savedTab && ['all', 'lk', 'ct', 'mr'].includes(savedTab)) {
+    const savedTab = localStorage.getItem('activeTab') as 'all' | 'lk' | 'ct' | 'fl' | 'adm' | null;
+    if (savedTab && ['all', 'lk', 'ct', 'adm', 'mr'].includes(savedTab)) {
       this.activeTab = savedTab;
     }
 
@@ -55,7 +56,7 @@ export class NotificationsComponent {
   }
 
   //tabs de conteudo
-  setActiveTab(tab: 'all' | 'lk' | 'ct' | 'fl'): void {
+  setActiveTab(tab: 'all' | 'lk' | 'ct' | 'fl' | 'adm'): void {
     this.activeTab = tab;
     localStorage.setItem('activeTab', tab);
   }

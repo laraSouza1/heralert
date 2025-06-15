@@ -22,6 +22,11 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { AdministrationLayoutComponent } from './layouts/administration-layout/administration-layout.component';
 import { UsersListComponent } from './components/administration/users-list/users-list.component';
 import { TagsAdministrationComponent } from './components/administration/tags-administration/tags-administration.component';
+import { UsersReportsComponent } from './components/administration/users-reports/users-reports.component';
+import { PostsReportsComponent } from './components/administration/posts-reports/posts-reports.component';
+import { CommentsReportsComponent } from './components/administration/comments-reports/comments-reports.component';
+import { BannedUsersListComponent } from './components/administration/banned-users-list/banned-users-list.component';
+import { UsersToBanListComponent } from './components/administration/users-to-ban-list/users-to-ban-list.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
@@ -61,6 +66,11 @@ export const routes: Routes = [
     children: [
       { path: 'users-list', component: UsersListComponent },
       { path: 'tags-administration', component: TagsAdministrationComponent },
+      { path: 'users-reports', component: UsersReportsComponent },
+      { path: 'posts-reports', component: PostsReportsComponent },
+      { path: 'comments-reports', component: CommentsReportsComponent },
+      { path: 'banned-users-list', component: BannedUsersListComponent },
+      { path: 'users-to-ban-list', component: UsersToBanListComponent },
     ]
   }
 ];

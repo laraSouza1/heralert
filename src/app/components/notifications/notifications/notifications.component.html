@@ -30,6 +30,8 @@
               class="w-3"></p-button>
             <p-button [ngClass]="activeTab === 'fl' ? 'bt1' : 'bt2'" label="Seguidores" (click)="setActiveTab('fl')"
               class="w-3"></p-button>
+            <p-button [ngClass]="activeTab === 'adm' ? 'bt1' : 'bt2'" label="Administração" (click)="setActiveTab('adm')"
+              class="w-3"></p-button>
           </div>
         </div>
 
@@ -38,7 +40,7 @@
         <app-likes-notifications *ngIf="activeTab === 'lk'"></app-likes-notifications><!--notificações de curtidas-->
         <app-comments-notifications *ngIf="activeTab === 'ct'"></app-comments-notifications><!--notificações de comentários-->
         <app-follower-notifications *ngIf="activeTab === 'fl'"></app-follower-notifications><!--notificações de seguidores-->
-
+        <app-adms-notifications *ngIf="activeTab === 'adm'"></app-adms-notifications><!--notificações da administração-->
       </div>
     </div>
   </div>

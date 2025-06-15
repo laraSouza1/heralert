@@ -15,27 +15,27 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-all-notifications',
   providers: [MessageService, ConfirmationService],
-    imports: [
-      IconFieldModule, InputIconModule, InputTextModule, ButtonModule, CommonModule,
-      NgIf, MentionPipe, ToastModule, ConfirmDialogModule
-    ],
+  imports: [
+    IconFieldModule, InputIconModule, InputTextModule, ButtonModule, CommonModule,
+    NgIf, MentionPipe, ToastModule, ConfirmDialogModule
+  ],
   templateUrl: './all-notifications.component.html',
   styleUrl: './all-notifications.component.css'
 })
 export class AllNotificationsComponent {
 
   constructor(
-      private router: Router, private http: HttpClient, private messageService: MessageService,
-      private notificationService: NotificationService
-    ) { }
+    private router: Router, private http: HttpClient, private messageService: MessageService,
+    private notificationService: NotificationService
+  ) { }
 
-    notifications: any[] = [];
-    notification: number = 0;
-    userId!: number;
-    searchTerm: string = '';
-    filteredNotifications: any[] = [];
+  notifications: any[] = [];
+  notification: number = 0;
+  userId!: number;
+  searchTerm: string = '';
+  filteredNotifications: any[] = [];
 
-    ngOnInit() {
+  ngOnInit() {
 
     //pega user logado do localstorage
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -45,7 +45,7 @@ export class AllNotificationsComponent {
       this.http.get<any>(`http://localhost:8085/api/notifications/${this.userId}`).subscribe(res => {
         if (res.status) {
           this.notifications = res.data;
-          this.filteredNotifications = [...this.notifications]; //inicializa filteredNotifications
+          this.filteredNotifications = [...this.notifications];
         }
       });
     }
@@ -104,6 +104,24 @@ export class AllNotificationsComponent {
       if (mentionedUsername) {
         this.router.navigate(['/profile-view', mentionedUsername]);
       }
+    }
+  }
+
+  //Para título/tipo de notificação
+  getNotificationTitle(type: string): string {
+    switch (type) {
+      case 'like':
+        return 'Nova curtida';
+      case 'comment':
+        return 'Novo comentário';
+      case 'follow':
+        return 'Novo seguidor';
+      case 'post_deleted_admin':
+        return 'Administração: Postagem excluída';
+      case 'report_outcome_admin':
+        return 'Administração: Resultado de sua denúncia';
+      default:
+        return 'Notificação';
     }
   }
 

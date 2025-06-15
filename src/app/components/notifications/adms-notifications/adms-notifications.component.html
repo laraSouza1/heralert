@@ -13,17 +13,11 @@
   <table class="mt-3 w-full mb-6">
     <tbody>
       <tr *ngFor="let n of filteredNotifications" class="click"
-        (click)="n.type === 'follow' ? goToUserProfile(n.sender_id, n.username) : goToPost(n.post_id, n.post_title)">
+        (click)="n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'">
 
         <!--icon-->
         <td class="w-3rem align-items-start align-content-start">
-          <i class="pi icon-notificação flex justify-content-center"
-          [ngClass]="{
-            'pi-heart': n.type === 'like',
-            'pi-comment': n.type === 'comment',
-            'pi-user-plus': n.type === 'follow',
-            'pi-headphones': n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'
-          }"></i>
+          <i class="pi pi-headphones icon-notificação flex justify-content-center"></i>
         </td>
 
         <td class="flex flex-column">
@@ -33,15 +27,8 @@
             {{ getNotificationTitle(n.type) }}
           </div>
 
-          <!--títupo da postagem que teve uma curtida/comentário-->
+          <!--títupo da postagem-->
           <div *ngIf="n.post_title" class="post-title"><i>{{ n.post_title }}</i></div>
-
-          <!--user de quem fez a ação-->
-          <div *ngIf="n.username && (n.type === 'like' || n.type === 'comment' || n.type === 'follow')" class="flex flex-row" (click)="handleMentionClick($event)">
-            <small>
-              <div [innerHTML]="('@' + n.username) | mention"></div>
-            </small>
-          </div>
 
           <!--mensagem da administração-->
           <div *ngIf="n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'" class="post-title">

@@ -18,16 +18,22 @@ export class MenuAdministrationComponent {
     //itens do menu
     this.items = [
       {
-        label: 'Gerenciamente de usuários',
+        label: 'Gerenciamente de usuárias',
         items: [
           {
-            label: 'Lista de usuários',
+            label: 'Lista de usuárias',
             icon: 'pi pi-users',
             command: () => this.navigateToUsersList(),
           },
           {
-            label: 'Usuários banidos',
+            label: 'Usuárias a banir',
+            icon: 'pi pi-flag',
+            command: () => this.navigateToUsersToBan(),
+          },
+          {
+            label: 'Usuárias banidas',
             icon: 'pi pi-ban',
+            command: () => this.navigateToBannnedUsers(),
           },
         ]
       },
@@ -35,16 +41,19 @@ export class MenuAdministrationComponent {
         label: 'Gerenciamente de denúncias',
         items: [
           {
-            label: 'Denúncias de usuários',
+            label: 'Denúncias de usuárias',
             icon: 'pi pi-users',
+            command: () => this.navigateToUsersReports(),
           },
           {
             label: 'Denúncias de posts',
             icon: 'pi pi-file',
+            command: () => this.navigateToPostsReports(),
           },
           {
             label: 'Denúncias de comentários',
             icon: 'pi pi-comment',
+            command: () => this.navigateToCommentsReports(),
           },
         ]
       },
@@ -78,6 +87,26 @@ export class MenuAdministrationComponent {
 
   navigateToTagsList() {
     this.router.navigate(['/tags-administration']);
+  }
+
+  navigateToBannnedUsers() {
+    this.router.navigate(['/banned-users-list']);
+  }
+
+  navigateToCommentsReports() {
+    this.router.navigate(['/comments-reports']);
+  }
+
+  navigateToPostsReports() {
+    this.router.navigate(['/posts-reports']);
+  }
+
+  navigateToUsersReports() {
+    this.router.navigate(['/users-reports']);
+  }
+
+  navigateToUsersToBan() {
+    this.router.navigate(['/users-to-ban-list']);
   }
 
 }

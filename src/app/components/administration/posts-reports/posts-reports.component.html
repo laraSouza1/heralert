@@ -1,4 +1,4 @@
-<div class="container px-6">
+<div class="container px-4">
 
   <p-confirmDialog></p-confirmDialog>
   <p-toast></p-toast>
@@ -8,6 +8,7 @@
     <div class="flex mr-2 w-6">Denúncias de postagens</div>
   </div>
 
+  <!--pesquisa-->
   <div class="line my-3 pt-3">
     <p-iconfield iconPosition="left" class="ml-auto">
       <p-inputicon><i class="pi pi-search"></i></p-inputicon>
@@ -15,183 +16,191 @@
     </p-iconfield>
   </div>
 
+  <!--loading-->
   <div class="table-container">
     <div *ngIf="isLoading" class="loader-overlay">
       <div class="spinner"></div>
     </div>
 
+    <!--tabs-->
     <p-tabView [(activeIndex)]="selectedTabIndex" (onChange)="onTabChange($event)">
+
+      <!--tab 1: denúncias de post em avaliação-->
       <p-tabPanel header="Em avaliação">
         <p-message severity="info">
           Atualize o estado das denúncias com cuidado. Caso erre, poderá voltar a atualizar o estado da denúncia
           específica nas abas "não válidas" ou "válidas".
         </p-message>
-        <ng-template pTemplate="content">
-          <table class="mt-2 w-full" *ngIf="!isLoading && reports.length > 0">
+        <ng-container *ngIf="reports.length > 0; else noReports">
+          <table class="mt-2 w-full evaluation-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
               <tr>
                 <th>Ver post</th>
-                <th>Data da Denúncia</th>
-                <th>Título do Post</th>
-                <th>Comunidade do Post</th>
-                <th>Usuária Reportada</th>
-                <th>Motivo da Denúncia</th>
+                <th>Data Denúncia</th>
+                <th>Título Post</th>
+                <th>Comunidade Post</th>
+                <th>Usuária</th>
+                <th>Motivo Denúncia</th>
                 <th>Estado</th>
-                <th>Atualizar estado</th>
+                <th>Att. Estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let report of reports" style="cursor: pointer;">
-                <td (click)="goToPostDetail(report.post_id, report.post_title, $event)">
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToPostDetail(report.post_id, report.post_title, $event)">
                   <i class="pi pi-eye"></i>
                 </td>
-                <td>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
+                <td class="dn">{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ report.post_title }}</td>
                 <td>{{ report.post_community }}</td>
-                <td (click)="goToProfile(report.reported_user_id, report.reported_username, $event)">
+                <td class="dn" (click)="goToProfile(report.reported_user_id, report.reported_username, $event)">
                   {{ report.reported_username }}
                 </td>
-                <td>{{ report.report_reason }}</td>
-                <td>{{ getReportStatusText(report.report_status) }}</td>
-                <td>
-                  <i class="pi pi-pencil" (click)="openStatusDialog(report)"></i>
-                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn" (click)="$event.stopPropagation(); openStatusDialog(report)"><i class="pi pi-pencil"></i></td>
               </tr>
             </tbody>
           </table>
-          <div *ngIf="!isLoading && reports.length === 0" class="text-center py-4">
-            Nenhum relatório "Em avaliação" encontrado.
-          </div>
-          <div *ngIf="isLoading" class="text-center py-4">
-            Carregando relatórios...
+        </ng-container>
+
+        <!--para caso não haja dados na tabela-->
+        <ng-template #noReports>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
           </div>
         </ng-template>
       </p-tabPanel>
 
+      <!--tab 1: denúncias de post não válidas-->
       <p-tabPanel header="Não válidas">
         <p-message severity="warn">
           Denúncias não válidas podem ser excluídas. Isso irá excluir somente a denúncia em específica. Por favor,
           verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
           para "em avaliação" ou "válida".
         </p-message>
-        <ng-template pTemplate="content">
-          <table class="mt-2 w-full" *ngIf="!isLoading && reports.length > 0">
+        <ng-container *ngIf="reports.length > 0; else noReports1">
+          <table class="mt-2 w-full invalid-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
               <tr>
                 <th>Ver post</th>
-                <th>Data da Denúncia</th>
-                <th>Título do Post</th>
-                <th>Comunidade do Post</th>
-                <th>Usuária Reportada</th>
-                <th>Motivo da Denúncia</th>
+                <th>Data Denúncia</th>
+                <th>Título Post</th>
+                <th>Comunidade Post</th>
+                <th>Usuária</th>
+                <th>Motivo Denúncia</th>
                 <th>Estado</th>
-                <th>Motivo do estado</th>
-                <th>Atualizar estado</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Deletar Denún...</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let report of reports" style="cursor: pointer;">
-                <td (click)="goToPostDetail(report.post_id, report.post_title, $event)">
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToPostDetail(report.post_id, report.post_title, $event)">
                   <i class="pi pi-eye"></i>
                 </td>
-                <td>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
+                <td class="dn">{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ report.post_title }}</td>
                 <td>{{ report.post_community }}</td>
-                <td (click)="goToProfile(report.reported_user_id, report.reported_username, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
                   {{ report.reported_username }}
                 </td>
-                <td>{{ report.report_reason }}</td>
-                <td>{{ getReportStatusText(report.report_status) }}</td>
-                <td>{{ report.status_reason_text }}</td>
-                <td>
-                  <i class="pi pi-pencil" (click)="openStatusDialog(report)"></i>
-                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn"><i class="pi pi-pencil"></i></td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteReport(report)"><i class="pi pi-trash"></i></td>
               </tr>
             </tbody>
           </table>
-          <div *ngIf="!isLoading && reports.length === 0" class="text-center py-4">
-            Nenhum relatório "Não justificada" encontrado.
-          </div>
-          <div *ngIf="isLoading" class="text-center py-4">
-            Carregando relatórios...
+        </ng-container>
+
+        <!--para caso não haja dados na tabela-->
+        <ng-template #noReports1>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
           </div>
         </ng-template>
       </p-tabPanel>
 
+      <!--tab 3: denúncias de post válidas-->
       <p-tabPanel header="Válidas">
         <p-message severity="error">
           Postagens com denúncias válidas devem ser excluídas! Isso irá excluir também todas as outras denúncias
           relacionadas a essa postagem. Por favor, verifique se a denúncia é realmente válida antes de tomar qualquer
           ação. Caso não seja, atualize o estado para "em avaliação" ou "não válida".
         </p-message>
-        <ng-template pTemplate="content">
-          <table class="mt-2 w-full" *ngIf="!isLoading && reports.length > 0">
+        <ng-container *ngIf="reports.length > 0; else noReports2">
+          <table class="mt-2 w-full valid-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
               <tr>
                 <th>Ver post</th>
-                <th>Data da Denúncia</th>
-                <th>Título do Post</th>
-                <th>Comunidade do Post</th>
-                <th>Usuária Reportada</th>
-                <th>Motivo da Denúncia</th>
+                <th>Data Denúncia</th>
+                <th>Título Post</th>
+                <th>Comunidade Post</th>
+                <th>Usuária</th>
+                <th>Motivo Denúncia</th>
                 <th>Estado</th>
-                <th>Motivo do estado</th>
-                <th>Atualizar estado</th>
-                <th>Deletar post</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Deletar Post</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let report of reports" style="cursor: pointer;">
-                <td (click)="goToPostDetail(report.post_id, report.post_title, $event)">
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td (click)="$event.stopPropagation(); goToPostDetail(report.post_id, report.post_title, $event)"
+                  class="dn">
                   <i class="pi pi-eye"></i>
                 </td>
                 <td>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ report.post_title }}</td>
                 <td>{{ report.post_community }}</td>
-                <td (click)="goToProfile(report.reported_user_id, report.reported_username, $event)">
+                <td
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)"
+                  class="dn">
                   {{ report.reported_username }}
                 </td>
-                <td>{{ report.report_reason }}</td>
-                <td>{{ getReportStatusText(report.report_status) }}</td>
-                <td>{{ report.status_reason_text }}</td>
-                <td>
-                  <i class="pi pi-pencil" (click)="openStatusDialog(report)"></i>
-                </td>
-                <td class="trash">
-                  <i class="pi pi-trash" (click)="handleDeletePost(report)"></i>
-                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn"><i class="pi pi-pencil"></i></td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeletePost(report)"><i class="pi pi-trash"></i></td>
               </tr>
             </tbody>
           </table>
-          <div *ngIf="!isLoading && reports.length === 0" class="text-center py-4">
-            Nenhum relatório "Justificada" encontrado.
-          </div>
-          <div *ngIf="isLoading" class="text-center py-4">
-            Carregando relatórios...
+        </ng-container>
+
+        <!--caso não haja dados na tabela-->
+        <ng-template #noReports2>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
           </div>
         </ng-template>
       </p-tabPanel>
     </p-tabView>
-    <p-paginator [rows]="limit" [totalRecords]="totalReports" [first]="first" (onPageChange)="onPageChange($event)">
-    </p-paginator>
+
+    <!--paginação-->
+    <p-paginator [rows]="limit" [totalRecords]="totalReports" [first]="first" (onPageChange)="onPageChange($event)"></p-paginator>
   </div>
 </div>
 
-<p-dialog [(visible)]="displayStatusDialog" modal [header]="'Atualizar estado denúncia de post'" [closable]="false"
-  [style]="{ width: '50vw' }">
-  <app-status-post [report]="selectedReport" (statusUpdated)="updateReportStatus($event)"
-    (dialogClosed)="closeStatusDialog()" #statusPostRef></app-status-post>
+<!--modal de atualização de estado das denúncias-->
+<p-dialog [(visible)]="displayStatusDialog" modal [header]="'Atualizar estado denúncia de post'" [closable]="false" [style]="{ width: '50vw' }">
+  <app-status-post [report]="selectedReport" (statusUpdated)="updateReportStatus($event)" (dialogClosed)="closeStatusDialog()" #statusPostRef></app-status-post>
 
   <ng-template pTemplate="footer">
+    <!--btn cancelar/Atualizar-->
     <p-button label="Cancelar" class="bt-post2" (click)="closeStatusDialog()"></p-button>
-    <p-button label="Enviar" class="bt-post" pRipple (click)="submitStatusUpdateFromChild()"
+    <p-button label="Atualizar" class="bt-post" pRipple (click)="submitStatusUpdateFromChild()"
       [disabled]="!statusPostRef?.FormValid()"></p-button>
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="displayStatusDialog" modal [header]="'Ver detalhes da denúncia'" [closable]="true"
-  [style]="{ width: '50vw' }">
-  <app-see-post-report-detail></app-see-post-report-detail>
-
-  <p-button label="Cancelar" class="bt-post2" (click)="closeStatusDialog()"></p-button>
+<!--modal para detalhes da denúncia-->
+<p-dialog [(visible)]="displayReportDetailDialog" modal [header]="'Ver detalhes da denúncia'" [closable]="true"[style]="{ width: '550px' }">
+  <app-see-post-report-detail [report]="selectedReport"></app-see-post-report-detail>
 </p-dialog>
