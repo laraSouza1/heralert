@@ -1,0 +1,99 @@
+<div class="mx-2 mt-4">
+  <div *ngIf="report" class="flex flex-column my-4">
+
+    <!--título-->
+    <div class="flex title mb-3">Informações da denúncia:</div>
+
+    <!--data da denúncia-->
+    <div class="flex ml-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Data da denúncia:</div>
+      <div class="flex ml-2">
+        <span>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</span>
+      </div>
+    </div>
+
+    <!--usuária reportada-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Usuária denunciada:</div>
+      <div class="flex ml-2" (click)="goToProfile(report.reported_user_id, report.reported_username)"
+        style="cursor: pointer;">
+        <div class="icon"><i class="pi pi-at"></i></div>
+        <span>{{ report.reported_username }}</span>
+      </div>
+    </div>
+
+    <!--cargo da usuária-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Cargo da usuária:</div>
+      <div class="flex ml-2">
+        <span>{{ getRoleName(report.reported_user_role) }}</span>
+      </div>
+    </div>
+
+    <!--motivo da denúncia-->
+    <div class="flex ml-2 mt-2">
+      <div class="flex flex-column">
+        <div class="flex">
+          <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+          <div class="flex">Motivo da denúncia:</div>
+        </div>
+        <div class="ml-3 mt-1 reason">{{ report.report_reason }}</div>
+      </div>
+    </div>
+
+    <!--estado atual-->
+    <div class="flex ml-2 mb-1 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Estado atual:</div>
+      <div class="flex ml-2 status">
+        <span>{{report.report_status === 'em_avaliacao' ? 'Em avaliação': report.report_status === 'nao_justificado'?
+          'Não justificada': 'Justificada'}}</span>
+      </div>
+    </div>
+
+    <!--motivo do estado-->
+    <div class="flex ml-2 mt-2" *ngIf="report.status_reason_text">
+      <div class="flex flex-column">
+        <div class="flex">
+          <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+          <div class="flex">Motivo do estado:</div>
+        </div>
+        <div class="ml-3 mt-1 reason">{{ report.status_reason_text }}</div>
+      </div>
+    </div>
+
+    <!--nº total de denúncias-->
+    <div class="flex ml-2 mb-1 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Nº total de denúncias:</div>
+      <div class="flex ml-2">
+        <span>{{ report.total_user_reports_count }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!--form para atualizar estado-->
+  <form [formGroup]="formGroup">
+    <div class="field mb-3">
+      <!--select em avaliaão/não válida/válida-->
+      <p-select id="selectedReason" [options]="reasons" formControlName="selectedReason" optionValue="value"
+        appendTo="body" optionLabel="label" placeholder="Selecione o estado" class="w-full mb-2"></p-select>
+      <!--mensagem de erro-->
+      <p-message severity="error" variant="simple" size="small" text="O estado é obrigatório."
+        *ngIf="formGroup.get('selectedReason')?.invalid && formGroup.get('selectedReason')?.touched">
+      </p-message>
+    </div>
+
+    <!--textarea para justificar estado escolhido no select-->
+    <textarea rows="5" cols="30" pTextarea maxlength="360" placeholder="Descreva o motivo do estado" class="w-full"
+      formControlName="statusReasonText"></textarea>
+    <!--mensagem de erro-->
+    <p-message severity="error" variant="simple" size="small"
+      [text]="(formGroup.get('statusReasonText')?.errors?.['required']? 'Este campo é obrigatório.': '') + (formGroup.get('statusReasonText')?.errors?.['maxlength']? ' Máximo de 360 caracteres.': '')"
+      *ngIf="formGroup.get('statusReasonText')?.invalid && formGroup.get('statusReasonText')?.touched">
+    </p-message>
+  </form>
+</div>

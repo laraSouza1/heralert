@@ -37,7 +37,7 @@ a {
   border-color: #ffb6b6 !important;
 }
 
-/*Conteúdo do motivo da denúncia -----------------*/
+/*Conteúdo do motivo da denúncia*/
 .reason {
   background-color: #ffebeb;
   border-radius: 5px;
@@ -53,7 +53,7 @@ a {
   color: #FF6B6B;
 }
 
-/*scrollbar --------------------------------*/
+/*scrollbar ------------------------------*/
 ::ng-deep ::-webkit-scrollbar {
   width: 16px;
   background-color: rgb(224, 224, 224);

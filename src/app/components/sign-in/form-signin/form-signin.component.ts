@@ -46,6 +46,7 @@ export class FormSigninComponent {
   isConfirmPasswordVisible: boolean = false;
   emailAlreadyUsed: boolean = false;
   usernameAlreadyUsed: boolean = false;
+  emailBannedError: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -98,15 +99,17 @@ export class FormSigninComponent {
   //validações de email/username em uso -----------------
 
   //verifica email em uso no back
-  checkEmailAvailability(): Promise<boolean> {
+  async checkEmailAvailability(): Promise<{ exists: boolean, message?: string }> {
     if (!this.email || this.emailError) {
-      return Promise.resolve(false);
+      return { exists: false };
     }
     return new Promise((resolve) => {
       this.http.get(`http://localhost:8085/api/users/check-email?email=${encodeURIComponent(this.email)}`)
         .subscribe({
-          next: (response: any) => resolve(response.exists),
-          error: () => resolve(false)
+          next: (response: any) => {
+            resolve({ exists: response.exists });
+          },
+          error: () => resolve({ exists: false })
         });
     });
   }
@@ -129,35 +132,36 @@ export class FormSigninComponent {
   }
 
   async onValidationChange() {
-    this.clearAvailabilityErrors();
+  this.clearAvailabilityErrors();
+  this.emailBannedError = false;
 
-    //executa verificações de maneira assíncrona
-    const [isEmailUsed, isUsernameUsed] = await Promise.all([
-      this.emailError ? false : this.checkEmailAvailability(),
-      (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
-    ]);
+  //executa verificações de maneira assíncrona
+  const [isEmailUsed, isUsernameUsed] = await Promise.all([
+    this.emailError ? false : this.checkEmailAvailability().then(res => res.exists),
+    (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
+  ]);
 
-    this.emailAlreadyUsed = isEmailUsed;
-    this.usernameAlreadyUsed = isUsernameUsed;
+  this.emailAlreadyUsed = isEmailUsed;
+  this.usernameAlreadyUsed = isUsernameUsed;
 
-    this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
+  this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
 
-    //erro, cancela envio
-    const hasError =
-      this.emailError || this.emailAlreadyUsed ||
-      this.usernameFormatError || this.usernameSpaceError ||
-      this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
-      this.nameLengthError || this.nameMaxLengthError ||
-      this.passwordError || this.confirmPasswordError ||
-      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword; //verifica se os campos estão preenchidos
+  //erro, cancela envio
+  const hasError =
+    this.emailError || this.emailAlreadyUsed || this.emailBannedError ||
+    this.usernameFormatError || this.usernameSpaceError ||
+    this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
+    this.nameLengthError || this.nameMaxLengthError ||
+    this.passwordError || this.confirmPasswordError ||
+    !this.email || !this.name || !this.username || !this.password || !this.confirmPassword;
 
-    this.formValid.emit(!hasError); //emite true se NÃO houver erros
-  }
-
+  this.formValid.emit(!hasError);
+}
 
   clearAvailabilityErrors() {
     this.emailAlreadyUsed = false;
     this.usernameAlreadyUsed = false;
+    this.emailBannedError = false;
   }
 
   //vai emitir os dados do formulário se eles forem validos

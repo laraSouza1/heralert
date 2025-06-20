@@ -55,13 +55,13 @@ a:hover {
 
 
 /*botões LOGIN/CADASTRO*/
-::ng-deep .bt2 .p-button {
+::ng-deep .bt22 .p-button {
   width: 100% !important;
   color: #616161 !important;
   background-color: #e2e2e2 !important;
 }
 
-::ng-deep .bt2 .p-button:hover {
+::ng-deep .bt22 .p-button:hover {
   color: #3b3b3b !important;
   background-color: #c5c5c5 !important;
   transform: scale(1.02) !important;

@@ -120,6 +120,10 @@ export class AllNotificationsComponent {
         return 'Administração: Postagem excluída';
       case 'report_outcome_admin':
         return 'Administração: Resultado de sua denúncia';
+      case 'content_deleted_by_report':
+        return 'Administração: Comentário excluído';
+      case 'report_outcome_user_admin':
+        return 'Administração: Denúncia de Usuário';
       default:
         return 'Notificação';
     }

@@ -321,3 +321,8 @@ body::-webkit-scrollbar {
   outline: none !important;
   outline-offset: none !important;
 }
+
+.broom {
+  height: 22px;
+  filter: opacity(80%);
+}

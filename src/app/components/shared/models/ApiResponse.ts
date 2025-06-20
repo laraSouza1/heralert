@@ -1,8 +1,5 @@
-export interface ApiResponse {
+export interface ApiResponse<T = any> {
   status: boolean;
-  data: {
-    reports: any[];
-    total: number;
-  };
+  data: T;
   message?: string;
 }

@@ -76,7 +76,7 @@
       <!--tab 1: denúncias de post não válidas-->
       <p-tabPanel header="Não válidas">
         <p-message severity="warn">
-          Denúncias não válidas podem ser excluídas. Isso irá excluir somente a denúncia em específica. Por favor,
+          Denúncias não válidas podem ser limpadas. Isso irá excluir somente a denúncia em específica. Por favor,
           verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
           para "em avaliação" ou "válida".
         </p-message>
@@ -93,7 +93,7 @@
                 <th>Estado</th>
                 <th>Motivo Estado</th>
                 <th>Att. Estado</th>
-                <th>Deletar Denún...</th>
+                <th>Limpar Denún...</th>
               </tr>
             </thead>
             <tbody>
@@ -113,7 +113,9 @@
                 <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
                 <td class="dn">{{ report.status_reason_text }}</td>
                 <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn"><i class="pi pi-pencil"></i></td>
-                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteReport(report)"><i class="pi pi-trash"></i></td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteReport(report)">
+                   <img src="/imgs/broom.png" class="broom" />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -201,6 +203,6 @@
 </p-dialog>
 
 <!--modal para detalhes da denúncia-->
-<p-dialog [(visible)]="displayReportDetailDialog" modal [header]="'Ver detalhes da denúncia'" [closable]="true"[style]="{ width: '550px' }">
+<p-dialog [(visible)]="displayReportDetailDialog" modal [header]="'Ver detalhes da denúncia'" [closable]="true"[style]="{ width: '50vw' }">
   <app-see-post-report-detail [report]="selectedReport"></app-see-post-report-detail>
 </p-dialog>

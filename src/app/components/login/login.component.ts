@@ -72,13 +72,9 @@ export class LoginComponent {
           console.log('Login bem-sucedido!', response.data);
 
           localStorage.clear();
-
-          //limpa dados anteriores
           this.followService.clearFollowings();
           this.blockService.clear();
-
           localStorage.setItem('user', JSON.stringify(response.data)); //pega novos dados o user recem logado para o localstorage
-
           this.followService.refreshFollowings(response.data.id).then(() => {
             this.router.navigate(['/for-you']);
           });
@@ -86,11 +82,23 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error('Erro no login:', error);
-
         this.emailOrUsernameError = false;
         this.passwordError = false;
 
-        if (error.status === 401) {
+        //trata o erro de usuário banido
+        if (error.status === 403) { //status 403 Forbidden para usuário banido
+          const bannedMessage = error.error?.message || 'Você foi banida por receber três ou mais denúncias válidas em seu perfil.';
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Acesso Negado',
+            detail: bannedMessage,
+            life: 5000
+          });
+          //redireciona para a tela de welcome após um curto atraso
+          setTimeout(() => {
+            this.router.navigate(['/welcome']);
+          }, 2000);
+        } else if (error.status === 401) { //status 401 Unauthorized para credenciais incorretas
           const msg = error.error?.message || '';
           if (msg.includes('Usuário não encontrado')) {
             this.emailOrUsernameError = true;
@@ -98,7 +106,11 @@ export class LoginComponent {
             this.passwordError = true;
           }
         } else {
-          alert('Erro ao tentar fazer login. Por favor, tente novamente.');
+          //rrros genéricos
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro ao tentar fazer login. Por favor, tente novamente.'
+          });
         }
       }
     });

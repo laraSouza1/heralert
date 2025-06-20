@@ -1,0 +1,112 @@
+<div class="mx-2 mt-4">
+  <div *ngIf="user" class="flex flex-column my-4">
+
+    <!--título-->
+    <div class="flex title mb-3">Informações da Usuária:</div>
+
+    <!--usuária-->
+    <div class="flex ml-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Usuária:</div>
+      <div class="flex ml-2 link" (click)="goToProfile(user.user_id, user.username)" style="cursor: pointer;">
+        <div class="icon"><i class="pi pi-at"></i></div>
+        <span>{{ user.username }}</span>
+      </div>
+    </div>
+
+    <!--nome-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Nome:</div>
+      <div class="flex ml-2">
+        <span>{{ user.name }}</span>
+      </div>
+    </div>
+
+    <!--cargo-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Cargo:</div>
+      <div class="flex ml-2">
+        <span>{{ getRoleName(user.role) }}</span>
+      </div>
+    </div>
+
+    <!--nº total de denúncias-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Nº Total de Denúncias:</div>
+      <div class="flex ml-2">
+        <span>{{ user.total_user_reports_count }}</span>
+      </div>
+    </div>
+
+    <!--nº denúncias-->
+    <div class="flex ml-2 mt-2">
+      <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+      <div>Nº Denúncias Válidas:</div>
+      <div class="flex ml-2">
+        <span>{{ user.total_valid_reports }}</span>
+      </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <!--título-->
+    <div class="flex title mb-3">Detalhes das Denúncias Válidas:</div>
+    <div *ngIf="isLoadingDetails" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <!--todas as denúncias válidas-->
+    <ng-container *ngIf="validReportsDetails.length > 0; else noValidReports">
+      <div *ngFor="let report of validReportsDetails" class="linee pb-4 mb-4">
+
+        <!--data da denúncia-->
+        <div class="flex ml-2">
+          <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+          <div>Data da denúncia:</div>
+          <div class="flex ml-2">
+            <span>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</span>
+          </div>
+        </div>
+
+        <!--motivo da denúncia-->
+        <div class="flex ml-2 mt-2">
+          <div class="flex flex-column">
+            <div class="flex">
+              <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+              <div class="flex">Motivo da denúncia:</div>
+            </div>
+            <div class="ml-3 mt-1 reason">{{ report.report_reason }}</div>
+          </div>
+        </div>
+
+        <!--estado da denúncia (válida)-->
+        <div class="flex ml-2 mt-1">
+          <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+          <div>Estado atual:</div>
+          <div class="flex ml-2 status">
+            <span>{{ getReportStatusText(report.report_status) }}</span>
+          </div>
+        </div>
+
+        <!--motivo do estado-->
+        <div class="flex ml-2 mt-2" *ngIf="report.status_reason_text">
+          <div class="flex flex-column">
+            <div class="flex">
+              <div class="mr-1 icon"><i class="pi pi-angle-right"></i></div>
+              <div class="flex">Motivo do estado:</div>
+            </div>
+            <div class="ml-3 mt-1 reason">{{ report.status_reason_text }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noValidReports>
+      <div class="flex justify-content-center align-items-center mt-4">
+        <p class="noReports">Nenhuma denúncia válida encontrada para esta usuária.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -17,10 +17,12 @@
     <div class="flex flex-row gap-2">
       <div>
         <ng-container *ngIf="!isBlocked">
+          <!--copiar link de perfil-->
           <p-button icon="pi pi-share-alt" class="icon-action share bt-sharee" (click)="copyProfileLink()" />
         </ng-container>
         <ng-container *ngIf="!isBlocked">
-          <p-button icon="pi pi-envelope" class="icon-action envelope bt-envelope" (click)="startChat()" />
+          <!--btn para iniciar chat-->
+          <p-button icon="pi pi-comment" class="icon-action envelope bt-envelope" (click)="startChat()" />
         </ng-container>
       </div>
       <div>

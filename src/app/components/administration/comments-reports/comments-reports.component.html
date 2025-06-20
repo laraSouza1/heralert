@@ -1,1 +1,224 @@
-<p>comments-reports works!</p>
+<div class="container px-4">
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
+
+  <!--título-->
+  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+    <div class="flex mr-2 w-6">Denúncias de comentários</div>
+  </div>
+
+  <!--pesquisa-->
+  <div class="line my-3 pt-3">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+      <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
+    </p-iconfield>
+  </div>
+
+  <div class="table-container">
+
+    <!--loading-->
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <p-tabView [(activeIndex)]="selectedTabIndex" (onChange)="onTabChange($event)">
+
+      <!--tabela aba 1: em avalicão-->
+      <p-tabPanel header="Em avaliação">
+        <p-message severity="info">
+          Atualize o estado das denúncias com cuidado. Caso erre, poderá voltar a atualizar o estado da denúncia
+          específica nas abas "não válidas" ou "válidas".
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports">
+          <table class="mt-2 w-full evaluation-table" *ngIf="!isLoading && reports.length > 0">
+            <thead>
+              <tr>
+                <th>Ver post</th>
+                <th>Data Denúncia</th>
+                <th>Usuária</th>
+                <th>Comentário</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Att. Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToPostDetail(report.comment_post_id, report.post_title, $event)">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td class="dn">
+                  {{ report.report_created_at | date: 'dd-MM-yyyy' }}
+                </td>
+                <td class="dn" (click)="goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  {{ report.reported_username }}
+                </td>
+                <td>
+                  <span class="comment-text-preview">{{ report.comment_text | slice: 0:50 }}<ng-container
+                      *ngIf="report.comment_text.length > 50">...</ng-container></span>
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn" (click)="$event.stopPropagation(); openStatusDialog(report)">
+                  <i class="pi pi-pencil"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noReports>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+
+      <!--tabela aba 2: não válidas-->
+      <p-tabPanel header="Não válidas">
+        <p-message severity="warn">
+          Denúncias não válidas podem ser limpadas. Isso irá excluir somente a denúncia em específica. Por favor,
+          verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
+          para "em avaliação" ou "válida".
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports1">
+          <table class="mt-2 w-full invalid-table" *ngIf="!isLoading && reports.length > 0">
+            <thead>
+              <tr>
+                <th>Ver post</th>
+                <th>Data Denúncia</th>
+                <th>Usuária</th>
+                <th>Comentário</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Limpar Denún...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToPostDetail(report.comment_post_id, report.post_title, $event)">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td class="dn">
+                  {{ report.report_created_at | date: 'dd-MM-yyyy' }}
+                </td>
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  {{ report.reported_username }}
+                </td>
+                <td>
+                  <span class="comment-text-preview">{{ report.comment_text | slice: 0:50 }}<ng-container
+                      *ngIf="report.comment_text.length > 50">...</ng-container></span>
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn">
+                  <i class="pi pi-pencil"></i>
+                </td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteReport(report)">
+                  <img src="/imgs/broom.png" class="broom" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+
+        <ng-template #noReports1>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+
+      <!--tabela aba 3: válidas-->
+      <p-tabPanel header="Válidas">
+        <p-message severity="error">
+          Comentários com denúncias válidas devem ser excluídos! Isso irá excluir também todas as outras denúncias
+          relacionadas a esse comentário. Por favor, verifique se a denúncia é realmente válida antes de tomar qualquer
+          ação. Caso não seja, atualize o estado para "em avaliação" ou "não válida".
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports2">
+          <table class="mt-2 w-full valid-table" *ngIf="!isLoading && reports.length > 0">
+            <thead>
+              <tr>
+                <th>Ver post</th>
+                <th>Data Denúncia</th>
+                <th>Usuária</th>
+                <th>Comentário</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Deletar Comentário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td
+                  (click)="$event.stopPropagation(); goToPostDetail(report.comment_post_id, report.post_title, $event)"
+                  class="dn">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
+                <td
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)"
+                  class="dn">
+                  {{ report.reported_username }}
+                </td>
+                <td>
+                  <span class="comment-text-preview">{{ report.comment_text | slice: 0:50 }}<ng-container
+                      *ngIf="report.comment_text.length > 50">...</ng-container></span>
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn">
+                  <i class="pi pi-pencil"></i>
+                </td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteComment(report)">
+                  <i class="pi pi-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+
+        <ng-template #noReports2>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+    </p-tabView>
+
+    <!--paginação-->
+    <p-paginator [rows]="limit" [totalRecords]="totalReports" [first]="first"
+      (onPageChange)="onPageChange($event)"></p-paginator>
+  </div>
+</div>
+
+<!--abre modal de atualizar estado da denúncia-->
+<p-dialog [(visible)]="displayStatusDialog" modal [header]="'Atualizar estado denúncia de comentário'" [closable]="false" [style]="{ width: '50vw' }">
+
+  <!--componente com o form-->
+  <app-status-comment [report]="selectedReport" (statusUpdated)="updateReportStatus($event)"
+    (dialogClosed)="closeStatusDialog()" #statusCommentRef></app-status-comment>
+
+  <!--btn cancelar e atualizar-->
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeStatusDialog()"></p-button>
+    <p-button label="Atualizar" class="bt-post" pRipple (click)="submitStatusUpdateFromChild()"
+      [disabled]="!statusCommentRef?.FormValid()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!--abre modal de detalhes-->
+<p-dialog [(visible)]="displayReportDetailDialog" modal [header]="'Ver detalhes da denúncia de comentário'" [closable]="true" [style]="{ width: '50vw' }">
+  <app-see-comment-report-detail [report]="selectedReport"></app-see-comment-report-detail>
+</p-dialog>

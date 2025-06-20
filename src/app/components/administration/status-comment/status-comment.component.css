@@ -53,7 +53,7 @@ a {
   color: #FF6B6B;
 }
 
-/*scrollbar --------------------------------*/
+/*scrollbar ---------------------------------*/
 ::ng-deep ::-webkit-scrollbar {
   width: 16px;
   background-color: rgb(224, 224, 224);

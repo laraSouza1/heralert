@@ -35,7 +35,7 @@ export class PostsReportsComponent implements OnInit {
   searchTerm = '';
   page = 1;
   first = 0;
-  limit = 9;
+  limit = 6;
   isLoading = false;
   reports: any[] = [];
   totalReports = 0;
@@ -127,9 +127,9 @@ export class PostsReportsComponent implements OnInit {
       case 'em_avaliacao':
         return 'Em avaliação';
       case 'nao_justificado':
-        return 'Não justificada';
+        return 'Não válida';
       case 'justificado':
-        return 'Justificada';
+        return 'Válida';
       default:
         return status;
     }
@@ -143,7 +143,14 @@ export class PostsReportsComponent implements OnInit {
   //handle para delete do post + denúncias relacionadas
   handleDeletePost(report: any) {
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir a postagem "${report.post_title}"?<br>Isso também irá excluir todas as denuncias referentes a esse post!`,
+      message: `Tem certeza que deseja excluir a postagem "${report.post_title}"?
+      <br><br>
+      <br><strong>Data da denúncia:</strong> ${report.report_created_at}
+      <br><strong>Usuária:</strong> ${report.reported_username}
+      <br><strong>Motivo da denúncia:</strong> ${report.report_reason}
+      <br><br><strong>Estado atual da denúncia:</strong> ${report.report_status}
+      <br><strong>Motivo do estado:</strong> ${report.status_reason_text}
+      <br><br>Isso também irá excluir todas as denuncias referentes a esse post!`,
       header: 'Excluir postagem',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Excluir',
@@ -215,19 +222,22 @@ export class PostsReportsComponent implements OnInit {
     });
   }
 
+  //para mudança de página
   onPageChange(event: any): void {
     this.page = Math.floor(event.first / this.limit) + 1; //calcula a nova página
     this.first = event.first; //atualiza o índice do primeiro item
     this.loadReports();
   }
 
+  //para navegar a postagem
   goToPostDetail(postId: number, postTitle: string, event: MouseEvent): void {
     event.stopPropagation();
-    const slugTitle = this.slugify(postTitle); //cCria um "slug" do título
+    const slugTitle = this.slugify(postTitle); //cria um "slug" do título
     const postUrl = this.router.createUrlTree([`/view-post/${postId}-${slugTitle}`]).toString(); //constrói a url do post
     window.open(postUrl, '_blank'); //abre numa nova aba
   }
 
+  //para navegar ao perfil
   goToProfile(userId: number, username: string, event: MouseEvent): void {
     event.stopPropagation();
     const profileUrl = this.router.createUrlTree(['/profile-view', username]).toString(); //constrói a url do perfil

@@ -1,30 +1,32 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
-import { ApiResponse } from '../../shared/models/ApiResponse';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-see-post-report-detail',
+  selector: 'app-see-user-report',
   imports: [
     CommonModule, NgIf
   ],
-  templateUrl: './see-post-report-detail.component.html',
-  styleUrl: './see-post-report-detail.component.css'
+  templateUrl: './see-user-report.component.html',
+  styleUrl: './see-user-report.component.css'
 })
-export class SeePostReportDetailComponent {
+export class SeeUserReportComponent {
 
   @Input() report: any;
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor(private router: Router) { }
 
-  //detecta mudanças na propriedade report e mostra o valor atual
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['report'] && changes['report'].currentValue) {
-      console.log('Denúncia recebida:', this.report);
+  //converte o role para texto
+  getRoleName(role: number): string {
+    switch (role) {
+      case 2:
+        return 'Criadora';
+      case 1:
+        return 'Administradora';
+      case 0:
+        return 'Usuária';
+      default:
+        return 'Desconhecido';
     }
   }
 
@@ -45,9 +47,10 @@ export class SeePostReportDetailComponent {
       .replace(/(^-|-$)/g, '');
   }
 
-  //navega para a página de perfil do usuário em uma nova aba
+  //navega para o perfil numa nova aba
   goToProfile(userId: number, username: string): void {
     const profileUrl = this.router.createUrlTree(['/profile-view', username]).toString();
     window.open(profileUrl, '_blank');
   }
+
 }

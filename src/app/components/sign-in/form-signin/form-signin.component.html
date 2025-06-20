@@ -13,6 +13,7 @@
   <!--mensagens de erro para o campo de email-->
   <p-message *ngIf="emailError" severity="error" variant="simple" size="small">E-mail inválido.</p-message>
   <p-message *ngIf="emailAlreadyUsed && !emailError" severity="error" variant="simple" size="small">E-mail já em uso.</p-message>
+  <p-message *ngIf="emailBannedError" severity="error" variant="simple" size="small">A usuária associada a esse e-mail foi banida por receber três ou mais denúncias válidas em seu perfil.</p-message>
 
   <!--campo de nome-->
   <p-iconfield class="mt-4 mb-2">

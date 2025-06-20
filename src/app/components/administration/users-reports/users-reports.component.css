@@ -1,0 +1,229 @@
+/*container do componente*/
+.container {
+  width: 100%;
+}
+
+.h-tag {
+  font-size: 24px;
+  border-left: 2px solid #ff6b6b;
+  padding-left: 10px;
+}
+
+.line {
+  border-top: 1px solid #e2e2e2;
+}
+
+/*formatação tabela ------------------------------------------------------*/
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+td {
+  border-bottom: 1px solid #dbdbdb;
+  border-left: none;
+  border-right: 1px solid #dbdbdb;
+  padding: 10px;
+  text-align: center;
+  color: #616161;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+
+/*remove bordas esquerda e direita das tabelas -------------------------------*/
+.evaluation-table td:last-child,
+.invalid-table td:last-child,
+.valid-table td:last-child {
+  border-right: none;
+}
+
+.evaluation-table td:first-child,
+.invalid-table td:first-child,
+.valid-table td:first-child {
+  border-left: none;
+}
+
+tr.clickable-row {
+  cursor: pointer;
+}
+
+table tbody tr:nth-child(even):hover,
+table tbody tr:nth-child(odd):hover {
+  background-color: #ff909025;
+}
+
+/*hover do td*/
+.dn:hover {
+  background-color: #ff909040;
+}
+
+th {
+  color: rgb(255, 255, 255);
+  background-color: #ff9090;
+  font-weight: 500;
+  padding: 6px;
+  font-size: 14px;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.table-container {
+  position: relative;
+}
+
+/*largura das colunas das 3 tabelas ------------------------------------------*/
+
+.evaluation-table th:nth-child(2),
+.evaluation-table td:nth-child(2),
+.evaluation-table th:nth-child(4),
+.evaluation-table td:nth-child(4),
+.evaluation-table th:nth-child(5),
+.evaluation-table td:nth-child(5),
+.evaluation-table th:nth-child(6),
+.evaluation-table td:nth-child(6) {
+  width: 13%;
+}
+
+.evaluation-table th:nth-child(3),
+.evaluation-table td:nth-child(3) {
+  width: 20%;
+}
+
+.evaluation-table th:nth-child(7),
+.evaluation-table td:nth-child(7),
+.valid-table th:nth-child(7),
+.valid-table td:nth-child(7),
+.invalid-table th:nth-child(7),
+.invalid-table th:nth-child(10),
+.invalid-table td:nth-child(7) {
+  width: 8%;
+}
+
+.invalid-table th:nth-child(1),
+.invalid-table td:nth-child(1),
+.invalid-table th:nth-child(8),
+.invalid-table td:nth-child(8),
+.valid-table th:nth-child(1),
+.valid-table td:nth-child(1),
+.valid-table th:nth-child(8),
+.valid-table td:nth-child(8),
+.evaluation-table th:nth-child(1),
+.evaluation-table td:nth-child(1) {
+  width: 8%;
+}
+
+.invalid-table th:nth-child(2),
+.invalid-table td:nth-child(2),
+.invalid-table th:nth-child(4),
+.invalid-table td:nth-child(4),
+.invalid-table th:nth-child(5),
+.invalid-table td:nth-child(5),
+.invalid-table th:nth-child(5),
+.invalid-table td:nth-child(5),
+.valid-table th:nth-child(5),
+.valid-table td:nth-child(5) {
+  width: 12%;
+}
+
+.invalid-table th:nth-child(3),
+.invalid-table td:nth-child(3),
+.invalid-table th:nth-child(6),
+.invalid-table td:nth-child(6) {
+  width: 18%;
+}
+
+.valid-table th:nth-child(2),
+.valid-table td:nth-child(2),
+.valid-table th:nth-child(4),
+.valid-table td:nth-child(4) {
+  width: 10%;
+}
+
+.valid-table th:nth-child(3),
+.valid-table td:nth-child(3),
+.valid-table th:nth-child(6),
+.valid-table td:nth-child(6) {
+  width: 16%;
+}
+
+.valid-table th:nth-child(9),
+.valid-table td:nth-child(9),
+.valid-table th:nth-child(10),
+.valid-table td:nth-child(10),
+.invalid-table th:nth-child(9),
+.invalid-table td:nth-child(9),
+.evaluation-table th:nth-child(8),
+.evaluation-table td:nth-child(8) {
+  width: 8%;
+}
+
+/*cor das linhas da tabela (branca e cinza) ----------------------------------*/
+table tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/*btns confirmação de cancelar/exluir denuncias --------------------------------------*/
+::ng-deep .my-delete-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-delete-button:hover {
+  background-color: #a72734 !important;
+}
+
+::ng-deep .my-cancel-button {
+  background-color: #d4d4d4 !important;
+  color: rgb(90, 90, 90) !important;
+  border: none !important;
+  width: 100px !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .my-cancel-button:hover {
+  background-color: #b8b8b8 !important;
+}
+
+::ng-deep .trash .pi-trash:before {
+  color: #dc3545 !important;
+}
+
+/*btns primng dos modais: cancelar e atualizar ----------------------------------*/
+::ng-deep .bt-post .p-button {
+  width: 100px !important;
+  font-size: 14px !important;
+  background-color: #FF6B6B !important;
+  color: white !important;
+  border: none !important;
+}
+
+::ng-deep .bt-post .p-button:not(:disabled):hover {
+  background-color: #F94C4C !important;
+}
+
+/*btns cancelar*/
+::ng-deep .bt-post2 .p-button {
+  width: 100px !important;
+  font-size: 14px !important;
+  border: none !important;
+  background-color: #c2c2c2 !important;
+  color: #3b3b3b !important;
+}
+
+::ng-deep .bt-post2 .p-button:not(:disabled):hover {
+  background-color: #aaaaaa !important;
+}
+
+/*para caso não haja dados nas tabelas ---------------------------*/
+.noReports {
+  color: #616161;
+}

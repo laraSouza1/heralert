@@ -1,11 +1,14 @@
 <div class="container">
   <div class="line-fy"></div>
 
+  <!--menu lateral + perfil lateral fixo-->
   <app-left-side class="sidebar left"></app-left-side>
 
+  <!--conteúdo da página que muda-->
   <div class="content pt-4">
-    <router-outlet></router-outlet>
+    <router-outlet></router-outlet> 
   </div>
 
+  <!--chat lateral fixo-->
   <app-right-side class="sidebar right"></app-right-side>
 </div>

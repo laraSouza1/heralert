@@ -91,37 +91,51 @@ export class SingInComponent implements OnInit {
 
   //vai inicializar o cadastro (sem que vá para a bd) e envia o email
   async initiateRegistrationAndSendEmail() {
-    if (this.isSubmitting || !this.formData) {
-      return;
-    }
+  if (this.isSubmitting || !this.formData) {
+    return;
+  }
 
-    this.isSubmitting = true;
+  this.isSubmitting = true;
 
-    //inicia cadasttro e envia email
-    this.http.post("http://localhost:8085/api/initiate-registration", this.formData)
-      .subscribe({
-        next: (response: any) => {
-          if (response.status) {
-            console.log('Iniciação de cadastro bem-sucedida!', response.message);
-            this.userEmailToVerify = response.email; //pega o email inserido no form para enviar o cod
-            this.activeStep = 1;
-            this.cdr.detectChanges();
-            this.messageService.add({ severity: 'info', summary: 'Código enviado para seu e-mail!'});
+  //inicia cadasttro e envia email
+  this.http.post("http://localhost:8085/api/initiate-registration", this.formData)
+    .subscribe({
+      next: (response: any) => {
+        if (response.status) {
+          console.log('Iniciação de cadastro bem-sucedida!', response.message);
+          this.userEmailToVerify = response.email; //pega o email inserido no form para enviar o cod
+          this.activeStep = 1;
+          this.cdr.detectChanges();
+          this.messageService.add({ severity: 'info', summary: 'Código enviado para seu e-mail!'});
+        } else {
+          console.error(response.message);
+          //trata mensagem de email banido
+          if (response.field === 'email' && response.message.includes('banida')) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Registro Negado',
+              detail: response.message, // Mensagem de banimento do backend
+              life: 5000
+            });
+            this.formSignin.email = '';
+            this.formSignin.emailBannedError = true;
+            this.formSignin.onValidationChange();
+            this.activeStep = 0; //garante que volta para o primeiro passo
           } else {
-            console.error(response.message);
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: response.message });
           }
-        },
-        error: (error) => {
-          console.error('Erro ao iniciar cadastro:', error);
-          this.messageService.add({ severity: 'error', summary: 'Erro ao tentar iniciar cadastro' });
-          this.isSubmitting = false;
-        },
-        complete: () => {
-          this.isSubmitting = false;
         }
-      });
-  }
+      },
+      error: (error) => {
+        console.error('Erro ao iniciar cadastro:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro ao tentar iniciar cadastro' });
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
+}
 
   //quando enviar o codigo
   async onSubmitVerification(verificationCode: string) {

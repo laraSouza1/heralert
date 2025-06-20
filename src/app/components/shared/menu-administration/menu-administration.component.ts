@@ -27,13 +27,8 @@ export class MenuAdministrationComponent {
           },
           {
             label: 'Usuárias a banir',
-            icon: 'pi pi-flag',
-            command: () => this.navigateToUsersToBan(),
-          },
-          {
-            label: 'Usuárias banidas',
             icon: 'pi pi-ban',
-            command: () => this.navigateToBannnedUsers(),
+            command: () => this.navigateToUsersToBan(),
           },
         ]
       },
@@ -42,7 +37,7 @@ export class MenuAdministrationComponent {
         items: [
           {
             label: 'Denúncias de usuárias',
-            icon: 'pi pi-users',
+            icon: 'pi pi-flag',
             command: () => this.navigateToUsersReports(),
           },
           {
@@ -87,10 +82,6 @@ export class MenuAdministrationComponent {
 
   navigateToTagsList() {
     this.router.navigate(['/tags-administration']);
-  }
-
-  navigateToBannnedUsers() {
-    this.router.navigate(['/banned-users-list']);
   }
 
   navigateToCommentsReports() {

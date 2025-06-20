@@ -25,7 +25,6 @@ import { TagsAdministrationComponent } from './components/administration/tags-ad
 import { UsersReportsComponent } from './components/administration/users-reports/users-reports.component';
 import { PostsReportsComponent } from './components/administration/posts-reports/posts-reports.component';
 import { CommentsReportsComponent } from './components/administration/comments-reports/comments-reports.component';
-import { BannedUsersListComponent } from './components/administration/banned-users-list/banned-users-list.component';
 import { UsersToBanListComponent } from './components/administration/users-to-ban-list/users-to-ban-list.component';
 
 //rotas acessíveis ao usuário
@@ -38,7 +37,7 @@ export const routes: Routes = [
   { path: 'change-password-request', component: EmailToChangepassComponent },
   { path: 'change-password/:userId/:token', component: ChangePasswordComponent },
 
-  //rotas com LeftSideComponent/RightSideComponent (usam layout com perfil e chat)
+  //rotas com LeftSideComponent/RightSideComponent (usam layout com perfil/menu lateral e chat)
   {
     path: '',
     component: MainLayoutComponent,
@@ -69,7 +68,6 @@ export const routes: Routes = [
       { path: 'users-reports', component: UsersReportsComponent },
       { path: 'posts-reports', component: PostsReportsComponent },
       { path: 'comments-reports', component: CommentsReportsComponent },
-      { path: 'banned-users-list', component: BannedUsersListComponent },
       { path: 'users-to-ban-list', component: UsersToBanListComponent },
     ]
   }

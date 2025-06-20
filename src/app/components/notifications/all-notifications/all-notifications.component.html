@@ -22,7 +22,7 @@
             'pi-heart': n.type === 'like',
             'pi-comment': n.type === 'comment',
             'pi-user-plus': n.type === 'follow',
-            'pi-headphones': n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'
+            'pi-headphones': n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin' || n.type === 'content_deleted_by_report' || n.type === 'report_outcome_user_admin'
           }"></i>
         </td>
 
@@ -44,7 +44,7 @@
           </div>
 
           <!--mensagem da administração-->
-          <div *ngIf="n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'" class="post-title">
+          <div *ngIf="n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin' || n.type === 'content_deleted_by_report' || n.type === 'report_outcome_user_admin'" class="post-title">
             {{ n.message }}
           </div>
 

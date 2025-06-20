@@ -1,1 +1,74 @@
-<p>users-to-ban-list works!</p>
+<div class="container px-6">
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
+
+  <!--título-->
+  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+    <div class="flex mr-2 w-6">Lista de usuárias a banir</div>
+  </div>
+
+  <!--pesquisa-->
+  <div class="line my-3 pt-3">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+      <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
+    </p-iconfield>
+  </div>
+
+  <!--spinner para o loading-->
+  <div class="table-container my-3">
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <!--tabela de users a banir-->
+    <ng-container *ngIf="usersToBan.length > 0; else noUsersToBan">
+      <table class="mt-2 w-full evaluation-table">
+        <thead>
+          <tr>
+            <th>Ver perfil</th>
+            <th>Usuária</th>
+            <th>Cargo</th>
+            <th>Nº Total Denúncias</th>
+            <th>Nº Denúncias Válidas</th>
+            <th>Banir Usuária</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usersToBan" class="clickable-row" (click)="openUserDetailDialog(user, $event)">
+            <td class="dn" (click)="$event.stopPropagation(); goToProfile(user.user_id, user.username, $event)">
+              <i class="pi pi-eye"></i>
+            </td>
+            <td class="dn">
+              {{ user.username }}
+            </td>
+            <td>
+              {{ getRoleName(user.role) }}
+            </td>
+            <td>{{ user.total_user_reports_count }}</td>
+            <td class="dn">{{ user.total_valid_reports }}</td>
+            <td class="dn trash" (click)="$event.stopPropagation(); handleBanUser(user)">
+              <i class="pi pi-ban"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-template #noUsersToBan>
+      <div class="flex justify-content-center align-items-center mt-4">
+        <p class="noReports">Nenhuma usuária atualmente elegível para banimento.</p>
+      </div>
+    </ng-template>
+
+    <!--paginação-->
+    <p-paginator [rows]="limit" [totalRecords]="totalUsers" [first]="first"
+      (onPageChange)="onPageChange($event)"></p-paginator>
+  </div>
+
+  <!--abre modal de detalhes de denuncias válidas-->
+  <p-dialog [(visible)]="displayUserDetailDialog" modal [header]="'Detalhes das Denúncias Válidas'" [closable]="true" [style]="{ width: '50vw' }">
+    <app-user-to-ban-detail [user]="selectedUserForDetail"></app-user-to-ban-detail>
+  </p-dialog>
+
+</div>

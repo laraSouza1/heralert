@@ -52,3 +52,23 @@ a {
 .status {
   color: #FF6B6B;
 }
+
+
+/*scrollbar ----------------------------*/
+::ng-deep ::-webkit-scrollbar {
+  width: 16px;
+  background-color: rgb(224, 224, 224);
+  border-bottom: 6px solid white;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb {
+  background-color: #ffb6b6;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}

@@ -38,19 +38,19 @@ export class AdmsNotificationsComponent {
   filteredNotifications: any[] = [];
 
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.userId = user.id;
-      this.http.get<any>(`http://localhost:8085/api/notifications/${this.userId}`).subscribe(res => {
-        if (res.status) {
-          this.notifications = res.data.filter(
-            (n: any) => n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin'
-          );
-          this.filteredNotifications = [...this.notifications];
-        }
-      });
-    }
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  if (user?.id) {
+    this.userId = user.id;
+    this.http.get<any>(`http://localhost:8085/api/notifications/${this.userId}`).subscribe(res => {
+      if (res.status) {
+        this.notifications = res.data.filter(
+          (n: any) => n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin' || n.type === 'content_deleted_by_report' || n.type === 'report_outcome_user_admin'
+        );
+        this.filteredNotifications = [...this.notifications];
+      }
+    });
   }
+}
 
   //para deletar uma notificação
   handleDeleteNotification(notificationId: number) {
@@ -82,14 +82,18 @@ export class AdmsNotificationsComponent {
   }
 
   getNotificationTitle(type: string): string {
-  switch (type) {
-    case 'post_deleted_admin':
-      return 'Administração: Postagem excluída';
-    case 'report_outcome_admin':
-      return 'Administração: Resultado de sua denúncia';
-    default:
-      return 'Notificação';
+    switch (type) {
+      case 'post_deleted_admin':
+        return 'Administração: Postagem excluída';
+      case 'report_outcome_admin':
+        return 'Administração: Resultado de sua denúncia';
+      case 'content_deleted_by_report':
+        return 'Administração: Comentário excluído';
+      case 'report_outcome_user_admin':
+        return 'Administração: Denúncia de Usuário';
+      default:
+        return 'Notificação';
+    }
   }
-}
 
 }

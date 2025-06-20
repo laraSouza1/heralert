@@ -1,1 +1,219 @@
-<p>users-reports works!</p>
+<div class="container px-4">
+
+  <!--título-->
+  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+    <div class="flex mr-2 w-6">Denúncias de usuárias</div>
+  </div>
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
+
+  <!--pesquisa-->
+  <div class="line my-3 pt-3">
+    <p-iconfield iconPosition="left" class="ml-auto">
+      <p-inputicon><i class="pi pi-search"></i></p-inputicon>
+      <input pInputText type="text" placeholder="Pesquisar..." (input)="onSearch($event)" class="pesquisa" />
+    </p-iconfield>
+  </div>
+
+  <!--spinner para o loading-->
+  <div class="table-container">
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <!--tabelas-->
+    <p-tabView [(activeIndex)]="selectedTabIndex" (onChange)="onTabChange($event)">
+
+      <!--aba 1: em avaliação-->
+      <p-tabPanel header="Em avaliação">
+        <p-message severity="info">
+          Atualize o estado das denúncias com cuidado. Caso erre, poderá voltar a atualizar o estado da denúncia
+          específica nas abas "não válidas" ou "válidas".
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports">
+          <table class="mt-2 w-full evaluation-table">
+            <thead>
+              <tr>
+                <th>Ver perfil</th>
+                <th>Data Denúncia</th>
+                <th>Usuária Reportada</th>
+                <th>Cargo</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Att. Estado</th>
+                <th>Nº Total Denún...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td class="dn">
+                  {{ report.report_created_at | date: 'dd-MM-yyyy' }}
+                </td>
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  {{ report.reported_username }}
+                </td>
+                <td>
+                  {{ getRoleName(report.reported_user_role) }}
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn" (click)="$event.stopPropagation(); openStatusDialog(report)">
+                  <i class="pi pi-pencil"></i>
+                </td>
+                <td>{{ report.total_user_reports_count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noReports>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+
+      <!--aba 2: não válidas-->
+      <p-tabPanel header="Não válidas">
+        <p-message severity="warn">
+          Denúncias não válidas podem ser limpadas. Isso irá excluir somente a denúncia em específica. Por favor,
+          verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
+          para "em avaliação" ou "válida".
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports1">
+          <table class="mt-2 w-full invalid-table">
+            <thead>
+              <tr>
+                <th>Ver perfil</th>
+                <th>Data Denúncia</th>
+                <th>Usuária Reportada</th>
+                <th>Cargo</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Limpar Denún...</th>
+                <th>Nº Total Denún...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td class="dn">{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
+                <td class="dn"
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)">
+                  {{ report.reported_username }}
+                </td>
+                <td>
+                  {{ getRoleName(report.reported_user_role) }}
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn">
+                  <i class="pi pi-pencil"></i>
+                </td>
+                <td class="trash dn" (click)="$event.stopPropagation(); handleDeleteReport(report)">
+                  <img src="/imgs/broom.png" class="broom" alt="Limpar" />
+                </td>
+                <td>{{ report.total_user_reports_count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noReports1>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+
+      <!--aba 3: válidas-->
+      <p-tabPanel header="Válidas">
+        <p-message severity="error">
+          Denúncias válidas só desaparecerão desta tabela quando a usuária da denúncia for banida.
+          Para uma usuária ser banida, ela precisa ter <strong>três ou mais denúncias válidas</strong>.
+          Para banir uma usuária com três ou mais denúncias válidas, faça essa ação na tabela "usuárias a banir" no menu
+          lateral.
+        </p-message>
+        <ng-container *ngIf="reports.length > 0; else noReports2">
+          <table class="mt-2 w-full valid-table">
+            <thead>
+              <tr>
+                <th>Ver perfil</th>
+                <th>Data Denúncia</th>
+                <th>Usuária Reportada</th>
+                <th>Cargo</th>
+                <th>Motivo Denúncia</th>
+                <th>Estado</th>
+                <th>Motivo Estado</th>
+                <th>Att. Estado</th>
+                <th>Nº Total Denún...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports" class="clickable-row" (click)="openReportDetailDialog(report, $event)">
+                <td
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)"
+                  class="dn">
+                  <i class="pi pi-eye"></i>
+                </td>
+                <td>{{ report.report_created_at | date: 'dd-MM-yyyy' }}</td>
+                <td
+                  (click)="$event.stopPropagation(); goToProfile(report.reported_user_id, report.reported_username, $event)"
+                  class="dn">{{ report.reported_username }}</td>
+                <td>
+                  {{ getRoleName(report.reported_user_role) }}
+                </td>
+                <td class="dn">{{ report.report_reason }}</td>
+                <td class="dn">{{ getReportStatusText(report.report_status) }}</td>
+                <td class="dn">{{ report.status_reason_text }}</td>
+                <td (click)="$event.stopPropagation(); openStatusDialog(report)" class="dn">
+                  <i class="pi pi-pencil"></i>
+                </td>
+                <td>{{ report.total_user_reports_count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noReports2>
+          <div class="flex justify-content-center align-items-center mt-4">
+            <p class="noReports">Ainda não há denúncias!</p>
+          </div>
+        </ng-template>
+      </p-tabPanel>
+    </p-tabView>
+
+    <!--paginação-->
+    <p-paginator [rows]="limit" [totalRecords]="totalReports" [first]="first"
+      (onPageChange)="onPageChange($event)"></p-paginator>
+  </div>
+</div>
+
+<!--modal do form de atualizar estado-->
+<p-dialog [(visible)]="displayStatusDialog" modal [header]="'Atualizar estado denúncia de usuário'" [closable]="false" [style]="{ width: '50vw' }">
+
+  <!--componente com o form-->
+  <app-status-user [report]="selectedReport" (statusUpdated)="updateReportStatus($event)" (dialogClosed)="closeStatusDialog()" #statusUserRef></app-status-user>
+
+  <!--btns cancelar/atualizar-->
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" class="bt-post2" (click)="closeStatusDialog()"></p-button>
+    <p-button label="Atualizar" class="bt-post" pRipple (click)="submitStatusUpdateFromChild()"
+      [disabled]="!statusUserRef?.FormValid()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!--modal com detalhes da denúncia-->
+<p-dialog [(visible)]="displayReportDetailDialog" modal [header]="'Ver detalhes da denúncia de usuário'"
+  [closable]="true" [style]="{ width: '50vw' }">
+  <app-see-user-report [report]="selectedReport"></app-see-user-report>
+</p-dialog>
