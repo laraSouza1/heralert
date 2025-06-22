@@ -17,7 +17,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { SeeUserReportComponent } from '../see-user-report/see-user-report.component';
 import { StatusUserComponent } from '../status-user/status-user.component';
-import { ApiResponse } from '../../shared/models/ApiResponse';
+import { ApiResponse } from '../../../shared/models/ApiResponse';
 
 @Component({
   selector: 'app-users-reports',

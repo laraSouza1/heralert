@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { ApiResponse } from '../../shared/models/ApiResponse';
+import { ApiResponse } from '../../../shared/models/ApiResponse';
 
 @Component({
   selector: 'app-user-to-ban-detail',

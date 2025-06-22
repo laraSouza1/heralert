@@ -9,7 +9,7 @@ import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { ApiResponse } from '../../shared/models/ApiResponse';
+import { ApiResponse } from '../../../shared/models/ApiResponse';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';

@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
-import { ApiResponse } from '../../shared/models/ApiResponse';
+import { ApiResponse } from '../../../shared/models/ApiResponse';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';

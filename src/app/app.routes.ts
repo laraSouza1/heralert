@@ -20,12 +20,12 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { EmailToChangepassComponent } from './components/email-to-changepass/email-to-changepass.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AdministrationLayoutComponent } from './layouts/administration-layout/administration-layout.component';
-import { UsersListComponent } from './components/administration/users-list/users-list.component';
+import { UsersListComponent } from './components/administration/adm-users/users-list/users-list.component';
 import { TagsAdministrationComponent } from './components/administration/tags-administration/tags-administration.component';
-import { UsersReportsComponent } from './components/administration/users-reports/users-reports.component';
-import { PostsReportsComponent } from './components/administration/posts-reports/posts-reports.component';
-import { CommentsReportsComponent } from './components/administration/comments-reports/comments-reports.component';
-import { UsersToBanListComponent } from './components/administration/users-to-ban-list/users-to-ban-list.component';
+import { UsersReportsComponent } from './components/administration/adm-users/users-reports/users-reports.component';
+import { PostsReportsComponent } from './components/administration/adm-posts/posts-reports/posts-reports.component';
+import { CommentsReportsComponent } from './components/administration/adm-comments/comments-reports/comments-reports.component';
+import { UsersToBanListComponent } from './components/administration/adm-users/users-to-ban-list/users-to-ban-list.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
