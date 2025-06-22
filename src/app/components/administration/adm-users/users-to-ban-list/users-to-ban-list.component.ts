@@ -14,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { UserToBanDetailComponent } from '../user-to-ban-detail/user-to-ban-detail.component';
+import { MessageModule } from 'primeng/message';
 
 interface UsersToBanData {
   users: any[];
@@ -26,7 +27,7 @@ interface UsersToBanData {
   providers: [ConfirmationService, MessageService],
   imports: [
     IconFieldModule, InputIconModule, InputTextModule, TableModule, CommonModule, ButtonModule, PaginatorModule,
-    ToastModule, ConfirmDialogModule, DialogModule, UserToBanDetailComponent
+    ToastModule, ConfirmDialogModule, DialogModule, UserToBanDetailComponent, MessageModule
   ],
   templateUrl: './users-to-ban-list.component.html',
   styleUrl: './users-to-ban-list.component.css'
@@ -111,19 +112,51 @@ export class UsersToBanListComponent implements OnInit {
   }
 
   //handle para banir user
-  handleBanUser(user: any): void {
+  handleBanUser(userToBan: any): void {
+    const currentUserRole = this.getCurrentUserRole();
+    const currentUserId = this.getCurrentUserId();
+
+    //previne auto-banimento caso o ID do user atual seja o mesmo para o ban imento
+    if (currentUserId === userToBan.user_id) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Você não pode banir sua própria conta.',
+      });
+      return;
+    }
+
+    //sistema de banimento para adms: nível 1 (adm) podem apenas banir users nível 0 (usuárias).
+    //nível 2 pode banir todos os tipos de user
+    if (currentUserRole <= userToBan.role) {
+      let message = '';
+      if (currentUserRole === 1 && userToBan.role === 1) {
+        message = `Como administradora, você não pode banir outras administradoras.`;
+      } else if (currentUserRole === 1 && userToBan.role === 2) {
+        message = `Como administradora, você não pode banir a criadora.`;
+      } else if (currentUserRole === 0) {
+        message = `Como usuária, você não tem permissão para banir outras usuárias.`;
+      } else {
+        message = `Você não tem permissão para banir esta usuária devido ao seu nível de privilégio.`;
+      }
+
+      this.messageService.add({
+        severity: 'warn',
+        summary: message,
+      });
+      return;
+    }
+
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja banir a usuária "${user.username}"?<br><b><i>Esta ação é irreversível e excluirá todos os seus dados e conteúdo.</i></b>
-      <br><br>Antes de banir, na tabela clique em "Nº Denúncias Válidas" na<br>linha da usuária para conferir todas as denúncias válidas dessa usuária.`,
+      message: `Tem certeza que deseja banir a usuária "${userToBan.username}"?<br><b><i>Esta ação é irreversível e excluirá todos os seus dados e conteúdo.</i></b>
+        <br><br>Antes de banir, na tabela clique em "Nº Denúncias Válidas" na<br>linha da usuária para conferir todas as denúncias válidas dessa usuária.`,
       header: 'Banir Usuária',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Banir',
       rejectLabel: 'Cancelar',
-      //estilização dos btns
       acceptButtonStyleClass: 'my-delete-button',
       rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
-        this.http.put<ApiResponse>(`http://localhost:8085/api/users/${user.user_id}/ban`, {})
+        this.http.put<ApiResponse>(`http://localhost:8085/api/users/${userToBan.user_id}/ban`, { currentUserRole: currentUserRole, currentUserId: currentUserId }) //para o user ID atual para o back
           .subscribe({
             next: (res: ApiResponse) => {
               if (res.status) {
@@ -139,6 +172,26 @@ export class UsersToBanListComponent implements OnInit {
           });
       }
     });
+  }
+
+  //busca o role do user atual pelo localstorage
+  private getCurrentUserRole(): number {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const user = JSON.parse(userString);
+      return user.role || 0;
+    }
+    return 0;
+  }
+
+  //para pegar o ID user atual do localstorage
+  private getCurrentUserId(): number | null {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const user = JSON.parse(userString);
+      return user.id || null;
+    }
+    return null;
   }
 
   //para mudança de página
