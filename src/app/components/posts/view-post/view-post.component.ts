@@ -216,7 +216,7 @@ export class ViewPostComponent implements OnInit {
 
     //ordenar comentários principais e respostas por data
     const sortComments = (list: any[]) => {
-      list.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     };
 
     sortComments(roots);
@@ -240,11 +240,29 @@ export class ViewPostComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Sim',
       rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'my-delete-button',
+      rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
         this.http.delete(`http://localhost:8085/api/comments/${commentId}`).subscribe({
           next: () => {
-            this.comments = this.comments.filter(c => c.id !== commentId);
-            this.buildCommentTree();
+            const deletedParentComment = this.comments.find(c => c.id === commentId);
+            const idsToDelete: number[] = [commentId];
+
+            if (deletedParentComment) {
+              const collectChildIds = (comment: any) => {
+                if (comment.children) {
+                  comment.children.forEach((child: any) => {
+                    idsToDelete.push(child.id);
+                    collectChildIds(child);
+                  });
+                }
+              };
+              
+              this.fetchCommentsForPost();
+            } else {
+              this.comments = this.comments.filter(c => c.id !== commentId);
+              this.buildCommentTree();
+            }
             this.messageService.add({ severity: 'success', summary: 'Comentário excluído!' });
           },
           error: () => {
@@ -253,6 +271,21 @@ export class ViewPostComponent implements OnInit {
         });
       }
     });
+  }
+
+  //busca os comentários do post
+  fetchCommentsForPost() {
+    const postId = this.route.snapshot.paramMap.get('idSlug')?.split('-')[0];
+    if (postId) {
+      this.http.get<any>(`http://localhost:8085/api/posts/${postId}`, {
+        params: { userId: this.currentUserId }
+      }).subscribe(response => {
+        if (response.status) {
+          this.comments = response.data.comments;
+          this.buildCommentTree(); //reconstói a arvore
+        }
+      });
+    }
   }
 
 }
