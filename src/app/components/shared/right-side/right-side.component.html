@@ -30,13 +30,13 @@
         <tr (click)="onRowClick(user)" [pContextMenuRow]="user" class="click">
 
           <!--foto usuário-->
-          <td>
+          <td class="w-2">
             <img [src]="user.profile_pic || '/imgs/ai.png'" class="user-image" />
           </td>
 
           <!--nome e nome de usuário-->
           <td>
-            <div class="flex flex-column">
+            <div class="flex flex-column justify-content-start">
               <div class="flex flex-row gap-1">
                 <div class="name2 flex">{{ user.name | truncateWords: 15 }}</div>
                 
@@ -59,7 +59,7 @@
           </td>
 
           <!--para excluir/deletar chat-->
-          <td>
+          <td class="w-1">
             <div>
               <i class="pi pi-ellipsis-v cursor-pointer"
                 (click)="toggleOptions(user.userId); $event.stopPropagation()"></i>

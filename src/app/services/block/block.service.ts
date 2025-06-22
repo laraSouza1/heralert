@@ -19,8 +19,7 @@ export class BlockService {
   constructor(private http: HttpClient) { }
 
   refreshBlockedUsers(userId: number): Promise<void> {
-
-    if (this.blocksLoaded) return Promise.resolve(); //se já carregou, resolve imediatamente
+    if (this.blocksLoaded) return Promise.resolve();
 
     return new Promise((resolve, reject) => {
       Promise.all([
@@ -29,12 +28,12 @@ export class BlockService {
         this.http.get<any>(`http://localhost:8085/api/blocks/blockers/${userId}`).toPromise()
       ]).then(([blockedRes, blockerRes]) => {
         if (blockedRes.status) {
-          //para popular e criar nova lista de yser
+          //para popular e criar nova lista de user
           this.blockedUsers = new Set(blockedRes.data.map((u: any) => u.blocked_id));
           this.blockedUsersChanged.next(new Set(this.blockedUsers));
         }
         if (blockerRes.status) {
-          this.usersWhoBlockedMe = new Set(blockerRes.data.map((u: any) => u.blocker_id)); //coloca dados lista de quem bloqueou
+          this.usersWhoBlockedMe = new Set(blockerRes.data.map((u: any) => u.blocker_id));
         }
 
         this.allBlockedChanged.next({
@@ -72,6 +71,14 @@ export class BlockService {
       blocked_id: blockedId
     }).pipe(
       tap(() => {
+        //deixar de seguir o bloqueador pelo usuário bloqueado
+        this.http.delete('http://localhost:8085/api/follows', {
+          params: { follower_id: blockedId.toString(), following_id: blockerId.toString() }
+        }).subscribe(
+          () => console.log('Blocked user unfollowed blocker successfully'),
+          error => console.error('Error in blocked user unfollowing blocker:', error)
+        );
+
         this.clear();
         this.notifyBlockAction();
       })

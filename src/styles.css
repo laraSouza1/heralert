@@ -369,7 +369,7 @@ body::-webkit-scrollbar {
   height: 18px;
   width: 18px;
   border-radius: 100%;
-  background-color: white;
+  background-color: transparent;
   display: flex;
   text-align: center;
   align-items: center;

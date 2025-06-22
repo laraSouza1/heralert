@@ -93,7 +93,6 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       }
     ];
   }
-
  
   closeUserReportingModal() {
     this.showUserReportModal = false;
