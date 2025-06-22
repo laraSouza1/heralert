@@ -16,7 +16,17 @@
         <img [src]="user.profile_pic || '/imgs/ai.png'" class="img-profile" />
       </td>
       <td class="pl-2">
-        <div class="user">{{ user.username }}</div>
+        <div class="flex gap-2">
+          <div class="user">{{ user.username }}</div>
+
+          <!--icon criadora (role 2) ou administradora (role 1)-->
+          <div *ngIf="user.role === 2" class="crown-creator crown1" pTooltip="Criadora" tooltipPosition="right">
+            <div><i class="pi pi-crown"></i></div>
+          </div>
+          <div *ngIf="user.role === 1" class="crown-adm crown2" pTooltip="Administradora" tooltipPosition="right">
+            <div><i class="pi pi-crown"></i></div>
+          </div>
+        </div>
         <div class="nome">{{ user.name }}</div>
       </td>
       <td class="text-right pr-2">

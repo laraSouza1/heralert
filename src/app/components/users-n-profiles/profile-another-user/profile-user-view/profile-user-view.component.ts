@@ -14,13 +14,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ChatService } from '../../../../services/chat/chat.service';
 import { ReportingUserComponent } from '../../../reportingForms/reporting-user/reporting-user.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-profile-user-view',
   providers: [MessageService, ConfirmationService],
   imports: [
     ButtonModule, DialogModule, MenuModule, ToastModule, FollowButtonComponent, NgIf, CommonModule,
-    ConfirmDialogModule, ReportingUserComponent
+    ConfirmDialogModule, ReportingUserComponent, TooltipModule
   ],
   templateUrl: './profile-user-view.component.html',
   styleUrls: ['./profile-user-view.component.css']

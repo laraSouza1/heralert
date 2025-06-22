@@ -15,7 +15,7 @@
 
 /*sidebars fixos*/
 .sidebar {
-  width: 350px;
+  width: 320px;
   position: fixed;
   top: 0;
   height: 100vh;
@@ -31,7 +31,7 @@
 /*conteúdo central*/
 .content {
   flex: 1;
-  margin-left: 350px !important;
+  margin-left: 320px !important;
   margin-right: 0px;
   background-color: #ffffff;
   min-height: 100vh;

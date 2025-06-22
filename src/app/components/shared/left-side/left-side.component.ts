@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -9,17 +9,21 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { FollowService } from '../../../services/follow/follow.service';
 import { BlockService } from '../../../services/block/block.service';
-import { HttpClient } from '@angular/common/http';
 import { NotificationService } from '../../../services/notification/notification.service';
+import { TooltipModule } from 'primeng/tooltip';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-left-side',
   providers: [MessageService, ConfirmationService],
-  imports: [ImageModule, ButtonModule, MenuModule, ToastModule, DialogModule, ConfirmDialogModule],
+  imports: [
+    ImageModule, ButtonModule, MenuModule, ToastModule, DialogModule, ConfirmDialogModule, TooltipModule,
+    CommonModule, NgIf
+  ],
   templateUrl: './left-side.component.html',
   styleUrls: ['./left-side.component.css']
 })
-export class LeftSideComponent {
+export class LeftSideComponent implements OnInit {
 
   items: any[] | undefined;
   user: any;
@@ -31,26 +35,43 @@ export class LeftSideComponent {
     private confirmationService: ConfirmationService,
     private followService: FollowService,
     private blockService: BlockService,
-    private http: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit() {
+    this.loadUser();
 
     //service de notification para fazer a contagem de notificações
-    if (!this.notificationService) return;
     this.notificationService.totalNotifications$.subscribe(count => {
       this.totalNotifications = count;
     });
 
-    this.loadUser();
     window.addEventListener('user-updated', () => {
       this.loadUser(); //recarrega caso perfil seja editado
-    }); //chama dados do user
+      this.updateMenuItems(); 
+    });
 
-    //itens do menu
+    this.updateMenuItems();
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user?.id) {
+      this.notificationService.loadNotificationCount(user.id);
+    }
+  }
+
+  //fetch nas infos do user do local storage
+  loadUser() {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    } else {
+      this.user = null;
+    }
+  }
+
+  //itens de menu baseados no role
+  updateMenuItems() {
     const baseItems = [
-      //itens visíveis a users nível/role 0 (usuárias)
       {
         label: 'Início',
         icon: 'pi pi-home',
@@ -68,7 +89,6 @@ export class LeftSideComponent {
       },
     ];
 
-    //condição para visualização do item de menu "administração" caso o nível/role seja 1 ou 2 (adm e criadora)
     if (this.user && (this.user.role === 1 || this.user.role === 2)) {
       this.items = [
         ...baseItems,
@@ -80,15 +100,6 @@ export class LeftSideComponent {
       ];
     } else {
       this.items = baseItems;
-    }
-
-    this.notificationService.totalNotifications$.subscribe(count => {
-      this.totalNotifications = count;
-    });
-
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user?.id) {
-      this.notificationService.loadNotificationCount(user.id);
     }
   }
 
@@ -134,13 +145,5 @@ export class LeftSideComponent {
         this.navigateToWelcome();
       }
     });
-  }
-
-  //chama dados do user
-  loadUser() {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      this.user = JSON.parse(storedUser);
-    }
   }
 }

@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FollowingUserViewComponent } from '../../../followers/following-user-view/following-user-view.component';
 import { FollowersUserViewComponent } from '../../../followers/followers-user-view/followers-user-view.component';
 import { BlockService } from '../../../../services/block/block.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-profile-view',
@@ -24,7 +25,7 @@ import { BlockService } from '../../../../services/block/block.service';
     DialogModule, ConfirmDialogModule, ToastModule,
     ButtonModule, MenubarModule, CommonModule, ProfileUserViewComponent, PostComponent,
     IconFieldModule, InputIconModule, InputTextModule, FollowingUserViewComponent,
-    FollowersUserViewComponent
+    FollowersUserViewComponent, TooltipModule
   ],
   templateUrl: './profile-view.component.html',
   styleUrl: './profile-view.component.css'

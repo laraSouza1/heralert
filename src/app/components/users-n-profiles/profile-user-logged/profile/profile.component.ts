@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -20,6 +20,7 @@ import { FollowersUserComponent } from '../../../followers/followers-user/follow
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
   providers: [MessageService, ConfirmationService],
   imports: [
     DialogModule, ConfirmDialogModule, ToastModule, CreatePostComponent,
@@ -29,7 +30,7 @@ import { FollowersUserComponent } from '../../../followers/followers-user/follow
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
   @ViewChild(CreatePostComponent) createPostComponent!: CreatePostComponent;
   @ViewChild(FollowingUserComponent) followingUserComponent?: FollowingUserComponent;

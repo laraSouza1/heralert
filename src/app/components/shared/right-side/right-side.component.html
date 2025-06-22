@@ -37,7 +37,17 @@
           <!--nome e nome de usuário-->
           <td>
             <div class="flex flex-column">
-              <div class="name2 flex">{{ user.name | truncateWords: 15 }}</div>
+              <div class="flex flex-row gap-1">
+                <div class="name2 flex">{{ user.name | truncateWords: 15 }}</div>
+                
+                <!--icon criadora (role 2) ou administradora (role 1)-->
+                <div *ngIf="user.role === 2" class="crown-creator crown1" pTooltip="Criadora" tooltipPosition="right">
+                  <div><i class="pi pi-crown"></i></div>
+                </div>
+                <div *ngIf="user.role === 1" class="crown-adm crown2" pTooltip="Administradora" tooltipPosition="right">
+                  <div><i class="pi pi-crown"></i></div>
+                </div>
+              </div>
               <div class="user flex">
                 <div class="edit-at-user"><i class="pi pi-at"></i></div>
                 <div class="username">{{ user.username | truncateWords: 15 }}</div>
@@ -48,7 +58,7 @@
             <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 15 }}</div>
           </td>
 
-           <!--para excluir/deletar chat-->
+          <!--para excluir/deletar chat-->
           <td>
             <div>
               <i class="pi pi-ellipsis-v cursor-pointer"
@@ -85,7 +95,19 @@
         <!--nome e nome de usuário-->
         <div class=" flex align-items-center w-7">
           <div class="flex flex-column">
-            <div *ngIf="expandedUser" class="name flex">{{ expandedUser.name | truncateWords: 15 }}</div>
+            <div class="flex flex-row gap-1">
+              <div class="name flex">{{ expandedUser.name | truncateWords: 15 }}</div>
+              
+              <!--icon criadora (role 2) ou administradora (role 1)-->
+              <div *ngIf="expandedUser.role === 2" class="crown-creator crown3" pTooltip="Criadora"
+                tooltipPosition="right">
+                <div><i class="pi pi-crown"></i></div>
+              </div>
+              <div *ngIf="expandedUser.role === 1" class="crown-adm crown3" pTooltip="Administradora"
+                tooltipPosition="right">
+                <div><i class="pi pi-crown"></i></div>
+              </div>
+            </div>
 
             <div class="user flex">
               <div class="edit-at-user"><i class="pi pi-at"></i></div>
@@ -98,7 +120,8 @@
         <div class=" flex align-items-center w-1" (click)="$event.stopPropagation()">
           <i class="pi pi-ellipsis-v cursor-pointer" (click)="toggleChatHeaderOptions(); $event.stopPropagation()"></i>
           <div *ngIf="showChatHeaderOptions" class="div-btn-delete">
-            <p-button class="delete-chat" (click)="deleteAllMessages(expandedUser!.userId); $event.stopPropagation()" label="Apagar toda a conversa"></p-button>
+            <p-button class="delete-chat" (click)="deleteAllMessages(expandedUser!.userId); $event.stopPropagation()"
+              label="Apagar toda a conversa"></p-button>
           </div>
         </div>
 
@@ -125,7 +148,8 @@
 
                 <!--btn para excluir uma mensagem-->
                 <div *ngIf="message.sender_id === loggedInUserId" class="flex justify-content-end align-items-end">
-                  <p-button icon="pi pi-trash" class="trash-bt trash" (click)="handleDeleteMessage(message.id)"></p-button>
+                  <p-button icon="pi pi-trash" class="trash-bt trash"
+                    (click)="handleDeleteMessage(message.id)"></p-button>
                 </div>
 
                 <!--verifica se é imagem-->
@@ -163,7 +187,8 @@
 
           <!--input para enviar mensagem-->
           <div class="flex">
-            <input type="text" pInputText placeholder="Escrever..." [(ngModel)]="newMessageContent" (keyup.enter)="sendMessage()" class="pesquisa" />
+            <input type="text" pInputText placeholder="Escrever..." [(ngModel)]="newMessageContent"
+              (keyup.enter)="sendMessage()" class="pesquisa" />
           </div>
 
           <!--btn para enviar mensagem-->

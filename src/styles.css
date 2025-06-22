@@ -326,3 +326,53 @@ body::-webkit-scrollbar {
   height: 22px;
   filter: opacity(80%);
 }
+
+/*icons de criador/adm ------------------------------------------*/
+
+.crown1 .pi {
+  color: #f3c52c !important;
+  font-size: 11px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  font-weight: 600 !important;
+}
+
+.crown2 .pi {
+  color: #cf6c33 !important;
+  font-size: 11px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  font-weight: 600 !important;
+}
+
+.crown3 .pi {
+  color: white !important;
+  font-size: 11px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  font-weight: 600 !important;
+}
+
+.crown-creator {
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  background-color: transparent;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.crown-adm {
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  background-color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}

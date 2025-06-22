@@ -13,6 +13,7 @@ import { FollowService } from '../../../services/follow/follow.service';
 
 export interface User {
   id: number;
+  role: number;
   username: string;
   name: string;
   profile_pic?: string;

@@ -18,6 +18,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { BlockService } from '../../../services/block/block.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface ChatUser {
   userId: number;
@@ -26,6 +27,7 @@ interface ChatUser {
   profile_pic?: string;
   lastMessageContent: string;
   lastMessageSenderId?: number;
+  role?: number;
 }
 
 interface Message {
@@ -42,7 +44,7 @@ interface Message {
   imports: [
     TableModule, CommonModule, InputTextModule, TextareaModule, IconFieldModule,
     InputIconModule, CommonModule, NgIf, FormsModule, ButtonModule, TruncateWordsPipe, MenuModule,
-    ToastModule, ConfirmDialogModule, DialogModule
+    ToastModule, ConfirmDialogModule, DialogModule, TooltipModule
   ],
   templateUrl: './right-side.component.html',
   styleUrls: ['./right-side.component.css'],
@@ -91,6 +93,7 @@ export class RightSideComponent implements OnInit {
         this.users = [{
           userId: userToChatWith.id,
           name: userToChatWith.name,
+          role: userToChatWith.role,
           username: userToChatWith.username,
           profile_pic: userToChatWith.profile_pic || '',
           lastMessageContent: 'Novo chat'
@@ -114,7 +117,8 @@ export class RightSideComponent implements OnInit {
         name: userToChatWith.name,
         username: userToChatWith.username,
         profile_pic: userToChatWith.profile_pic || '',
-        lastMessageContent: existingChatUser?.lastMessageContent || 'Novo chat'
+        lastMessageContent: existingChatUser?.lastMessageContent || 'Novo chat',
+        role: userToChatWith.role
       });
     });
 
@@ -148,41 +152,42 @@ export class RightSideComponent implements OnInit {
 
   //carrega a lista de usuários com chats
   loadChatUsers(): void {
-  if (typeof this.loggedInUserId === 'undefined') return;
+    if (typeof this.loggedInUserId === 'undefined') return;
 
-  this.blockService.refreshBlockedUsers(this.loggedInUserId).then(() => {
-    const blockedSet = new Set(this.blockService['blockedUsers']);
-    const blockedBySet = new Set(this.blockService['usersWhoBlockedMe']);
+    this.blockService.refreshBlockedUsers(this.loggedInUserId).then(() => {
+      const blockedSet = new Set(this.blockService['blockedUsers']);
+      const blockedBySet = new Set(this.blockService['usersWhoBlockedMe']);
 
-    this.http.get<any>(`http://localhost:8085/api/chats/${this.loggedInUserId}`).subscribe({
-      next: response => {
-        if (response.status) {
-          //mapeia a resposta para o formato ChatUser
-          this.users = response.data
-            .filter((user: any) =>
-              !blockedSet.has(user.userId) &&
-              !blockedBySet.has(user.userId)
-            )
-            .map((user: any) => ({
-              userId: user.userId,
-              username: user.username,
-              name: user.name,
-              profile_pic: user.profile_pic,
-              lastMessageContent: user.lastMessageContent,
-              lastMessageSenderId: user.lastMessageSenderId
-            }));
 
-          this.originalUsers = [...this.users];
-        } else {
-          console.error(response.message);
+      this.http.get<any>(`http://localhost:8085/api/chats/${this.loggedInUserId}`).subscribe({
+        next: response => {
+          if (response.status) {
+            //mapeia a resposta para o formato ChatUser
+            this.users = response.data
+              .filter((user: any) =>
+                !blockedSet.has(user.userId) &&
+                !blockedBySet.has(user.userId)
+              )
+              .map((user: any) => ({
+                userId: user.userId,
+                username: user.username,
+                name: user.name,
+                profile_pic: user.profile_pic,
+                lastMessageContent: user.lastMessageContent,
+                lastMessageSenderId: user.lastMessageSenderId,
+                role: user.role
+              }));
+            this.originalUsers = [...this.users];
+          } else {
+            console.error(response.message);
+          }
+        },
+        error: error => {
+          console.error(error);
         }
-      },
-      error: error => {
-        console.error(error);
-      }
+      });
     });
-  });
-}
+  }
 
   //filtra usuários por nome ou username
   filterByNameOrUsername(event: Event): void {

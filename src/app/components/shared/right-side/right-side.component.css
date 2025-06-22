@@ -98,6 +98,7 @@
 .message-sent {
   text-align: right !important;
   justify-content: end !important;
+  font-size: 14px !important;
 }
 
 .message-sent p {
@@ -113,6 +114,7 @@
 /*mensagem recebida*/
 .message-received {
   text-align: left !important;
+  font-size: 14px !important;
 }
 
 .message-received p {
@@ -262,14 +264,14 @@
 }
 
 .name2 {
-  color: rgb(104, 104, 104);
+  color: rgb(104, 104, 104) !important;
   font-weight: 500;
   font-size: 16px;
 }
 
 /*username do usuário*/
 .username {
-  color: rgb(173, 69, 69);
+  color: rgb(221, 95, 95);
   font-size: 12px;
   font-weight: 500;
 }

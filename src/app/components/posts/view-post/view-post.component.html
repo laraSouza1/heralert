@@ -51,10 +51,18 @@
                   <img [src]="comment.profile_pic || '/imgs/ai.png'" class="icon-image">
                 </div>
                 <div class="flex user justify-content-start">{{ comment.username }}</div>
-                <div class="flex justify-content-start">
-                  <span *ngIf="comment.user_id === post.user_id" class="badge badge-primary ml-2 criador">
-                    Criador
-                  </span>
+                
+                <!--icon criadora (role 2) ou administradora (role 1)-->
+                <div *ngIf="comment.role === 2" class="flex crown-creator crown1" pTooltip="Criadora"
+                  tooltipPosition="right">
+                  <div><i class="pi pi-crown"></i></div>
+                </div>
+                <div *ngIf="comment.role === 1" class="flex crown-adm crown2" pTooltip="Administradora"
+                  tooltipPosition="right">
+                  <div><i class="pi pi-crown"></i></div>
+                </div>
+                <div class="flex justify-content-start w-3">
+                  <div *ngIf="comment.user_id === post.user_id" class="ml-2 criador">OP</div>
                 </div>
                 <div *ngIf="comment.user_id !== currentUserId"
                   class="w-full flex align-items-center justify-content-end" (click)="$event.stopPropagation()">
@@ -79,8 +87,11 @@
 
               <!--btn/input de responder comentário já existente-->
               <div class="mt-1">
-                <input type="text" pInputText *ngIf="replyToCommentId === comment.id" [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder" class="i-resposta" maxlength="360" />
-                <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer" (click)="startReply(comment)">Responder</a>
+                <input type="text" pInputText *ngIf="replyToCommentId === comment.id"
+                  [(ngModel)]="newCommentMap[comment.id]" (keydown.enter)="addComment()" placeholder="Responder"
+                  class="i-resposta" maxlength="360" />
+                <a *ngIf="replyToCommentId !== comment.id" class="btn-responder cursor-pointer"
+                  (click)="startReply(comment)">Responder</a>
               </div>
             </div>
 
@@ -96,11 +107,14 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="showCommentReportModal" modal [header]="'Denunciar Comentário'" [closable]="false" [style]="{ width: '50vw' }">
-  <app-reporting-comment *ngIf="selectedCommentToReport && post" [comment]="selectedCommentToReport" [post]="post"></app-reporting-comment>
+<p-dialog [(visible)]="showCommentReportModal" modal [header]="'Denunciar Comentário'" [closable]="false"
+  [style]="{ width: '50vw' }">
+  <app-reporting-comment *ngIf="selectedCommentToReport && post" [comment]="selectedCommentToReport"
+    [post]="post"></app-reporting-comment>
 
   <ng-template pTemplate="footer">
     <p-button label="Cancelar" class="bt-post2" (click)="closeReportingCommentModal()"></p-button>
-    <p-button label="Enviar" class="bt-post" pRipple (click)="submitCommentReportForm()" [disabled]="!isCommentReportFormValid()"></p-button>
+    <p-button label="Enviar" class="bt-post" pRipple (click)="submitCommentReportForm()"
+      [disabled]="!isCommentReportFormValid()"></p-button>
   </ng-template>
 </p-dialog>

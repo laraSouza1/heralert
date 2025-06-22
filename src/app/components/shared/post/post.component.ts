@@ -16,6 +16,7 @@ import { FollowService } from '../../../services/follow/follow.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportingPostComponent } from '../../reportingForms/reporting-post/reporting-post.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-post',
@@ -23,7 +24,7 @@ import { ReportingPostComponent } from '../../reportingForms/reporting-post/repo
   providers: [MessageService, ConfirmationService],
   imports: [
     TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule, NgIf,
-    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent
+    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent, TooltipModule
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']

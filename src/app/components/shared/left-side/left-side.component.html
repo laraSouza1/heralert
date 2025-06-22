@@ -13,8 +13,20 @@
       <!--foto de perfil-->
       <img [src]="user?.profile_pic || '/imgs/ai.png'" class="img-profile mb-3">
 
-      <!--nome de usuário-->
-      <p class="name">{{ user?.name }}</p>
+      <div class="flex flex-row gap-2">
+        <div class="flex">
+          <!--nome de usuário-->
+          <p class="name">{{ user?.name }}</p>
+        </div>
+
+        <!--icon criadora (role 2) ou administradora (role 1)-->
+        <div *ngIf="user?.role === 2" class="flex crown-creator crown1" pTooltip="Criadora" tooltipPosition="right">
+          <div><i class="pi pi-crown"></i></div>
+        </div>
+        <div *ngIf="user?.role === 1" class="flex crown-adm crown2" pTooltip="Administradora" tooltipPosition="right">
+          <div><i class="pi pi-crown"></i></div>
+        </div>
+      </div>
     </div>
 
     <!--usuário-->

@@ -11,6 +11,7 @@ import { FollowButtonComponent } from '../../shared/follow-button/follow-button.
 
 export interface User {
   id: number;
+  role: number;
   username: string;
   name: string;
   profile_pic?: string;

@@ -15,14 +15,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 import { ReportingCommentComponent } from '../../reportingForms/reporting-comment/reporting-comment.component';
+import { Tooltip, TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-view-post',
+  standalone: true,
   providers: [MessageService, ConfirmationService],
   imports: [
     PostComponent, CommonModule, IconFieldModule, InputIconModule,
     InputTextModule, ButtonModule, ToastModule, NgIf, MenuModule, FormsModule, InputText, DialogModule,
-    ConfirmDialogModule, MentionPipe, ReportingCommentComponent
+    ConfirmDialogModule, MentionPipe, ReportingCommentComponent, TooltipModule
   ],
   templateUrl: './view-post.component.html',
   styleUrl: './view-post.component.css'

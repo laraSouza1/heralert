@@ -12,6 +12,7 @@ import { FollowingUserComponent } from '../following-user/following-user.compone
 
 export interface User {
   id: number;
+  role: number;
   username: string;
   name: string;
   profile_pic?: string;

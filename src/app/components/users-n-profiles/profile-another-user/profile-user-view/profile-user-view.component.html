@@ -10,6 +10,14 @@
   <div class="flex flex-row align-items-center mt-5 ml-3 gap-3">
     <div class="flex flex-row gap-2 w-9">
       <div class="flex align-items-center justify-content-center user">{{ user?.name }}</div>
+      
+      <!--icon criadora (role 2) ou administradora (role 1)-->
+      <div *ngIf="user?.role === 2" class="crown-creator crown1" pTooltip="Criadora" tooltipPosition="right">
+        <div><i class="pi pi-crown"></i></div>
+      </div>
+      <div *ngIf="user?.role === 1" class="crown-adm crown2" pTooltip="Administradora" tooltipPosition="right">
+        <div><i class="pi pi-crown"></i></div>
+      </div>
       <div>
         <app-follow-button *ngIf="user" [targetUserId]="user.id"></app-follow-button>
       </div>
@@ -61,7 +69,8 @@
 
 </div>
 
-<p-dialog [(visible)]="showUserReportModal" modal [header]="'Denunciar usuário'" [closable]="false" [style]="{ width: '50vw' }">
+<p-dialog [(visible)]="showUserReportModal" modal [header]="'Denunciar usuário'" [closable]="false"
+  [style]="{ width: '50vw' }">
   <app-reporting-user [user]="user"></app-reporting-user> <ng-template pTemplate="footer">
     <p-button label="Cancelar" class="bt-post2" (click)="closeUserReportingModal()"></p-button>
     <p-button label="Enviar" class="bt-post" pRipple (click)="submitUserReportForm()"
