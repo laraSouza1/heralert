@@ -18,18 +18,18 @@
       <div class="spinner"></div>
     </div>
 
-
     <!--tabela exibição users-->
-    <table class="mt-2 w-full" *ngIf="!isLoading">
+    <table class="mt-2 w-full evaluation-table td:last-child" *ngIf="!isLoading">
       <thead>
         <tr>
-          <th style="width: 6%;">Ver Perfil</th>
+          <th>Ver Perfil</th>
           <th>Usuária</th>
-          <th>Nome</th>
-          <th>Registro</th>
+          <th style="width: 15%;">Nome</th>
+          <th style="width: 15%;">Registro</th>
           <th>E-mail</th>
           <th>Cargo</th>
-          <th style="width: 10%;">N.º de Denúncias</th>
+          <th>N.º Total Denúncias</th>
+          <th *ngIf="currentUserRole === 2">Tornar/tirar ADM</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +43,9 @@
           <td>{{ user.email }}</td>
           <td>{{ getRoleName(user.role) }}</td>
           <td class="dn">{{ user.reports_count || 0 }}</td>
+          <td class="dn" *ngIf="currentUserRole === 2" (click)="$event.stopPropagation(); handleRoleChange(user)">
+            <i class="pi pi-crown"></i>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -50,4 +53,6 @@
     <p-paginator [rows]="limit" [totalRecords]="totalUsers" [first]="first" (onPageChange)="onPageChange($event)">
     </p-paginator>
   </div>
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
 </div>

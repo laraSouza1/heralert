@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  width: 100% !important;
 }
 
 .h-tag {
@@ -60,41 +60,10 @@ th {
 table tbody tr:nth-child(even) {
   background-color: #f3f3f3;
 }
-
 table tbody tr:nth-child(odd) {
   background-color: #ffffff;
 }
 
 .table-container {
   position: relative;
-}
-
-/*btns confirmação de cancelar/exluir mensagem*/
-::ng-deep .my-delete-button {
-  background-color: #dc3545 !important;
-  color: white !important;
-  border: none !important;
-  width: 100px !important;
-  font-size: 14px !important;
-}
-
-::ng-deep .my-delete-button:hover {
-  background-color: #a72734 !important;
-}
-
-
-::ng-deep .my-cancel-button {
-  background-color: #d4d4d4 !important;
-  color: rgb(90, 90, 90) !important;
-  border: none !important;
-  width: 100px !important;
-  font-size: 14px !important;
-}
-
-::ng-deep .my-cancel-button:hover {
-  background-color: #b8b8b8 !important;
-}
-
-::ng-deep .trash .pi-trash:before {
-  color: #dc3545 !important;
 }
