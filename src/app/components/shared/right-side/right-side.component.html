@@ -39,7 +39,7 @@
             <div class="flex flex-column justify-content-start">
               <div class="flex flex-row gap-1">
                 <div class="name2 flex">{{ user.name | truncateWords: 15 }}</div>
-                
+
                 <!--icon criadora (role 2) ou administradora (role 1)-->
                 <div *ngIf="user.role === 2" class="crown-creator crown1" pTooltip="Criadora" tooltipPosition="right">
                   <div><i class="pi pi-crown"></i></div>
@@ -56,6 +56,13 @@
 
             <!--última mensagem enviada-->
             <div style="font-size: 12px;">{{ getPreviewWithSender(user) || 'Sem mensagens' | truncateWords: 15 }}</div>
+          </td>
+
+          <!--nº de mensagens não lidas-->
+          <td class="w-1">
+            <div *ngIf="user.unreadCount && user.unreadCount > 0" class="unread-count ml-2">
+              <span class="p-tag p-tag-rounded p-tag-danger">{{ user.unreadCount }}</span>
+            </div>
           </td>
 
           <!--para excluir/deletar chat-->
@@ -97,7 +104,7 @@
           <div class="flex flex-column">
             <div class="flex flex-row gap-1">
               <div class="name flex">{{ expandedUser.name | truncateWords: 15 }}</div>
-              
+
               <!--icon criadora (role 2) ou administradora (role 1)-->
               <div *ngIf="expandedUser.role === 2" class="crown-creator crown3" pTooltip="Criadora"
                 tooltipPosition="right">

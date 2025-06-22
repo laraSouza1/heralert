@@ -114,7 +114,7 @@ export class SingInComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Registro Negado',
-              detail: response.message, // Mensagem de banimento do backend
+              detail: response.message,
               life: 5000
             });
             this.formSignin.email = '';

@@ -30,6 +30,7 @@ interface ChatUser {
   lastMessageContent: string;
   lastMessageSenderId?: number;
   role?: number;
+  unreadCount?: number;
 }
 
 interface Message {
@@ -38,6 +39,7 @@ interface Message {
   receiver_id: number;
   content: string;
   created_at: string;
+  is_read?: boolean;
 }
 
 @Component({
@@ -98,7 +100,8 @@ export class RightSideComponent implements OnInit {
           role: userToChatWith.role,
           username: userToChatWith.username,
           profile_pic: userToChatWith.profile_pic || '',
-          lastMessageContent: 'Novo chat'
+          lastMessageContent: 'Novo chat',
+          unreadCount: 0
         }, ...this.users];
       }
 
@@ -120,7 +123,8 @@ export class RightSideComponent implements OnInit {
         username: userToChatWith.username,
         profile_pic: userToChatWith.profile_pic || '',
         lastMessageContent: existingChatUser?.lastMessageContent || 'Novo chat',
-        role: userToChatWith.role
+        role: userToChatWith.role,
+        unreadCount: existingChatUser?.unreadCount || 0
       });
     });
 
@@ -134,7 +138,8 @@ export class RightSideComponent implements OnInit {
           username: user.username,
           profile_pic: user.profile_pic || '',
           lastMessageContent: 'chat vazio',
-          lastMessageSenderId: undefined
+          lastMessageSenderId: undefined,
+          unreadCount: 0
         });
       }
       this.onRowClick({
@@ -142,7 +147,8 @@ export class RightSideComponent implements OnInit {
         name: user.name || user.username,
         username: user.username,
         profile_pic: user.profile_pic || '',
-        lastMessageContent: 'chat vazio'
+        lastMessageContent: 'chat vazio',
+        unreadCount: 0
       });
     });
 
@@ -160,7 +166,6 @@ export class RightSideComponent implements OnInit {
       const blockedSet = new Set(this.blockService['blockedUsers']);
       const blockedBySet = new Set(this.blockService['usersWhoBlockedMe']);
 
-
       this.http.get<any>(`http://localhost:8085/api/chats/${this.loggedInUserId}`).subscribe({
         next: response => {
           if (response.status) {
@@ -177,7 +182,8 @@ export class RightSideComponent implements OnInit {
                 profile_pic: user.profile_pic,
                 lastMessageContent: user.lastMessageContent,
                 lastMessageSenderId: user.lastMessageSenderId,
-                role: user.role
+                role: user.role,
+                unreadCount: user.unreadCount || 0
               }));
             this.originalUsers = [...this.users];
           } else {
@@ -227,6 +233,21 @@ export class RightSideComponent implements OnInit {
     this.isExpanded = true; //abre a visualização do chat
     this.tableHeight = '0px';
     this.loadChatMessages(user.userId); //carrega as mensagens do chat selecionado
+
+    //vai fazer a leitura das mensagens
+    if (typeof this.loggedInUserId !== 'undefined' && user.unreadCount && user.unreadCount > 0) {
+      this.http.put(`http://localhost:8085/api/messages/read/${user.userId}/${this.loggedInUserId}`, {}).subscribe({
+        next: () => {
+          const userIndex = this.users.findIndex(u => u.userId === user.userId);
+          if (userIndex !== -1) {
+            this.users[userIndex].unreadCount = 0;
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 
   //carrega as mensagens de um chat específico
@@ -238,8 +259,8 @@ export class RightSideComponent implements OnInit {
     this.http.get<any>(`http://localhost:8085/api/messages/${this.loggedInUserId}/${otherUserId}`).subscribe({
       next: response => {
         if (response.status) {
-          this.chatMessages = response.data; //atribui as mensagens carregadas
-          this.scrollToChatBottom(); //rola para o final do chat
+          this.chatMessages = response.data;
+          this.scrollToChatBottom();
         } else {
           console.error('Falha ao carregar mensagens do chat:', response.message);
         }
@@ -248,7 +269,6 @@ export class RightSideComponent implements OnInit {
         console.error('Erro puxando mensagens do chat:', error);
       }
     });
-    //rola para o final do chat após carregar as mensagens
     setTimeout(() => {
       const chatDiv = document.querySelector('.chat');
       chatDiv?.scrollTo({ top: chatDiv.scrollHeight, behavior: 'smooth' });
@@ -262,6 +282,7 @@ export class RightSideComponent implements OnInit {
     this.expandedUser = null;
     this.chatMessages = [];
     this.newMessageContent = '';
+    this.loadChatUsers();
   }
 
   //envia uma nova mensagem
@@ -285,7 +306,8 @@ export class RightSideComponent implements OnInit {
             sender_id: message.sender_id,
             receiver_id: message.receiver_id,
             content: message.content,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
+            is_read: false
           });
           this.newMessageContent = ''; //limpa o campo de nova mensagem
           this.loadChatUsers(); //atualiza a lista de chats para refletir a nova mensagem
