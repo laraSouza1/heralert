@@ -81,3 +81,93 @@ h1 {
   font-size: 20px;
   padding-left: 10px;
 }
+
+/*termos condições ------------------------------------------*/
+
+.tc {
+  font-size: 12.5px;
+  color: #888888;
+  cursor: pointer;
+}
+
+.tc:hover {
+  color: #adadad;
+}
+
+/*checkbox -------------------------------------------*/
+
+.custom-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.custom-checkbox-container input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 20px; 
+  width: 20px; 
+  background-color: #eee;
+  border: 1px solid #ff7d7d;
+  border-radius: 5px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.custom-checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+  background-color: #ff7d7d;
+  border-color: #ff7d7d;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+}
+
+.custom-checkbox-container .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/*scrollbar ------------------------------*/
+::ng-deep ::-webkit-scrollbar {
+  width: 16px;
+  background-color: rgb(224, 224, 224);
+  border-bottom: 6px solid white;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb {
+  background-color: #ffb6b6;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 8px solid white;
+}
+
+::ng-deep ::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}

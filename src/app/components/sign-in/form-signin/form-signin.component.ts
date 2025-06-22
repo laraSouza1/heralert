@@ -12,13 +12,15 @@ import { HttpClient } from '@angular/common/http';
 import { StepsModule } from 'primeng/steps';
 import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-form-signin',
   providers: [MessageService],
   imports: [
     InputIcon, IconField, InputTextModule, FormsModule, ButtonModule, PasswordModule,
-    MessageModule, Message, CommonModule, StepsModule, ToastModule
+    MessageModule, Message, CommonModule, StepsModule, ToastModule, DialogModule, ConfirmDialogModule
   ],
   templateUrl: './form-signin.component.html',
   styleUrl: './form-signin.component.css'
@@ -41,12 +43,15 @@ export class FormSigninComponent {
   nameMaxLengthError: boolean = false;
   nameLengthError: boolean = false;
   passwordError: boolean = false;
+  checkError: boolean = false;
   confirmPasswordError: boolean = false;
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
+  termsAccepted: boolean = false;
   emailAlreadyUsed: boolean = false;
   usernameAlreadyUsed: boolean = false;
   emailBannedError: boolean = false;
+  showModal: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -54,7 +59,21 @@ export class FormSigninComponent {
     private messageService: MessageService
   ) { }
 
+  ngOnInit() {
+    this.onValidationChange();
+  }
+
   //-------------------- VALIDAÇÕES DO FORMULÁRIO ---------------------
+
+  //validação checkbox-------------------
+  onTermsChange() {
+    this.checkError = !this.termsAccepted;
+    this.onValidationChange();
+  }
+
+  openModal() {
+    this.showModal = true;
+  }
 
   //validação senha + ver senha---------------------
   togglePasswordVisibility() {
@@ -124,7 +143,6 @@ export class FormSigninComponent {
         .subscribe({
           next: (response: any) => resolve(response.exists),
           error: (err) => {
-            console.error("Erro na verificação de username:", err);
             resolve(false);
           }
         });
@@ -132,54 +150,55 @@ export class FormSigninComponent {
   }
 
   async onValidationChange() {
-  this.clearAvailabilityErrors();
-  this.emailBannedError = false;
+    this.clearAvailabilityErrors();
+    this.emailBannedError = false;
 
-  //executa verificações de maneira assíncrona
-  const [isEmailUsed, isUsernameUsed] = await Promise.all([
-    this.emailError ? false : this.checkEmailAvailability().then(res => res.exists),
-    (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
-  ]);
+    //executa verificações de maneira assíncrona
+    const [isEmailUsed, isUsernameUsed] = await Promise.all([
+      this.emailError ? false : this.checkEmailAvailability().then(res => res.exists),
+      (this.usernameFormatError || this.usernameSpaceError || this.usernameLengthError || this.usernameMaxLengthError) ? false : this.checkUsernameAvailability()
+    ]);
 
-  this.emailAlreadyUsed = isEmailUsed;
-  this.usernameAlreadyUsed = isUsernameUsed;
+    this.emailAlreadyUsed = isEmailUsed;
+    this.usernameAlreadyUsed = isUsernameUsed;
 
-  this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
+    this.cdr.detectChanges(); //garante que a UI seja atualizada com os novos erros de disponibilidade
 
-  //erro, cancela envio
-  const hasError =
-    this.emailError || this.emailAlreadyUsed || this.emailBannedError ||
-    this.usernameFormatError || this.usernameSpaceError ||
-    this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
-    this.nameLengthError || this.nameMaxLengthError ||
-    this.passwordError || this.confirmPasswordError ||
-    !this.email || !this.name || !this.username || !this.password || !this.confirmPassword;
+    //erro, cancela envio
+    const hasAnyValidationError =
+      this.emailError || this.emailAlreadyUsed || this.emailBannedError ||
+      this.usernameFormatError || this.usernameSpaceError ||
+      this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
+      this.nameLengthError || this.nameMaxLengthError ||
+      this.passwordError || this.confirmPasswordError ||
+      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword ||
+      !this.termsAccepted;
 
-  this.formValid.emit(!hasError);
-}
+    this.formValid.emit(!hasAnyValidationError);
+  }
 
   clearAvailabilityErrors() {
     this.emailAlreadyUsed = false;
     this.usernameAlreadyUsed = false;
     this.emailBannedError = false;
+    this.checkError = false;
   }
 
-  //vai emitir os dados do formulário se eles forem validos
   async emitFormDataIfValid() {
-    //garante que todas as validações (incluindo as assíncronas) sejam executadas antes de emitir
     await this.onValidationChange();
 
-    //re-avalia a validade baseada nos estados ATUAIS de erro
-    const isFormCurrentlyValid = !(
-      this.emailError || this.emailAlreadyUsed ||
+    //re-avalia a validade baseada nos estados atuais de erro
+    const isFormValidNow = !(
+      this.emailError || this.emailAlreadyUsed || this.emailBannedError ||
       this.usernameFormatError || this.usernameSpaceError ||
       this.usernameLengthError || this.usernameMaxLengthError || this.usernameAlreadyUsed ||
       this.nameLengthError || this.nameMaxLengthError ||
       this.passwordError || this.confirmPasswordError ||
-      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword //verifica se os campos estão preenchidos
+      !this.email || !this.name || !this.username || !this.password || !this.confirmPassword ||
+      !this.termsAccepted
     );
 
-    if (isFormCurrentlyValid) {
+    if (isFormValidNow) {
       const data = {
         name: this.name,
         email: this.email,
@@ -188,9 +207,16 @@ export class FormSigninComponent {
       };
       this.formDataReady.emit(data);
     } else {
-      console.log('Formulário inválido, não emitindo dados.');
-      this.messageService.add({ severity: 'warn', summary: 'Preencha todos os campos!' });
+      if (!this.termsAccepted) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Por favor, aceite a política de privacidade e os termos e condições.',
+        });
+        this.checkError = true;
+      } else {
+        this.messageService.add({ severity: 'warn', summary: 'Preencha todos os campos!' });
+      }
     }
-    this.formValid.emit(isFormCurrentlyValid); //garante que o SingInComponent tenha o status mais recente
   }
+
 }

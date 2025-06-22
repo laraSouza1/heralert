@@ -1,3 +1,11 @@
 footer {
   background-color: #505050;
 }
+
+.email {
+  color: #c2c2c2;
+}
+
+a {
+  color: #eb7878 !important;
+}
