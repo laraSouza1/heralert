@@ -16,7 +16,6 @@ import { FollowService } from '../../../services/follow/follow.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportingPostComponent } from '../../reportingForms/reporting-post/reporting-post.component';
-import { TooltipModule } from 'primeng/tooltip';
 import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 import { LinkifyPipe } from '../../../pipes/linkify/linkify.pipe';
 
@@ -26,7 +25,7 @@ import { LinkifyPipe } from '../../../pipes/linkify/linkify.pipe';
   providers: [MessageService, ConfirmationService],
   imports: [
     TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule, NgIf,
-    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent, TooltipModule,
+    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent,
     MentionPipe, LinkifyPipe
   ],
   templateUrl: './post.component.html',
@@ -94,6 +93,11 @@ export class PostComponent implements OnInit {
     this.isSave = !!this.post.user_saved;
     this.comments = this.post.comments_count || 0;
 
+    //para sanitizar o conteúdo
+    if (this.post.content) {
+      this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
+    }
+
     //recupera informações do usuário do localStorage
     if (this.userId) {
       const storedLike = localStorage.getItem(`like_${this.userId}_${this.post.id}`);
@@ -141,7 +145,10 @@ export class PostComponent implements OnInit {
     if (this.reportingPostComponent) {
       this.reportingPostComponent.submitReport();
 
-      this.showPostModal = false; //fecha modal após envio
+      //atrasar o fechamento do modal por 2 segundos
+      setTimeout(() => {
+        this.showPostModal = false;
+      }, 2000);
     }
   }
 

@@ -1,6 +1,5 @@
 <!--COMPONENTE PARTILHADO MODELO DE POSTAGEM (utilizado em vários lugares)-->
 
-<p-toast appendTo="body" />
 <p-confirmdialog />
 
 <div class="container mb-5">
@@ -25,8 +24,6 @@
       (click)="$event.stopPropagation()"></app-follow-button>
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
       (click)="$event.stopPropagation()">
-      <p-toast />
-      <p-confirmDialog></p-confirmDialog>
       <p-menu #menu [model]="items" [popup]="true" appendTo="body" styleClass="custom-menu" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
     </div>
@@ -92,8 +89,7 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="showPostModal" modal [header]="'Denunciar postagem'" [closable]="false"
-  [style]="{ width: '50vw' }">
+<p-dialog [(visible)]="showPostModal" modal [header]="'Denunciar postagem'" [closable]="false" [style]="{ width: '50vw' }">
   <app-reporting-post [post]="post"></app-reporting-post>
 
   <ng-template pTemplate="footer">
