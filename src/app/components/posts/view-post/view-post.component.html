@@ -73,7 +73,7 @@
 
               <!--CONTEÚDO------------------>
 
-              <div class="cont-comment pr-5" [innerHTML]="comment.content | mention" (click)="handleMentionClick($event)"></div>
+              <div class="cont-comment pr-5" [innerHTML]="comment.content | mention | safeHtml" (click)="handleMentionClick($event)"></div>
               <!--vai ler o conteúdo do coentário em innerHTML para o pipe de mention (@) funcionar-->
 
               <div class="flex flex-row w-full mt-2">

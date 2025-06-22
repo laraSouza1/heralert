@@ -159,7 +159,7 @@
 
                 <!--se não for imagem, mostra como texto-->
                 <ng-template #textContent>
-                  <p class="m-0">{{ message.content }}</p>
+                  <p class="m-0" [innerHTML]="message.content | linkify | mention | safeHtml" (click)="handleMentionClick($event)"></p>
                 </ng-template>
               </div>
 

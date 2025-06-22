@@ -17,6 +17,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportingPostComponent } from '../../reportingForms/reporting-post/reporting-post.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { MentionPipe } from '../../../pipes/mention/mention.pipe';
+import { LinkifyPipe } from '../../../pipes/linkify/linkify.pipe';
 
 @Component({
   selector: 'app-post',
@@ -24,7 +26,8 @@ import { TooltipModule } from 'primeng/tooltip';
   providers: [MessageService, ConfirmationService],
   imports: [
     TableModule, ButtonModule, TagModule, MenuModule, ToastModule, NgFor, CommonModule, NgIf,
-    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent, TooltipModule
+    FollowButtonComponent, ConfirmDialogModule, DialogModule, ReportingPostComponent, TooltipModule,
+    MentionPipe, LinkifyPipe
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
@@ -91,11 +94,6 @@ export class PostComponent implements OnInit {
     this.isSave = !!this.post.user_saved;
     this.comments = this.post.comments_count || 0;
 
-    //para sanitizar o conteúdo
-    if (this.post.content) {
-    this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
-  }
-
     //recupera informações do usuário do localStorage
     if (this.userId) {
       const storedLike = localStorage.getItem(`like_${this.userId}_${this.post.id}`);
@@ -117,11 +115,32 @@ export class PostComponent implements OnInit {
     }
   }
 
+  //para navegar ao perfil ao clicar num @ na mensagem
+  handleMentionClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('mention')) {
+      const mentionedUsername = target.getAttribute('data-username');
+
+      if (!mentionedUsername) {
+        return;
+      }
+
+      //navega até o perfil do user mencionado
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+      if (mentionedUsername === currentUser.username) {
+        this.router.navigate(['/profile']);
+        //se for o user logado no localstorage, mostra o perfil dele
+      } else {
+        this.router.navigate(['/profile-view', mentionedUsername]);
+      }
+    }
+  }
+
   //para enviar o form de denuncia de post
   submitReportForm() {
     if (this.reportingPostComponent) {
       this.reportingPostComponent.submitReport();
-     
+
       this.showPostModal = false; //fecha modal após envio
     }
   }
@@ -135,7 +154,7 @@ export class PostComponent implements OnInit {
     this.showPostModal = false;
     //reseta o form após submissão
     if (this.reportingPostComponent) {
-        this.reportingPostComponent.formGroup.reset();
+      this.reportingPostComponent.formGroup.reset();
     }
   }
 

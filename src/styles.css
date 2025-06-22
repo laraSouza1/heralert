@@ -376,3 +376,11 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-content: center;
 }
+
+/*links dentro do chat -----------------------------*/
+
+.chat-link {
+  color: #d17272;
+  text-decoration: underline;
+  cursor: pointer;
+}

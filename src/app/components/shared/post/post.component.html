@@ -40,7 +40,7 @@
         {{ post.created_at | date: 'dd/MM/yy' }}
       </div>
     </div>
-    <div class="conteudo cont mt-3" [innerHTML]="sanitizedContent"></div>
+    <div class="conteudo cont mt-3" [innerHTML]="post.content | linkify | mention | safeHtml" (click)="handleMentionClick($event)"></div>
 
     <!--comunidade-->
     <span (click)="goToCommunity(post.community, $event)" style="cursor: pointer;">

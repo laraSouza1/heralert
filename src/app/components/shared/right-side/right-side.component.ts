@@ -19,6 +19,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { BlockService } from '../../../services/block/block.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { LinkifyPipe } from '../../../pipes/linkify/linkify.pipe';
+import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 
 interface ChatUser {
   userId: number;
@@ -44,7 +46,7 @@ interface Message {
   imports: [
     TableModule, CommonModule, InputTextModule, TextareaModule, IconFieldModule,
     InputIconModule, CommonModule, NgIf, FormsModule, ButtonModule, TruncateWordsPipe, MenuModule,
-    ToastModule, ConfirmDialogModule, DialogModule, TooltipModule
+    ToastModule, ConfirmDialogModule, DialogModule, TooltipModule, LinkifyPipe, MentionPipe
   ],
   templateUrl: './right-side.component.html',
   styleUrls: ['./right-side.component.css'],
@@ -187,6 +189,27 @@ export class RightSideComponent implements OnInit {
         }
       });
     });
+  }
+
+  //para navegar ao perfil ao clicar num @ na mensagem
+  handleMentionClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('mention')) {
+      const mentionedUsername = target.getAttribute('data-username');
+
+      if (!mentionedUsername) {
+        return;
+      }
+
+      //navega até o perfil do user mencionado
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+      if (mentionedUsername === currentUser.username) {
+        this.router.navigate(['/profile']);
+        //se for o user logado no localstorage, mostra o perfil dele
+      } else {
+        this.router.navigate(['/profile-view', mentionedUsername]);
+      }
+    }
   }
 
   //filtra usuários por nome ou username
