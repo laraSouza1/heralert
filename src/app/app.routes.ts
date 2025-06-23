@@ -26,6 +26,7 @@ import { UsersReportsComponent } from './components/administration/adm-users/use
 import { PostsReportsComponent } from './components/administration/adm-posts/posts-reports/posts-reports.component';
 import { CommentsReportsComponent } from './components/administration/adm-comments/comments-reports/comments-reports.component';
 import { UsersToBanListComponent } from './components/administration/adm-users/users-to-ban-list/users-to-ban-list.component';
+import { MyComplaintsComponent } from './components/users-n-profiles/profile-user-logged/config-options/my-complaints/my-complaints.component';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
@@ -54,7 +55,8 @@ export const routes: Routes = [
       { path: 'post-tag', component: PostTagComponent },
       { path: 'communities', component: CommunitiesComponent },
       { path: 'profile-config', component: ProfileConfigComponent },
-      { path: 'notifications', component: NotificationsComponent }
+      { path: 'notifications', component: NotificationsComponent },
+      { path: 'my-complaints', component: MyComplaintsComponent }
     ]
   },
 

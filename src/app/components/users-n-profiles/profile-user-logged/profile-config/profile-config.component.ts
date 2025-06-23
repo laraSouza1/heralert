@@ -13,13 +13,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EmailComponent } from '../config-options/email/email.component';
 import { PasswordComponent } from '../config-options/password/password.component';
+import { MyComplaintsComponent } from '../config-options/my-complaints/my-complaints.component';
+import { ApiResponse } from '../../../shared/models/ApiResponse';
 
 @Component({
   selector: 'app-profile-config',
   providers: [MessageService, ConfirmationService, DialogService],
   imports: [
     ButtonModule, ConfirmDialogModule, DialogModule,
-    MenuModule, ToastModule, BlockedUsersComponent, CommonModule, EmailComponent, PasswordComponent, DynamicDialogModule
+    MenuModule, ToastModule, BlockedUsersComponent, CommonModule, EmailComponent, PasswordComponent,
+    DynamicDialogModule, MyComplaintsComponent
   ],
   templateUrl: './profile-config.component.html',
   styleUrl: './profile-config.component.css'
@@ -32,7 +35,9 @@ export class ProfileConfigComponent implements OnInit {
   passwordMasked = '';
   showEmailDialog = false;
   showPasswordDialog = false;
-  emailComponentVisible = true;
+  showComplaintsDialog = false;
+  emailComponentVisible = true; newUpdatesAvailable = false;
+  totalComplaintsCount: number = 0;
 
   @ViewChild(PasswordComponent) passwordComponent!: PasswordComponent;
 
@@ -40,7 +45,7 @@ export class ProfileConfigComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -48,9 +53,71 @@ export class ProfileConfigComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
     this.passwordMasked = '*'.repeat(this.user.password?.length || 0);
     this.loadBlockedCount(); //fetch nos users bloqueados
+    this.loadComplaintCounts();
+  }
+
+  //para contagem de número de denúncias
+  loadComplaintCounts(): void {
+    if (!this.user?.id) return;
+
+    //pega todas as denúncias feitas pelo user
+    this.http.get<any>(`http://localhost:8085/api/reports/by-reporter/${this.user.id}`).subscribe({
+      next: response => {
+        if (response.status) {
+          this.totalComplaintsCount = response.data.reports.length;
+        } else {
+          this.totalComplaintsCount = 0;
+        }
+      },
+      error: error => {
+        this.totalComplaintsCount = 0;
+      }
+    });
+
+    //pega nova atualização de contagem
+    this.http.get<any>(`http://localhost:8085/api/reports/unseen-updates/count/${this.user.id}`).subscribe({
+      next: response => {
+        if (response.status) {
+          this.newUpdatesAvailable = response.data.newUpdatesCount > 0;
+        } else {
+          console.error(response.message);
+          this.newUpdatesAvailable = false;
+        }
+      },
+      error: error => {
+        console.error(error);
+        this.newUpdatesAvailable = false;
+      }
+    });
+  }
+
+
+  //navegações do menu ------------------------------------
+  navigateToMyComplaints() {
+    this.router.navigate(['/my-complaints']);
   }
 
   //modais -----------------------------------
+
+  //modal de minhas denúncias
+  abrirComplaints(): void {
+    this.showComplaintsDialog = true;
+    if (this.user?.id && this.newUpdatesAvailable) {
+      //se houver novas atualizações, marca como vistas quando o modal for aberto
+      this.http.put<ApiResponse>(`http://localhost:8085/api/reports/mark-seen/${this.user.id}`, {}).subscribe({
+        next: (res: ApiResponse) => {
+          if (res.status) {
+            this.newUpdatesAvailable = false;
+          } else {
+            console.error(res.message);
+          }
+        },
+        error: error => {
+          console.error(error);
+        }
+      });
+    }
+  }
 
   //modal de users bloqueados
   abrirBlocked(): void {

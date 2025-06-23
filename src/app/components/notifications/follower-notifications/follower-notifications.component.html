@@ -12,15 +12,15 @@
 <ng-container *ngIf="notifications.length > 0; else noNotifications">
   <table class="mt-3 w-full mb-6">
     <tbody>
-      <tr *ngFor="let n of filteredNotifications" class="click"
-        (click)="n.type === 'follow' ? goToUserProfile(n.sender_id, n.username) : goToPost(n.post_id, n.post_title)">
+      <tr *ngFor="let n of filteredNotifications" class="click" style="cursor: pointer;"
+        (click)="n.type === 'follow'">
 
         <!--icon-->
         <td class="w-3rem align-items-start align-content-start">
           <i class="pi pi-user-plus icon-notificação flex justify-content-center"></i>
         </td>
 
-        <td class="flex flex-column">
+        <td class="flex flex-column" (click)="goToUserProfile(n.sender_id, n.username)">
 
           <!--título/tipo da notificação-->
           <div class="title-action mb-2">Novo seguidor</div>
@@ -38,7 +38,6 @@
 
         <!--deletar notificação-->
         <td class="w-2rem">
-          <p-toast />
           <p-button class="delete-comment" icon="pi pi-trash"
             (click)="handleDeleteNotification(n.id); $event.stopPropagation()" type="button">
           </p-button>
@@ -50,8 +49,10 @@
 
 <!--caso não haja notificações aparece menssagem informando-->
 <ng-template #noNotifications>
-  <div class="no-content flex flex-column justify-content-center align-items-center">
+  <div class="no-content flex flex-column justify-content-center align-items-center" style="cursor: default;">
     <p class="flex">Ainda não há notificações!</p>
     <img src="/imgs/i.png" class="flex no-content-img" />
   </div>
 </ng-template>
+
+<p-toast />

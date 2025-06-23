@@ -38,6 +38,7 @@ body::-webkit-scrollbar {
   border-radius: 7px 7px 5px 5px !important;
   color: #3e3e3e !important;
   border: none !important;
+  cursor: default !important;
 }
 
 .p-dialog-header {
@@ -383,4 +384,18 @@ body::-webkit-scrollbar {
   color: #d17272;
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+/*definindo cursores ------------------------*/
+.p-message {
+  cursor: default !important;
+}
+
+th {
+  cursor: default;
+}
+
+.p-menu-submenu-label {
+  cursor: default !important;
 }

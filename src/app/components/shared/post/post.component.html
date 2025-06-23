@@ -23,7 +23,7 @@
     <app-follow-button *ngIf="!isDraft && !isProfile && !isOwnPost" class="aa" [targetUserId]="post.user_id"
       (click)="$event.stopPropagation()"></app-follow-button>
     <div *ngIf="!isDraft && !isProfile && !isOwnPost" class="w-9 flex align-items-center justify-content-end"
-      (click)="$event.stopPropagation()">
+      (click)="$event.stopPropagation()" style="cursor: pointer;">
       <p-menu #menu [model]="items" [popup]="true" appendTo="body" styleClass="custom-menu" />
       <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" class="menu-cont" />
     </div>
@@ -33,7 +33,7 @@
   <div class="cont-post" (click)="goToPostDetail($event)">
     <div class="flex flex-row w-12 gap-2">
       <div class="flex align-items-center title w-11">{{ post.title }}</div>
-      <div class="flex align-items-center justify-content-center date">
+      <div class="flex align-items-center justify-content-center date" style="cursor: default;">
         {{ post.created_at | date: 'dd/MM/yy' }}
       </div>
     </div>
@@ -41,7 +41,7 @@
 
     <!--comunidade-->
     <span (click)="goToCommunity(post.community, $event)" style="cursor: pointer;">
-      <button class="comm my-2">{{ post.community }}</button>
+      <button class="comm my-2" style="cursor: pointer;">{{ post.community }}</button>
     </span>
 
     <!--tags-->

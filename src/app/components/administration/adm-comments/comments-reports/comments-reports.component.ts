@@ -157,7 +157,7 @@ export class CommentsReportsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Excluir',
       rejectLabel: 'Cancelar',
-      //esyilização dos btns
+      //estilização dos btns
       acceptButtonStyleClass: 'my-delete-button',
       rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {

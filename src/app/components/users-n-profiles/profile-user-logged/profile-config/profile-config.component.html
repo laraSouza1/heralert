@@ -5,41 +5,41 @@
 
   <div>
 
-    <div class="content px-4 pt-4 ">
+    <div class="content px-4 pt-4">
       <div class="div-ww">
 
         <!--título-->
         <div class="flex flex-row my-2 title h-2rem align-content-center align-items-center">
-          <div class="flex mr-2">Configurações do perfil</div>
+          <div class="flex mr-2" style="cursor: default;">Configurações do perfil</div>
         </div>
 
         <div>
           <!-- Email -->
-          <div class="flex flex-row w-12 gap-6 wd-100 wd-1002" (click)="abrirEmail()">
+          <div class="flex flex-row w-12 gap-6 wd-100 wd-1002" style="cursor: pointer;" (click)="abrirEmail()">
             <div class="flex justify-content-start">E-mail</div>
             <div class="flex justify-content-end op-profile">{{ user?.email }}</div>
           </div>
 
           <!-- Senha -->
-          <div class="flex gap-6 wd-100" (click)="abrirPassword()">
+          <div class="flex gap-6 wd-100" (click)="abrirPassword()" style="cursor: pointer;">
             <div>Palavra-passe</div>
             <div class="op-profile">{{ passwordMasked }}</div>
           </div>
 
           <!--usuários bloqueados-->
-          <div class="flex gap-6 wd-100" (click)="abrirBlocked()">
+          <div class="flex gap-6 wd-100" (click)="abrirBlocked()" style="cursor: pointer;">
             <div>Usuários bloqueados</div>
             <div class="op-profile">{{ blockedCount }}</div>
           </div>
 
           <!--denúncias-->
-          <div class="flex gap-6 wd-100">
+          <div class="flex gap-6 wd-100" (click)="abrirComplaints()" style="cursor: pointer;">
             <div>Minhas denúncias</div>
-            <div class="op-profile">0</div>
+            <div class="op-profile">{{ totalComplaintsCount }}</div> <div *ngIf="newUpdatesAvailable" class="new-update-indicator">Nova atualização</div>
           </div>
 
           <!--excluir conta-->
-          <div class="flex wd-100 op-profile2" (click)="handleDeleteAccount()">
+          <div class="flex wd-100 op-profile2" (click)="handleDeleteAccount()" style="cursor: pointer;">
             Excluir conta
           </div>
         </div>
@@ -69,4 +69,9 @@
 <p-dialog header="Atualizar palavra-passe" [(visible)]="showPasswordDialog" (onHide)="onPasswordDialogHide()" modal
   [style]="{ width: '40vw' }">
   <app-password [user]="user" (onUpdate)="onPasswordUpdated()"></app-password>
+</p-dialog>
+
+<p-dialog header="Minhas denúncias" [(visible)]="showComplaintsDialog" modal
+  [style]="{ width: '53vw' }">
+  <app-my-complaints [loggedInUserId]="user?.id"></app-my-complaints>
 </p-dialog>

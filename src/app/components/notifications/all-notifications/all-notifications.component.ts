@@ -111,9 +111,9 @@ export class AllNotificationsComponent {
   getNotificationTitle(type: string): string {
     switch (type) {
       case 'like':
-        return 'Nova curtida';
+        return 'Nova curtida em';
       case 'comment':
-        return 'Novo comentário';
+        return 'Novo comentário em';
       case 'follow':
         return 'Novo seguidor';
       case 'post_deleted_admin':

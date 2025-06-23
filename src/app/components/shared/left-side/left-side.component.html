@@ -14,7 +14,7 @@
       <img [src]="user?.profile_pic || '/imgs/ai.png'" class="img-profile mb-3">
 
       <div class="flex flex-row gap-2">
-        <div class="flex">
+        <div class="flex" style="cursor: default;">
           <!--nome de usuário-->
           <p class="name">{{ user?.name }}</p>
         </div>
@@ -30,7 +30,7 @@
     </div>
 
     <!--usuário-->
-    <div class="user mt-2 mb-3">
+    <div class="user mt-2 mb-3" style="cursor: default;">
       <div class="editt-at"><i class="pi pi-at"></i></div>
       <span>{{ user?.username }}</span>
     </div>
@@ -42,7 +42,9 @@
     <!--menu + número de notificações-->
     <div class="w-full">
       <p-menu #menu [model]="items"></p-menu>
-      <div class="number-notifications flex justify-content-center align-items-center">{{ totalNotifications }}</div>
+      <div class="number-notifications flex justify-content-center align-items-center" (click)="navigateToNotifications()" style="cursor: pointer;">
+        {{ totalNotifications }}
+      </div>
     </div>
 
     <!--logo-->

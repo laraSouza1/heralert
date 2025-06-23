@@ -1,1 +1,115 @@
-<p>my-complaints works!</p>
+<div class="mx-2 mt-2">
+  <table class="mt-4 w-full">
+    <tbody>
+      <ng-container *ngIf="reports && reports.length > 0; else noReports">
+        <tr *ngFor="let report of reports" style="cursor: pointer;">
+          <!--icon-->
+          <td class="w-3rem align-items-start align-content-start mt-1">
+            <i class="pi pi-headphones icon-notificação flex justify-content-center"></i>
+          </td>
+
+          <td>
+            <!--tipo da denúncia-->
+            <div class="flex flex-column">
+              <div class="mb-2 ml-2 tipo">
+                {{ getTypeDisplay(report.target_type) }}
+              </div>
+
+              <!--User reportada-->
+              <div class="flex mb-2 mt-0 pt-0">
+                <div class="icon"><i class="pi pi-angle-right"></i></div>
+                <strong>Usuária reportada:</strong>
+                <div class="flex ml-1 link" (click)="goToProfile(report.reported_username)" style="cursor: pointer;">
+                  <div class="icon"><i class="pi pi-at"></i></div>
+                  <span>{{ report.reported_username }}</span>
+                </div>
+              </div>
+
+              <!--data da denúncia-->
+              <div class="flex mb-2">
+                <div class="icon"><i class="pi pi-angle-right"></i></div>
+                <strong>Data da denúncia:</strong>
+                <div class="ml-2">{{ report.report_created_at | date: 'dd-MM-yyyy' }}</div>
+              </div>
+
+              <!--mostra conteúdo do comentário caso a denuncia seja do tipo comment-->
+              <div class="flex mb-2">
+                <ng-container *ngIf="report.target_type === 'comment'">
+                  <div class="icon"><i class="pi pi-angle-right"></i></div>
+                  <div class="flex flex-column">
+                    <div><strong>Conteúdo do comentário:</strong></div>
+                    <div class="reason">{{ report.comment_text }}</div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <!--mostra o título do post caso a denuncia seja do tipo post/comment-->
+              <div class="flex mb-2">
+                <ng-container *ngIf="report.post_title">
+                  <div class="icon"><i class="pi pi-angle-right"></i></div>
+                  <strong>Título:</strong>
+                  <div class="ml-1">{{ report.post_title }}</div>
+                </ng-container>
+              </div>
+
+              <!--motivo da denúncia-->
+              <div class="flex mb-2">
+                <div class="icon"><i class="pi pi-angle-right"></i></div>
+                <div class="flex flex-column">
+                  <div><strong>Motivo da denúncia:</strong></div>
+                  <div class="reason">{{ report.report_reason }}</div>
+                </div>
+              </div>
+
+              <!--estado atual-->
+              <div class="flex mb-2">
+                <div class="icon"><i class="pi pi-angle-right"></i></div>
+                <strong>Estado atual:</strong>
+                <span class="status ml-1">{{ report.report_status === 'em_avaliacao' ? 'Em avaliação' : report.report_status === 'nao_justificado' ? 'Não válida' : 'Válida' }}</span>
+              </div>
+
+              <!--motivo do estado atual-->
+              <div class="flex mb-2">
+                <ng-container
+                  *ngIf="report.report_status === 'nao_justificado' || report.report_status === 'justificado'">
+                  <div class="icon"><i class="pi pi-angle-right"></i></div>
+
+                  <div class="flex flex-column">
+                    <div><strong>Motivo do estado atual:</strong></div>
+                    <div class="reason">{{ report.status_reason_text }}</div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <!--mostra ação final tomada-->
+              <div class="flex">
+                <ng-container *ngIf="report.action_taken_message">
+                  <div class="icon"><i class="pi pi-angle-right"></i></div>
+                  <div class="flex flex-column">
+                    <div><strong>Ação Tomada:</strong></div>
+                    <div class="reason">{{ report.action_taken_message }}</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </td>
+
+          <!--deleta denúncia da lista-->
+          <td style="cursor: pointer;" class="w-3rem align-items-end align-content-end justify-content-end">
+            <p-button class="delete-comment" icon="pi pi-trash"
+              (click)="deleteReport(report.report_id); $event.stopPropagation()" type="button">
+            </p-button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #noReports>
+        <tr>
+          <td colspan="3" class="text-center py-4" style="color: #cacaca;">Você não fez nenhuma denúncia.</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

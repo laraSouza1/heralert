@@ -67,8 +67,7 @@ export class MenuAdministrationComponent {
   }
 
   constructor(
-    private router: Router,
-    private http: HttpClient,
+    private router: Router
   ) { }
 
   //navegações do menu ------------------------------------

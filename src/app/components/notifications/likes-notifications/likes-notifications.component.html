@@ -13,23 +13,23 @@
   <table class="mt-3 w-full mb-6">
     <tbody>
       <tr *ngFor="let n of filteredNotifications" class="click"
-        (click)="n.type === 'like' ? goToUserProfile(n.sender_id, n.username) : goToPost(n.post_id, n.post_title)">
+        (click)="n.type === 'like'">
 
         <!--icon-->
         <td class="w-3rem align-items-start align-content-start">
           <i class="pi pi-heart icon-notificação flex justify-content-center"></i>
         </td>
 
-        <td class="flex flex-column">
+        <td class="flex flex-column" (click)="goToPost(n.post_id, n.post_title)" style="cursor: pointer;">
 
           <!--título/tipo da notificação-->
           <div class="title-action mb-2">Nova curtida</div>
 
           <!--títupo da postagem que teve uma curtida-->
-          <div *ngIf="n.post_title" class="post-title"><i>{{ n.post_title }}</i></div>
+          <div *ngIf="n.post_title" class="post-title">Na postagem <i><strong>{{ n.post_title }}</strong></i></div>
 
           <!--user de quem fez a ação-->
-          <div *ngIf="n.username" class="flex flex-row" (click)="handleMentionClick($event)">
+          <div *ngIf="n.username" class="flex flex-row" (click)="handleMentionClick($event); goToUserProfile(n.sender_id, n.username)">
             <small>
               <div [innerHTML]="('@' + n.username) | mention"></div>
             </small>
@@ -41,7 +41,6 @@
 
         <!--deletar notificação-->
         <td class="w-2rem">
-          <p-toast />
           <p-button class="delete-comment" icon="pi pi-trash"
             (click)="handleDeleteNotification(n.id); $event.stopPropagation()" type="button">
           </p-button>
@@ -53,8 +52,10 @@
 
 <!--caso não haja notificações aparece menssagem informando-->
 <ng-template #noNotifications>
-  <div class="no-content flex flex-column justify-content-center align-items-center">
+  <div class="no-content flex flex-column justify-content-center align-items-center" style="cursor: default;">
     <p class="flex">Ainda não há notificações!</p>
     <img src="/imgs/i.png" class="flex no-content-img" />
   </div>
 </ng-template>
+
+<p-toast />

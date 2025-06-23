@@ -12,7 +12,7 @@
   <!--tabela para exibição de todas as tags-->
   <table class="mt-2 w-full mb-6">
     <tbody>
-      <tr class="click" *ngFor="let tag of tags" (click)="goToTag(tag.tag)">
+      <tr class="click" *ngFor="let tag of tags" (click)="goToTag(tag.tag)" style="cursor: pointer;">
         <td class="pl-2" style="width: 2rem;">
           <div class="hasht">#</div>
         </td>

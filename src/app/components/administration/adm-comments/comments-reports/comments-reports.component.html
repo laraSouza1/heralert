@@ -4,7 +4,7 @@
   <p-toast></p-toast>
 
   <!--título-->
-  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center">
+  <div class="flex flex-row my-2 h-tag h-2rem align-content-center align-items-center" style="cursor: default;">
     <div class="flex mr-2 w-6">Denúncias de comentários</div>
   </div>
 
@@ -34,7 +34,7 @@
         <ng-container *ngIf="reports.length > 0; else noReports">
           <table class="mt-2 w-full evaluation-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
-              <tr>
+              <tr style="cursor: default;">
                 <th>Ver post</th>
                 <th>Data Denúncia</th>
                 <th>Usuária</th>
@@ -86,7 +86,7 @@
         <ng-container *ngIf="reports.length > 0; else noReports1">
           <table class="mt-2 w-full invalid-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
-              <tr>
+              <tr style="cursor: default;">
                 <th>Ver post</th>
                 <th>Data Denúncia</th>
                 <th>Usuária</th>
@@ -146,7 +146,7 @@
         <ng-container *ngIf="reports.length > 0; else noReports2">
           <table class="mt-2 w-full valid-table" *ngIf="!isLoading && reports.length > 0">
             <thead>
-              <tr>
+              <tr style="cursor: default;">
                 <th>Ver post</th>
                 <th>Data Denúncia</th>
                 <th>Usuária</th>

@@ -98,6 +98,7 @@
   color: #616161 !important;
   border: 0px !important;
   border-left: 2px solid #ffb6b6 !important;
+  cursor: default !important;
 }
 
 ::ng-deep .slt .p-select {

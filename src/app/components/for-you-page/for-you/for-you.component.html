@@ -14,7 +14,7 @@
     <div class="content px-4 pt-4">
 
       <!--imagem das comunidades + navegação a elas-->
-      <div class="w-full gap-2 flex justify-content-between pb-2 mb-1 line">
+      <div class="w-full gap-2 flex justify-content-between pb-2 mb-1 line" style="cursor: pointer;">
         <div (click)="navigateToAG()"><img src="/imgs/5.png" class="com-image" /></div>
         <div (click)="navigateToAIF()"><img src="/imgs/1.png" class="com-image" /></div>
         <div (click)="navigateToDA()"><img src="/imgs/2.png" class="com-image" /></div>
@@ -24,7 +24,7 @@
 
       <!--para explorar: ver posts / users / tags -->
       <div class="flex flex-row aling-items-center w-full mt-3">
-        <div><p-button class="bt4" label="Explorar" /></div>
+        <div style="cursor: default;"><p-button class="bt4" label="Explorar" /></div>
         <p-select class="w-full slt" [options]="comunities" [(ngModel)]="selectedComunity"
           (ngModelChange)="onCommunityChange()" placeholder="Explorar" optionLabel="name"></p-select>
       </div>

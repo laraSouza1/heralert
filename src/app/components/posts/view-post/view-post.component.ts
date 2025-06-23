@@ -112,7 +112,10 @@ export class ViewPostComponent implements OnInit {
   submitCommentReportForm() {
     if (this.reportingCommentComponent) {
       this.reportingCommentComponent.submitReport();
-      this.closeReportingCommentModal(); //fecha modal após envio
+      //atrasar o fechamento do modal por 2 segundos
+      setTimeout(() => {
+        this.closeReportingCommentModal();
+      }, 2000); //fecha modal após envio
     }
   }
 
@@ -257,7 +260,7 @@ export class ViewPostComponent implements OnInit {
                   });
                 }
               };
-              
+
               this.fetchCommentsForPost();
             } else {
               this.comments = this.comments.filter(c => c.id !== commentId);

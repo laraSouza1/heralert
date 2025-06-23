@@ -88,12 +88,12 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
             label: 'Denunciar usuário',
             icon: 'pi pi-flag',
             command: () => { this.showUserReportModal = true; }
-           }
+          }
         ]
       }
     ];
   }
- 
+
   closeUserReportingModal() {
     this.showUserReportModal = false;
     if (this.reportingUserComponent) {
@@ -107,7 +107,9 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
   submitUserReportForm() {
     if (this.reportingUserComponent) {
       this.reportingUserComponent.submitReport();
-      this.showUserReportModal = false; //fecha modal após envio
+      setTimeout(() => {
+        this.showUserReportModal = false;
+      }, 2000); //fecha modal após envio
     }
   }
 

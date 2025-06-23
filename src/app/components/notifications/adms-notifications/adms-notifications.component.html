@@ -20,7 +20,7 @@
           <i class="pi pi-headphones icon-notificação flex justify-content-center"></i>
         </td>
 
-        <td class="flex flex-column">
+        <td class="flex flex-column" style="cursor: pointer;">
 
           <!--título/tipo da notificação-->
           <div class="title-action mb-2">
@@ -28,7 +28,7 @@
           </div>
 
           <!--títupo da postagem-->
-          <div *ngIf="n.post_title" class="post-title"><i>{{ n.post_title }}</i></div>
+          <div *ngIf="n.post_title" class="post-title"><i><strong>{{ n.post_title }}</strong></i></div>
 
           <!--mensagem da administração-->
           <div *ngIf="n.type === 'post_deleted_admin' || n.type === 'report_outcome_admin' || n.type === 'content_deleted_by_report' || n.type === 'report_outcome_user_admin'" class="post-title">
@@ -39,7 +39,6 @@
         </td>
 
         <td class="w-2rem">
-          <p-toast />
           <p-button class="delete-comment" icon="pi pi-trash"
             (click)="handleDeleteNotification(n.id); $event.stopPropagation()" type="button">
           </p-button>
@@ -51,8 +50,10 @@
 
 <!--caso não haja notificações aparece menssagem informando-->
 <ng-template #noNotifications>
-  <div class="no-content flex flex-column justify-content-center align-items-center">
+  <div class="no-content flex flex-column justify-content-center align-items-center" style="cursor: default;">
     <p class="flex">Ainda não há notificações!</p>
     <img src="/imgs/i.png" class="flex no-content-img" />
   </div>
 </ng-template>
+
+<p-toast />
