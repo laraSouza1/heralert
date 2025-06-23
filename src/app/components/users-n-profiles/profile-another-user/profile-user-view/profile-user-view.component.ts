@@ -109,7 +109,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       this.reportingUserComponent.submitReport();
       setTimeout(() => {
         this.showUserReportModal = false;
-      }, 2000); //fecha modal após envio
+      }, 1500); //fecha modal após envio
     }
   }
 

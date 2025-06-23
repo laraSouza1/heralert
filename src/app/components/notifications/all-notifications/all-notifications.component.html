@@ -37,7 +37,7 @@
           <div *ngIf="n.post_title" class="post-title"><i><strong>{{ n.post_title }}</strong></i></div>
 
           <!--user de quem fez a ação-->
-          <div *ngIf="n.username && (n.type === 'like' || n.type === 'comment' || n.type === 'follow')" class="flex flex-row" (click)="handleMentionClick($event)">
+          <div *ngIf="n.username && (n.type === 'like' || n.type === 'comment' || n.type === 'follow')" class="flex flex-row" (click)="handleMentionClick($event); goToUserProfile(n.sender_id, n.username)">
             <small>
               <div [innerHTML]="('@' + n.username) | mention"></div>
             </small>

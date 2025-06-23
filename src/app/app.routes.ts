@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { LoginComponent } from './components/login/login.component';
 import { SingInComponent } from './components/sign-in/sing-in/sign-in.component';
-import { SupportComponent } from './components/support/support.component';
 import { ForYouComponent } from './components/for-you-page/for-you/for-you.component';
 import { ProfileComponent } from './components/users-n-profiles/profile-user-logged/profile/profile.component';
 import { AssuntosGeraisComponent } from './components/communities/assuntos-gerais/assuntos-gerais.component';
@@ -27,6 +26,7 @@ import { PostsReportsComponent } from './components/administration/adm-posts/pos
 import { CommentsReportsComponent } from './components/administration/adm-comments/comments-reports/comments-reports.component';
 import { UsersToBanListComponent } from './components/administration/adm-users/users-to-ban-list/users-to-ban-list.component';
 import { MyComplaintsComponent } from './components/users-n-profiles/profile-user-logged/config-options/my-complaints/my-complaints.component';
+import { AdminGuard } from './guards/admin/admin.guard';
 
 //rotas acessíveis ao usuário
 export const routes: Routes = [
@@ -65,12 +65,12 @@ export const routes: Routes = [
     path: '',
     component: AdministrationLayoutComponent,
     children: [
-      { path: 'users-list', component: UsersListComponent },
-      { path: 'tags-administration', component: TagsAdministrationComponent },
-      { path: 'users-reports', component: UsersReportsComponent },
-      { path: 'posts-reports', component: PostsReportsComponent },
-      { path: 'comments-reports', component: CommentsReportsComponent },
-      { path: 'users-to-ban-list', component: UsersToBanListComponent },
+      { path: 'users-list', component: UsersListComponent, canActivate: [AdminGuard] },
+      { path: 'tags-administration', component: TagsAdministrationComponent, canActivate: [AdminGuard] },
+      { path: 'users-reports', component: UsersReportsComponent, canActivate: [AdminGuard] },
+      { path: 'posts-reports', component: PostsReportsComponent, canActivate: [AdminGuard] },
+      { path: 'comments-reports', component: CommentsReportsComponent, canActivate: [AdminGuard] },
+      { path: 'users-to-ban-list', component: UsersToBanListComponent, canActivate: [AdminGuard] },
     ]
   }
 ];

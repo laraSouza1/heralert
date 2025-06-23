@@ -145,10 +145,10 @@ export class PostComponent implements OnInit {
     if (this.reportingPostComponent) {
       this.reportingPostComponent.submitReport();
 
-      //atrasar o fechamento do modal por 2 segundos
+      //atrasar o fechamento do modal por 1.5 segundos
       setTimeout(() => {
         this.showPostModal = false;
-      }, 2000);
+      }, 1500);
     }
   }
 
