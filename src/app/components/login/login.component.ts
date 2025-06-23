@@ -98,7 +98,7 @@ export class LoginComponent {
           setTimeout(() => {
             this.router.navigate(['/welcome']);
           }, 2000);
-        } else if (error.status === 401) { //status 401 Unauthorized para credenciais incorretas
+        } else if (error.status === 401) {
           const msg = error.error?.message || '';
           if (msg.includes('Usuário não encontrado')) {
             this.emailOrUsernameError = true;
@@ -106,7 +106,7 @@ export class LoginComponent {
             this.passwordError = true;
           }
         } else {
-          //rrros genéricos
+          //erros genéricos
           this.messageService.add({
             severity: 'error',
             summary: 'Erro ao tentar fazer login. Por favor, tente novamente.'

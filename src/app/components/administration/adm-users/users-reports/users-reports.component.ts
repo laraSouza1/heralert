@@ -7,7 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -155,6 +155,9 @@ export class UsersReportsComponent implements OnInit {
 
   //handle para deletar apenas uma denúncia por id
   handleDeleteReport(report: any): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const headers = new HttpHeaders().set('authorization-user', JSON.stringify(user));
+
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir esta denúncia referente ao usuário<br>"${report.reported_username}"?`,
       header: 'Excluir Denúncia de Usuário',
@@ -166,7 +169,7 @@ export class UsersReportsComponent implements OnInit {
       rejectButtonStyleClass: 'my-cancel-button',
       accept: () => {
         //envia requisição para deletar denúncia
-        this.http.delete<ApiResponse>(`http://localhost:8085/api/reports/${report.report_id}`).subscribe({
+        this.http.delete<ApiResponse>(`http://localhost:8085/api/reports/${report.report_id}`, { headers }).subscribe({
           next: (res: ApiResponse) => {
             if (res.status) {
               this.messageService.add({
@@ -181,7 +184,7 @@ export class UsersReportsComponent implements OnInit {
               });
             }
           },
-          error: (err) => {
+          error: () => {
             this.messageService.add({ severity: 'error', summary: 'Erro interno ao deletar denúncia de usuário.' });
           }
         });
@@ -198,6 +201,9 @@ export class UsersReportsComponent implements OnInit {
 
   //para att uma denúncia
   updateReportStatus(updatedStatus: { status: string; reason: string }): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const headers = new HttpHeaders().set('authorization-user', JSON.stringify(user));
+
     //verifica se há uma denúncia selecionado e um status válido
     if (!this.selectedReport || !updatedStatus.status) {
       this.messageService.add({
@@ -208,10 +214,14 @@ export class UsersReportsComponent implements OnInit {
     }
 
     //envia requisição para atualizar o status da denúncia
-    this.http.put<ApiResponse>(`http://localhost:8085/api/user-reports/${this.selectedReport.report_id}/status`, {
-      status: updatedStatus.status,
-      reason: updatedStatus.reason,
-    }).subscribe({
+    this.http.put<ApiResponse>(
+      `http://localhost:8085/api/user-reports/${this.selectedReport.report_id}/status`,
+      {
+        status: updatedStatus.status,
+        reason: updatedStatus.reason,
+      },
+      { headers }
+    ).subscribe({
       next: (res: ApiResponse) => {
         if (res.status) {
           this.messageService.add({
@@ -227,7 +237,7 @@ export class UsersReportsComponent implements OnInit {
           });
         }
       },
-      error: (err) => {
+      error: () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro interno ao atualizar status da denúncia de usuário.',

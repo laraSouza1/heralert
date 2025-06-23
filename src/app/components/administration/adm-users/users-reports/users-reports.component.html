@@ -29,7 +29,7 @@
       <p-tabPanel header="Em avaliação">
         <p-message severity="info">
           Atualize o estado das denúncias com cuidado. Caso erre, poderá voltar a atualizar o estado da denúncia
-          específica nas abas "não válidas" ou "válidas".
+          específica nas abas "não válidas" ou "válidas". <strong>NOTA:</strong> Administradoras não podem atualizar o estado de denúncias que são referentes a si ou a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports">
           <table class="mt-2 w-full evaluation-table">
@@ -83,7 +83,7 @@
         <p-message severity="warn">
           Denúncias não válidas podem ser limpadas. Isso irá excluir somente a denúncia em específica. Por favor,
           verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
-          para "em avaliação" ou "válida".
+          para "em avaliação" ou "válida". <strong>NOTA:</strong> Administradoras não podem limpar/atualizar o estado de denúncias que são referentes a si ou a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports1">
           <table class="mt-2 w-full invalid-table">
@@ -142,7 +142,7 @@
           Denúncias válidas só desaparecerão desta tabela quando a usuária da denúncia for banida.
           Para uma usuária ser banida, ela precisa ter <strong>três ou mais denúncias válidas</strong>.
           Para banir uma usuária com três ou mais denúncias válidas, faça essa ação na tabela "usuárias a banir" no menu
-          lateral.
+          lateral. <strong>NOTA:</strong> Administradoras não podem atualizar o estado de denúncias que são referentes a si ou a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports2">
           <table class="mt-2 w-full valid-table">

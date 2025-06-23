@@ -45,6 +45,7 @@ export class CommentsReportsComponent implements OnInit {
   displayReportDetailDialog: boolean = false;
   selectedReport: any = null;
   statusMap: string[] = ['em_avaliacao', 'nao_justificado', 'justificado'];
+  currentUser: any = null;
 
   @ViewChild(StatusCommentComponent) statusCommentComponent!: StatusCommentComponent;
 
@@ -57,7 +58,10 @@ export class CommentsReportsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //carrega as denúncias ao inicializar o componente
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+    }
     this.loadReports();
   }
 
@@ -150,6 +154,13 @@ export class CommentsReportsComponent implements OnInit {
 
   //handle para excluir comentário + denúncias relacionadas
   handleDeleteComment(report: any) {
+    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para excluir.',
+      });
+      return;
+    }
     //exibe um diálogo de confirmação antes de excluir o comentário
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir o comentário "${report.comment_text}"?<br>Isso também irá excluir todas as denúncias referentes a este comentário!`,
@@ -184,6 +195,13 @@ export class CommentsReportsComponent implements OnInit {
 
   //handle para excluir denuncia não válida
   handleDeleteReport(report: any): void {
+    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para excluir este conteúdo.',
+      });
+      return;
+    }
     //exibe um diálogo de confirmação antes de excluir a denúncia
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir esta denúncia referente ao comentário<br>"${report.comment_text}"?
@@ -267,6 +285,23 @@ export class CommentsReportsComponent implements OnInit {
   }
 
   updateReportStatus(updatedStatus: { status: string; reason: string }): void {
+    if (!this.selectedReport || !updatedStatus.status) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Nenhuma denúncia selecionada ou status inválido.',
+      });
+      return;
+    }
+
+    //permissão: apenas criadora pode avaliar denúncias de adms/criadora
+    const reportedUserLevel = this.selectedReport.reported_user_role;
+    if (this.currentUser.role !== 2 && reportedUserLevel >= 1) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para atualizar esta denúncia.',
+      });
+      return;
+    }
     //verifica se uma denúncia foi selecionada e se o status é válido
     if (!this.selectedReport || !updatedStatus.status) {
       this.messageService.add({

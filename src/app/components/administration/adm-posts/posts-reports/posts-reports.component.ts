@@ -44,6 +44,7 @@ export class PostsReportsComponent implements OnInit {
   displayReportDetailDialog: boolean = false;
   selectedReport: any = null;
   statusMap: string[] = ['em_avaliacao', 'nao_justificado', 'justificado'];
+  currentUser: any = null;
 
   @ViewChild(StatusPostComponent) statusPostComponent!: StatusPostComponent; //acesso ao componente filho
 
@@ -56,7 +57,11 @@ export class PostsReportsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadReports(); //carrega as denúncias
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+    }
+    this.loadReports();
   }
 
   //pesquisa
@@ -142,6 +147,15 @@ export class PostsReportsComponent implements OnInit {
 
   //handle para delete do post + denúncias relacionadas
   handleDeletePost(report: any) {
+
+    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para excluir este conteúdo.',
+      });
+      return;
+    }
+
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir a postagem "${report.post_title}"?
       <br><br>
@@ -180,6 +194,14 @@ export class PostsReportsComponent implements OnInit {
 
   //handle para deletar apenas uma denúncia por id
   handleDeleteReport(report: any): void {
+    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para excluir este conteúdo.',
+      });
+      return;
+    }
+
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir está denúncia referente ao post "${report.post_title}"?
       <br><br>
@@ -256,6 +278,23 @@ export class PostsReportsComponent implements OnInit {
 
   //para att uma denúncia
   updateReportStatus(updatedStatus: { status: string; reason: string }): void {
+    if (!this.selectedReport || !updatedStatus.status) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Nenhuma denúncia selecionada ou status inválido.',
+      });
+      return;
+    }
+
+    //permissão: apenas criadora pode avaliar denúncias de adms/criadora
+    const reportedUserLevel = this.selectedReport.reported_user_role;
+    if (this.currentUser.role !== 2 && reportedUserLevel >= 1) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para atualizar esta denúncia.',
+      });
+      return;
+    }
     //verifica se há uma denúncia selecionado e um status válido
     if (!this.selectedReport || !updatedStatus.status) {
       this.messageService.add({

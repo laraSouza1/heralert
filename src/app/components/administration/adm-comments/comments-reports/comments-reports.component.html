@@ -29,7 +29,7 @@
       <p-tabPanel header="Em avaliação">
         <p-message severity="info">
           Atualize o estado das denúncias com cuidado. Caso erre, poderá voltar a atualizar o estado da denúncia
-          específica nas abas "não válidas" ou "válidas".
+          específica nas abas "não válidas" ou "válidas". <strong>NOTA:</strong> Administradoras não têm permissão para atualizar o estado de uma denúncia referente a si e a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports">
           <table class="mt-2 w-full evaluation-table" *ngIf="!isLoading && reports.length > 0">
@@ -81,7 +81,7 @@
         <p-message severity="warn">
           Denúncias não válidas podem ser limpadas. Isso irá excluir somente a denúncia em específica. Por favor,
           verifique se a denúncia realmente não é válida antes de tomar qualquer ação. Caso não seja, atualize o estado
-          para "em avaliação" ou "válida".
+          para "em avaliação" ou "válida". <strong>NOTA:</strong> Administradoras não têm permissão para limpar/atualizar o estado de uma denúncia referente a si e a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports1">
           <table class="mt-2 w-full invalid-table" *ngIf="!isLoading && reports.length > 0">
@@ -141,7 +141,7 @@
         <p-message severity="error">
           Comentários com denúncias válidas devem ser excluídos! Isso irá excluir também todas as outras denúncias
           relacionadas a esse comentário. Por favor, verifique se a denúncia é realmente válida antes de tomar qualquer
-          ação. Caso não seja, atualize o estado para "em avaliação" ou "não válida".
+          ação. Caso não seja, atualize o estado para "em avaliação" ou "não válida". <strong>NOTA:</strong> Administradoras não têm permissão para deletar um comentário ou para atualizar o estado de uma denúncia referente a si e a outras administradoras.
         </p-message>
         <ng-container *ngIf="reports.length > 0; else noReports2">
           <table class="mt-2 w-full valid-table" *ngIf="!isLoading && reports.length > 0">
