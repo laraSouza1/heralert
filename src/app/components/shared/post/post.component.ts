@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -31,13 +31,14 @@ import { LinkifyPipe } from '../../../pipes/linkify/linkify.pipe';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnChanges {
 
   @Input() post: any;
   @Input() tags: string[] = [];
   @Input() userId!: number;
   @Input() isDraft: boolean = false;
   @Input() isProfile: boolean = false;
+  @Input() commentsCount: number = 0;
 
   @Output() editPost = new EventEmitter<any>();
   @Output() deletePost = new EventEmitter<any>();
@@ -91,7 +92,7 @@ export class PostComponent implements OnInit {
     this.likes = this.post.likes_count || 0;
     this.isFavorite = !!this.post.user_liked;
     this.isSave = !!this.post.user_saved;
-    this.comments = this.post.comments_count || 0;
+    this.comments = this.commentsCount !== undefined ? this.commentsCount : (this.post.comments_count || 0);
 
     //para sanitizar o conteúdo
     if (this.post.content) {
@@ -117,6 +118,17 @@ export class PostComponent implements OnInit {
         this.isSave = JSON.parse(storedSave);
       }
     }
+  }
+
+  //para atualização de contagem de comentários 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['commentsCount'] && changes['commentsCount'].currentValue !== undefined) {
+      this.comments = changes['commentsCount'].currentValue;
+    }
+  }
+
+  onCommentsUpdated(newCount: number) {
+    this.comments = newCount;
   }
 
   //para navegar ao perfil ao clicar num @ na mensagem

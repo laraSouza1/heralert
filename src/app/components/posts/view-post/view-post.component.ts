@@ -3,7 +3,7 @@ import { PostComponent } from '../../shared/post/post.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText, InputTextModule } from 'primeng/inputtext';
@@ -15,7 +15,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MentionPipe } from '../../../pipes/mention/mention.pipe';
 import { ReportingCommentComponent } from '../../reportingForms/reporting-comment/reporting-comment.component';
-import { Tooltip, TooltipModule } from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-view-post',
@@ -47,6 +48,8 @@ export class ViewPostComponent implements OnInit {
 
   @ViewChild(ReportingCommentComponent) reportingCommentComponent!: ReportingCommentComponent;
 
+  @Output() commentsUpdated = new EventEmitter<number>();
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -71,6 +74,7 @@ export class ViewPostComponent implements OnInit {
           this.tags = this.post.tags;
           this.comments = this.post.comments;
           this.buildCommentTree();
+          this.commentsUpdated.emit(this.comments.length);
         }
       });
     }
@@ -115,7 +119,7 @@ export class ViewPostComponent implements OnInit {
       //atrasar o fechamento do modal por 1.5 segundos
       setTimeout(() => {
         this.closeReportingCommentModal();
-      },15000); //fecha modal após envio
+      }, 15000); //fecha modal após envio
     }
   }
 
@@ -187,6 +191,8 @@ export class ViewPostComponent implements OnInit {
 
         this.replyToCommentId = null;
         this.replyToUsername = '';
+
+        this.commentsUpdated.emit(this.comments.length); //emite a contagem atualizada após criação de comentário
       }
     });
   }
@@ -266,6 +272,8 @@ export class ViewPostComponent implements OnInit {
               this.comments = this.comments.filter(c => c.id !== commentId);
               this.buildCommentTree();
             }
+
+            this.commentsUpdated.emit(this.comments.length); //emite a contagem atualizada após exclusão de comentário
             this.messageService.add({ severity: 'success', summary: 'Comentário excluído!' });
           },
           error: () => {
@@ -286,6 +294,7 @@ export class ViewPostComponent implements OnInit {
         if (response.status) {
           this.comments = response.data.comments;
           this.buildCommentTree(); //reconstói a arvore
+          this.commentsUpdated.emit(this.comments.length); //emite a contagem de4 comentários atualizada
         }
       });
     }

@@ -60,8 +60,8 @@
 
           <!--nº de mensagens não lidas-->
           <td class="w-1">
-            <div *ngIf="user.unreadCount && user.unreadCount > 0" class="unread-count ml-2">
-              <span class="p-tag p-tag-rounded p-tag-danger">{{ user.unreadCount }}</span>
+            <div *ngIf="user.unreadCount && user.unreadCount > 0" class="ml-2">
+              <span class="number-notifications">{{ user.unreadCount }}</span>
             </div>
           </td>
 

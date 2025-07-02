@@ -10,7 +10,7 @@
     <div class="div-ww mb-6">
 
       <!--post clicado-->
-      <app-post [post]="post" [tags]="tags" [userId]="currentUserId" *ngIf="post"></app-post>
+      <app-post [post]="post" [tags]="tags" [userId]="currentUserId" [commentsCount]="comments.length" (commentsUpdated)="post.comments_count = $event" *ngIf="post"></app-post>
 
       <!--contagem de comentários-->
       <h3 class="mb-4 line pt-4" style="cursor: default;">{{ comments.length }} Comentário{{ comments.length === 1 ? '' : 's' }}</h3>
@@ -51,7 +51,7 @@
                   <img [src]="comment.profile_pic || '/imgs/ai.png'" class="icon-image">
                 </div>
                 <div class="flex user justify-content-start">{{ comment.username }}</div>
-                
+
                 <!--icon criadora (role 2) ou administradora (role 1)-->
                 <div *ngIf="comment.role === 2" class="flex crown-creator crown1" pTooltip="Criadora"
                   tooltipPosition="right">
