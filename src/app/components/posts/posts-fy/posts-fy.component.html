@@ -14,7 +14,7 @@
     <div class="spinner"></div>
   </div>
 
-  <div *ngIf="!isLoading">
-    <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId" (userBlocked)="onUserBlocked()"></app-post>
+  <div *ngIf="!isLoading" class="pb-1">
+    <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId" (userBlocked)="onUserBlocked()" [commentsCount]="post.comments_count"></app-post>
   </div>
 </div>

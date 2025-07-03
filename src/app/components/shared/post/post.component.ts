@@ -127,10 +127,6 @@ export class PostComponent implements OnInit, OnChanges {
     }
   }
 
-  onCommentsUpdated(newCount: number) {
-    this.comments = newCount;
-  }
-
   //para navegar ao perfil ao clicar num @ na mensagem
   handleMentionClick(event: MouseEvent) {
     const target = event.target as HTMLElement;

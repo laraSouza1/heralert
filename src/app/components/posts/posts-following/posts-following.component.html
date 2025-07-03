@@ -19,7 +19,7 @@
 
     <div *ngIf="!isLoading">
       <app-post *ngFor="let post of posts" [post]="post" [tags]="post.tags" [userId]="currentUserId"
-        (userBlocked)="onUserBlocked()"></app-post>
+        (userBlocked)="onUserBlocked()" [commentsCount]="post.comments_count"></app-post>
     </div>
   </div>
 </ng-container>

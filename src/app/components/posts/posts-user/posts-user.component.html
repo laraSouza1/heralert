@@ -11,7 +11,7 @@
 
   <!--chamando post.component para exibição de posts criados pelo user-->
   <app-post *ngFor="let post of userPosts" [post]="post" [tags]="post.tags" [userId]="currentUserId"
-    (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)" [isProfile]="true"></app-post>
+    (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)" [isProfile]="true" [commentsCount]="post.comments_count"></app-post>
 </ng-container>
 
 <!--caso n haja posts-->
