@@ -33,7 +33,7 @@ export class MenuAdministrationComponent {
         ]
       },
       {
-        label: 'Gerenciamente de denúncias',
+        label: 'Denúncias',
         items: [
           {
             label: 'Denúncias de usuárias',

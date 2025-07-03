@@ -148,10 +148,10 @@ export class PostsReportsComponent implements OnInit {
   //handle para delete do post + denúncias relacionadas
   handleDeletePost(report: any) {
 
-    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+    if (this.currentUser.role < 2 && report.reported_user_role >= this.currentUser.role) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Você não tem permissão para excluir este conteúdo.',
+        summary: 'Você não tem permissão para excluir esta postagem. Apenas a criadora pode gerenciar denúncias referentes a administradores',
       });
       return;
     }
@@ -194,16 +194,16 @@ export class PostsReportsComponent implements OnInit {
 
   //handle para deletar apenas uma denúncia por id
   handleDeleteReport(report: any): void {
-    if (this.currentUser.role !== 2 && (report.reported_user_role >= 1 || report.reported_user_id === this.currentUser.id)) {
+    if (this.currentUser.role < 2 && report.reported_user_role >= this.currentUser.role) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Você não tem permissão para excluir este conteúdo.',
+        summary: 'Você não tem permissão para limpar esta denúncia. Apenas a criadora pode gerenciar denúncias referentes a administradores',
       });
       return;
     }
 
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir está denúncia referente ao post "${report.post_title}"?
+      message: `Tem certeza que deseja limpar está denúncia referente ao post "${report.post_title}"?
       <br><br>
       <br><strong>Data da denúncia:</strong> ${report.report_created_at}
       <br><strong>Usuária:</strong> ${report.reported_username}
@@ -287,14 +287,15 @@ export class PostsReportsComponent implements OnInit {
     }
 
     //permissão: apenas criadora pode avaliar denúncias de adms/criadora
-    const reportedUserLevel = this.selectedReport.reported_user_role;
-    if (this.currentUser.role !== 2 && reportedUserLevel >= 1) {
+    const reportedUserRole = this.selectedReport.reported_user_role;
+    if (this.currentUser.role < 2 && reportedUserRole >= this.currentUser.role) {
       this.messageService.add({
         severity: 'error',
-        summary: 'Você não tem permissão para atualizar esta denúncia.',
+        summary: 'Você não tem permissão para atualizar esta denúncia. Apenas a criadora pode gerenciar denúncias referentes a administradores.',
       });
       return;
     }
+
     //verifica se há uma denúncia selecionado e um status válido
     if (!this.selectedReport || !updatedStatus.status) {
       this.messageService.add({

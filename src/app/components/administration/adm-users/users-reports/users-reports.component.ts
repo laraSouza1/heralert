@@ -155,8 +155,17 @@ export class UsersReportsComponent implements OnInit {
 
   //handle para deletar apenas uma denúncia por id
   handleDeleteReport(report: any): void {
+
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const headers = new HttpHeaders().set('authorization-user', JSON.stringify(user));
+
+    if (user.role < 2 && report.reported_user_role >= user.role) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para limpar essa denúncia. Apenas a criadora pode gerenciar denúncias referentes a administradores.',
+      });
+      return;
+    }
 
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir esta denúncia referente ao usuário<br>"${report.reported_username}"?`,
@@ -209,6 +218,16 @@ export class UsersReportsComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Nenhuma denúncia selecionada ou status inválido.',
+      });
+      return;
+    }
+
+    const reportedUserRole = this.selectedReport.reported_user_role; // Assuming selectedReport has this property
+
+    if (user.role < 2 && reportedUserRole >= user.role) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Você não tem permissão para atualizar esta denúncia. Apenas a criadora pode gerenciar denúncias referentes a administradores.',
       });
       return;
     }
