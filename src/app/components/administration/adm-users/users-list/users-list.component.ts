@@ -68,7 +68,8 @@ export class UsersListComponent implements OnInit {
       .set('search', this.searchTerm)
       .set('currentUserId', this.currentUserId.toString())
       .set('limit', this.limit.toString())
-      .set('offset', ((this.page - 1) * this.limit).toString());
+      .set('offset', ((this.page - 1) * this.limit).toString())
+      .set('isAdminRequest', 'true');
 
     this.http
       .get<ApiResponse<any>>('http://localhost:8085/api/users', { params })

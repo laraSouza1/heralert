@@ -119,7 +119,7 @@ export class ViewPostComponent implements OnInit {
       //atrasar o fechamento do modal por 1.5 segundos
       setTimeout(() => {
         this.closeReportingCommentModal();
-      }, 15000); //fecha modal após envio
+      }, 1000); //fecha modal após envio
     }
   }
 

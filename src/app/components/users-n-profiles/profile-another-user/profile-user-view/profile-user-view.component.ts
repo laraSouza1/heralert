@@ -109,7 +109,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
       this.reportingUserComponent.submitReport();
       setTimeout(() => {
         this.showUserReportModal = false;
-      }, 1500); //fecha modal após envio
+      }, 1000); //fecha modal após envio
     }
   }
 
@@ -183,6 +183,7 @@ export class ProfileUserViewComponent implements OnInit, OnChanges {
             this.blockService.clear();
             this.refreshBlockStatus(); //atualizar tudo
             this.setupMenuItems();
+            setTimeout(() => window.location.reload(), 0);
           });
         } else {
           //bloqueia user

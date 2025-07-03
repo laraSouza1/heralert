@@ -120,7 +120,7 @@ export class PostComponent implements OnInit, OnChanges {
     }
   }
 
-  //para atualização de contagem de comentários 
+  //para atualização de contagem de comentários
   ngOnChanges(changes: SimpleChanges) {
     if (changes['commentsCount'] && changes['commentsCount'].currentValue !== undefined) {
       this.comments = changes['commentsCount'].currentValue;
@@ -160,7 +160,7 @@ export class PostComponent implements OnInit, OnChanges {
       //atrasar o fechamento do modal por 1.5 segundos
       setTimeout(() => {
         this.showPostModal = false;
-      }, 1500);
+      }, 1000);
     }
   }
 

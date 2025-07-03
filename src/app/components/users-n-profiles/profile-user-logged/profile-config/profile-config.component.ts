@@ -195,6 +195,7 @@ export class ProfileConfigComponent implements OnInit {
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Conta excluída com sucesso!' });
             localStorage.clear(); //limpa localstorage
+            this.blockedCount = 0; //reseta a contagem de bloqueados
             setTimeout(() => this.router.navigate(['/welcome']), 1000); //volta para o welcome da app
           },
           error: () => {
