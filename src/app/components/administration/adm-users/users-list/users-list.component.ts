@@ -164,7 +164,6 @@ export class UsersListComponent implements OnInit {
               }
             },
             error: (err) => {
-              console.error("Erro ao alterar cargo do usuário:", err);
               this.messageService.add({ severity: 'error', summary: 'Erro interno ao alterar cargo da usuária.' });
             }
           });

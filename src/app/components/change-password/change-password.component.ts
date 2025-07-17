@@ -143,7 +143,6 @@ export class ChangePasswordComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Erro ao atualizar palavra-passe:', error);
         const errorMessage = error.error?.message || 'Erro ao tentar atualizar a senha. Tente novamente.';
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage });
       }

@@ -71,6 +71,7 @@
   <p-message *ngIf="confirmPasswordError" severity="error" variant="simple" size="small">Palavra-passes não
     correspondem</p-message>
 
+  <!--termos e condições-->
   <div class="flex flex-column gap-2 my-4">
     <label class="custom-checkbox-container mb-2">
       <input type="checkbox" [(ngModel)]="termsAccepted" (ngModelChange)="onTermsChange()"

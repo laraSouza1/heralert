@@ -111,7 +111,6 @@ export class PostsReportsComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Erro ao carregar denúncias:', err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro ao carregar denúncias.',
@@ -184,7 +183,6 @@ export class PostsReportsComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.error('Erro ao deletar post:', err);
             this.messageService.add({ severity: 'error', summary: 'Erro interno ao deletar post.' });
           }
         });
@@ -236,7 +234,6 @@ export class PostsReportsComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.error('Erro ao deletar denúncia:', err);
             this.messageService.add({ severity: 'error', summary: 'Erro interno ao deletar denúncia.' });
           }
         });
@@ -328,7 +325,6 @@ export class PostsReportsComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Erro ao atualizar status da denúncia:', err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro interno ao atualizar status da denúncia.',

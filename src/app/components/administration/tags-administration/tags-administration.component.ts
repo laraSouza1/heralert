@@ -118,7 +118,6 @@ export class TagsAdministrationComponent implements OnInit {
             }
           },
           error: error => {
-            console.error('Erro ao excluir tag', error);
             this.messageService.add({ severity: 'error', summary: 'Erro ao excluir tag' });
           }
         });

@@ -82,7 +82,6 @@ export class UsersToBanListComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error("Erro ao carregar usuários para banir:", err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro ao carregar usuários para banir.',

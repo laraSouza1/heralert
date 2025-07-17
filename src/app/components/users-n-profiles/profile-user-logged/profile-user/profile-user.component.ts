@@ -146,7 +146,6 @@ export class ProfileUserComponent implements OnInit {
         this.closeEditProfileModal();
       },
       error: (err) => {
-        console.error("Erro ao salvar perfil:", err);
         this.messageService.add({ severity: 'error', summary: 'Erro ao salvar perfil!' });
       }
     });

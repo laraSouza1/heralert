@@ -102,7 +102,6 @@ export class SingInComponent implements OnInit {
     .subscribe({
       next: (response: any) => {
         if (response.status) {
-          console.log('Iniciação de cadastro bem-sucedida!', response.message);
           this.userEmailToVerify = response.email; //pega o email inserido no form para enviar o cod
           this.activeStep = 1;
           this.cdr.detectChanges();
@@ -127,7 +126,6 @@ export class SingInComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Erro ao iniciar cadastro:', error);
         this.messageService.add({ severity: 'error', summary: 'Erro ao tentar iniciar cadastro' });
         this.isSubmitting = false;
       },
@@ -150,7 +148,6 @@ export class SingInComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.status) {
-            console.log('Verificação de e-mail e cadastro bem-sucedidos!');
             const userData = response.user;
             localStorage.setItem('user', JSON.stringify(userData));
             this.messageService.add({ severity: 'success', summary: 'Conta criada com sucesso!'});
@@ -161,7 +158,6 @@ export class SingInComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error('Erro ao verificar código ou cadastrar:', error);
           const errorMessage = error.error?.message || 'Erro ao verificar código. Por favor, tente novamente.';
           this.messageService.add({ severity: 'error', summary: 'Erro ao verificar código. Por favor, tente novamente.'});
           this.isSubmitting = false;
@@ -175,7 +171,6 @@ export class SingInComponent implements OnInit {
   //para reenviar o código
   resendVerificationEmail() {
     if (!this.formData || !this.formData.email || this.isSubmitting) {
-      console.error('Dados de formulário ou e-mail não disponíveis para reenviar código.');
       this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: 'Não foi possível reenviar o código. Tente novamente.' });
       return;
     }
@@ -184,15 +179,12 @@ export class SingInComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.status) {
-            console.log('Novo e-mail de verificação enviado!', response.message);
             this.messageService.add({ severity: 'info', summary: 'Novo código enviado!'});
           } else {
-            console.error('Erro ao reenviar e-mail de verificação:', response.message);
             this.messageService.add({ severity: 'error', summary: 'Erro ao reenviar o código'});
           }
         },
         error: (error) => {
-          console.error('Erro de rede ao reenviar e-mail de verificação:', error);
           this.messageService.add({ severity: 'error', summary: 'Erro de Rede ao reenviar o código.' });
         },
         complete: () => {

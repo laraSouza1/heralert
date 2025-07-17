@@ -69,7 +69,6 @@ export class LoginComponent {
     this.http.post("http://localhost:8085/api/login", loginData).subscribe({
       next: (response: any) => {
         if (response.status) {
-          console.log('Login bem-sucedido!', response.data);
 
           localStorage.clear();
           this.followService.clearFollowings();
@@ -81,7 +80,6 @@ export class LoginComponent {
         }
       },
       error: (error) => {
-        console.error('Erro no login:', error);
         this.emailOrUsernameError = false;
         this.passwordError = false;
 

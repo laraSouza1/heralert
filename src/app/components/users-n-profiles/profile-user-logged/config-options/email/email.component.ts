@@ -113,7 +113,6 @@ export class EmailComponent implements OnInit, OnChanges {
           }
         },
         error: (error) => {
-          console.error('Erro ao iniciar verificação de e-mail:', error);
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao tentar enviar código de verificação. Por favor, tente novamente.' });
         },
         complete: () => {
@@ -180,7 +179,6 @@ export class EmailComponent implements OnInit, OnChanges {
           }
         },
         error: (error) => {
-          console.error('Erro ao reenviar código de verificação:', error);
           this.messageService.add({ severity: 'error', summary: 'Erro de Rede', detail: 'Erro ao reenviar o código. Verifique sua conexão.' });
         },
         complete: () => {

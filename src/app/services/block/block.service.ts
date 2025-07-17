@@ -75,8 +75,8 @@ export class BlockService {
         this.http.delete('http://localhost:8085/api/follows', {
           params: { follower_id: blockedId.toString(), following_id: blockerId.toString() }
         }).subscribe(
-          () => console.log('Blocked user unfollowed blocker successfully'),
-          error => console.error('Error in blocked user unfollowing blocker:', error)
+          () => console.log('O usuário bloqueado deixou de seguir o bloqueador com sucesso'),
+          error => console.error('Erro:', error)
         );
 
         this.clear();

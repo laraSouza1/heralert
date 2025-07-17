@@ -137,7 +137,6 @@ export class ReportingCommentComponent {
           }
         },
         error: (error) => {
-          console.error('Erro ao enviar denúncia:', error);
           this.messageService.add({ severity: 'error', summary: 'Erro de conexão ao enviar denúncia.' });
         }
       });

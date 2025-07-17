@@ -118,7 +118,6 @@ export class CommentsReportsComponent implements OnInit {
         },
         error: (err) => {
           //em caso de erro, exibe uma mensagem de erro e limpa os dados
-          console.error('Erro ao carregar denúncias de comentários:', err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro ao carregar denúncias de comentários.',
